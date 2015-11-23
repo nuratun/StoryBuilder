@@ -24,38 +24,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tahastudio.storybuilder.StoryBuilderMain" />
         </activity>
-        <activity
-            android:name=".AddCharacters"
-            android:label="@string/title_activity_add_characters"
-            android:parentActivityName=".CreateStory" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="tahastudio.storybuilder.CreateStory" />
-        </activity>
-        <activity
-            android:name=".AddPlotline"
-            android:label="@string/title_activity_add_plotline"
-            android:parentActivityName=".CreateStory" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="tahastudio.storybuilder.CreateStory" />
-        </activity>
-        <activity
-            android:name=".AddPlaces"
-            android:label="@string/title_activity_add_places"
-            android:parentActivityName=".CreateStory" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="tahastudio.storybuilder.CreateStory" />
-        </activity>
-        <activity
-            android:name=".AddCharacter"
-            android:label="@string/title_activity_add_character"
-            android:parentActivityName=".AddCharacters" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="tahastudio.storybuilder.AddCharacters" />
-        </activity>
     </application>
 
 </manifest>
