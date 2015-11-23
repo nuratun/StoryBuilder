@@ -2,15 +2,17 @@ package tahastudio.storybuilder;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * A placeholder fragment containing a simple view.
+ * Fragment to start the CreateStory activity from the FAB click
  */
 public class StoryBuilderMainFragment extends Fragment {
+    FloatingActionButton the_fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
 
     public StoryBuilderMainFragment() {
     }
@@ -20,7 +22,7 @@ public class StoryBuilderMainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        getActivity().findViewById(R.id.fab).setOnClickListener(new View.OnClickListener() {
+        the_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(v.getContext(), CreateStory.class));
