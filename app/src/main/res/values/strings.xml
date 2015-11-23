@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">StoryBuilder</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="firstrun_welcome">Welcome to StoryBuilder</string>
+    <string name="instructions">To begin click on the + button</string>
+    <string name="title_activity_create_story">Create a New Story</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_add_characters">Add New Characters</string>
+    <string name="title_activity_add_plotline">Add A Plotline</string>
+    <string name="title_activity_add_places">Add Places</string>
+    <string name="title_activity_add_character">Add A Character</string>
+</resources>

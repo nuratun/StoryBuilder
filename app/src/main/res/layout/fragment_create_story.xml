@@ -1,0 +1,66 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context="tahastudio.storybuilder.CreateStoryFragment">
+
+    <include
+        layout="@layout/tool_bar"></include>
+
+    <LinearLayout
+        android:id="@+id/story_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="50dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="20dp"
+            android:text="Title Your Story" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_title"
+            android:text="Add a title to your story" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/add_elements"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_above="@+id/story_title" >
+
+        <TextView
+            android:id="@+id/add_characters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="Characters" />
+
+        <TextView
+            android:id="@+id/add_plotline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="Plotline" />
+
+        <TextView
+            android:id="@+id/add_places"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:text="Places" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

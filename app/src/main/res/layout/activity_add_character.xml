@@ -1,0 +1,53 @@
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="tahastudio.storybuilder.AddCharacter">
+
+    <include
+        layout="@layout/tool_bar"></include>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/character_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Name" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/character_birthplace"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:text="Birthplace" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/character_personality"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Personality" />
+    </TableRow>
+
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_width="wrap_content">
+
+        <Button
+            android:id="@+id/character_save"
+            android:text="Save"/>
+    </TableRow>
+
+</TableLayout>
