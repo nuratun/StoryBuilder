@@ -12,7 +12,7 @@ import android.view.ViewGroup;
  * Fragment to start the CreateStory activity from the FAB click
  */
 public class StoryBuilderMainFragment extends Fragment {
-    FloatingActionButton the_fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+    FloatingActionButton the_fab;
 
     public StoryBuilderMainFragment() {
     }
@@ -21,6 +21,8 @@ public class StoryBuilderMainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        the_fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
 
         the_fab.setOnClickListener(new View.OnClickListener() {
             @Override

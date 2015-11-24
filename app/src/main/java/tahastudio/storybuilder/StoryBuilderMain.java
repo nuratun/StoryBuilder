@@ -15,11 +15,12 @@ public class StoryBuilderMain extends AppCompatActivity {
         // Call function to check if app has run before
         checkFirstRun();
 
+        setContentView(R.layout.fragment_story_builder_main);
+
         // Attach toolbar
         Toolbar tool_bar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(tool_bar);
-
-        setContentView(R.layout.activity_story_builder_main);
+        setTitle("StoryBuilder");
     }
 
     /* Method for checking if app is being run for the first time,
