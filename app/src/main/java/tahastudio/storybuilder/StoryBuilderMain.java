@@ -8,7 +8,7 @@ import android.view.MenuItem;
 
 public class StoryBuilderMain extends AppCompatActivity {
     public boolean isFirstRun;
-    private Toolbar toolbar;
+    private Toolbar tool_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,8 +18,8 @@ public class StoryBuilderMain extends AppCompatActivity {
         checkFirstRun();
 
         // Attach layout to the toolbar
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
-        setSupportActionBar(toolbar);
+        tool_bar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(tool_bar);
 
         setContentView(R.layout.activity_story_builder_main);
     }
