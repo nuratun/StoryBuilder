@@ -7,8 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class StoryBuilderMain extends AppCompatActivity {
-    public boolean isFirstRun;
-    private Toolbar tool_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,8 +15,8 @@ public class StoryBuilderMain extends AppCompatActivity {
         // Call function to check if app has run before
         checkFirstRun();
 
-        // Attach layout to the toolbar
-        tool_bar = (Toolbar) findViewById(R.id.tool_bar);
+        // Attach toolbar
+        Toolbar tool_bar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(tool_bar);
 
         setContentView(R.layout.activity_story_builder_main);
@@ -28,6 +26,8 @@ public class StoryBuilderMain extends AppCompatActivity {
     /* or if it's just been updated.
      */
     public void checkFirstRun() {
+
+        boolean isFirstRun;
         isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                 .getBoolean("isFirstRun", true);
 
