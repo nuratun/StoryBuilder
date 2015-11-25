@@ -5,7 +5,7 @@
     tools:context="tahastudio.storybuilder.CharacterFragment">
 
     <include
-        layout="@layout/tool_bar"></include>
+        layout="@layout/toolbar"></include>
 
     <LinearLayout
         android:layout_width="wrap_content"

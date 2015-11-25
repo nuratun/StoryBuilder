@@ -7,7 +7,7 @@
     tools:context="tahastudio.storybuilder.CreateStoryFragment">
 
     <include
-        layout="@layout/tool_bar"></include>
+        layout="@layout/toolbar"></include>
 
     <LinearLayout
         android:id="@+id/story_title"

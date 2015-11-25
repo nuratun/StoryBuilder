@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StoryBuilderMainFragment">
+    tools:context=".StoryBuilderMain">
 
     <include
-        layout="@layout/tool_bar"></include>
+        layout="@layout/toolbar"></include>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,15 +17,15 @@
         <LinearLayout
             android:id="@+id/topView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:background="@android:color/holo_green_dark"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/instructions"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="0dp"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:text="@string/instructions" />
@@ -34,17 +34,18 @@
 
         <LinearLayout
             android:id="@+id/bottomView"
-            android:layout_width="550dp"
-            android:layout_height="360dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:background="@android:color/holo_blue_dark"
-            android:orientation="horizontal" >
+            android:layout_weight="2"
+            android:orientation="vertical" >
 
             <ListView
                 android:id="@+id/story_list"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical|center"
-                android:layout_weight="0" />
+                android:layout_weight="1" />
 
         </LinearLayout>
 

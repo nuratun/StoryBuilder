@@ -1,35 +1,58 @@
 package tahastudio.storybuilder;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
 public class StoryBuilderMain extends AppCompatActivity {
 
     // Add in MD toolbar and drawer to main activity XML
-    android.support.v7.widget.Toolbar tool_bar;
+    android.support.v7.widget.Toolbar toolbar;
     DrawerLayout drawer_layout;
+
+    // Add the FAB
+    FloatingActionButton the_fab;
+
+    // Get the editText box to add a story
+    //LinearLayout add_story;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Set contentView first before finding elements
+        setContentView(R.layout.fragment_story_builder_main);
 
         // Call function to check if app has run before
         checkFirstRun();
 
-        // Set contentView first before finding elements
-        setContentView(R.layout.fragment_story_builder_main);
-
         // Attach toolbar
-        tool_bar = (android.support.v7.widget.Toolbar) findViewById(R.id.tool_bar);
-        setSupportActionBar(tool_bar);
+        toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         // Attach drawer
         drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         setTitle("StoryBuilder");
+
+        // Now call pop-up box when FAB is clicked
+        the_fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        the_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addStoryPopUp(v);
+            }
+        });
     }
 
     //
@@ -52,6 +75,33 @@ public class StoryBuilderMain extends AppCompatActivity {
                     .putBoolean("isFirstRun", false)
                     .apply();
         }
+    }
+
+    private void addStoryPopUp(View view) {
+        // Get ready to inflate the activity_add_story XML
+        LayoutInflater get_story_layout = (LayoutInflater) getApplicationContext()
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View popSwitchView = get_story_layout.inflate(R.layout.activity_add_story, null, false);
+
+        final PopupWindow popWindow = new PopupWindow(popSwitchView);
+        popWindow.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
+        popWindow.setHeight(LinearLayout.LayoutParams.MATCH_PARENT);
+        popWindow.setOutsideTouchable(false);
+        popWindow.setFocusable(true);
+
+        Button add_story = (Button) popSwitchView.findViewById(R.id.add_the_story);
+
+        add_story.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                popWindow.dismiss();
+            }
+        });
+
+        popWindow.showAtLocation(popSwitchView, Gravity.CENTER, 0, 0);
+
     }
 
 
