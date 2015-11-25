@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 public class StoryBuilderMain extends AppCompatActivity {
 
+    // Add in MD toolbar and drawer to main activity XML
     android.support.v7.widget.Toolbar tool_bar;
     DrawerLayout drawer_layout;
 
@@ -18,6 +19,7 @@ public class StoryBuilderMain extends AppCompatActivity {
         // Call function to check if app has run before
         checkFirstRun();
 
+        // Set contentView first before finding elements
         setContentView(R.layout.fragment_story_builder_main);
 
         // Attach toolbar
@@ -30,9 +32,10 @@ public class StoryBuilderMain extends AppCompatActivity {
         setTitle("StoryBuilder");
     }
 
-    /* Method for checking if app is being run for the first time,
-    /* or if it's just been updated.
-     */
+    //
+    // Method for checking if app has been run for the first time.
+    // If so, provide message. Otherwise, skip.
+    //
     public void checkFirstRun() {
 
         boolean isFirstRun;
@@ -43,8 +46,7 @@ public class StoryBuilderMain extends AppCompatActivity {
             // Put dialog here
 
 
-            // Update the preferences so this dialog isn't run again
-            // until updated
+            // Update the preferences so this dialog isn't run again until updated
             getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                     .edit()
                     .putBoolean("isFirstRun", false)

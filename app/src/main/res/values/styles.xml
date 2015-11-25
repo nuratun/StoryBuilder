@@ -1,6 +1,6 @@
 <resources>
     <!-- Base theme applied no matter what API -->
-    <style name="SBTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="ActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!--If you are using revision 22.1 please use just windowNoTitle. Without android:-->
         <item name="android:windowNoTitle">true</item>
         <!--We will be using the toolbar so no need to show ActionBar-->
@@ -15,5 +15,11 @@
         <item name="colorAccent">#FF4081</item>
         <!-- You can also set colorControlNormal, colorControlActivated
             colorControlHighlight and colorSwitchThumbNormal. -->
+    </style>
+
+    <!-- change color Popup -->
+    <style name="ActionBarPopupTheme" parent="ThemeOverlay.AppCompat.Light" >
+        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>
