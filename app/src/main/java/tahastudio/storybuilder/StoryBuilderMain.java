@@ -1,12 +1,15 @@
 package tahastudio.storybuilder;
 
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 public class StoryBuilderMain extends AppCompatActivity {
+
+    android.support.v7.widget.Toolbar tool_bar;
+    DrawerLayout drawer_layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,8 +21,12 @@ public class StoryBuilderMain extends AppCompatActivity {
         setContentView(R.layout.fragment_story_builder_main);
 
         // Attach toolbar
-        Toolbar tool_bar = (Toolbar) findViewById(R.id.tool_bar);
+        tool_bar = (android.support.v7.widget.Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(tool_bar);
+
+        // Attach drawer
+        drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         setTitle("StoryBuilder");
     }
 
