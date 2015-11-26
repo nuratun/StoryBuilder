@@ -80,16 +80,16 @@ public class StoryBuilderMain extends AppCompatActivity {
 
     private void addStoryPopUp(View view) {
         // Create the ViewGroup for the inflater
-        LinearLayout viewGroup = (LinearLayout) view.findViewById(R.id.add_story);
+        LinearLayout viewGroup = (LinearLayout) findViewById(R.id.add_story);
 
         // Get ready to inflate the activity_add_story XML
-        LayoutInflater get_story_layout = (LayoutInflater) getApplicationContext()
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater get_story_layout = (LayoutInflater) getApplicationContext().
+                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         final View popSwitchView = get_story_layout
-                .inflate(R.layout.activity_add_story, viewGroup);
+                .inflate(R.layout.activity_add_story, viewGroup, true);
 
-        final PopupWindow popWindow = new PopupWindow(popSwitchView, 300, 400, true);
+        final PopupWindow popWindow = new PopupWindow(popSwitchView);
         popWindow.setContentView(popSwitchView);
         popWindow.setOutsideTouchable(false);
         popWindow.setFocusable(true);
