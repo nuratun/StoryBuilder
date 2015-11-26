@@ -2,6 +2,7 @@ package tahastudio.storybuilder;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
 public class StoryBuilderMain extends AppCompatActivity {
@@ -77,16 +77,15 @@ public class StoryBuilderMain extends AppCompatActivity {
         }
     }
 
-    private void addStoryPopUp(View view) {
+    private void addStoryPopUp() {
         // Get ready to inflate the activity_add_story XML
         LayoutInflater get_story_layout = (LayoutInflater) getApplicationContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View popSwitchView = get_story_layout.inflate(R.layout.activity_add_story, null, false);
+        View popSwitchView = get_story_layout
+                .inflate(R.layout.activity_add_story, (ViewGroup), findViewById(R.id.add_story));
 
-        final PopupWindow popWindow = new PopupWindow(popSwitchView);
-        popWindow.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
-        popWindow.setHeight(LinearLayout.LayoutParams.MATCH_PARENT);
+        PopupWindow popWindow = new PopupWindow(popSwitchView, 300, 400, true);
         popWindow.setOutsideTouchable(false);
         popWindow.setFocusable(true);
 
@@ -100,10 +99,11 @@ public class StoryBuilderMain extends AppCompatActivity {
             }
         });
 
-        popWindow.showAtLocation(popSwitchView, Gravity.CENTER, 0, 0);
-
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                popWindow.showAtLocation(popSwitchView, Gravity.CENTER, 0, 0);
+            }}, 100L);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
