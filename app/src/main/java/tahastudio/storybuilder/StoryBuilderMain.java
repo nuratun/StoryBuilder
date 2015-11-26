@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
 public class StoryBuilderMain extends AppCompatActivity {
@@ -77,15 +78,19 @@ public class StoryBuilderMain extends AppCompatActivity {
         }
     }
 
-    private void addStoryPopUp() {
+    private void addStoryPopUp(View view) {
+        // Create the ViewGroup for the inflater
+        LinearLayout viewGroup = (LinearLayout) view.findViewById(R.id.add_story);
+
         // Get ready to inflate the activity_add_story XML
         LayoutInflater get_story_layout = (LayoutInflater) getApplicationContext()
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View popSwitchView = get_story_layout
-                .inflate(R.layout.activity_add_story, (ViewGroup), findViewById(R.id.add_story));
+        final View popSwitchView = get_story_layout
+                .inflate(R.layout.activity_add_story, viewGroup);
 
-        PopupWindow popWindow = new PopupWindow(popSwitchView, 300, 400, true);
+        final PopupWindow popWindow = new PopupWindow(popSwitchView, 300, 400, true);
+        popWindow.setContentView(popSwitchView);
         popWindow.setOutsideTouchable(false);
         popWindow.setFocusable(true);
 
