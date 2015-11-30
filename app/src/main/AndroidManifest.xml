@@ -19,10 +19,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".CreateStory"
-            android:label="@string/title_activity_create_story" />
-
     </application>
 
 </manifest>

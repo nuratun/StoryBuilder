@@ -100,7 +100,7 @@ public class StoryBuilderMain extends AppCompatActivity {
         add_the_story.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent createStory = new Intent(StoryBuilderMain.this, CreateStory.class);
+                Intent createStory = new Intent(StoryBuilderMain.this, CreateStoryFragment.class);
                 startActivity(createStory);
                 finish();
             }

@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Fragment to start the CreateStory activity from the FAB click
+ * Fragment not needed
  */
 public class StoryBuilderMainFragment extends Fragment {
 
