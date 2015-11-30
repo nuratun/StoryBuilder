@@ -9,6 +9,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/ActionBarTheme" >
+
         <activity
             android:name=".StoryBuilderMain"
             android:label="@string/app_name" >
@@ -17,14 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".CreateStory"
-            android:label="@string/title_activity_create_story"
-            android:parentActivityName=".StoryBuilderMain" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="tahastudio.storybuilder.StoryBuilderMain" />
-        </activity>
+            android:label="@string/title_activity_create_story" />
+
     </application>
 
 </manifest>

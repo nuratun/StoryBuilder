@@ -1,6 +1,6 @@
 package tahastudio.storybuilder;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.PopupWindow;
 
 public class StoryBuilderMain extends AppCompatActivity {
@@ -20,9 +21,6 @@ public class StoryBuilderMain extends AppCompatActivity {
 
     // Add the FAB
     FloatingActionButton the_fab;
-
-    // Set context for pop up window
-    Context contxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +74,7 @@ public class StoryBuilderMain extends AppCompatActivity {
     }
 
     public void addStoryPopUp(View view) {
+
         // Set the popup window's activity, which will be this since
         // we're just overlaying a window over the main activity
         PopupWindow popup = new PopupWindow(StoryBuilderMain.this);
@@ -94,6 +93,18 @@ public class StoryBuilderMain extends AppCompatActivity {
         popup.setFocusable(true);
 
         popup.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        // Get the button in the inflated layout. Must find by View -> layout
+        Button add_the_story = (Button) layout.findViewById(R.id.add_the_story);
+
+        add_the_story.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent createStory = new Intent(StoryBuilderMain.this, CreateStory.class);
+                startActivity(createStory);
+                finish();
+            }
+        });
     }
 
     @Override
