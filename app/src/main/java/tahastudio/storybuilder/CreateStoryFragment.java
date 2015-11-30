@@ -15,10 +15,10 @@ import java.io.FileOutputStream;
  */
 public class CreateStoryFragment extends Fragment {
 
-    // Link storytitle to the editText id in fragment_create_story
-    EditText storytitle = (EditText) getActivity().findViewById(R.id.edit_title);
-
     public CreateStoryFragment() {
+        // Link storytitle to the editText id in fragment_create_story
+        EditText storytitle = (EditText) getView().findViewById(R.id.edit_title);
+
         // Filename to save to internal storage
         String FILENAME = "Story_Title";
         String title = storytitle.getText().toString();
@@ -38,7 +38,7 @@ public class CreateStoryFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         return inflater.inflate(R.layout.fragment_create_story, container, false);
+
     }
 }
