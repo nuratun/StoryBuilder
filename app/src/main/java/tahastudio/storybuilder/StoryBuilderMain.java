@@ -2,17 +2,14 @@ package tahastudio.storybuilder;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
+import android.view.WindowManager;
 import android.widget.PopupWindow;
 
 public class StoryBuilderMain extends AppCompatActivity {
@@ -24,8 +21,8 @@ public class StoryBuilderMain extends AppCompatActivity {
     // Add the FAB
     FloatingActionButton the_fab;
 
-    // Get the editText box to add a story
-    //LinearLayout add_story;
+    // Set context for pop up window
+    Context contxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,36 +75,25 @@ public class StoryBuilderMain extends AppCompatActivity {
         }
     }
 
-    private void addStoryPopUp(View view) {
-        // Create the ViewGroup for the inflater
-        LinearLayout viewGroup = (LinearLayout) findViewById(R.id.add_story);
+    public void addStoryPopUp(View view) {
+        // Set the popup window's activity, which will be this since
+        // we're just overlaying a window over the main activity
+        PopupWindow popup = new PopupWindow(StoryBuilderMain.this);
 
-        // Get ready to inflate the activity_add_story XML
-        LayoutInflater get_story_layout = (LayoutInflater) getApplicationContext().
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        // Inflate the view we plan on using for the popup
+        View layout = getLayoutInflater().inflate(R.layout.activity_add_story, null);
 
-        final View popSwitchView = get_story_layout
-                .inflate(R.layout.activity_add_story, viewGroup, true);
+        // Let's set the view inside the popup
+        popup.setContentView(layout);
 
-        final PopupWindow popWindow = new PopupWindow(popSwitchView);
-        popWindow.setContentView(popSwitchView);
-        popWindow.setOutsideTouchable(false);
-        popWindow.setFocusable(true);
+        // Set the width/height of the content
+        popup.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
+        popup.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
 
-        Button add_story = (Button) popSwitchView.findViewById(R.id.add_the_story);
+        popup.setOutsideTouchable(true);
+        popup.setFocusable(true);
 
-        add_story.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                popWindow.dismiss();
-            }
-        });
-
-        new Handler().postDelayed(new Runnable() {
-            public void run() {
-                popWindow.showAtLocation(popSwitchView, Gravity.CENTER, 0, 0);
-            }}, 100L);
+        popup.showAtLocation(view, Gravity.CENTER, 0, 0);
     }
 
     @Override
