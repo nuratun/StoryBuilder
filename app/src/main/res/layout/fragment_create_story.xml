@@ -1,4 +1,5 @@
 <LinearLayout
+    android:id="@+id/create_story_fragment_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"

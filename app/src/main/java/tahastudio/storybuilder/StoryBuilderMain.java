@@ -1,6 +1,5 @@
 package tahastudio.storybuilder;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
@@ -100,9 +99,10 @@ public class StoryBuilderMain extends AppCompatActivity {
         add_the_story.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent createStory = new Intent(StoryBuilderMain.this, CreateStoryFragment.class);
-                startActivity(createStory);
-                finish();
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.create_story_fragment_layout, new CreateStoryFragment())
+                        .commit();
             }
         });
     }
