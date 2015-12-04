@@ -12,36 +12,38 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.PopupWindow;
 
+/**
+ * This is the main activity of StoryBuilder
+ * */
 public class StoryBuilderMain extends AppCompatActivity {
 
-    // Add in MD toolbar and drawer to main activity XML
+    // Add in MD toolbar, drawer, and FAB to the view
     android.support.v7.widget.Toolbar toolbar;
     DrawerLayout drawer_layout;
-
-    // Add the FAB
     FloatingActionButton the_fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Set contentView first before finding elements
+        // Set the activity's view before finding elements
         setContentView(R.layout.fragment_story_builder_main);
 
-        // Call function to check if app has run before
+        // Call function to check if app has been run before.
+        // Otherwise, call popup intro box
         checkFirstRun();
 
-        // Attach toolbar
+        // Find and attach the toolbar to the view
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        // Attach drawer
-        drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
-
+        // Set title on actionbar/
         setTitle("StoryBuilder");
+
+        // Find the drawer
+        drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        // TODO -> Set the drawer
 
         // Now call pop-up box when FAB is clicked
         the_fab = (FloatingActionButton) findViewById(R.id.fab);
-
         the_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,15 +58,19 @@ public class StoryBuilderMain extends AppCompatActivity {
     //
     public void checkFirstRun() {
 
+        // Set the variable to true/false
         boolean isFirstRun;
+
+        // First run is initially set to true
         isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                 .getBoolean("isFirstRun", true);
 
+        // TODO -> Implement the pop-up box
         if (isFirstRun) {
             // Put dialog here
 
-
-            // Update the preferences so this dialog isn't run again until updated
+            // Once run, update the preferences
+            // Only run again when app is updated
             getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                     .edit()
                     .putBoolean("isFirstRun", false)
@@ -74,47 +80,51 @@ public class StoryBuilderMain extends AppCompatActivity {
 
     public void addStoryPopUp(View view) {
 
-        // Set the popup window's activity, which will be this since
-        // we're just overlaying a window over the main activity
+        // Set the popup window's activity, which will be this activity,
+        // since we're just overlaying a window over the main activity
         PopupWindow popup = new PopupWindow(StoryBuilderMain.this);
 
-        // Inflate the view we plan on using for the popup
-        View layout = getLayoutInflater().inflate(R.layout.activity_add_story, null);
+        // Inflate the view we plan on using for the pop-up box
+        final View layout = getLayoutInflater().inflate(R.layout.activity_add_story, null);
 
-        // Let's set the view inside the popup
+        // Let's set the view inside the pop-up box
         popup.setContentView(layout);
 
-        // Set the width/height of the content
+        // Set the width/height of the content in the pop-up box
+        // This will take up all of the screen
         popup.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
         popup.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
 
+        // Can the user touch outside the pop-up box to exit it? -> true
+        // Is it focused when it pops up? -> true
         popup.setOutsideTouchable(true);
         popup.setFocusable(true);
 
+        // Set the location of where it'll show.
         popup.showAtLocation(view, Gravity.CENTER, 0, 0);
 
-        // Get the button in the inflated layout. Must find by View -> layout
-        Button add_the_story = (Button) layout.findViewById(R.id.add_the_story);
+        // Get the button in the inflated layout. Must find by View first,
+        // which is -> layout
+        final Button add_the_story = (Button) layout.findViewById(R.id.add_the_story);
 
+        // The create story activity is just a fragment, so we have to call
+        // the fragment manager on the button click
         add_the_story.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .replace(R.id.create_story_fragment_layout, new CreateStoryFragment())
+                        .replace(add_the_story, new CreateStoryFragment())
                         .commit();
             }
         });
+
+        // TODO -> Save the title and genre to database
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-
-        //MenuInflater inflater = getMenuInflater();
-        //inflater.inflate(R.menu.menu_story_builder_main, menu);
-        //return super.onCreateOptionsMenu(menu);
-
         getMenuInflater().inflate(R.menu.menu_story_builder_main, menu);
         return true;
     }

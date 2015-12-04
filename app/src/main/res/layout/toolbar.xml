@@ -6,8 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/ColorPrimary"
-    android:elevation="4dp"
     android:theme="@style/ActionBarTheme"
-    app:popupTheme="@style/ActionBarPopupTheme">
-
+    app:popupTheme="@style/ActionBarPopupTheme"
+    android:elevation="30dp">
 </android.support.v7.widget.Toolbar>
