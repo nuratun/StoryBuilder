@@ -112,10 +112,7 @@ public class StoryBuilderMain extends AppCompatActivity {
         add_the_story.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(add_the_story, new CreateStoryFragment())
-                        .commit();
+                new CreateStory();
             }
         });
 

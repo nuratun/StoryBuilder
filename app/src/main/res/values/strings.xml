@@ -5,13 +5,13 @@
     <string name="instructions">To begin click on the + button</string>
     <string name="title_activity_create_story">Create a New Story</string>
 
-    <!-- For the CreateStoryFragment -->
+    <!-- For the CreateStory -->
     <string name="title_activity_add_characters">Add New Characters</string>
     <string name="title_activity_add_plotline">Add A Plotline</string>
     <string name="title_activity_add_places">Add Places</string>
     <string name="title_activity_add_character">Add A Character</string>
 
-    <!-- For the CreateStoryFragment tabs -->
+    <!-- For the CreateStory tabs -->
     <string name="tab_characters">Characters</string>
     <string name="tab_plotline">Plotline</string>
     <string name="tab_places">Places</string>
