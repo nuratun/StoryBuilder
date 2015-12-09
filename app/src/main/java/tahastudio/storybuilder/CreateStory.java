@@ -10,8 +10,7 @@ import android.widget.TextView;
 import java.io.FileOutputStream;
 
 public class CreateStory extends AppCompatActivity {
-    // Get the toolbar, second FAB button, and
-    // other elements
+    // Get the toolbar, second FAB button, and other elements
     android.support.v7.widget.Toolbar toolbar;
     FloatingActionButton the_second_fab;
     TextView story_title;

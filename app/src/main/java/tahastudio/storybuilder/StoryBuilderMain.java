@@ -15,7 +15,7 @@ import android.widget.PopupWindow;
 
 /**
  * This is the main activity of StoryBuilder
- * */
+ **/
 public class StoryBuilderMain extends AppCompatActivity {
 
     // Add in MD toolbar, drawer, and FAB to the view
@@ -36,14 +36,14 @@ public class StoryBuilderMain extends AppCompatActivity {
         // Find and attach the toolbar to the view
         toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Set title on actionbar/
+        // Set title on actionbar
         setTitle("StoryBuilder");
 
         // Find the drawer
         drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
         // TODO -> Set the drawer
 
-        // Now call pop-up box when FAB is clicked
+        // Now find the FAB call pop-up box when it's clicked
         the_fab = (FloatingActionButton) findViewById(R.id.fab);
         the_fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,13 +108,13 @@ public class StoryBuilderMain extends AppCompatActivity {
         // which is -> layout
         final Button add_the_story = (Button) layout.findViewById(R.id.add_the_story);
 
-        // The create story activity is just a fragment, so we have to call
-        // the fragment manager on the button click
+        // Create a new intent to launch the CreateStory activity
         add_the_story.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Add an intent for CreateStory
                 Intent callCreateStory = new Intent(StoryBuilderMain.this, CreateStory.class);
+                // Call it
                 startActivity(callCreateStory);
             }
         });
