@@ -26,6 +26,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tahastudio.storybuilder.StoryBuilderMain" />
         </activity>
+        <activity
+            android:name=".TabViewer"
+            android:label="@string/title_activity_tab_viewer"
+            android:parentActivityName=".CreateStory">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tahastudio.storybuilder.CreateStory" />
+        </activity>
     </application>
 
 </manifest>
