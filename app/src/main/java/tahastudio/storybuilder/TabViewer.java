@@ -7,9 +7,9 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 public class TabViewer extends FragmentStatePagerAdapter {
     int sbTabs;
 
-    public TabViewer(FragmentManager fm, int sbTabs) {
+    public TabViewer(FragmentManager fm, int nmTabs) {
         super(fm);
-        this.sbTabs = sbTabs;
+        this.sbTabs = nmTabs;
     }
 
     @Override
