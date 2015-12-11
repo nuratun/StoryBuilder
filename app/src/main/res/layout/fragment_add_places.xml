@@ -1,4 +1,5 @@
 <RelativeLayout
+    android:id="@+id/add_places_tab"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,7 +8,6 @@
     tools:context="tahastudio.storybuilder.AddPlaces">
 
     <TextView
-        android:id="@+id/add_places_tab"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" />
