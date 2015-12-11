@@ -4,8 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -15,6 +13,7 @@ import java.io.FileOutputStream;
 
 public class CreateStory extends AppCompatActivity {
     TextView story_title;
+    private TabViewer tab_viewer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +30,7 @@ public class CreateStory extends AppCompatActivity {
         FloatingActionButton the_second_fab = (FloatingActionButton)
                 findViewById(R.id.second_fab);
 
-        // Find the tablayout in activity_tab_viewer.xml
+        // Find the tablayout in activity_create_story.xml
         TabLayout tab_layout = (TabLayout) findViewById(R.id.tab_layout);
         // Add the tabs, and set the title for each one
         tab_layout.addTab(tab_layout.newTab().setText("Characters"));
@@ -42,18 +41,7 @@ public class CreateStory extends AppCompatActivity {
         // ViewPager allows flipping left and right through pages of data
         final ViewPager view_pager = (ViewPager) findViewById(R.id.pager);
         // Must use FragmentPagerAdapter to get the list of pages in TabViewer
-        final FragmentPagerAdapter tab_viewer = new FragmentPagerAdapter
-                (super.getSupportFragmentManager()) {
-            @Override
-            public Fragment getItem(int position) {
-                return null;
-            }
-
-            @Override
-            public int getCount() {
-                return 0;
-            }
-        };
+        tab_viewer = new TabViewer(getSupportFragmentManager(), tab_layout.getTabCount());
 
         // Set which adapter the ViewPager is going to use to flip through the pages (tabs)
         view_pager.setAdapter(tab_viewer);

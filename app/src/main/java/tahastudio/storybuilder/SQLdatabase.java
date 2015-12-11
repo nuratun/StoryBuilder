@@ -1,9 +1,10 @@
 package tahastudio.storybuilder;
 
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-public class SQLdatabase extends SQLiteDatabase {
+public class SQLDatabase {
+    private SQLiteDatabase sbDatabase;
+
     // Version number must change if schema changes
     public static final double DATABASE_VERSION = 1.0;
     public static final String DATABASE_NAME = "sql.db";
@@ -14,8 +15,8 @@ public class SQLdatabase extends SQLiteDatabase {
 
     private static final String SQL_CREATE_ENTRIES = "(";
 
-    public SQLdatabase(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    public SQLDatabase() {
+
     }
 
     public void onCreate(SQLiteDatabase db) {
