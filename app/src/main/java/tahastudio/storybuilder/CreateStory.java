@@ -43,6 +43,23 @@ public class CreateStory extends AppCompatActivity {
                 tab_layout.getTabCount());
 
         view_pager.setAdapter(tab_viewer);
+        view_pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab_layout));
+        tab_layout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                view_pager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         // Link to the editText id in fragment_create_story XML
         story_title = (TextView) findViewById(R.id.story_title);
