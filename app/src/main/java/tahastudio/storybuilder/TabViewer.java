@@ -12,6 +12,7 @@ public class TabViewer extends FragmentStatePagerAdapter {
         this.sbTabs = nmTabs;
     }
 
+    // TODO -> Check about releasing tabs
     @Override
     public Fragment getItem(int position) {
 

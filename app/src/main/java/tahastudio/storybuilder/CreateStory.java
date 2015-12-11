@@ -103,5 +103,4 @@ public class CreateStory extends AppCompatActivity {
     public void addStoryElements(View view) {
 
     }
-
 }
