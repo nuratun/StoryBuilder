@@ -13,6 +13,8 @@ import java.io.FileOutputStream;
 
 public class CreateStory extends AppCompatActivity {
     TextView story_title;
+    // Need to instantiate the TabViewer class to set
+    // the tabs for TabLayout
     private TabViewer tab_viewer;
 
     @Override
@@ -32,7 +34,8 @@ public class CreateStory extends AppCompatActivity {
 
         // Find the tablayout in activity_create_story.xml
         TabLayout tab_layout = (TabLayout) findViewById(R.id.tab_layout);
-        // Add the tabs, and set the title for each one
+        // Add the number tabs, and set the title for each one. Still need the
+        // content for each tab, which the TabViewer class will fill
         tab_layout.addTab(tab_layout.newTab().setText("Characters"));
         tab_layout.addTab(tab_layout.newTab().setText("Plotline"));
         tab_layout.addTab(tab_layout.newTab().setText("Places"));
@@ -40,10 +43,10 @@ public class CreateStory extends AppCompatActivity {
 
         // ViewPager allows flipping left and right through pages of data
         final ViewPager view_pager = (ViewPager) findViewById(R.id.pager);
-        // Must use FragmentPagerAdapter to get the list of pages in TabViewer
+        // Use the TabViewer class to get the list of fragments for the ViewPager
         tab_viewer = new TabViewer(getSupportFragmentManager(), tab_layout.getTabCount());
 
-        // Set which adapter the ViewPager is going to use to flip through the pages (tabs)
+        // Set TabViewer  as the adapter, so ViewPager can flip through the fragments
         view_pager.setAdapter(tab_viewer);
         view_pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab_layout));
         tab_layout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
