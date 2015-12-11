@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -31,17 +33,29 @@ public class CreateStory extends AppCompatActivity {
 
         // Find the tablayout in activity_tab_viewer.xml
         TabLayout tab_layout = (TabLayout) findViewById(R.id.tab_layout);
-        // Add the tabs, and set the title
-        tab_layout.addTab(tab_layout.newTab().setText("Add Characters"));
-        tab_layout.addTab(tab_layout.newTab().setText("Add Plotline"));
-        tab_layout.addTab(tab_layout.newTab().setText("Add Places"));
+        // Add the tabs, and set the title for each one
+        tab_layout.addTab(tab_layout.newTab().setText("Characters"));
+        tab_layout.addTab(tab_layout.newTab().setText("Plotline"));
+        tab_layout.addTab(tab_layout.newTab().setText("Places"));
         tab_layout.setTabGravity(tab_layout.GRAVITY_FILL);
 
         // ViewPager allows flipping left and right through pages of data
         final ViewPager view_pager = (ViewPager) findViewById(R.id.pager);
-        final TabViewer tab_viewer = new TabViewer(super.getSupportFragmentManager(),
-                tab_layout.getTabCount());
+        // Must use FragmentPagerAdapter to get the list of pages in TabViewer
+        final FragmentPagerAdapter tab_viewer = new FragmentPagerAdapter
+                (super.getSupportFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+                return null;
+            }
 
+            @Override
+            public int getCount() {
+                return 0;
+            }
+        };
+
+        // Set which adapter the ViewPager is going to use to flip through the pages (tabs)
         view_pager.setAdapter(tab_viewer);
         view_pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab_layout));
         tab_layout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
