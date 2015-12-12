@@ -21,6 +21,12 @@ public class Constants {
     public static final String CRTEATED_TIME = "CREATED_TIME";
 
     // Create the actual database entries
-    public static final String SQL_CREATE_ENTRIES = "CREATE TABLE +";
+    public static final String SQL_CREATE_ENTRIES = "CREATE TABLE "
+            + DB_NAME
+            + "("
+            + DB_ID
+            + "Integer Primary Key autoincrement, "
+            + TEXT_TYPE
+            + " text not null, ";
 
 }
