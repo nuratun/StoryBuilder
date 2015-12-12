@@ -10,7 +10,7 @@ public class SQLDatabase {
     }
 
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(Constants.SQL_CREATE_ENTRIES);
+        db.execSQL(Constants.SQL_CREATE_DB);
     }
 
 }

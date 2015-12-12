@@ -58,7 +58,8 @@ public class Constants {
             + STORY_NAME + " text not null, "
             + STORY_GENRE + " text not null, "
             + STORY_NOTES + " text, "
-            + "PRIMARY KEY(" + DB_ID + ")";
+            + "PRIMARY KEY(" + DB_ID + ")"
+            + " )";
 
     // Create the character table, with foreign keys from the story table
     public static final String SQL_CREATE_CHARACTERS = "CREATE TABLE "
@@ -72,7 +73,8 @@ public class Constants {
             + STORY_CHARACTER_NOTES + " text, "
             + "FOREIGN KEY("
             + STORY_TABLE + "_" + DB_ID + DB_COMMA + STORY_TABLE + "_" + STORY_NAME + ") "
-            + "REFERENCES " + STORY_TABLE + "(" + DB_ID + DB_COMMA + STORY_NAME + ")";
+            + "REFERENCES " + STORY_TABLE + "(" + DB_ID + DB_COMMA + STORY_NAME + ")"
+            + " )";
 
     // Create the plotline table
     public static final String SQL_CREATE_PLOTLINE = "CREATE TABLE "
@@ -82,7 +84,8 @@ public class Constants {
             + STORY_THIRD_PLOTLINE + " text, "
             + "FOREIGN KEY("
             + STORY_TABLE + "_" + DB_ID + DB_COMMA + STORY_TABLE + "_" + STORY_NAME + ") "
-            + "REFERENCES " + STORY_TABLE + "(" + DB_ID + DB_COMMA + STORY_NAME + ")";
+            + "REFERENCES " + STORY_TABLE + "(" + DB_ID + DB_COMMA + STORY_NAME + ")"
+            + " )";
 
     // Create teh places table
     public static final String SQL_CREATE_PLACES = "CREATE TABLE "
@@ -94,5 +97,6 @@ public class Constants {
             + STORY_PLACE_NOTES + " text, "
             + "FOREIGN KEY("
             + STORY_TABLE + "_" + DB_ID + DB_COMMA + STORY_TABLE + "_" + STORY_NAME + ") "
-            + "REFERENCES " + STORY_TABLE + "(" + DB_ID + DB_COMMA + STORY_NAME + ")";
+            + "REFERENCES " + STORY_TABLE + "(" + DB_ID + DB_COMMA + STORY_NAME + ")"
+            + " )";
 }
