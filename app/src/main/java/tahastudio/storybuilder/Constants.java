@@ -6,7 +6,7 @@ package tahastudio.storybuilder;
 public class Constants {
 
     // Version number must change if schema changes
-    public static final double DATABASE_VERSION = 1.0;
+    public static final double DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "sql.db";
 
     // Set up database schema for the story
@@ -43,10 +43,6 @@ public class Constants {
     public static final String STORY_SEC_PLACE = "sec_place";
     public static final String STORY_SEC_PLACE_DESC = "sec_place_desc";
     public static final String STORY_PLACE_NOTES = "place_notes";
-
-    // Time entries
-    public static final String MODIFIED_TIME = "MODIFIED_TIME";
-    public static final String CRTEATED_TIME = "CREATED_TIME";
 
     // Create the database
     public static final String SQL_CREATE_DB = "CREATE DATABASE " + DB_NAME;
