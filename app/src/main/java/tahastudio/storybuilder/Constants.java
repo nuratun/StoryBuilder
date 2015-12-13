@@ -6,7 +6,7 @@ package tahastudio.storybuilder;
 public class Constants {
 
     // Version number must change if schema changes
-    public static final double DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "sql.db";
 
     // Set up database schema for the story

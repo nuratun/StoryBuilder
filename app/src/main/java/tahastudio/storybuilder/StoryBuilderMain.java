@@ -17,7 +17,6 @@ import android.widget.PopupWindow;
  * This is the main activity of StoryBuilder
  **/
 public class StoryBuilderMain extends AppCompatActivity {
-
     // Add in MD toolbar, drawer, and FAB to the view
     android.support.v7.widget.Toolbar toolbar;
     DrawerLayout drawer_layout;
@@ -29,8 +28,12 @@ public class StoryBuilderMain extends AppCompatActivity {
         // Set the activity's view before finding elements
         setContentView(R.layout.fragment_story_builder_main);
 
+        // Instantiate database object and call the write method on it
+        SQLDatabase sbDatabase = new SQLDatabase(this);
+        sbDatabase.getWritableDatabase();
+
         // Call function to check if app has been run before.
-        // Otherwise, call popup intro box
+        // Otherwise, call pop-up intro box
         checkFirstRun();
 
         // Find and attach the toolbar to the view
@@ -70,8 +73,7 @@ public class StoryBuilderMain extends AppCompatActivity {
         if (isFirstRun) {
             // Put dialog here
 
-            // Once run, update the preferences
-            // Only run again when app is updated
+            // Once run, update the preference. Only run again when app is updated
             getSharedPreferences("PREFERENCE", MODE_PRIVATE)
                     .edit()
                     .putBoolean("isFirstRun", false)
@@ -104,8 +106,7 @@ public class StoryBuilderMain extends AppCompatActivity {
         // Set the location of where it'll show.
         popup.showAtLocation(view, Gravity.CENTER, 0, 0);
 
-        // Get the button in the inflated layout. Must find by View first,
-        // which is -> layout
+        // Get the button in the inflated layout. Must find by View first, which is -> layout
         final Button add_the_story = (Button) layout.findViewById(R.id.add_the_story);
 
         // Create a new intent to launch the CreateStory activity
