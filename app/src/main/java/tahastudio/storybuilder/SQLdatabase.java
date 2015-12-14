@@ -1,5 +1,6 @@
 package tahastudio.storybuilder;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -13,7 +14,6 @@ public class SQLDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sbDatabase) {
-        sbDatabase.execSQL(Constants.SQL_CREATE_DB);
         sbDatabase.execSQL(Constants.SQL_CREATE_STORY_TABLE);
         sbDatabase.execSQL(Constants.SQL_CREATE_CHARACTERS);
         sbDatabase.execSQL(Constants.SQL_CREATE_PLACES);
@@ -23,5 +23,12 @@ public class SQLDatabase extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sbDatabase, int old_ver, int new_ver) {
 
+    }
+
+    public void insertRow(ContentValues values, String db) {
+        sbDatabase = this.getWritableDatabase();
+        sbDatabase.insert(db, null, values);
+        sbDatabase.setTransactionSuccessful();
+        sbDatabase.close();
     }
 }

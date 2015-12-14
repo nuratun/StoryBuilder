@@ -1,5 +1,6 @@
 package tahastudio.storybuilder;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.PopupWindow;
 
 /**
@@ -27,10 +29,6 @@ public class StoryBuilderMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         // Set the activity's view before finding elements
         setContentView(R.layout.fragment_story_builder_main);
-
-        // Instantiate database object and call the write method on it
-        SQLDatabase sbDatabase = new SQLDatabase(this);
-        sbDatabase.getWritableDatabase();
 
         // Call function to check if app has been run before.
         // Otherwise, call pop-up intro box
@@ -113,6 +111,25 @@ public class StoryBuilderMain extends AppCompatActivity {
         add_the_story.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Grab the text field inputs from user
+                EditText the_story_title = (EditText) layout.findViewById(R.id.sb_title);
+                EditText the_story_genre = (EditText) layout.findViewById(R.id.sb_genre);
+
+                // Convert to text
+                String sb_story_title = the_story_title.getText().toString();
+                String sb_story_genre = the_story_genre.getText().toString();
+
+                // Format values to put in their respective columns
+                ContentValues values = new ContentValues();
+                values.put(Constants.STORY_NAME, sb_story_title);
+                values.put(Constants.STORY_GENRE, sb_story_genre);
+
+                // Instantiate an instance of the SQLDatabase class
+                SQLDatabase db = new SQLDatabase(StoryBuilderMain.this);
+
+                // Call the insertRow method of SQLDatabase to insert the values
+                db.insertRow(values, Constants.STORY_TABLE);
+
                 // Add an intent for CreateStory
                 Intent callCreateStory = new Intent(StoryBuilderMain.this, CreateStory.class);
                 // Call it
