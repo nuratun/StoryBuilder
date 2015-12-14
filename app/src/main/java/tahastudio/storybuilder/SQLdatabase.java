@@ -28,7 +28,7 @@ public class SQLDatabase extends SQLiteOpenHelper {
     public void insertRow(ContentValues values, String db) {
         sbDatabase = this.getWritableDatabase();
         sbDatabase.insert(db, null, values);
-        sbDatabase.setTransactionSuccessful();
+        //sbDatabase.setTransactionSuccessful();
         sbDatabase.close();
     }
 }

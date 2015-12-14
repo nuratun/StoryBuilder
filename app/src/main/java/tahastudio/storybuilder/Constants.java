@@ -6,7 +6,7 @@ package tahastudio.storybuilder;
 public class Constants {
 
     // Version number must change if database changes
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "sql.db";
 
     // Set up database schema for the story
@@ -46,24 +46,23 @@ public class Constants {
     // Create the story table. All other tables will reference the id and story name
     public static final String SQL_CREATE_STORY_TABLE = "CREATE TABLE "
             + STORY_TABLE + "("
-            + DB_ID + " int(8) primary key autoincrement, "
-            + STORY_NAME + " text not null, "
-            + STORY_GENRE + " text not null, "
-            + STORY_NOTES + " text, "
-            + "PRIMARY KEY(" + DB_ID + ")"
+            + DB_ID + " integer primary key autoincrement, "
+            + STORY_NAME + " text, "
+            + STORY_GENRE + " text, "
+            + STORY_NOTES + " text "
             + " )";
 
     // Create the character table, with foreign keys from the story table
     public static final String SQL_CREATE_CHARACTERS = "CREATE TABLE "
             + STORY_CHARACTER_TABLE + "("
-            + STORY_CHARACTER + " text not null, "
-            + STORY_MAIN + " tinyint(1) not null, "
-            + STORY_GENDER + " text not null, "
-            + STORY_AGE + " int(8), "
-            + STORY_BIRTHPLACE + " text not null, "
+            + STORY_CHARACTER + " text, "
+            + STORY_MAIN + " tinyint(1), "
+            + STORY_GENDER + " text, "
+            + STORY_AGE + " integer, "
+            + STORY_BIRTHPLACE + " text, "
             + STORY_PERSONALITY + " text, "
             + STORY_CHARACTER_NOTES + " text, "
-            + DB_ID + " int, "
+            + DB_ID + " integer, "
             + STORY_NAME + " text, "
             + "FOREIGN KEY(" + DB_ID + DB_COMMA + STORY_NAME + ") "
             + "REFERENCES " + STORY_TABLE + "(" + DB_ID + DB_COMMA + STORY_NAME + ")"
@@ -75,7 +74,7 @@ public class Constants {
             + STORY_MAIN_PLOTLINE + " text, "
             + STORY_SECONDARY_PLOTLINE + " text, "
             + STORY_THIRD_PLOTLINE + " text, "
-            + DB_ID + " int,"
+            + DB_ID + " integer,"
             + STORY_NAME + " text, "
             + "FOREIGN KEY(" + DB_ID + DB_COMMA + STORY_NAME + ") "
             + "REFERENCES " + STORY_TABLE + "(" + DB_ID + DB_COMMA + STORY_NAME + ")"
@@ -89,7 +88,7 @@ public class Constants {
             + STORY_SEC_PLACE + " text, "
             + STORY_SEC_PLACE_DESC + " text, "
             + STORY_PLACE_NOTES + " text, "
-            + DB_ID + " int, "
+            + DB_ID + " integer, "
             + STORY_NAME + " text, "
             + "FOREIGN KEY(" + DB_ID + DB_COMMA + STORY_NAME + ") "
             + "REFERENCES " + STORY_TABLE + "(" + DB_ID + DB_COMMA + STORY_NAME + ")"
