@@ -1,4 +1,4 @@
-<FrameLayout
+<RelativeLayout
     android:id="@+id/add_plotline_tab"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,9 +7,19 @@
     android:orientation="vertical"
     tools:context="tahastudio.storybuilder.AddPlotline">
 
-    <TextView
+    <ListView
+        android:id="@+id/add_plotline_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent" />
 
-</FrameLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/second_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:clickable="true"
+        android:src="@drawable/ic_add_black_48dp" />
+
+</RelativeLayout>
