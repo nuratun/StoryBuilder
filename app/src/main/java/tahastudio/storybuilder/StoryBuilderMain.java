@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupWindow;
@@ -104,7 +103,7 @@ public class StoryBuilderMain extends AppCompatActivity {
         popup.setFocusable(true);
 
         // Set the location of where it'll show.
-        popup.showAtLocation(view, Gravity.CENTER, 0, 0);
+        popup.showAtLocation(view, Gravity.NO_GRAVITY, 0, 0);
 
         // Get the button in the inflated layout. Must find by View first, which is -> layout
         final Button add_the_story = (Button) layout.findViewById(R.id.add_the_story);
@@ -113,18 +112,6 @@ public class StoryBuilderMain extends AppCompatActivity {
         add_the_story.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Create a Validator instance to check that there is input for title & genre
-                AutoCompleteTextView.Validator validator = new AutoCompleteTextView.Validator() {
-                    @Override
-                    public boolean isValid(CharSequence text) {
-                        return false;
-                    }
-
-                    @Override
-                    public CharSequence fixText(CharSequence invalidText) {
-                        return null;
-                    }
-                };
 
                 // Grab the text field inputs from user
                 EditText the_story_title = (EditText) layout.findViewById(R.id.sb_title);
@@ -136,11 +123,8 @@ public class StoryBuilderMain extends AppCompatActivity {
                 String sb_story_genre = the_story_genre.getText().toString();
                 String sb_story_notes = the_story_notes.getText().toString();
 
-                boolean valid_title = validator.isValid(sb_story_title);
-                boolean valid_genre = validator.isValid(sb_story_genre);
-
                 // Make sure both title and genre are non-empty strings
-                if ( !valid_title || !valid_genre ) {
+                if ( sb_story_title.length() < 1 || sb_story_genre.length() < 1 ) {
                     Toast.makeText(getApplicationContext(), "Both the title and " +
                             "genre are required fields", Toast.LENGTH_LONG).show();
                 }
@@ -157,12 +141,14 @@ public class StoryBuilderMain extends AppCompatActivity {
 
                     // Call the insertRow method of SQLDatabase to insert the values
                     db.insertRow(values, Constants.STORY_TABLE);
-                }
 
-                // Add an intent for CreateStory
-                Intent callCreateStory = new Intent(StoryBuilderMain.this, CreateStory.class);
-                // Call it
-                startActivity(callCreateStory);
+                    // Add an intent for CreateStory
+                    Intent callCreateStory = new Intent(StoryBuilderMain.this, CreateStory.class);
+                    // Send the story title to the new activity
+                    callCreateStory.putExtra("title", sb_story_title);
+                    // Call the new activity
+                    startActivity(callCreateStory);
+                }
             }
         });
     }
