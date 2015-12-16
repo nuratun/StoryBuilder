@@ -31,4 +31,10 @@ public class SQLDatabase extends SQLiteOpenHelper {
         //sbDatabase.setTransactionSuccessful();
         sbDatabase.close();
     }
+
+    public void runQuery(String query) {
+        sbDatabase = this.getReadableDatabase();
+        sbDatabase.execSQL(query);
+        sbDatabase.close();
+    }
 }
