@@ -10,8 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 public class CreateStory extends AppCompatActivity {
-    // Need to instantiate the TabViewer class to set
-    // the tabs for TabLayout
+    // Need to instantiate the TabViewer class to set the tabs for TabLayout
     private TabViewer tab_viewer;
 
     @Override

@@ -80,7 +80,7 @@ public class Constants {
             + "REFERENCES " + STORY_TABLE + "(" + DB_ID + DB_COMMA + STORY_NAME + ")"
             + " )";
 
-    // Create teh places table, with foreign keys from the story table
+    // Create the places table, with foreign keys from the story table
     public static final String SQL_CREATE_PLACES = "CREATE TABLE "
             + STORY_PLACES_TABLE + "("
             + STORY_MAIN_PLACE + " text, "
@@ -93,4 +93,10 @@ public class Constants {
             + "FOREIGN KEY(" + DB_ID + DB_COMMA + STORY_NAME + ") "
             + "REFERENCES " + STORY_TABLE + "(" + DB_ID + DB_COMMA + STORY_NAME + ")"
             + " )";
+
+    // Used in AddCharacters class to populate listview
+    public static final String GRAB_CHARACTER_NAME = "SELECT " + STORY_NAME + " FROM "
+            + STORY_CHARACTER_TABLE
+            + ";";
+
 }

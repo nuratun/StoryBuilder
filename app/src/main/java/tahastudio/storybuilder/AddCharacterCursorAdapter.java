@@ -20,7 +20,8 @@ public class AddCharacterCursorAdapter extends CursorAdapter {
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return LayoutInflater.from(context).inflate(R.layout.fragment_add_characters, parent, false);
+        return LayoutInflater.from(context).inflate(R.layout.fragment_add_characters, parent,
+                false);
     }
 
     // Start binding the views to the textviews in the layout. The number of textviews should
@@ -31,6 +32,7 @@ public class AddCharacterCursorAdapter extends CursorAdapter {
         ListView character_list = (ListView) view.findViewById(R.id.add_characters_list);
 
         // Attach the db columns
-        String character_name = cursor.getString(cursor.getColumnIndexOrThrow(Constants.STORY_CHARACTER));
+        String character_name = cursor.getString(cursor.getColumnIndexOrThrow(Constants
+                .STORY_CHARACTER));
     }
 }
