@@ -2,11 +2,9 @@ package tahastudio.storybuilder;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.TextView;
 
 public class CreateStory extends AppCompatActivity {
@@ -23,11 +21,6 @@ public class CreateStory extends AppCompatActivity {
                 findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("StoryBuilder");
-
-        // Get the FAB for the story creation. Clicking on this FAB should bring
-        // a small pop-up list with the ability to add a new character, plotline, or place
-        FloatingActionButton the_second_fab = (FloatingActionButton)
-                findViewById(R.id.second_fab);
 
         // Find the title so we can add in the user's story title
         TextView story_title = (TextView) findViewById(R.id.story_title);
@@ -70,16 +63,5 @@ public class CreateStory extends AppCompatActivity {
 
             }
         });
-
-        the_second_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addStoryElements(v);
-            }
-        });
-    }
-
-    public void addStoryElements(View view) {
-
     }
 }

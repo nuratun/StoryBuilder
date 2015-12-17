@@ -6,11 +6,11 @@ package tahastudio.storybuilder;
 public class Constants {
 
     // Version number must change if database changes
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 7;
     public static final String DATABASE_NAME = "sql.db";
 
     // Set up database schema for the story
-    public static final String DB_ID = "id";
+    public static final String DB_ID = "_id";
     public static final String DB_COMMA = ", ";
 
     // Set up table schema for story
@@ -95,7 +95,10 @@ public class Constants {
             + " )";
 
     // Used in AddCharacters class to populate listview
-    public static final String GRAB_CHARACTER_NAME = "SELECT " + STORY_NAME + " FROM "
+    public static final String GRAB_CHARACTER_DETAILS = "SELECT "
+            + DB_ID + ", "
+            + STORY_CHARACTER + ", "
+            + STORY_AGE + " FROM "
             + STORY_CHARACTER_TABLE
             + ";";
 

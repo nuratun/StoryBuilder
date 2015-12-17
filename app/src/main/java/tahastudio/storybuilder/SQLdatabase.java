@@ -2,6 +2,7 @@ package tahastudio.storybuilder;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -22,19 +23,32 @@ public class SQLDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sbDatabase, int old_ver, int new_ver) {
-
+        // Remove when going into production
+        sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_TABLE);
+        sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_CHARACTER_TABLE);
+        sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_PLACES_TABLE);
+        sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_PLOTLINE_TABLE);
+        onCreate(sbDatabase);
     }
 
     public void insertRow(ContentValues values, String db) {
         sbDatabase = this.getWritableDatabase();
         sbDatabase.insert(db, null, values);
-        //sbDatabase.setTransactionSuccessful();
-        sbDatabase.close();
+    }
+
+    public boolean updateRow(ContentValues values, String db) {
+        // TODO -> Implement updateRow
+        return true;
     }
 
     public void runQuery(String query) {
         sbDatabase = this.getReadableDatabase();
         sbDatabase.execSQL(query);
-        sbDatabase.close();
+    }
+
+    public Cursor getRows(String query) {
+        sbDatabase = this.getReadableDatabase();
+        Cursor result = sbDatabase.rawQuery(query, null);
+        return result;
     }
 }
