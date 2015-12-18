@@ -31,6 +31,8 @@ public class AddPlaces extends Fragment {
         // Find the ListView in the layout
         add_places_listview = (ListView) add_place_layout.findViewById(R.id.add_places_list);
 
+        // TODO -> Create async task for background threads
+
         // Instantiate the db and get the context
         db = new SQLDatabase(getActivity().getApplicationContext());
 
@@ -53,8 +55,7 @@ public class AddPlaces extends Fragment {
                 cursor,
                 columns,
                 widgets,
-                0
-        );
+                0);
 
         add_places_listview.setAdapter(cursorAdapter);
 

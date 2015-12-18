@@ -32,6 +32,8 @@ public class AddCharacters extends Fragment {
         add_characters_listview = (ListView) add_character_layout.findViewById(R.id
                 .add_characters_list);
 
+        // TODO -> Create async task for background threads
+
         // Instantiate the db and get the context
         db = new SQLDatabase(getActivity().getApplicationContext());
 

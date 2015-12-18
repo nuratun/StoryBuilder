@@ -109,4 +109,13 @@ public class Constants {
             + STORY_SEC_PLACE + " FROM "
             + STORY_PLACES_TABLE
             + ";";
+
+    // Used in the AddPlotline class to populate the listview
+    public static final String GRAB_PLOTLINE_DETALIS = "SELECT "
+            + DB_ID + ", "
+            + STORY_MAIN_PLOTLINE + ", "
+            + STORY_SECONDARY_PLOTLINE + ", "
+            + STORY_THIRD_PLOTLINE + " FROM "
+            + STORY_PLOTLINE_TABLE
+            + ";";
 }
