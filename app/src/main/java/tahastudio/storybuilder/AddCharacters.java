@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
-
+import android.widget.Toast;
 
 /**
  * First tab for SB
@@ -109,25 +109,36 @@ public class AddCharacters extends Fragment {
         popup.showAtLocation(view, Gravity.NO_GRAVITY, 0, 0);
 
         // Now find the elements
-        EditText name = (EditText) layout.findViewById(R.id.sb_character_name);
-        EditText age = (EditText) layout.findViewById(R.id.sb_character_age);
-        EditText birthplace = (EditText) layout.findViewById(R.id.sb_character_birthplace);
-        EditText personality = (EditText) layout.findViewById(R.id.sb_character_personality);
-        EditText character_notes = (EditText) layout.findViewById(R.id.sb_character_notes);
+        final EditText name = (EditText) layout.findViewById(R.id.sb_character_name);
+        final EditText age = (EditText) layout.findViewById(R.id.sb_character_age);
+        final EditText birthplace = (EditText) layout.findViewById(R.id.sb_character_birthplace);
+        final EditText personality = (EditText) layout.findViewById(R.id.sb_character_personality);
+        final EditText character_notes = (EditText) layout.findViewById(R.id.sb_character_notes);
         Button add_the_character = (Button) layout.findViewById(R.id.add_the_character);
 
         // Get character's position in story: protagonist, antagonist, or neither
-        String pos = mCharacterCheckbox(layout);
+        final String pos = mCharacterCheckbox(layout);
 
         // Get character's gender or null
-        String gender = characterGender(layout);
+        final String gender = characterGender(layout);
 
-        // Convert element entries to text
-        String sb_name = name.getText().toString();
-        String sb_age = age.getText().toString();
-        String sb_birthplace = birthplace.getText().toString();
-        String sb_personality = personality.getText().toString();
-        String sb_character_notes = character_notes.getText().toString();
+        add_the_character.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Convert element entries to text
+                String sb_name = name.getText().toString();
+                String sb_age = age.getText().toString();
+                String sb_birthplace = birthplace.getText().toString();
+                String sb_personality = personality.getText().toString();
+                String sb_character_notes = character_notes.getText().toString();
+
+                // Make sure the name field is not empty
+                if ( sb_name.length() < 1 ) {
+                    Toast.makeText(getActivity().getApplicationContext(), "The character's name "
+                            + "is a required field", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
     }
 
@@ -143,7 +154,7 @@ public class AddCharacters extends Fragment {
             String type = null;
             switch (view.getId()) {
                 case R.id.main_character_checkbox:
-                    type += "Protagonist";
+                    type = "Protagonist";
                     break;
                 case R.id.antagonist_character_checkbox:
                     type += "Antagonist";
