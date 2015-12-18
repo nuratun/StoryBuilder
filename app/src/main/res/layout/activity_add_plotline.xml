@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/add_plotline"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/main_plot_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Main plotline" />
+
+       <RadioButton
+           android:id="@+id/sec_plot_checkbox"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="Secondary plotline" />
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/sb_plotline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Describe the plot here" />
+
+
+    <EditText
+        android:id="@+id/sb_plotline_notes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Notes" />
+
+    <Button
+        android:id="@+id/add_the_plotline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Add" />
+
+</LinearLayout>

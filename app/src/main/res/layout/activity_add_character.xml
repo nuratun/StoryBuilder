@@ -20,11 +20,43 @@
         android:text="Main Character"
         android:onClick="mCharacterCheckbox" />
 
-    <EditText
-        android:id="@+id/sb_character_gender"
+    <CheckBox
+        android:id="@+id/antagonist_character_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Gender" />
+        android:text="Main Antagonist" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gender" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <RadioButton
+            android:id="@+id/male_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Male"
+            android:onClick="characterGender" />
+
+        <RadioButton
+            android:id="@+id/female_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female"
+            android:onClick="characterGender" />
+
+        <RadioButton
+            android:id="@+id/other_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Other"
+            android:onClick="characterGender" />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/sb_character_age"
