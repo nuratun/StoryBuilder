@@ -94,7 +94,7 @@ public class Constants {
             + "REFERENCES " + STORY_TABLE + "(" + DB_ID + DB_COMMA + STORY_NAME + ")"
             + " )";
 
-    // Used in AddCharacters class to populate listview
+    // Used in AddCharacters class to populate the listview
     public static final String GRAB_CHARACTER_DETAILS = "SELECT "
             + DB_ID + ", "
             + STORY_CHARACTER + ", "
@@ -102,4 +102,11 @@ public class Constants {
             + STORY_CHARACTER_TABLE
             + ";";
 
+    // Used in the AddPlaces class to populate the listview
+    public static final String GRAB_PLACES_DETAILS = "SELECT "
+            + DB_ID + ", "
+            + STORY_MAIN_PLACE + ", "
+            + STORY_SEC_PLACE + " FROM "
+            + STORY_PLACES_TABLE
+            + ";";
 }

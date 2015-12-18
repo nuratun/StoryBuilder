@@ -15,7 +15,7 @@ import android.widget.ListView;
  * First tab for SB
  */
 public class AddCharacters extends Fragment {
-    // Get an instance of the SQLDatabase
+    // Get an instance of the SQLDatabase and the listview to populate
     private SQLDatabase db;
     private ListView add_characters_listview;
 
@@ -26,7 +26,7 @@ public class AddCharacters extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment and return it
+        // Inflate the layout for this fragment
         View add_character_layout = inflater.inflate(R.layout.fragment_add_characters, container,
                 false);
         add_characters_listview = (ListView) add_character_layout.findViewById(R.id
@@ -71,6 +71,7 @@ public class AddCharacters extends Fragment {
             }
         });
 
+        // Return the layout
         return add_character_layout;
     }
 
