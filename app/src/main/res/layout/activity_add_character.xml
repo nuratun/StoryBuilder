@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/add_character"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/sb_character_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Name" />
+
+    <CheckBox
+        android:id="@+id/main_character_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Main Character"
+        android:onClick="mCharacterCheckbox" />
+
+    <EditText
+        android:id="@+id/sb_character_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Gender" />
+
+    <EditText
+        android:id="@+id/sb_character_age"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Age" />
+
+    <EditText
+        android:id="@+id/sb_character_birthplace"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Place of birth" />
+
+    <EditText
+        android:id="@+id/sb_character_personality"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Personality" />
+
+    <EditText
+        android:id="@+id/sb_character_notes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Notes" />
+
+    <Button
+        android:id="@+id/add_the_character"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Add" />
+
+</LinearLayout>
