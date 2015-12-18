@@ -10,9 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.RadioButton;
 
 
 /**
@@ -107,10 +110,69 @@ public class AddCharacters extends Fragment {
 
         // Now find the elements
         EditText name = (EditText) layout.findViewById(R.id.sb_character_name);
+        EditText age = (EditText) layout.findViewById(R.id.sb_character_age);
+        EditText birthplace = (EditText) layout.findViewById(R.id.sb_character_birthplace);
+        EditText personality = (EditText) layout.findViewById(R.id.sb_character_personality);
+        EditText character_notes = (EditText) layout.findViewById(R.id.sb_character_notes);
+        Button add_the_character = (Button) layout.findViewById(R.id.add_the_character);
+
+        // Get character's position in story: protagonist, antagonist, or neither
+        String pos = mCharacterCheckbox(layout);
+
+        // Get character's gender or null
+        String gender = characterGender(layout);
+
+        // Convert element entries to text
+        String sb_name = name.getText().toString();
+        String sb_age = age.getText().toString();
+        String sb_birthplace = birthplace.getText().toString();
+        String sb_personality = personality.getText().toString();
+        String sb_character_notes = character_notes.getText().toString();
 
     }
 
-    public void mCharacterCheckbox(View view) {
+    // May be a variation -> main character & the antagonist, just the main character
+    // or just the antagonist.
+    public String mCharacterCheckbox(View view) {
+        // Is a checkbox checked?
+        boolean checked = ((CheckBox) view).isChecked();
 
+        // Check which one(s) were checked
+        if (checked) {
+            // If checked, initialize a string to hold the value
+            String type = null;
+            switch (view.getId()) {
+                case R.id.main_character_checkbox:
+                    type += "Protagonist";
+                    break;
+                case R.id.antagonist_character_checkbox:
+                    type += "Antagonist";
+                    break;
+            }
+            return type;
+        }
+        return null;
+    }
+
+    public String characterGender(View view) {
+        // Is a radio button selected?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Return which radio button was selected
+        switch (view.getId()) {
+            case R.id.male_gender:
+                if (checked)
+                    return "male";
+                break;
+            case R.id.female_gender:
+                if (checked)
+                    return "female";
+                break;
+            case R.id.other_gender:
+                if (checked)
+                    return "other";
+                break;
+        }
+        return null;
     }
 }

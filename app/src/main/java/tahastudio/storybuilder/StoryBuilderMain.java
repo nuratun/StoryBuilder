@@ -113,6 +113,8 @@ public class StoryBuilderMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                // TODO -> Add a cancel button
+
                 // Grab the text field inputs from user
                 EditText the_story_title = (EditText) layout.findViewById(R.id.sb_title);
                 EditText the_story_genre = (EditText) layout.findViewById(R.id.sb_genre);
