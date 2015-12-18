@@ -94,8 +94,8 @@ public class StoryBuilderMain extends AppCompatActivity {
 
         // Set the width/height of the content in the pop-up box
         // This will take up all of the screen
-        popup.setHeight(WindowManager.LayoutParams.MATCH_PARENT);
-        popup.setWidth(WindowManager.LayoutParams.MATCH_PARENT);
+        popup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        popup.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
 
         // Can the user touch outside the pop-up box to exit it? -> true
         // Is it focused when it pops up? -> true

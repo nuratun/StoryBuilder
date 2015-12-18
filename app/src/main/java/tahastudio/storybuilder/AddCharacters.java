@@ -5,10 +5,14 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 
 
 /**
@@ -69,7 +73,7 @@ public class AddCharacters extends Fragment {
         the_character_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addStoryElements(v);
+                addCharacterElements(v);
             }
         });
 
@@ -77,7 +81,36 @@ public class AddCharacters extends Fragment {
         return add_character_layout;
     }
 
-    public void addStoryElements(View view) {
+    // Create pop-up box to start adding characters to the story
+    public void addCharacterElements(View view) {
+        // Set activity of pop-up box
+        PopupWindow popup = new PopupWindow(getActivity().getApplicationContext());
+
+        // Inflate the layout to use in this pop-up window
+        final View layout = getActivity().getLayoutInflater().inflate(R.layout
+                .activity_add_character,
+                null);
+
+        // Set view in the pop-up
+        popup.setContentView(layout);
+
+        // Set height and width for pop-up
+        popup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        popup.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
+
+        // Set touch parameter and focusable -> both true
+        popup.setOutsideTouchable(true);
+        popup.setFocusable(true);
+
+        // Set location
+        popup.showAtLocation(view, Gravity.NO_GRAVITY, 0, 0);
+
+        // Now find the elements
+        EditText name = (EditText) layout.findViewById(R.id.sb_character_name);
+
+    }
+
+    public void mCharacterCheckbox(View view) {
 
     }
 }
