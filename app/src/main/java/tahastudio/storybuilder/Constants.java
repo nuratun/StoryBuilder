@@ -6,7 +6,7 @@ package tahastudio.storybuilder;
 public class Constants {
 
     // Version number must change if database changes
-    public static final int DATABASE_VERSION = 7;
+    public static final int DATABASE_VERSION = 8;
     public static final String DATABASE_NAME = "sql.db";
 
     // Set up database schema for the story
@@ -37,10 +37,9 @@ public class Constants {
 
     // Set up table schema for places
     public static final String STORY_PLACES_TABLE = "sb_places";
-    public static final String STORY_MAIN_PLACE = "main_place";
-    public static final String STORY_MAIN_PLACE_DESC = "main_place_description";
-    public static final String STORY_SEC_PLACE = "sec_place";
-    public static final String STORY_SEC_PLACE_DESC = "sec_place_desc";
+    public static final String STORY_PLACE_NAME = "place_name";
+    public static final String STORY_PLACE_LOCATION = "place_location";
+    public static final String STORY_PLACE_DESC = "place_description";
     public static final String STORY_PLACE_NOTES = "place_notes";
 
     // Create the story table. All other tables will reference the id and story name
@@ -83,10 +82,9 @@ public class Constants {
     // Create the places table, with foreign keys from the story table
     public static final String SQL_CREATE_PLACES = "CREATE TABLE "
             + STORY_PLACES_TABLE + "("
-            + STORY_MAIN_PLACE + " text, "
-            + STORY_MAIN_PLACE_DESC + " text, "
-            + STORY_SEC_PLACE + " text, "
-            + STORY_SEC_PLACE_DESC + " text, "
+            + STORY_PLACE_NAME + " text, "
+            + STORY_PLACE_LOCATION + " text, "
+            + STORY_PLACE_DESC + " text, "
             + STORY_PLACE_NOTES + " text, "
             + DB_ID + " integer, "
             + STORY_NAME + " text, "
@@ -105,8 +103,9 @@ public class Constants {
     // Used in the AddPlaces class to populate the listview
     public static final String GRAB_PLACES_DETAILS = "SELECT "
             + DB_ID + ", "
-            + STORY_MAIN_PLACE + ", "
-            + STORY_SEC_PLACE + " FROM "
+            + STORY_PLACE_NAME + ", "
+            + STORY_PLACE_LOCATION + ", "
+            + STORY_PLACE_DESC + " FROM "
             + STORY_PLACES_TABLE
             + ";";
 

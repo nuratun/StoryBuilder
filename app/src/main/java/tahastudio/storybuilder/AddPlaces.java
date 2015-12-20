@@ -49,8 +49,8 @@ public class AddPlaces extends Fragment {
 
         // Get the column names
         String[] columns = new String[] {
-                Constants.STORY_MAIN_PLACE,
-                Constants.STORY_SEC_PLACE
+                Constants.STORY_PLACE_NAME,
+                Constants.STORY_PLACE_LOCATION
         };
 
         int[] widgets = new int[] {
@@ -131,6 +131,19 @@ public class AddPlaces extends Fragment {
                 else {
                     // Format values into their respective db fields
                     ContentValues values = new ContentValues();
+                    values.put(Constants.STORY_PLACE_NAME, sb_name);
+                    values.put(Constants.STORY_PLACE_LOCATION, sb_location);
+                    values.put(Constants.STORY_PLACE_DESC, sb_description);
+                    values.put(Constants.STORY_PLACE_NOTES, sb_notes);
+
+                    // Initialize db
+                    db = new SQLDatabase(getActivity().getApplicationContext());
+
+                    // Insert rows
+                    db.insertRow(values, Constants.STORY_PLACES_TABLE);
+
+                    // Dismiss the pop-up window
+                    popup.dismiss();
                 }
             }
         });
