@@ -1,13 +1,22 @@
 package tahastudio.storybuilder;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RadioButton;
+import android.widget.Toast;
 
 
 /**
@@ -62,9 +71,90 @@ public class AddPlotline extends Fragment {
 
         add_plotline_listview.setAdapter(cursorAdapter);
 
-        // TODO -> Setup the FAB
+        // Find the FAB to create the pop-up window
+        FloatingActionButton the_plotline_fab = (FloatingActionButton)
+                add_plotline_layout.findViewById(R.id.add_plotline_fab);
+        the_plotline_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addPlotlineElements(v);
+            }
+        });
 
         // Return the layout
         return add_plotline_layout;
+    }
+
+    // Create the pop-up window from FAB click to add a plotline
+    public void addPlotlineElements(View view) {
+        PopupWindow popup = new PopupWindow(getActivity().getApplicationContext());
+
+        // Get the layout
+        final View layout = getActivity().getLayoutInflater().inflate(
+                R.layout.activity_add_plotline,
+                null);
+
+        // Set view in pop-up window
+        popup.setContentView(layout);
+
+        // Set height and width of pop-up window
+        popup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+        popup.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
+
+        // Set focusable and outside touchable -> true
+        popup.setFocusable(true);
+        popup.setOutsideTouchable(true);
+
+        // Set location
+        popup.showAtLocation(view, Gravity.NO_GRAVITY, 0, 0);
+
+        // Check if this is the main plot -> true/false
+        boolean main_plot_checked = mPlotline(layout);
+
+        // Now get the elements
+        final String main_plot = String.valueOf(main_plot_checked);
+        final EditText plotline = (EditText) layout.findViewById(R.id.sb_plotline);
+        final EditText notes = (EditText) layout.findViewById(R.id.sb_plotline_notes);
+        Button add_the_plot = (Button) layout.findViewById(R.id.add_the_plotline);
+
+        add_the_plot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Convert to regular strings
+                String sb_plot = plotline.getText().toString();
+                String sb_plot_notes = notes.getText().toString();
+
+                // Ensure the plotline field is a non-empty value
+                if ( sb_plot.length() < 1 ) {
+                    Toast.makeText(getActivity().getApplicationContext(), "You must enter at least"
+                        + " a summary of the plot", Toast.LENGTH_LONG).show();
+                }
+
+                else {
+                    // TODO -> Check if main or secondary plot
+                    // Format the strings to their respective db fields
+                    ContentValues values = new ContentValues();
+                }
+            }
+        });
+
+    }
+
+    public boolean mPlotline(View view) {
+        // Is radio button selected?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // If one of them is selected...
+        if ( checked ) {
+            switch (view.getId()) {
+                case R.id.main_plot_checkbox:
+                    return true;
+                case R.id.sec_plot_checkbox:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+        return false;
     }
 }

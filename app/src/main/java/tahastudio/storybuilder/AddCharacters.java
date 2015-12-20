@@ -171,7 +171,7 @@ public class AddCharacters extends Fragment {
         boolean checked = ((CheckBox) view).isChecked();
 
         // Check which one(s) were checked
-        if (checked) {
+        if ( checked ) {
             // If checked, initialize a string to hold the value
             String type = null;
             switch (view.getId()) {

@@ -103,7 +103,7 @@ public class AddPlaces extends Fragment {
         popup.setOutsideTouchable(true);
 
         // Set the location
-        popup.showAtLocation(layout, Gravity.NO_GRAVITY, 0, 0);
+        popup.showAtLocation(view, Gravity.NO_GRAVITY, 0, 0);
 
         // Now start finding the elements
         final EditText place_name = (EditText) layout.findViewById(R.id.sb_place_name);
