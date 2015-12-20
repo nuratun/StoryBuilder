@@ -52,8 +52,7 @@ public class AddPlotline extends Fragment {
         // Get the columns
         String[] columns = new String[] {
                 Constants.STORY_MAIN_PLOTLINE,
-                Constants.STORY_SECONDARY_PLOTLINE,
-                Constants.STORY_PLOTLINE_NOTES
+                Constants.STORY_SECONDARY_PLOTLINE
         };
 
         // Get the layout
@@ -131,7 +130,6 @@ public class AddPlotline extends Fragment {
                 }
 
                 else {
-                    // TODO -> Check if main or secondary plot
                     // Format the strings to their respective db fields
                     ContentValues values = new ContentValues();
 
