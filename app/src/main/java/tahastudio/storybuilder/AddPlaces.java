@@ -1,13 +1,21 @@
 package tahastudio.storybuilder;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.Toast;
 
 
 /**
@@ -59,9 +67,72 @@ public class AddPlaces extends Fragment {
 
         add_places_listview.setAdapter(cursorAdapter);
 
-        // TODO -> Get the FAB
+        // Find and initialize the FAB on button click
+        FloatingActionButton add_a_place = (FloatingActionButton) add_place_layout
+                .findViewById(R.id.add_place_fab);
+        add_a_place.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addPlaceElements(v);
+            }
+        });
 
         // Return the layout
         return add_place_layout;
+    }
+
+    // Create the pop-up window to start creating a place/location in the story
+    public void addPlaceElements(View view) {
+        // Set activity of pop-up window
+        final PopupWindow popup = new PopupWindow(getActivity().getApplicationContext());
+
+        // Inflate the layout to use in this pop-up window
+        final View layout = getActivity().getLayoutInflater().inflate(R.layout
+                .activity_add_place,
+                null);
+
+        // Set the view inside the pop-up
+        popup.setContentView(layout);
+
+        // Set height/width of the pop-up
+        popup.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
+        popup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+
+        // Set touch parameter and focusable -> both true
+        popup.setFocusable(true);
+        popup.setOutsideTouchable(true);
+
+        // Set the location
+        popup.showAtLocation(layout, Gravity.NO_GRAVITY, 0, 0);
+
+        // Now start finding the elements
+        final EditText place_name = (EditText) layout.findViewById(R.id.sb_place_name);
+        final EditText place_location = (EditText) layout.findViewById(R.id.sb_place_location);
+        final EditText place_description = (EditText) layout.findViewById(R.id.sb_place_desc);
+        final EditText place_notes = (EditText) layout.findViewById(R.id.sb_place_notes);
+        final Button add_place = (Button) layout.findViewById(R.id.add_the_place);
+        // TODO -> Add a cancel button
+
+        add_place.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Convert user input to text
+                String sb_name = place_name.getText().toString();
+                String sb_location = place_location.getText().toString();
+                String sb_description = place_description.getText().toString();
+                String sb_notes = place_notes.getText().toString();
+
+                // Make sure name field is a non-empty value
+                if ( sb_name.length() < 1 ) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Name is a required "
+                            + "field", Toast.LENGTH_LONG).show();
+                }
+
+                else {
+                    // Format values into their respective db fields
+                    ContentValues values = new ContentValues();
+                }
+            }
+        });
     }
 }

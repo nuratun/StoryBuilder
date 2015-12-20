@@ -1,5 +1,6 @@
 package tahastudio.storybuilder;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -87,7 +88,7 @@ public class AddCharacters extends Fragment {
     // Create pop-up box to start adding characters to the story
     public void addCharacterElements(View view) {
         // Set activity of pop-up box
-        PopupWindow popup = new PopupWindow(getActivity().getApplicationContext());
+        final PopupWindow popup = new PopupWindow(getActivity().getApplicationContext());
 
         // Inflate the layout to use in this pop-up window
         final View layout = getActivity().getLayoutInflater().inflate(R.layout
@@ -132,14 +133,35 @@ public class AddCharacters extends Fragment {
                 String sb_personality = personality.getText().toString();
                 String sb_character_notes = character_notes.getText().toString();
 
+                // TODO -> Add a cancel button
                 // Make sure the name field is not empty
                 if ( sb_name.length() < 1 ) {
                     Toast.makeText(getActivity().getApplicationContext(), "The character's name "
                             + "is a required field", Toast.LENGTH_LONG).show();
                 }
+
+                else {
+                    // Format values in their db fields
+                    ContentValues values = new ContentValues();
+                    values.put(Constants.STORY_CHARACTER, sb_name);
+                    values.put(Constants.STORY_AGE, sb_age);
+                    values.put(Constants.STORY_BIRTHPLACE, sb_birthplace);
+                    values.put(Constants.STORY_PERSONALITY, sb_personality);
+                    values.put(Constants.STORY_MAIN, pos);
+                    values.put(Constants.STORY_GENDER, gender);
+                    values.put(Constants.STORY_CHARACTER_NOTES, sb_character_notes);
+
+                    // Initialize the db
+                    db = new SQLDatabase(getActivity().getApplicationContext());
+
+                    // Insert the rows
+                    db.insertRow(values, Constants.STORY_CHARACTER_TABLE);
+
+                    // Dismiss the pop-up window
+                    popup.dismiss();
+                }
             }
         });
-
     }
 
     // May be a variation -> main character & the antagonist, just the main character

@@ -84,7 +84,7 @@ public class StoryBuilderMain extends AppCompatActivity {
 
         // Set the popup window's activity, which will be this activity,
         // since we're just overlaying a window over the main activity
-        PopupWindow popup = new PopupWindow(StoryBuilderMain.this);
+        final PopupWindow popup = new PopupWindow(StoryBuilderMain.this);
 
         // Inflate the view we plan on using for the pop-up box
         final View layout = getLayoutInflater().inflate(R.layout.activity_add_story, null);
@@ -150,6 +150,9 @@ public class StoryBuilderMain extends AppCompatActivity {
                     callCreateStory.putExtra("title", sb_story_title);
                     // Call the new activity
                     startActivity(callCreateStory);
+
+                    // Dismiss the pop-up window
+                    popup.dismiss();
                 }
             }
         });
