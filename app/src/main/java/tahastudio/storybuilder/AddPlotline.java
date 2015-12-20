@@ -53,7 +53,7 @@ public class AddPlotline extends Fragment {
         String[] columns = new String[] {
                 Constants.STORY_MAIN_PLOTLINE,
                 Constants.STORY_SECONDARY_PLOTLINE,
-                Constants.STORY_THIRD_PLOTLINE
+                Constants.STORY_PLOTLINE_NOTES
         };
 
         // Get the layout
@@ -134,10 +134,22 @@ public class AddPlotline extends Fragment {
                     // TODO -> Check if main or secondary plot
                     // Format the strings to their respective db fields
                     ContentValues values = new ContentValues();
+
+                    // If this is the main plot
+                    if ( main_plot.equals("true") ) {
+                        // Put in the main plotline field in the db
+                        values.put(Constants.STORY_MAIN_PLOTLINE, sb_plot);
+                    }
+                    else {
+                        // Otherwise it's a secondary plotline
+                        values.put(Constants.STORY_SECONDARY_PLOTLINE, sb_plot);
+                    }
+                    values.put(Constants.STORY_PLOTLINE_NOTES, sb_plot_notes);
                 }
             }
         });
 
+        popup.dismiss();
     }
 
     public boolean mPlotline(View view) {

@@ -33,7 +33,7 @@ public class Constants {
     public static final String STORY_PLOTLINE_TABLE = "sb_plotline";
     public static final String STORY_MAIN_PLOTLINE = "main_plotline";
     public static final String STORY_SECONDARY_PLOTLINE = "sec_plotline";
-    public static final String STORY_THIRD_PLOTLINE = "third_plotline";
+    public static final String STORY_PLOTLINE_NOTES = "plotline_notes";
 
     // Set up table schema for places
     public static final String STORY_PLACES_TABLE = "sb_places";
@@ -72,7 +72,7 @@ public class Constants {
             + STORY_PLOTLINE_TABLE + "("
             + STORY_MAIN_PLOTLINE + " text, "
             + STORY_SECONDARY_PLOTLINE + " text, "
-            + STORY_THIRD_PLOTLINE + " text, "
+            + STORY_PLOTLINE_NOTES + " text, "
             + DB_ID + " integer,"
             + STORY_NAME + " text, "
             + "FOREIGN KEY(" + DB_ID + DB_COMMA + STORY_NAME + ") "
@@ -113,8 +113,7 @@ public class Constants {
     public static final String GRAB_PLOTLINE_DETALIS = "SELECT "
             + DB_ID + ", "
             + STORY_MAIN_PLOTLINE + ", "
-            + STORY_SECONDARY_PLOTLINE + ", "
-            + STORY_THIRD_PLOTLINE + " FROM "
+            + STORY_SECONDARY_PLOTLINE + " FROM "
             + STORY_PLOTLINE_TABLE
             + ";";
 }
