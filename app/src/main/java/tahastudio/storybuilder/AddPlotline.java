@@ -1,6 +1,6 @@
 package tahastudio.storybuilder;
 
-import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,7 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 
@@ -26,6 +25,7 @@ public class AddPlotline extends Fragment {
     // Get an instance of the SQLDatabase and the listview to populate
     private SQLDatabase db;
     private ListView add_plotline_listview;
+    private SBValues send = new SBValues();
 
     public AddPlotline() {
 
@@ -86,7 +86,11 @@ public class AddPlotline extends Fragment {
 
     // Create the pop-up window from FAB click to add a plotline
     public void addPlotlineElements(View view) {
-        PopupWindow popup = new PopupWindow(getActivity().getApplicationContext());
+        // Get an instance of the context
+        final Context context = getActivity().getApplicationContext();
+
+        // Create pop-up window with above context
+        PopupWindow popup = new PopupWindow(context);
 
         // Get the layout
         final View layout = getActivity().getLayoutInflater().inflate(
@@ -108,7 +112,7 @@ public class AddPlotline extends Fragment {
         popup.showAtLocation(view, Gravity.NO_GRAVITY, 0, 0);
 
         // Check if this is the main plot -> true/false
-        boolean main_plot_checked = mPlotline(layout);
+        boolean main_plot_checked = CreateStory.mPlotline(view);
 
         // Now get the elements
         final String main_plot = String.valueOf(main_plot_checked);
@@ -119,52 +123,32 @@ public class AddPlotline extends Fragment {
         add_the_plot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Convert to regular strings
-                String sb_plot = plotline.getText().toString();
-                String sb_plot_notes = notes.getText().toString();
-
                 // Ensure the plotline field is a non-empty value
-                if ( sb_plot.length() < 1 ) {
-                    Toast.makeText(getActivity().getApplicationContext(), "You must enter at least"
+                if ( plotline.length() < 1 ) {
+                    Toast.makeText(context, "You must enter at least"
                         + " a summary of the plot", Toast.LENGTH_LONG).show();
                 }
 
                 else {
-                    // Format the strings to their respective db fields
-                    ContentValues values = new ContentValues();
+                    // Send to SBValues
 
                     // If this is the main plot
                     if ( main_plot.equals("true") ) {
                         // Put in the main plotline field in the db
-                        values.put(Constants.STORY_MAIN_PLOTLINE, sb_plot);
+                        send.processValues(context, Constants.STORY_MAIN_PLOTLINE, plotline,
+                                Constants.STORY_PLOTLINE_TABLE);
                     }
                     else {
                         // Otherwise it's a secondary plotline
-                        values.put(Constants.STORY_SECONDARY_PLOTLINE, sb_plot);
+                        send.processValues(context, Constants.STORY_SECONDARY_PLOTLINE, plotline,
+                                Constants.STORY_PLOTLINE_TABLE);
                     }
-                    values.put(Constants.STORY_PLOTLINE_NOTES, sb_plot_notes);
+                    send.processValues(context, Constants.STORY_PLOTLINE_NOTES, notes,
+                            Constants.STORY_PLOTLINE_TABLE);
                 }
             }
         });
 
         popup.dismiss();
-    }
-
-    public boolean mPlotline(View view) {
-        // Is radio button selected?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // If one of them is selected...
-        if ( checked ) {
-            switch (view.getId()) {
-                case R.id.main_plot_checkbox:
-                    return true;
-                case R.id.sec_plot_checkbox:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-        return false;
     }
 }

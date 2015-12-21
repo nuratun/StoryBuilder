@@ -36,14 +36,59 @@ public class SQLDatabase extends SQLiteOpenHelper {
         sbDatabase.insert(db, null, values);
     }
 
+    public void insertElements(ContentValues values, String table, int num) {
+        sbDatabase = this.getWritableDatabase();
+        sbDatabase.execSQL("INSERT INTO "
+                + table + " VALUES "
+                + values + " WHERE "
+                + Constants.DB_ID + " = "
+                + num);
+    }
+
+    // Insert ID into the characters, plotline, and places table
+    public void insertTheID(int id) {
+        sbDatabase = this.getWritableDatabase();
+        sbDatabase.execSQL("INSERT INTO "
+                + Constants.STORY_CHARACTER_TABLE + " ("
+                + Constants.DB_ID + ") VALUES ("
+                + id + ");");
+
+        sbDatabase.execSQL("INSERT INTO "
+                + Constants.STORY_PLOTLINE_TABLE + " ("
+                + Constants.DB_ID + ") VALUES ("
+                + id + ");");
+
+        sbDatabase.execSQL("INSERT INTO "
+                + Constants.STORY_PLACES_TABLE + " ("
+                + Constants.DB_ID + ") VALUES ("
+                + id + ");");
+    }
+
     public boolean updateRow(ContentValues values, String db) {
-        // TODO -> Implement updateRow
+
         return true;
     }
 
     public void runQuery(String query) {
         sbDatabase = this.getReadableDatabase();
         sbDatabase.execSQL(query);
+    }
+
+    public int getStoryID(String title) {
+        sbDatabase = this.getReadableDatabase();
+        Cursor cursor = sbDatabase.rawQuery("SELECT "
+                + Constants.DB_ID + " FROM "
+                + Constants.STORY_TABLE + " WHERE "
+                + Constants.STORY_NAME + " = '"
+                + title + "'",
+                null);
+
+        // Move to first index, otherwise OutOfBoundsException will occur
+        if ( !cursor.moveToFirst() ) {
+            cursor.moveToFirst();
+        }
+
+        return cursor.getInt( cursor.getColumnIndexOrThrow(Constants.DB_ID) );
     }
 
     public Cursor getRows(String query) {

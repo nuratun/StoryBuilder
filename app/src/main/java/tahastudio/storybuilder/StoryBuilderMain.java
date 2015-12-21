@@ -146,14 +146,14 @@ public class StoryBuilderMain extends AppCompatActivity {
 
                     // Add an intent for CreateStory
                     Intent callCreateStory = new Intent(StoryBuilderMain.this, CreateStory.class);
-                    // Send the story title to the new activity
+                    // Send the story title and DB_ID to the new activity
                     callCreateStory.putExtra("title", sb_story_title);
+                    callCreateStory.putExtra("id", db.getStoryID(sb_story_title));
                     // Call the new activity
                     startActivity(callCreateStory);
 
-                    // Dismiss the pop-up window
-                    popup.dismiss();
                 }
+                popup.dismiss();
             }
         });
     }

@@ -1,6 +1,6 @@
 package tahastudio.storybuilder;
 
-import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -25,6 +25,7 @@ public class AddPlaces extends Fragment {
     // Get an instance of the SQLDatabase and the listview to populate
     private SQLDatabase db;
     private ListView add_places_listview;
+    private SBValues send = new SBValues();
 
     public AddPlaces() {
 
@@ -83,8 +84,11 @@ public class AddPlaces extends Fragment {
 
     // Create the pop-up window to start creating a place/location in the story
     public void addPlaceElements(View view) {
+        // Get an instance of the context
+        final Context context = getActivity().getApplicationContext();
+
         // Set activity of pop-up window
-        final PopupWindow popup = new PopupWindow(getActivity().getApplicationContext());
+        final PopupWindow popup = new PopupWindow(context);
 
         // Inflate the layout to use in this pop-up window
         final View layout = getActivity().getLayoutInflater().inflate(R.layout
@@ -116,33 +120,23 @@ public class AddPlaces extends Fragment {
         add_place.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Convert user input to text
-                String sb_name = place_name.getText().toString();
-                String sb_location = place_location.getText().toString();
-                String sb_description = place_description.getText().toString();
-                String sb_notes = place_notes.getText().toString();
-
                 // Make sure name field is a non-empty value
-                if ( sb_name.length() < 1 ) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Name is a required "
+                if ( place_name.length() < 1 ) {
+                    Toast.makeText(context, "Name is a required "
                             + "field", Toast.LENGTH_LONG).show();
                 }
 
                 else {
-                    // Format values into their respective db fields
-                    ContentValues values = new ContentValues();
-                    values.put(Constants.STORY_PLACE_NAME, sb_name);
-                    values.put(Constants.STORY_PLACE_LOCATION, sb_location);
-                    values.put(Constants.STORY_PLACE_DESC, sb_description);
-                    values.put(Constants.STORY_PLACE_NOTES, sb_notes);
+                    // Send to SBValues
+                    send.processValues(context, Constants.STORY_PLACE_NAME, place_name,
+                            Constants.STORY_PLACES_TABLE);
+                    send.processValues(context, Constants.STORY_PLACE_LOCATION, place_location,
+                            Constants.STORY_PLACES_TABLE);
+                    send.processValues(context, Constants.STORY_PLACE_DESC, place_description,
+                            Constants.STORY_PLACES_TABLE);
+                    send.processValues(context, Constants.STORY_PLACE_NOTES, place_notes,
+                            Constants.STORY_PLACES_TABLE);
 
-                    // Initialize db
-                    db = new SQLDatabase(getActivity().getApplicationContext());
-
-                    // Insert rows
-                    db.insertRow(values, Constants.STORY_PLACES_TABLE);
-
-                    // Dismiss the pop-up window
                     popup.dismiss();
                 }
             }

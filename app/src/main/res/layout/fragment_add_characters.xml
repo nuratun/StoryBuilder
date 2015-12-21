@@ -19,7 +19,6 @@
         android:layout_margin="20dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:clickable="true"
-        android:src="@drawable/ic_add_black_48dp" />
+        android:clickable="true" />
 
 </RelativeLayout>

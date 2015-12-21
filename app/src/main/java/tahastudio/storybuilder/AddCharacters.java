@@ -1,6 +1,6 @@
 package tahastudio.storybuilder;
 
-import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -12,20 +12,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RadioButton;
 import android.widget.Toast;
 
 /**
  * First tab for SB
  */
 public class AddCharacters extends Fragment {
-    // Get an instance of the SQLDatabase and the listview to populate
-    private SQLDatabase db;
     private ListView add_characters_listview;
+    private SQLDatabase db;
+    private SBValues send = new SBValues();
 
     public AddCharacters() {
 
@@ -35,10 +33,11 @@ public class AddCharacters extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View add_character_layout = inflater.inflate(R.layout.fragment_add_characters, container,
+        View add_character_layout = inflater.inflate(R.layout.fragment_add_characters,
+                container,
                 false);
-        add_characters_listview = (ListView) add_character_layout.findViewById(R.id
-                .add_characters_list);
+        add_characters_listview = (ListView) add_character_layout.findViewById(
+                R.id.add_characters_list);
 
         // TODO -> Create async task for background threads
 
@@ -86,13 +85,16 @@ public class AddCharacters extends Fragment {
     }
 
     // Create pop-up box to start adding characters to the story
+    // TODO -> Factor out pop-up windows into separate class
     public void addCharacterElements(View view) {
+        // Get context
+        final Context context = getActivity().getApplicationContext();
         // Set activity of pop-up box
-        final PopupWindow popup = new PopupWindow(getActivity().getApplicationContext());
+        final PopupWindow popup = new PopupWindow(context);
 
         // Inflate the layout to use in this pop-up window
-        final View layout = getActivity().getLayoutInflater().inflate(R.layout
-                .activity_add_character,
+        final View layout = getActivity().getLayoutInflater().inflate(
+                R.layout.activity_add_character,
                 null);
 
         // Set view in the pop-up
@@ -115,97 +117,37 @@ public class AddCharacters extends Fragment {
         final EditText birthplace = (EditText) layout.findViewById(R.id.sb_character_birthplace);
         final EditText personality = (EditText) layout.findViewById(R.id.sb_character_personality);
         final EditText character_notes = (EditText) layout.findViewById(R.id.sb_character_notes);
+
         Button add_the_character = (Button) layout.findViewById(R.id.add_the_character);
 
-        // Get character's position in story: protagonist, antagonist, or neither
-        final String pos = mCharacterCheckbox(layout);
-
-        // Get character's gender or null
-        final String gender = characterGender(layout);
-
-        add_the_character.setOnClickListener(new View.OnClickListener() {
+          add_the_character.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Convert element entries to text
-                String sb_name = name.getText().toString();
-                String sb_age = age.getText().toString();
-                String sb_birthplace = birthplace.getText().toString();
-                String sb_personality = personality.getText().toString();
-                String sb_character_notes = character_notes.getText().toString();
 
                 // TODO -> Add a cancel button
                 // Make sure the name field is not empty
-                if ( sb_name.length() < 1 ) {
-                    Toast.makeText(getActivity().getApplicationContext(), "The character's name "
+                if ( name.length() < 1 ) {
+                    Toast.makeText(context, "The character's name "
                             + "is a required field", Toast.LENGTH_LONG).show();
                 }
 
                 else {
-                    // Format values in their db fields
-                    ContentValues values = new ContentValues();
-                    values.put(Constants.STORY_CHARACTER, sb_name);
-                    values.put(Constants.STORY_AGE, sb_age);
-                    values.put(Constants.STORY_BIRTHPLACE, sb_birthplace);
-                    values.put(Constants.STORY_PERSONALITY, sb_personality);
-                    values.put(Constants.STORY_MAIN, pos);
-                    values.put(Constants.STORY_GENDER, gender);
-                    values.put(Constants.STORY_CHARACTER_NOTES, sb_character_notes);
-
-                    // Initialize the db
-                    db = new SQLDatabase(getActivity().getApplicationContext());
-
-                    // Insert the rows
-                    db.insertRow(values, Constants.STORY_CHARACTER_TABLE);
+                    // Send them to SBValues
+                    send.processValues(context, Constants.STORY_CHARACTER, name,
+                            Constants.STORY_CHARACTER_TABLE);
+                    send.processValues(context, Constants.STORY_AGE, age,
+                            Constants.STORY_CHARACTER_TABLE);
+                    send.processValues(context, Constants.STORY_BIRTHPLACE, birthplace,
+                            Constants.STORY_CHARACTER_TABLE);
+                    send.processValues(context, Constants.STORY_PERSONALITY, personality,
+                            Constants.STORY_CHARACTER_TABLE);
+                    send.processValues(context, Constants.STORY_CHARACTER_NOTES, character_notes,
+                            Constants.STORY_CHARACTER_TABLE);
 
                     // Dismiss the pop-up window
                     popup.dismiss();
                 }
             }
         });
-    }
-
-    // May be a variation -> main character & the antagonist, just the main character
-    // or just the antagonist.
-    public String mCharacterCheckbox(View view) {
-        // Is a checkbox checked?
-        boolean checked = ((CheckBox) view).isChecked();
-
-        // Check which one(s) were checked
-        if ( checked ) {
-            // If checked, initialize a string to hold the value
-            String type = null;
-            switch (view.getId()) {
-                case R.id.main_character_checkbox:
-                    type = "Protagonist";
-                    break;
-                case R.id.antagonist_character_checkbox:
-                    type += "Antagonist";
-                    break;
-            }
-            return type;
-        }
-        return null;
-    }
-
-    public String characterGender(View view) {
-        // Is a radio button selected?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Return which radio button was selected
-        switch (view.getId()) {
-            case R.id.male_gender:
-                if (checked)
-                    return "male";
-                break;
-            case R.id.female_gender:
-                if (checked)
-                    return "female";
-                break;
-            case R.id.other_gender:
-                if (checked)
-                    return "other";
-                break;
-        }
-        return null;
     }
 }
