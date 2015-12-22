@@ -12,17 +12,12 @@
         android:layout_height="match_parent"
         android:orientation="horizontal" >
 
-        <RadioButton
+        <CheckBox
             android:id="@+id/main_plot_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Main plotline" />
 
-       <RadioButton
-           android:id="@+id/sec_plot_checkbox"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:text="Secondary plotline" />
     </LinearLayout>
 
     <EditText

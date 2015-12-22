@@ -2,6 +2,7 @@ package tahastudio.storybuilder;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -25,7 +26,7 @@ public class AddPlaces extends Fragment {
     // Get an instance of the SQLDatabase and the listview to populate
     private SQLDatabase db;
     private ListView add_places_listview;
-    private SBValues send = new SBValues();
+    private Context context = getActivity().getApplicationContext();
 
     public AddPlaces() {
 
@@ -35,7 +36,10 @@ public class AddPlaces extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment and return it
-        View add_place_layout = inflater.inflate(R.layout.fragment_add_places, container, false);
+        View add_place_layout = inflater.inflate(
+                R.layout.fragment_add_places,
+                container,
+                false);
 
         // Find the ListView in the layout
         add_places_listview = (ListView) add_place_layout.findViewById(R.id.add_places_list);
@@ -43,7 +47,7 @@ public class AddPlaces extends Fragment {
         // TODO -> Create async task for background threads
 
         // Instantiate the db and get the context
-        db = new SQLDatabase(getActivity().getApplicationContext());
+        db = new SQLDatabase(context);
 
         // Create a Cursor object to hold the rows
         final Cursor cursor = db.getRows(Constants.GRAB_PLACES_DETAILS);
@@ -59,7 +63,7 @@ public class AddPlaces extends Fragment {
         };
 
         SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
-                getActivity().getApplicationContext(),
+                context,
                 R.layout.fragment_add_places,
                 cursor,
                 columns,
@@ -84,15 +88,13 @@ public class AddPlaces extends Fragment {
 
     // Create the pop-up window to start creating a place/location in the story
     public void addPlaceElements(View view) {
-        // Get an instance of the context
-        final Context context = getActivity().getApplicationContext();
 
         // Set activity of pop-up window
         final PopupWindow popup = new PopupWindow(context);
 
         // Inflate the layout to use in this pop-up window
-        final View layout = getActivity().getLayoutInflater().inflate(R.layout
-                .activity_add_place,
+        final View layout = getActivity().getLayoutInflater().inflate(
+                R.layout.activity_add_place,
                 null);
 
         // Set the view inside the pop-up
@@ -109,17 +111,21 @@ public class AddPlaces extends Fragment {
         // Set the location
         popup.showAtLocation(view, Gravity.NO_GRAVITY, 0, 0);
 
-        // Now start finding the elements
-        final EditText place_name = (EditText) layout.findViewById(R.id.sb_place_name);
-        final EditText place_location = (EditText) layout.findViewById(R.id.sb_place_location);
-        final EditText place_description = (EditText) layout.findViewById(R.id.sb_place_desc);
-        final EditText place_notes = (EditText) layout.findViewById(R.id.sb_place_notes);
-        final Button add_place = (Button) layout.findViewById(R.id.add_the_place);
-        // TODO -> Add a cancel button
-
+        Button add_place = (Button) layout.findViewById(R.id.add_the_place);
         add_place.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // TODO -> Add a cancel button
+
+                // Instantiate AsyncTask to send to background thread
+                addPlacesTask addPlacesTask = new addPlacesTask();
+
+                // Now start finding the elements
+                EditText place_name = (EditText) layout.findViewById(R.id.sb_place_name);
+                EditText place_location = (EditText) layout.findViewById(R.id.sb_place_location);
+                EditText place_description = (EditText) layout.findViewById(R.id.sb_place_desc);
+                EditText place_notes = (EditText) layout.findViewById(R.id.sb_place_notes);
+
                 // Make sure name field is a non-empty value
                 if ( place_name.length() < 1 ) {
                     Toast.makeText(context, "Name is a required "
@@ -127,19 +133,49 @@ public class AddPlaces extends Fragment {
                 }
 
                 else {
-                    // Send to SBValues
-                    send.processValues(context, Constants.STORY_PLACE_NAME, place_name,
-                            Constants.STORY_PLACES_TABLE);
-                    send.processValues(context, Constants.STORY_PLACE_LOCATION, place_location,
-                            Constants.STORY_PLACES_TABLE);
-                    send.processValues(context, Constants.STORY_PLACE_DESC, place_description,
-                            Constants.STORY_PLACES_TABLE);
-                    send.processValues(context, Constants.STORY_PLACE_NOTES, place_notes,
-                            Constants.STORY_PLACES_TABLE);
-
-                    popup.dismiss();
+                    // Send to background thread
+                    addPlacesTask.execute(place_name,
+                            place_location,
+                            place_description,
+                            place_notes);
                 }
             }
         });
+        popup.dismiss();
+    }
+
+    private class addPlacesTask extends AsyncTask<EditText, Void, Boolean> {
+        private SBValues send = new SBValues();
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        protected void onProgressUpdate() {
+            super.onProgressUpdate();
+        }
+
+        @Override
+        protected Boolean doInBackground(EditText... params) {
+            Boolean completed = true;
+
+            // Send to SBValues to process into text and add to db
+            send.processValues(context, Constants.STORY_PLACE_NAME, params[0],
+                    Constants.STORY_PLACES_TABLE);
+            send.processValues(context, Constants.STORY_PLACE_LOCATION, params[1],
+                    Constants.STORY_PLACES_TABLE);
+            send.processValues(context, Constants.STORY_PLACE_DESC, params[2],
+                    Constants.STORY_PLACES_TABLE);
+            send.processValues(context, Constants.STORY_PLACE_NOTES, params[3],
+                    Constants.STORY_PLACES_TABLE);
+
+            return completed;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+        }
     }
 }

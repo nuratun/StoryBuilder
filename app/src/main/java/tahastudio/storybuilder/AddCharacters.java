@@ -2,6 +2,7 @@ package tahastudio.storybuilder;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -22,8 +23,7 @@ import android.widget.Toast;
  */
 public class AddCharacters extends Fragment {
     private ListView add_characters_listview;
-    private SQLDatabase db;
-    private SBValues send = new SBValues();
+    private Context context = getActivity().getApplicationContext();
 
     public AddCharacters() {
 
@@ -39,10 +39,8 @@ public class AddCharacters extends Fragment {
         add_characters_listview = (ListView) add_character_layout.findViewById(
                 R.id.add_characters_list);
 
-        // TODO -> Create async task for background threads
-
         // Instantiate the db and get the context
-        db = new SQLDatabase(getActivity().getApplicationContext());
+        SQLDatabase db = new SQLDatabase(context);
 
         // Create a Cursor object to hold the rows
         final Cursor cursor = db.getRows(Constants.GRAB_CHARACTER_DETAILS);
@@ -54,13 +52,13 @@ public class AddCharacters extends Fragment {
                 Constants.STORY_AGE
         };
 
-        // Get the listview widget
+        // Get the ListView widget
         int[] widgets = new int[] {
                 R.id.add_characters_list
         };
 
         SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
-                getActivity().getApplicationContext(),
+                context,
                 R.layout.fragment_add_characters,
                 cursor,
                 columns,
@@ -87,8 +85,6 @@ public class AddCharacters extends Fragment {
     // Create pop-up box to start adding characters to the story
     // TODO -> Factor out pop-up windows into separate class
     public void addCharacterElements(View view) {
-        // Get context
-        final Context context = getActivity().getApplicationContext();
         // Set activity of pop-up box
         final PopupWindow popup = new PopupWindow(context);
 
@@ -111,18 +107,16 @@ public class AddCharacters extends Fragment {
         // Set location
         popup.showAtLocation(view, Gravity.NO_GRAVITY, 0, 0);
 
-        // Now find the elements
-        final EditText name = (EditText) layout.findViewById(R.id.sb_character_name);
-        final EditText age = (EditText) layout.findViewById(R.id.sb_character_age);
-        final EditText birthplace = (EditText) layout.findViewById(R.id.sb_character_birthplace);
-        final EditText personality = (EditText) layout.findViewById(R.id.sb_character_personality);
-        final EditText character_notes = (EditText) layout.findViewById(R.id.sb_character_notes);
-
         Button add_the_character = (Button) layout.findViewById(R.id.add_the_character);
-
-          add_the_character.setOnClickListener(new View.OnClickListener() {
+        add_the_character.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Now find the elements
+                EditText name = (EditText) layout.findViewById(R.id.sb_character_name);
+                EditText age = (EditText) layout.findViewById(R.id.sb_character_age);
+                EditText birthplace = (EditText) layout.findViewById(R.id.sb_character_birthplace);
+                EditText personality = (EditText) layout.findViewById(R.id.sb_character_personality);
+                EditText character_notes = (EditText) layout.findViewById(R.id.sb_character_notes);
 
                 // TODO -> Add a cancel button
                 // Make sure the name field is not empty
@@ -130,24 +124,51 @@ public class AddCharacters extends Fragment {
                     Toast.makeText(context, "The character's name "
                             + "is a required field", Toast.LENGTH_LONG).show();
                 }
-
                 else {
-                    // Send them to SBValues
-                    send.processValues(context, Constants.STORY_CHARACTER, name,
-                            Constants.STORY_CHARACTER_TABLE);
-                    send.processValues(context, Constants.STORY_AGE, age,
-                            Constants.STORY_CHARACTER_TABLE);
-                    send.processValues(context, Constants.STORY_BIRTHPLACE, birthplace,
-                            Constants.STORY_CHARACTER_TABLE);
-                    send.processValues(context, Constants.STORY_PERSONALITY, personality,
-                            Constants.STORY_CHARACTER_TABLE);
-                    send.processValues(context, Constants.STORY_CHARACTER_NOTES, character_notes,
-                            Constants.STORY_CHARACTER_TABLE);
-
-                    // Dismiss the pop-up window
-                    popup.dismiss();
+                    // Send them to a background thread to process in the SBValues
+                    addCharactersTask charactersTask = new addCharactersTask();
+                    charactersTask.execute(name, age, birthplace, personality, character_notes);
                 }
             }
         });
+
+        // Dismiss the pop-up window
+        popup.dismiss();
+    }
+
+    private class addCharactersTask extends AsyncTask<EditText, Void, Boolean> {
+        private SBValues send = new SBValues();
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        protected void onProgressUpdate() {
+            super.onProgressUpdate();
+        }
+
+        @Override
+        protected Boolean doInBackground(EditText... params) {
+            Boolean completed = true;
+
+            send.processValues(context, Constants.STORY_CHARACTER, params[0],
+                    Constants.STORY_CHARACTER_TABLE);
+            send.processValues(context, Constants.STORY_AGE, params[1],
+                    Constants.STORY_CHARACTER_TABLE);
+            send.processValues(context, Constants.STORY_BIRTHPLACE, params[2],
+                    Constants.STORY_CHARACTER_TABLE);
+            send.processValues(context, Constants.STORY_PERSONALITY, params[3],
+                    Constants.STORY_CHARACTER_TABLE);
+            send.processValues(context, Constants.STORY_CHARACTER_NOTES, params[4],
+                    Constants.STORY_CHARACTER_TABLE);
+
+            return completed;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+        }
     }
 }

@@ -2,6 +2,7 @@ package tahastudio.storybuilder;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -22,10 +24,11 @@ import android.widget.Toast;
  * 3rd tab for SB
  */
 public class AddPlotline extends Fragment {
-    // Get an instance of the SQLDatabase and the listview to populate
+    // Get an instance of the SQLDatabase and the ListView to populate
     private SQLDatabase db;
     private ListView add_plotline_listview;
-    private SBValues send = new SBValues();
+    // Get fragment-wide context
+    private Context context = getActivity().getApplicationContext();
 
     public AddPlotline() {
 
@@ -39,12 +42,13 @@ public class AddPlotline extends Fragment {
                 false);
 
         // Find the ListView for this layout
-        add_plotline_listview = (ListView) add_plotline_layout.findViewById(R.id.add_plotline_list);
+        add_plotline_listview = (ListView) add_plotline_layout
+                .findViewById(R.id.add_plotline_list);
 
         // TODO -> Create async task for background thread
 
         // Instantiate the db and get the context
-        db = new SQLDatabase(getActivity().getApplicationContext());
+        db = new SQLDatabase(context);
 
         // Create a cursor object to hold the rows
         final Cursor cursor = db.getRows(Constants.GRAB_PLOTLINE_DETALIS);
@@ -52,7 +56,7 @@ public class AddPlotline extends Fragment {
         // Get the columns
         String[] columns = new String[] {
                 Constants.STORY_MAIN_PLOTLINE,
-                Constants.STORY_SECONDARY_PLOTLINE
+                Constants.STORY_PLOTLINE
         };
 
         // Get the layout
@@ -61,7 +65,7 @@ public class AddPlotline extends Fragment {
         };
 
         SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
-                getActivity().getApplicationContext(),
+                context,
                 R.layout.fragment_add_plotline,
                 cursor,
                 columns,
@@ -86,11 +90,9 @@ public class AddPlotline extends Fragment {
 
     // Create the pop-up window from FAB click to add a plotline
     public void addPlotlineElements(View view) {
-        // Get an instance of the context
-        final Context context = getActivity().getApplicationContext();
 
         // Create pop-up window with above context
-        PopupWindow popup = new PopupWindow(context);
+        final PopupWindow popup = new PopupWindow(context);
 
         // Get the layout
         final View layout = getActivity().getLayoutInflater().inflate(
@@ -111,44 +113,76 @@ public class AddPlotline extends Fragment {
         // Set location
         popup.showAtLocation(view, Gravity.NO_GRAVITY, 0, 0);
 
-        // Check if this is the main plot -> true/false
-        boolean main_plot_checked = CreateStory.mPlotline(view);
-
-        // Now get the elements
-        final String main_plot = String.valueOf(main_plot_checked);
-        final EditText plotline = (EditText) layout.findViewById(R.id.sb_plotline);
-        final EditText notes = (EditText) layout.findViewById(R.id.sb_plotline_notes);
         Button add_the_plot = (Button) layout.findViewById(R.id.add_the_plotline);
 
         add_the_plot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Ensure the plotline field is a non-empty value
-                if ( plotline.length() < 1 ) {
-                    Toast.makeText(context, "You must enter at least"
-                        + " a summary of the plot", Toast.LENGTH_LONG).show();
-                }
+                // Find the elements in activity_add_plotline.xml
 
-                else {
-                    // Send to SBValues
+                // Check if it's the main plotline or a secondary plotline
+                CheckBox main_plot_checked = (CheckBox) layout.findViewById(
+                        R.id.main_character_checkbox);
+
+                // Convert to String value
+                String main_plot = String.valueOf(main_plot_checked);
+
+                EditText plotline = (EditText) layout.findViewById(R.id.sb_plotline);
+                EditText notes = (EditText) layout.findViewById(R.id.sb_plotline_notes);
+
+                // Ensure the plotline field is a non-empty value
+                if (plotline.length() < 1) {
+                    Toast.makeText(context, "You must enter at least"
+                            + " a summary of the plot", Toast.LENGTH_LONG).show();
+                } else {
+                    // Instantiate instance of AsyncTask to send input to background thread
+                    addPlotlineTask plotlineTask = new addPlotlineTask();
 
                     // If this is the main plot
-                    if ( main_plot.equals("true") ) {
-                        // Put in the main plotline field in the db
-                        send.processValues(context, Constants.STORY_MAIN_PLOTLINE, plotline,
-                                Constants.STORY_PLOTLINE_TABLE);
+                    if (main_plot.equals("true")) {
+                        // Send to background thread
+                        // TODO -> Need to add db entry stating this is the main plotline
+                        plotlineTask.execute(plotline, notes);
+
+                    } else {
+                        plotlineTask.execute(plotline, notes);
                     }
-                    else {
-                        // Otherwise it's a secondary plotline
-                        send.processValues(context, Constants.STORY_SECONDARY_PLOTLINE, plotline,
-                                Constants.STORY_PLOTLINE_TABLE);
-                    }
-                    send.processValues(context, Constants.STORY_PLOTLINE_NOTES, notes,
-                            Constants.STORY_PLOTLINE_TABLE);
                 }
             }
         });
 
+        // Dismiss this pop-up
         popup.dismiss();
+    }
+
+    private class addPlotlineTask extends AsyncTask<EditText, Void, Boolean> {
+        private SBValues send = new SBValues();
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        protected void onProgressUpdate() {
+            super.onProgressUpdate();
+        }
+
+        @Override
+        protected Boolean doInBackground(EditText... params) {
+            Boolean completed = true;
+
+            send.processValues(context, Constants.STORY_PLOTLINE, params[0],
+                    Constants.STORY_PLOTLINE_TABLE);
+            send.processValues(context, Constants.STORY_PLOTLINE_NOTES, params[1],
+                    Constants.STORY_PLOTLINE_TABLE);
+
+            return completed;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            super.onPostExecute(result);
+        }
+
     }
 }

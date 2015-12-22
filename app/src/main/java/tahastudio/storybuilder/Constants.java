@@ -6,7 +6,7 @@ package tahastudio.storybuilder;
 public class Constants {
 
     // Version number must change if database changes
-    public static final int DATABASE_VERSION = 8;
+    public static final int DATABASE_VERSION = 9;
     public static final String DATABASE_NAME = "sql.db";
 
     // Set up database schema for the story
@@ -32,7 +32,7 @@ public class Constants {
     // Set up table schema for plotline
     public static final String STORY_PLOTLINE_TABLE = "sb_plotline";
     public static final String STORY_MAIN_PLOTLINE = "main_plotline";
-    public static final String STORY_SECONDARY_PLOTLINE = "sec_plotline";
+    public static final String STORY_PLOTLINE = "sb_plotline_desc";
     public static final String STORY_PLOTLINE_NOTES = "plotline_notes";
 
     // Set up table schema for places
@@ -71,7 +71,7 @@ public class Constants {
     public static final String SQL_CREATE_PLOTLINE = "CREATE TABLE "
             + STORY_PLOTLINE_TABLE + "("
             + STORY_MAIN_PLOTLINE + " text, "
-            + STORY_SECONDARY_PLOTLINE + " text, "
+            + STORY_PLOTLINE + " text, "
             + STORY_PLOTLINE_NOTES + " text, "
             + DB_ID + " integer,"
             + STORY_NAME + " text, "
@@ -92,7 +92,7 @@ public class Constants {
             + "REFERENCES " + STORY_TABLE + "(" + DB_ID + DB_COMMA + STORY_NAME + ")"
             + " )";
 
-    // Used in AddCharacters class to populate the listview
+    // Used in AddCharacters class to populate the ListView
     public static final String GRAB_CHARACTER_DETAILS = "SELECT "
             + DB_ID + ", "
             + STORY_CHARACTER + ", "
@@ -100,7 +100,7 @@ public class Constants {
             + STORY_CHARACTER_TABLE
             + ";";
 
-    // Used in the AddPlaces class to populate the listview
+    // Used in the AddPlaces class to populate the ListView
     public static final String GRAB_PLACES_DETAILS = "SELECT "
             + DB_ID + ", "
             + STORY_PLACE_NAME + ", "
@@ -109,11 +109,11 @@ public class Constants {
             + STORY_PLACES_TABLE
             + ";";
 
-    // Used in the AddPlotline class to populate the listview
+    // Used in the AddPlotline class to populate the ListView
     public static final String GRAB_PLOTLINE_DETALIS = "SELECT "
             + DB_ID + ", "
             + STORY_MAIN_PLOTLINE + ", "
-            + STORY_SECONDARY_PLOTLINE + " FROM "
+            + STORY_PLOTLINE + " FROM "
             + STORY_PLOTLINE_TABLE
             + ";";
 }

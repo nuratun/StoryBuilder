@@ -1,6 +1,7 @@
 package tahastudio.storybuilder;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -36,14 +37,22 @@ public class CreateStory extends AppCompatActivity {
         story_title.setText(title);
 
         // Grab the DB_ID from StoryBuilderMain
-        //Intent get_int = getIntent();
-        //int the_id = get_int.getIntExtra("id", 0);
+        Intent get_int = getIntent();
+        Integer the_id = get_int.getIntExtra("id", 0);
 
-        // Insert into database using the custom SQL method
-        //SQLDatabase db = new SQLDatabase(CreateStory.this);
-        //db.insertTheID(the_id);
+        // Send the story db id to AsyncTask to start
+        // creating all the tables
+        createStoryTask storyTask = new createStoryTask();
 
-        // Find the tablayout in activity_create_story.xml
+        // Try to get the response back from createStoryTask
+        try {
+            Boolean is_completed = storyTask.execute(the_id).get();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Find the TabLayout in activity_create_story.xml
         TabLayout tab_layout = (TabLayout) findViewById(R.id.tab_layout);
 
         // Add the number tabs, and set the title for each one. Still need the
@@ -130,11 +139,43 @@ public class CreateStory extends AppCompatActivity {
             switch (view.getId()) {
                 case R.id.main_plot_checkbox:
                     plot = true;
-                case R.id.sec_plot_checkbox:
-                    plot = false;
                 default:
                     plot = false;
             }
+        }
+    }
+
+    // Create the tables on a background thread
+    private class createStoryTask extends AsyncTask<Integer, Void, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        protected void onProgressUpdate() {
+            super.onProgressUpdate();
+        }
+
+        @Override
+        protected Boolean doInBackground(Integer... params) {
+            // Set boolean value initially to false
+            boolean completed = false;
+            SQLDatabase db = new SQLDatabase(CreateStory.this);
+
+            try {
+                db.insertTheID(params[0]);
+                completed = true;
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            return completed;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean completed) {
+            super.onPostExecute(completed);
         }
     }
 }

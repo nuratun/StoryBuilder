@@ -1,63 +1,33 @@
-<RelativeLayout
+<LinearLayout
+    android:id="@+id/add_story"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".StoryBuilderMain">
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <include
-        layout="@layout/toolbar" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/topView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@android:color/holo_green_dark"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/instructions"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:text="@string/instructions" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/bottomView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@android:color/holo_blue_dark"
-            android:layout_weight="2"
-            android:orientation="vertical" >
-
-            <ListView
-                android:id="@+id/story_list"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_gravity="center_vertical|center"
-                android:layout_weight="1" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
+    <EditText
+        android:id="@+id/sb_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:src="@drawable/ic_add_black_48dp"
-        app:layout_anchorGravity="bottom|right|end"
-        android:layout_margin="20dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true" />
+        android:hint="Title Your Story" />
 
-</RelativeLayout>
+    <EditText
+        android:id="@+id/sb_genre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Genre" />
+
+    <EditText
+        android:id="@+id/sb_notes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Synopsis/Notes" />
+
+    <Button
+        android:id="@+id/add_the_story"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Add" />
+
+</LinearLayout>
