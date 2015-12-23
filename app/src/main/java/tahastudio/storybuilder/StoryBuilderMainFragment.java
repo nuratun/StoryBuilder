@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 /**
- * Fragment not needed
+ * Fragment to replace BottomView
  */
 public class StoryBuilderMainFragment extends Fragment {
 
@@ -52,14 +52,14 @@ public class StoryBuilderMainFragment extends Fragment {
                     Toast.makeText(getActivity().getApplicationContext(), "Both the title and " +
                             "genre are required fields", Toast.LENGTH_LONG).show();
                 } else {
+                    // Send to do db work in the background. Have to call from parent activity
+                    StoryBuilderMain sb = new StoryBuilderMain();
+
+                    Integer get_id = sb.callAddStoryTask(new StoryBuilderMain()
+                            .addStoryParams(sb_story_title, sb_story_genre, sb_story_notes));
+
                     // Add an intent for CreateStory
                     Intent callCreateStory = new Intent(getActivity(), CreateStory.class);
-
-                    // Send to do db work in the background. Have to call from parent activity
-                    Integer get_id = ((StoryBuilderMain) getActivity()).callAddStoryTask(
-                                sb_story_title,
-                                sb_story_genre,
-                                sb_story_notes);
 
                     // Send the story title to the new activity, also
                     callCreateStory.putExtra("title", sb_story_title);

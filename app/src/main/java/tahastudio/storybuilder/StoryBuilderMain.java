@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -20,10 +21,7 @@ public class StoryBuilderMain extends AppCompatActivity {
     DrawerLayout drawer_layout;
     FloatingActionButton the_fab;
     // Get an instance of the FragmentManager
-    android.support.v4.app.FragmentManager fragment =
-            StoryBuilderMain
-            .this
-            .getSupportFragmentManager();
+    FragmentManager fragment = getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +30,6 @@ public class StoryBuilderMain extends AppCompatActivity {
         setContentView(R.layout.activity_story_builder_main);
 
         // Call function to check if app has been run before.
-        // Otherwise, call pop-up intro box
         checkFirstRun();
 
         // Find and attach the toolbar to the view
@@ -50,12 +47,12 @@ public class StoryBuilderMain extends AppCompatActivity {
         the_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                StoryBuilderMainFragment get_fragment = new StoryBuilderMainFragment();
-                FragmentTransaction ft =
+                FragmentTransaction transaction =
                         fragment.beginTransaction()
                                 .addToBackStack(null)
-                                .replace(R.id.fragment_content, get_fragment);
-                ft.commit();
+                                .replace(R.id.fragment_container,
+                                        new StoryBuilderMainFragment());
+                                transaction.commit();
             }
         });
     }
@@ -108,7 +105,25 @@ public class StoryBuilderMain extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public Integer callAddStoryTask(String string_one, String string_two, String string_three) {
+    // Because we're passing multiple variables to the AsyncTask, we should wrap them
+    // in a container. Then AsyncTask can parse them out. This will be called from the
+    // class -> StoryBuilderMainFragment
+    public static class addStoryParams {
+        // The strings to hold the story title, genre,
+        // and notes, if any
+        String zero;
+        String one;
+        String two;
+
+        addStoryParams(String zero, String one, String two) {
+            this.zero = zero;
+            this.one = one;
+            this.two = two;
+        }
+    }
+
+    // To return the Integer from the AsyncTask and use it
+    public Integer callAddStoryTask(addStoryParams params) {
         // This is being called from StoryBuilderMainFragment,
         // to add a new story to the database
         try {
@@ -122,7 +137,7 @@ public class StoryBuilderMain extends AppCompatActivity {
     }
 
     // Need to start background thread to do the db work
-    private class addStoryTask extends AsyncTask<String, Void, Integer> {
+    private class addStoryTask extends AsyncTask<addStoryParams, Void, Integer> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -134,16 +149,21 @@ public class StoryBuilderMain extends AppCompatActivity {
         }
 
         @Override
-        protected Integer doInBackground(String... params) {
+        protected Integer doInBackground(addStoryParams... params) {
             // Store in a ContentValues instance to prepare for
             // db entry
             ContentValues values = new ContentValues();
 
+            // Grab the Strings from addStoryParams instance
+            String story_name = params[0].zero;
+            String story_genre = params[1].one;
+            String story_notes = params[2].two;
+
             // Sent 3 strings to this AsyncTask, which puts
             // them into an array. Grab them by their index.
-            values.put(Constants.STORY_NAME, params[0]);
-            values.put(Constants.STORY_GENRE, params[1]);
-            values.put(Constants.STORY_NOTES, params[2]);
+            values.put(Constants.STORY_NAME, story_name);
+            values.put(Constants.STORY_GENRE, story_genre);
+            values.put(Constants.STORY_NOTES, story_notes);
 
             // Instantiate an instance of the SQLDatabase class
             SQLDatabase db = new SQLDatabase(StoryBuilderMain.this);
@@ -153,7 +173,7 @@ public class StoryBuilderMain extends AppCompatActivity {
 
             // Now grab the primary key of this entry to return
             // to the UI thread during postExecute
-            int story_id = db.getStoryID(params[0]);
+            Integer story_id = db.getStoryID(story_name);
 
             return story_id;
         }
