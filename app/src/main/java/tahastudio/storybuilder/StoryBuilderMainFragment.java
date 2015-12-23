@@ -55,8 +55,10 @@ public class StoryBuilderMainFragment extends Fragment {
                     // Send to do db work in the background. Have to call from parent activity
                     StoryBuilderMain sb = new StoryBuilderMain();
 
-                    Integer get_id = sb.callAddStoryTask(new StoryBuilderMain()
-                            .addStoryParams(sb_story_title, sb_story_genre, sb_story_notes));
+                    Integer get_id = sb.callAddStoryTask(
+                            sb_story_title,
+                            sb_story_genre,
+                            sb_story_notes);
 
                     // Add an intent for CreateStory
                     Intent callCreateStory = new Intent(getActivity(), CreateStory.class);

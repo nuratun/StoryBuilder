@@ -105,30 +105,13 @@ public class StoryBuilderMain extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // Because we're passing multiple variables to the AsyncTask, we should wrap them
-    // in a container. Then AsyncTask can parse them out. This will be called from the
-    // class -> StoryBuilderMainFragment
-    public static class addStoryParams {
-        // The strings to hold the story title, genre,
-        // and notes, if any
-        String zero;
-        String one;
-        String two;
-
-        addStoryParams(String zero, String one, String two) {
-            this.zero = zero;
-            this.one = one;
-            this.two = two;
-        }
-    }
-
     // To return the Integer from the AsyncTask and use it
-    public Integer callAddStoryTask(addStoryParams params) {
+    public Integer callAddStoryTask(String zero, String one, String two) {
         // This is being called from StoryBuilderMainFragment,
-        // to add a new story to the database
+        // to add a new story to the database.
+        // Return an Integer from addStoryTask.
         try {
-            Integer story_id = new addStoryTask().execute().get();
-            return story_id;
+            return new addStoryTask(zero, one, two).execute().get();
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -137,7 +120,22 @@ public class StoryBuilderMain extends AppCompatActivity {
     }
 
     // Need to start background thread to do the db work
-    private class addStoryTask extends AsyncTask<addStoryParams, Void, Integer> {
+    private class addStoryTask extends AsyncTask<Void, Void, Integer> {
+        // Because we're passing multiple variables to the AsyncTask, we should wrap them
+        // in a constructor. Then AsyncTask can parse them out. The public class
+        // callAddStoryTask will be called from StoryBuilderMainFragment, and that
+        // will instantiate this class.
+        // Return: Integer, which will be db id for this entry
+        String zero;
+        String one;
+        String two;
+
+        addStoryTask(String zero, String one, String two) {
+            this.zero = zero;
+            this.one = one;
+            this.two = two;
+        }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -149,15 +147,15 @@ public class StoryBuilderMain extends AppCompatActivity {
         }
 
         @Override
-        protected Integer doInBackground(addStoryParams... params) {
+        protected Integer doInBackground(Void... params) {
             // Store in a ContentValues instance to prepare for
             // db entry
             ContentValues values = new ContentValues();
 
             // Grab the Strings from addStoryParams instance
-            String story_name = params[0].zero;
-            String story_genre = params[1].one;
-            String story_notes = params[2].two;
+            String story_name = zero;
+            String story_genre = one;
+            String story_notes = two;
 
             // Sent 3 strings to this AsyncTask, which puts
             // them into an array. Grab them by their index.
