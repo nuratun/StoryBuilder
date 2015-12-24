@@ -1,41 +1,59 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <LinearLayout
-        android:id="@+id/topview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/instructions"
-            android:background="@android:color/holo_green_dark"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/instructions"
-            android:textStyle="bold"
-            android:typeface="serif"
-            android:visibility="visible"
-            android:padding="20dp"
-            android:layout_marginTop="55dp" />
-
-        <fragment
-            android:id="@+id/fragment_container"
-            android:name="tahastudio.storybuilder.BottomView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:layout="@layout/bottom_view" />
-
-    </LinearLayout>
+    tools:context=".StoryBuilderMain">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/toolbar">
+
+        <LinearLayout
+            android:id="@+id/topView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/holo_green_dark"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/instructions"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text="@string/instructions" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bottomView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@android:color/holo_blue_dark"
+            android:layout_weight="2"
+            android:orientation="vertical" >
+
+            <ListView
+                android:id="@+id/story_list"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -43,15 +61,9 @@
         android:layout_height="wrap_content"
         android:clickable="true"
         android:src="@drawable/ic_add_black_48dp"
+        app:layout_anchorGravity="bottom|right|end"
         android:layout_margin="20dp"
-        android:baselineAlignBottom="false"
-        android:layout_alignParentEnd="false"
-        android:layout_alignBottom="@+id/topview"
-        android:layout_alignRight="@+id/topview" />
-
-    <android.support.v4.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

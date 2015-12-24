@@ -74,21 +74,16 @@ public class SQLDatabase extends SQLiteOpenHelper {
         sbDatabase.execSQL(query);
     }
 
-    public int getStoryID(String title) {
+    // Get the story ID back from database to create the other tables
+    public Integer getStoryID() {
         sbDatabase = this.getReadableDatabase();
-        Cursor cursor = sbDatabase.rawQuery("SELECT "
-                + Constants.DB_ID + " FROM "
-                + Constants.STORY_TABLE + " WHERE "
-                + Constants.STORY_NAME + " = '"
-                + title + "'",
-                null);
+        Cursor cur = sbDatabase.rawQuery(Constants.GET_STORY_ID, null);
 
-        // Move to first index, otherwise OutOfBoundsException will occur
-        if ( !cursor.moveToFirst() ) {
-            cursor.moveToFirst();
-        }
+        cur.moveToFirst(); // Move to the first position
+        int the_id = cur.getInt(0);
+        cur.close(); // Close the cursor when done
 
-        return cursor.getInt( cursor.getColumnIndexOrThrow(Constants.DB_ID) );
+        return the_id;
     }
 
     public Cursor getRows(String query) {

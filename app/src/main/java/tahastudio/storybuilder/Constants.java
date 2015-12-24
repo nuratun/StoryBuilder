@@ -6,7 +6,7 @@ package tahastudio.storybuilder;
 public class Constants {
 
     // Version number must change if database changes
-    public static final int DATABASE_VERSION = 9;
+    public static final int DATABASE_VERSION = 10;
     public static final String DATABASE_NAME = "sql.db";
 
     // Set up database schema for the story
@@ -41,6 +41,9 @@ public class Constants {
     public static final String STORY_PLACE_LOCATION = "place_location";
     public static final String STORY_PLACE_DESC = "place_description";
     public static final String STORY_PLACE_NOTES = "place_notes";
+
+    // Get latest story entry id from database
+    public static final String GET_STORY_ID = "SELECT MAX(_id) FROM " + STORY_TABLE;
 
     // Create the story table. All other tables will reference the id and story name
     public static final String SQL_CREATE_STORY_TABLE = "CREATE TABLE "

@@ -20,4 +20,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_tab_viewer">TabViewer</string>
     <string name="title_activity_sqldatabase">SQLdatabase</string>
+
+    <!-- For dialog box -->
+    <string name="create_story">Create</string>
+    <string name="cancel_story">Cancel</string>
 </resources>

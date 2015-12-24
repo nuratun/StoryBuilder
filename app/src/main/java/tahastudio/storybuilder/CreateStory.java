@@ -32,9 +32,9 @@ public class CreateStory extends AppCompatActivity {
         TextView story_title = (TextView) findViewById(R.id.story_title);
 
         // Grab the title from StoryBuilderMain
-        Intent get_title = getIntent();
-        String title = get_title.getStringExtra("title");
-        story_title.setText(title);
+        //Intent get_title = getIntent();
+        //String title = get_title.getStringExtra("title");
+        //story_title.setText(title);
 
         // Grab the DB_ID from StoryBuilderMain
         Intent get_int = getIntent();
