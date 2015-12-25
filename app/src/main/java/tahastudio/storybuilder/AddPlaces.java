@@ -2,31 +2,24 @@ package tahastudio.storybuilder;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.PopupWindow;
-import android.widget.Toast;
 
 
 /**
  * Second tab for SB
  */
 public class AddPlaces extends Fragment {
-    // Get an instance of the SQLDatabase and the listview to populate
-    private SQLDatabase db;
     private ListView add_places_listview;
-    private Context context = getActivity().getApplicationContext();
+    private Context context;
 
     public AddPlaces() {
 
@@ -42,12 +35,14 @@ public class AddPlaces extends Fragment {
                 false);
 
         // Find the ListView in the layout
-        add_places_listview = (ListView) add_place_layout.findViewById(R.id.add_places_list);
+        add_places_listview = (ListView) add_place_layout
+                .findViewById(R.id.add_places_list);
 
-        // TODO -> Create async task for background threads
+        // Get an instance of the application context
+        context = getActivity().getApplicationContext();
 
         // Instantiate the db and get the context
-        db = new SQLDatabase(context);
+        SQLDatabase db = new SQLDatabase(context);
 
         // Create a Cursor object to hold the rows
         final Cursor cursor = db.getRows(Constants.GRAB_PLACES_DETAILS);
@@ -78,104 +73,17 @@ public class AddPlaces extends Fragment {
         add_a_place.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addPlaceElements(v);
+                // To programmatically add in the AddPlaceElements fragment
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                // Need to get APIs from FragmentTransaction to add, replace or remove fragments
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                // Add the fragment, add it to the backstack, and commit it
+                fragmentTransaction.add(R.id.add_places_tab, new AddPlaceElements())
+                        .addToBackStack("add_the_place")
+                        .commit();
             }
         });
-
         // Return the layout
         return add_place_layout;
-    }
-
-    // Create the pop-up window to start creating a place/location in the story
-    public void addPlaceElements(View view) {
-
-        // Set activity of pop-up window
-        final PopupWindow popup = new PopupWindow(context);
-
-        // Inflate the layout to use in this pop-up window
-        final View layout = getActivity().getLayoutInflater().inflate(
-                R.layout.activity_add_place,
-                null);
-
-        // Set the view inside the pop-up
-        popup.setContentView(layout);
-
-        // Set height/width of the pop-up
-        popup.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
-        popup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-
-        // Set touch parameter and focusable -> both true
-        popup.setFocusable(true);
-        popup.setOutsideTouchable(true);
-
-        // Set the location
-        popup.showAtLocation(view, Gravity.NO_GRAVITY, 0, 0);
-
-        Button add_place = (Button) layout.findViewById(R.id.add_the_place);
-        add_place.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO -> Add a cancel button
-
-                // Instantiate AsyncTask to send to background thread
-                addPlacesTask addPlacesTask = new addPlacesTask();
-
-                // Now start finding the elements
-                EditText place_name = (EditText) layout.findViewById(R.id.sb_place_name);
-                EditText place_location = (EditText) layout.findViewById(R.id.sb_place_location);
-                EditText place_description = (EditText) layout.findViewById(R.id.sb_place_desc);
-                EditText place_notes = (EditText) layout.findViewById(R.id.sb_place_notes);
-
-                // Make sure name field is a non-empty value
-                if ( place_name.length() < 1 ) {
-                    Toast.makeText(context, "Name is a required "
-                            + "field", Toast.LENGTH_LONG).show();
-                }
-
-                else {
-                    // Send to background thread
-                    addPlacesTask.execute(place_name,
-                            place_location,
-                            place_description,
-                            place_notes);
-                }
-            }
-        });
-        popup.dismiss();
-    }
-
-    private class addPlacesTask extends AsyncTask<EditText, Void, Boolean> {
-        private SBValues send = new SBValues();
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        protected void onProgressUpdate() {
-            super.onProgressUpdate();
-        }
-
-        @Override
-        protected Boolean doInBackground(EditText... params) {
-            Boolean completed = true;
-
-            // Send to SBValues to process into text and add to db
-            send.processValues(context, Constants.STORY_PLACE_NAME, params[0],
-                    Constants.STORY_PLACES_TABLE);
-            send.processValues(context, Constants.STORY_PLACE_LOCATION, params[1],
-                    Constants.STORY_PLACES_TABLE);
-            send.processValues(context, Constants.STORY_PLACE_DESC, params[2],
-                    Constants.STORY_PLACES_TABLE);
-            send.processValues(context, Constants.STORY_PLACE_NOTES, params[3],
-                    Constants.STORY_PLACES_TABLE);
-
-            return completed;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-        }
     }
 }

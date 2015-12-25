@@ -1,6 +1,5 @@
 package tahastudio.storybuilder;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -75,20 +74,6 @@ public class StoryBuilderMain extends AppCompatActivity {
         SBDialog newDialog = new SBDialog();
         newDialog.show(getSupportFragmentManager(), "story_creation");
     }
-
-    // The following is being called from SBDialog. It's calling AsyncTask -> CreateStoryTask
-    public void onPostResult(String result) {
-        // Add an intent for CreateStory
-        Intent callCreateStory = new Intent(StoryBuilderMain.this, CreateStory.class);
-
-        // TODO -> Grab the story id in db from another asynctask in CreateStory class
-        // Send the story title to the new activity
-        callCreateStory.putExtra("title", result);
-
-        // Call the new activity
-        startActivity(callCreateStory);
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -16,26 +16,13 @@ public class CreateStoryTask extends AsyncTask<String, Void, String> {
 
     // We need to be able to pass more than one string to this background task
     public CreateStoryTask(Context context, String one, String two, String three) {
+        this.context = context;
         this.one = one;
         this.two = two;
         this.three = three;
-        this.context = context;
     }
 
-    // Interface for this class. Will process result from doInBackground,
-    // which will be the story title
-    public interface StoryTask{
-        void onPostResult(String result);
-    }
-
-    StoryTask addStory;
-
-    // Constructor for this class
-    public void CreateTheStory(StoryTask addStory) {
-        this.addStory = addStory;
-    }
-
-    @Override
+     @Override
     protected void onPreExecute() {
         super.onPreExecute();
     }
@@ -63,7 +50,6 @@ public class CreateStoryTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-        addStory.onPostResult(result);
     }
 
 

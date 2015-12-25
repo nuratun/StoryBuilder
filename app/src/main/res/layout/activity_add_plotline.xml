@@ -37,6 +37,6 @@
         android:id="@+id/add_the_plotline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Add" />
+        android:text="Add" />
 
 </LinearLayout>

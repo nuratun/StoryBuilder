@@ -3,6 +3,7 @@ package tahastudio.storybuilder;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -62,15 +63,26 @@ public class SBDialog extends DialogFragment {
                                     + sb_story_notes,
                                     Toast.LENGTH_LONG).show();
 
-                            // Call a new instance of the AsyncTask -> CreateStoryTask, and
-                            // give it the variables to enter into the db, as well as the context
-                            // Return {Integer}: story id in db will be returned to StoryBuilderMain
+                            // Execute the AsyncTask, CreateStoryTask, to add entry into database
                             CreateStoryTask task = new CreateStoryTask(
                                     getActivity().getApplicationContext(),
                                     sb_story_title,
                                     sb_story_genre,
                                     sb_story_notes);
                             task.execute();
+
+                            // Add an intent for CreateStory
+                            Intent callCreateStory = new Intent(
+                                    getActivity().getApplicationContext(),
+                                    CreateStory.class);
+
+                            // TODO -> Grab the story id in db from another asynctask in
+                            // CreateStory class
+                            // Send the story title to the new activity
+                            callCreateStory.putExtra("title", sb_story_title);
+
+                            // Call the new activity
+                            startActivity(callCreateStory);
                         }
                     }
                 })

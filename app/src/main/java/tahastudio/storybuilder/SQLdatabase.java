@@ -45,6 +45,18 @@ public class SQLDatabase extends SQLiteOpenHelper {
                 + num);
     }
 
+    // Get the story ID back from database to create the other tables
+    public Integer getStoryID() {
+        sbDatabase = this.getReadableDatabase();
+        Cursor cur = sbDatabase.rawQuery(Constants.GET_STORY_ID, null);
+
+        cur.moveToFirst(); // Move to the first position
+        int the_id = cur.getInt(0);
+        cur.close(); // Close the cursor when done
+
+        return the_id;
+    }
+
     // Insert ID into the characters, plotline, and places table
     public void insertTheID(int id) {
         sbDatabase = this.getWritableDatabase();
@@ -72,18 +84,6 @@ public class SQLDatabase extends SQLiteOpenHelper {
     public void runQuery(String query) {
         sbDatabase = this.getReadableDatabase();
         sbDatabase.execSQL(query);
-    }
-
-    // Get the story ID back from database to create the other tables
-    public Integer getStoryID() {
-        sbDatabase = this.getReadableDatabase();
-        Cursor cur = sbDatabase.rawQuery(Constants.GET_STORY_ID, null);
-
-        cur.moveToFirst(); // Move to the first position
-        int the_id = cur.getInt(0);
-        cur.close(); // Close the cursor when done
-
-        return the_id;
     }
 
     public Cursor getRows(String query) {
