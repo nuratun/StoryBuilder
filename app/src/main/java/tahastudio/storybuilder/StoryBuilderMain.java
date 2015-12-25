@@ -77,14 +77,13 @@ public class StoryBuilderMain extends AppCompatActivity {
     }
 
     // The following is being called from SBDialog. It's calling AsyncTask -> CreateStoryTask
-    public void onPostResult(Integer result) {
+    public void onPostResult(String result) {
         // Add an intent for CreateStory
         Intent callCreateStory = new Intent(StoryBuilderMain.this, CreateStory.class);
 
-        // TODO -> Grab the story title from another asynctask in CreateStory class
-        // Send the story title to the new activity, also
-        //callCreateStory.putExtra("title", sb_story_title);
-        callCreateStory.putExtra("id", result);
+        // TODO -> Grab the story id in db from another asynctask in CreateStory class
+        // Send the story title to the new activity
+        callCreateStory.putExtra("title", result);
 
         // Call the new activity
         startActivity(callCreateStory);

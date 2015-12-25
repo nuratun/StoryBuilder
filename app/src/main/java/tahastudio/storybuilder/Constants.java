@@ -9,11 +9,9 @@ public class Constants {
     public static final int DATABASE_VERSION = 10;
     public static final String DATABASE_NAME = "sql.db";
 
-    // Set up database schema for the story
+    // Set up table schema for the story
     public static final String DB_ID = "_id";
     public static final String DB_COMMA = ", ";
-
-    // Set up table schema for story
     public static final String STORY_TABLE = "sb_story";
     public static final String STORY_NAME = "title";
     public static final String STORY_GENRE = "genre";

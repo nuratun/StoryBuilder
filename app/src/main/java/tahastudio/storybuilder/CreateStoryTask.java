@@ -5,14 +5,16 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 /**
- * Separate AsyncTask to add a new story to the database.
+ * Separate AsyncTask to add a new story to the database. Will pass three strings
+ * from SBDialog.
  */
-public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
+public class CreateStoryTask extends AsyncTask<String, Void, String> {
     String one;
     String two;
     String three;
     private Context context;
 
+    // We need to be able to pass more than one string to this background task
     public CreateStoryTask(Context context, String one, String two, String three) {
         this.one = one;
         this.two = two;
@@ -20,9 +22,10 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
         this.context = context;
     }
 
-    // Interface for this class
+    // Interface for this class. Will process result from doInBackground,
+    // which will be the story title
     public interface StoryTask{
-        void onPostResult(Integer result);
+        void onPostResult(String result);
     }
 
     StoryTask addStory;
@@ -38,7 +41,7 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
     }
 
     @Override
-    protected Integer doInBackground(String... params) {
+    protected String doInBackground(String... params) {
         // Instantiate new db instance
         SQLDatabase db = new SQLDatabase(context);
         db.getWritableDatabase();
@@ -52,24 +55,14 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
         // Insert into the database
         db.insertRow(values, Constants.STORY_TABLE);
 
-        // Now get the db id back
-        db.getReadableDatabase();
-
-        try {
-            return db.getStoryID();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return null;
+        // Now return the story title to send to
+        // StoryBuilderMain and then CreateStory
+        return one;
     }
 
     @Override
-    protected void onPostExecute(Integer result) {
+    protected void onPostExecute(String result) {
         super.onPostExecute(result);
-
-        // TODO -> Causing an error. Send the story title back, and grab the id in the
-        // next class
         addStory.onPostResult(result);
     }
 

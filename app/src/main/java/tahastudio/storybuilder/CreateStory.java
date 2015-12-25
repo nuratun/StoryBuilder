@@ -31,28 +31,11 @@ public class CreateStory extends AppCompatActivity {
         // Find the title so we can add in the user's story title
         TextView story_title = (TextView) findViewById(R.id.story_title);
 
-        // Grab the title from StoryBuilderMain
-        //Intent get_title = getIntent();
-        //String title = get_title.getStringExtra("title");
-        //story_title.setText(title);
+        Intent get_title = getIntent(); // Get the Intent sent from StoryBuilderMain
+        String title = get_title.getStringExtra("title"); // Get the title from the intent
+        story_title.setText(title); // Set the TextView for this activity
 
-        // Grab the DB_ID from StoryBuilderMain
-        Intent get_int = getIntent();
-        Integer the_id = get_int.getIntExtra("id", 0);
-
-        // Send the story db id to AsyncTask to start
-        // creating all the tables
-        createStoryTask storyTask = new createStoryTask();
-
-        // Try to get the response back from createStoryTask
-        try {
-            Boolean is_completed = storyTask.execute(the_id).get();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // Find the TabLayout in activity_create_story.xml
+         // Find the TabLayout in activity_create_story.xml
         TabLayout tab_layout = (TabLayout) findViewById(R.id.tab_layout);
 
         // Add the number tabs, and set the title for each one. Still need the
