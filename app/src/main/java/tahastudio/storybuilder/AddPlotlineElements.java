@@ -99,7 +99,8 @@ public class AddPlotlineElements extends Fragment {
             SBValues send = new SBValues();
 
             try {
-                send.processValues(context, Constants.STORY_PLOTLINE, plotline,
+                send.processValues(context, Constants.STORY_PLOTLINE,
+                        plotline,
                         Constants.STORY_PLOTLINE_TABLE);
                 send.processValues(context, Constants.STORY_PLOTLINE_NOTES, notes,
                         Constants.STORY_PLOTLINE_TABLE);
