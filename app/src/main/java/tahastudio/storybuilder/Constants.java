@@ -105,8 +105,7 @@ public class Constants {
     public static final String GRAB_PLACES_DETAILS = "SELECT "
             + DB_ID + ", "
             + STORY_PLACE_NAME + ", "
-            + STORY_PLACE_LOCATION + ", "
-            + STORY_PLACE_DESC + " FROM "
+            + STORY_PLACE_LOCATION + " FROM "
             + STORY_PLACES_TABLE
             + ";";
 

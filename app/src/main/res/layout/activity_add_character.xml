@@ -17,15 +17,13 @@
         android:id="@+id/main_character_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Main Character"
-        android:onClick="mCharacterCheckbox" />
+        android:text="Main Character" />
 
     <CheckBox
         android:id="@+id/antagonist_character_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Main Antagonist"
-        android:onClick="mCharacterCheckbox" />
+        android:text="Main Antagonist" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -41,22 +39,19 @@
             android:id="@+id/male_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Male"
-            android:onClick="characterGender" />
+            android:text="Male" />
 
         <RadioButton
             android:id="@+id/female_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Female"
-            android:onClick="characterGender" />
+            android:text="Female" />
 
         <RadioButton
             android:id="@+id/other_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Other"
-            android:onClick="characterGender" />
+            android:text="Other" />
     </LinearLayout>
 
     <EditText
