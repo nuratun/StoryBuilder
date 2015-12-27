@@ -17,6 +17,8 @@ public class CreateStory extends AppCompatActivity {
     private String character_gender;
     private boolean plot;
 
+    // TODO -> Add create to https://github.com/futuresimple/android-floating-action-button
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
