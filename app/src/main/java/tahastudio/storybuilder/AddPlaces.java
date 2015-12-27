@@ -4,10 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,22 +39,6 @@ public class AddPlaces extends Fragment {
         setPlaceList placeList = new setPlaceList();
         placeList.execute();
 
-        // Find the FAB button and on click, grab the AddPlaceElements fragment
-        FloatingActionButton add_a_place = (FloatingActionButton) add_place_layout
-                .findViewById(R.id.add_place_fab);
-        add_a_place.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // To programmatically add in the AddPlaceElements fragment
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                // Need to get APIs from FragmentTransaction to add, replace or remove fragments
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                // Add the fragment, add it to the backstack, and commit it
-                fragmentTransaction.add(R.id.add_places_tab, new AddPlaceElements())
-                        .addToBackStack("add_the_place")
-                        .commit();
-            }
-        });
         // Return the layout
         return add_place_layout;
     }

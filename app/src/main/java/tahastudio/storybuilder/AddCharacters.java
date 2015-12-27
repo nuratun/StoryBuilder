@@ -4,10 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,25 +37,6 @@ public class AddCharacters extends Fragment {
         // Run the AsyncTask to fill in the ListView
         setCharacterList characterList = new setCharacterList();
         characterList.execute();
-
-        // Get the FAB for the story creation. Clicking on this FAB should
-        // instantiate the AddCharacterElements fragment
-        FloatingActionButton the_character_fab = (FloatingActionButton)
-                add_character_layout.findViewById(R.id.add_character_fab);
-        the_character_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // To programmatically add in the AddCharacterElements fragment
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                // Need to get APIs from FragmentTransaction to add, replace or remove fragments
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                // Add the fragment, add it to the backstack, and commit it
-                fragmentTransaction
-                        .add(R.id.add_characters_tab, new AddCharacterElements())
-                        .addToBackStack("add_the_character")
-                        .commit();
-            }
-        });
 
         // Return this view
         return add_character_layout;

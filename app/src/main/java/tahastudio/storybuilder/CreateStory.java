@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -12,6 +14,11 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 public class CreateStory extends AppCompatActivity {
+    // To programmatically add in the element fragments
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    // Need to get APIs from FragmentTransaction to add, replace or remove fragments
+    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
     // To be used for the checkboxes
     private String character_type;
     private String character_gender;
@@ -36,6 +43,64 @@ public class CreateStory extends AppCompatActivity {
         Intent get_title = getIntent(); // Get the Intent sent from StoryBuilderMain
         String title = get_title.getStringExtra("title"); // Get the title from the intent
         story_title.setText(title); // Set the TextView for this activity
+
+        // Find the FAB menu and add the actions
+        com.getbase.floatingactionbutton.FloatingActionsMenu fab =
+                (com.getbase.floatingactionbutton.FloatingActionsMenu) findViewById(R.id.fab);
+
+        // Find the inner menu for adding a character
+        com.getbase.floatingactionbutton.FloatingActionButton characters_fab =
+                (com.getbase.floatingactionbutton.FloatingActionButton)
+                        findViewById(R.id.characters);
+
+        // Find the inner menu for adding a place
+        com.getbase.floatingactionbutton.FloatingActionButton place_fab =
+                (com.getbase.floatingactionbutton.FloatingActionButton)
+                        findViewById(R.id.places);
+
+        // Find the inner menu for adding a plot
+        com.getbase.floatingactionbutton.FloatingActionButton plot_fab =
+                (com.getbase.floatingactionbutton.FloatingActionButton)
+                        findViewById(R.id.plots);
+
+        // Now add the buttons to the menu
+        // TODO -> below is causing following error: The specified child already has a parent.
+        // You must call removeView() on the child's parent first.
+        fab.addButton(characters_fab);
+        fab.addButton(place_fab);
+        fab.addButton(plot_fab);
+
+        // Now create the menu clicks for each button menu
+        characters_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Add the fragment, add it to the backstack, and commit it
+                fragmentTransaction
+                        .add(R.id.add_characters_tab, new AddCharacterElements())
+                        .addToBackStack("add_the_character")
+                        .commit();
+            }
+        });
+
+        place_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Add the fragment, add it to the backstack, and commit it
+                fragmentTransaction.add(R.id.add_places_tab, new AddPlaceElements())
+                        .addToBackStack("add_the_place")
+                        .commit();
+            }
+        });
+
+        plot_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Add the fragment, add it to the backstack, and commit it
+                fragmentTransaction.add(R.id.add_plotline_tab, new AddPlotlineElements())
+                        .addToBackStack("add_the_plot")
+                        .commit();
+            }
+        });
 
          // Find the TabLayout in activity_create_story.xml
         TabLayout tab_layout = (TabLayout) findViewById(R.id.tab_layout);

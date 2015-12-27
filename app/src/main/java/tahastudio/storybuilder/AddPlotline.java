@@ -4,10 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,20 +38,6 @@ public class AddPlotline extends Fragment {
         // Call the AsyncTask to populate the ListView
         setPlotlineList plotlineList = new setPlotlineList();
         plotlineList.execute();
-
-        // Find the FAB and instantiate the AddPlotlineElements fragment
-        FloatingActionButton the_plotline_fab = (FloatingActionButton)
-                add_plotline_layout.findViewById(R.id.add_plotline_fab);
-        the_plotline_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.add(R.id.add_plotline_tab, new AddPlotlineElements())
-                        .addToBackStack("add_the_plot")
-                        .commit();
-            }
-        });
 
         // Return the layout
         return add_plotline_layout;
