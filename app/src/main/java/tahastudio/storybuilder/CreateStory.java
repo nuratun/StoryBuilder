@@ -46,6 +46,7 @@ public class CreateStory extends AppCompatActivity {
         String title = get_title.getStringExtra("title"); // Get the title from the intent
         story_title.setText(title); // Set the TextView for this activity
 
+        // TODO - Check why correct ID is not being passed
         Intent get_id = getIntent(); // Get the id Intent sent from CreateStoryTask
         SB_ID = get_id.getIntExtra("result", 0); // Set it as a public variable
 

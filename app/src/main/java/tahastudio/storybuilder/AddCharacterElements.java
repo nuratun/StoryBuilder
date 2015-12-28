@@ -128,6 +128,7 @@ public class AddCharacterElements extends Fragment {
             values = new ContentValues();
 
             try {
+                values.put(Constants.DB_ID, CreateStory.SB_ID);
                 values.put(Constants.STORY_CHARACTER, name);
                 values.put(Constants.STORY_AGE, age);
                 values.put(Constants.STORY_BIRTHPLACE, birthplace);
@@ -135,7 +136,7 @@ public class AddCharacterElements extends Fragment {
                 values.put(Constants.STORY_CHARACTER_NOTES, notes);
 
                 // Insert the rows
-                db.insertElements(values, Constants.STORY_CHARACTER_TABLE, CreateStory.SB_ID);
+                db.insertRow(values, Constants.STORY_CHARACTER_TABLE);
 
                 return true;
             } catch (Exception e) {

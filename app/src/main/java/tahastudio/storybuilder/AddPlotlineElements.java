@@ -107,11 +107,12 @@ public class AddPlotlineElements extends Fragment {
             values = new ContentValues();
 
             try {
+                values.put(Constants.DB_ID, CreateStory.SB_ID);
                 values.put(Constants.STORY_PLOTLINE, plotline);
                 values.put(Constants.STORY_PLOTLINE_NOTES, notes);
 
                 // Insert the rows
-                db.insertElements(values, Constants.STORY_PLOTLINE_TABLE, CreateStory.SB_ID);
+                db.insertRow(values, Constants.STORY_PLOTLINE_TABLE);
 
                 return true;
             } catch (Exception e) {
