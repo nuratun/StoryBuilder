@@ -1,10 +1,15 @@
 <LinearLayout
     android:id="@+id/add_story"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="20dp"
+    android:padding="30dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create A New Story" />
 
     <EditText
         android:id="@+id/sb_title"

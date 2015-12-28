@@ -23,9 +23,9 @@ public class TabViewer extends FragmentStatePagerAdapter {
             case 1:
                 AddPlaces sbTab2 = new AddPlaces();
                 return sbTab2;
-            //case 2:
-            //    AddPlotline sbTab3 = new AddPlotline();
-            //    return sbTab3;
+            case 2:
+                AddPlotline sbTab3 = new AddPlotline();
+                return sbTab3;
             default:
                 return null;
         }

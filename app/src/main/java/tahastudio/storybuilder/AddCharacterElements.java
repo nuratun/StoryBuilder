@@ -1,5 +1,6 @@
 package tahastudio.storybuilder;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -58,19 +59,26 @@ public class AddCharacterElements extends Fragment {
                             + "is a required field", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    // Send them to a background thread to process in the SBValues
+                    // Convert the EditText fields to the equivalent string
+                    String convert_name = name.getText().toString();
+                    String convert_age = age.getText().toString();
+                    String convert_birthplace = birthplace.getText().toString();
+                    String convert_personality = personality.getText().toString();
+                    String convert_notes = character_notes.getText().toString();
+
+                    // Send them to a background thread to process in the db
                     addCharactersTask charactersTask =
                             new addCharactersTask(
                                     context,
-                                    name,
-                                    age,
-                                    birthplace,
-                                    personality,
-                                    character_notes);
+                                    convert_name,
+                                    convert_age,
+                                    convert_birthplace,
+                                    convert_personality,
+                                    convert_notes);
                     charactersTask.execute();
                 }
                 // Return to AddCharacters class
-                getActivity().getFragmentManager().popBackStack();
+                getFragmentManager().popBackStackImmediate();
             }
         });
 
@@ -81,25 +89,28 @@ public class AddCharacterElements extends Fragment {
     // Need to process more than one variable, so create a constructor in the class
     private class addCharactersTask extends AsyncTask<Void, Void, Boolean> {
         private Context context;
-        EditText name;
-        EditText age;
-        EditText birthplace;
-        EditText personality;
-        EditText notes;
+        private ContentValues values;
+        private SQLDatabase db;
+        String name;
+        String age;
+        String birthplace;
+        String personality;
+        String notes;
 
         // Constructor to pass in more than one value
         public addCharactersTask(Context context,
-                                 EditText name,
-                                 EditText age,
-                                 EditText birthplace,
-                                 EditText personality,
-                                 EditText notes) {
+                                 String name,
+                                 String age,
+                                 String birthplace,
+                                 String personality,
+                                 String notes) {
             this.context = context;
             this.name = name;
             this.age = age;
             this.birthplace = birthplace;
             this.personality = personality;
             this.notes = notes;
+
         }
 
         @Override
@@ -113,24 +124,23 @@ public class AddCharacterElements extends Fragment {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            SBValues send = new SBValues();
+            db = new SQLDatabase(context);
+            values = new ContentValues();
 
             try {
-                send.processValues(context, Constants.STORY_CHARACTER, name,
-                        Constants.STORY_CHARACTER_TABLE);
-                send.processValues(context, Constants.STORY_AGE, age,
-                        Constants.STORY_CHARACTER_TABLE);
-                send.processValues(context, Constants.STORY_BIRTHPLACE, birthplace,
-                        Constants.STORY_CHARACTER_TABLE);
-                send.processValues(context, Constants.STORY_PERSONALITY, personality,
-                        Constants.STORY_CHARACTER_TABLE);
-                send.processValues(context, Constants.STORY_CHARACTER_NOTES, notes,
-                        Constants.STORY_CHARACTER_TABLE);
+                values.put(Constants.STORY_CHARACTER, name);
+                values.put(Constants.STORY_AGE, age);
+                values.put(Constants.STORY_BIRTHPLACE, birthplace);
+                values.put(Constants.STORY_PERSONALITY, personality);
+                values.put(Constants.STORY_CHARACTER_NOTES, notes);
+
+                // Insert the rows
+                db.insertElements(values, Constants.STORY_CHARACTER_TABLE, CreateStory.SB_ID);
+
                 return true;
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
             return false;
         }
 

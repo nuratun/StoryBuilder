@@ -1,5 +1,6 @@
 package tahastudio.storybuilder;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -55,17 +56,23 @@ public class AddPlaceElements extends Fragment {
                 }
 
                 else {
+                    // Convert EditText fields to equivalent strings
+                    String convert_place_name = place_name.getText().toString();
+                    String convert_place_location = place_location.getText().toString();
+                    String convert_place_description = place_description.getText().toString();
+                    String convert_place_notes = place_notes.getText().toString();
+
                     // Send to background thread
                     addPlacesTask placesTask = new addPlacesTask(
                             context,
-                            place_name,
-                            place_location,
-                            place_description,
-                            place_notes);
+                            convert_place_name,
+                            convert_place_location,
+                            convert_place_description,
+                            convert_place_notes);
                     placesTask.execute();
                 }
                 // Return to AddPlaces class
-                getActivity().getFragmentManager().popBackStack();
+                getFragmentManager().popBackStackImmediate();
             }
         });
         // Return the layout
@@ -75,16 +82,18 @@ public class AddPlaceElements extends Fragment {
     // Need an AsyncTask with a constructor to pass in multiple values
     private class addPlacesTask extends AsyncTask<Void, Void, Boolean> {
         private Context context;
-        EditText name;
-        EditText location;
-        EditText description;
-        EditText notes;
+        private ContentValues values;
+        private SQLDatabase db;
+        String name;
+        String location;
+        String description;
+        String notes;
 
         public addPlacesTask(Context context,
-                             EditText name,
-                             EditText location,
-                             EditText description,
-                             EditText notes) {
+                             String name,
+                             String location,
+                             String description,
+                             String notes) {
             this.context = context;
             this.name = name;
             this.location = location;
@@ -103,18 +112,18 @@ public class AddPlaceElements extends Fragment {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            SBValues send = new SBValues();
+            db = new SQLDatabase(context);
+            values = new ContentValues();
 
             try {
-                // Send to SBValues to process into text and add to db
-                send.processValues(context, Constants.STORY_PLACE_NAME, name,
-                        Constants.STORY_PLACES_TABLE);
-                send.processValues(context, Constants.STORY_PLACE_LOCATION, location,
-                        Constants.STORY_PLACES_TABLE);
-                send.processValues(context, Constants.STORY_PLACE_DESC, description,
-                        Constants.STORY_PLACES_TABLE);
-                send.processValues(context, Constants.STORY_PLACE_NOTES, notes,
-                        Constants.STORY_PLACES_TABLE);
+                values.put(Constants.STORY_PLACE_NAME, name);
+                values.put(Constants.STORY_PLACE_LOCATION, location);
+                values.put(Constants.STORY_PLACE_DESC, description);
+                values.put(Constants.STORY_PLACE_NOTES, notes);
+
+                // Insert the rows
+                db.insertElements(values, Constants.STORY_PLACES_TABLE, CreateStory.SB_ID);
+
                 return true; // If successfully inserted values
             } catch (Exception e) {
                 e.printStackTrace();

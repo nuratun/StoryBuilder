@@ -15,7 +15,7 @@ import android.widget.ListView;
  * First tab for SB
  */
 public class AddCharacters extends Fragment {
-    private ListView add_characters_listview;
+    private View add_character_layout;
 
     public AddCharacters() {
 
@@ -25,14 +25,10 @@ public class AddCharacters extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View add_character_layout = inflater.inflate(
+        add_character_layout = inflater.inflate(
                 R.layout.fragment_add_characters,
                 container,
                 false);
-
-        // Find the ListView in the layout
-        add_characters_listview = (ListView) add_character_layout
-                .findViewById(R.id.add_characters_list);
 
         // Run the AsyncTask to fill in the ListView
         setCharacterList characterList = new setCharacterList();
@@ -44,7 +40,7 @@ public class AddCharacters extends Fragment {
 
     // This AsyncTask will populate the ListView with a list of characters saved for this story
     private class setCharacterList extends AsyncTask<Void, Void, Cursor> {
-        private Context context;
+        private Context context = getActivity().getApplicationContext();
         private SQLDatabase db;
 
         @Override
@@ -58,8 +54,7 @@ public class AddCharacters extends Fragment {
 
         @Override
         protected Cursor doInBackground(Void... params) {
-            // Get an instance of the application context for the db
-            context = getActivity().getApplicationContext();
+            // Get a new db instance and set the context
             db = new SQLDatabase(context);
 
             try {
@@ -83,19 +78,24 @@ public class AddCharacters extends Fragment {
                     Constants.STORY_AGE
             };
 
-            // Get the ListView widget
+            // Get the TextView widgets
             int[] widgets = new int[] {
-                    R.id.add_characters_list
+                    R.id.db_id,
+                    R.id.name_info,
+                    R.id.extra_info
             };
 
             SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
                     context,
-                    R.layout.fragment_add_characters,
+                    R.layout.tab_view,
                     result,
                     columns,
                     widgets,
                     0);
 
+            // Find the ListView in the layout
+            ListView add_characters_listview = (ListView) add_character_layout
+                    .findViewById(R.id.characters_listview);
             add_characters_listview.setAdapter(cursorAdapter);
         }
     }

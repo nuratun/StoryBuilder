@@ -36,7 +36,7 @@ public class SQLDatabase extends SQLiteOpenHelper {
         sbDatabase.insert(db, null, values);
     }
 
-    public void insertElements(ContentValues values, String table, int num) {
+    public void insertElements(ContentValues values, String table, Integer num) {
         sbDatabase = this.getWritableDatabase();
         sbDatabase.execSQL("INSERT INTO "
                 + table + " VALUES "

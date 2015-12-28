@@ -6,7 +6,7 @@ package tahastudio.storybuilder;
 public class Constants {
 
     // Version number must change if database changes
-    public static final int DATABASE_VERSION = 11;
+    public static final int DATABASE_VERSION = 12;
     public static final String DATABASE_NAME = "sql.db";
 
     // Set up table schema for the story
@@ -98,22 +98,25 @@ public class Constants {
             + DB_ID + ", "
             + STORY_CHARACTER + ", "
             + STORY_AGE + " FROM "
-            + STORY_CHARACTER_TABLE
-            + ";";
+            + STORY_CHARACTER_TABLE + " WHERE "
+            + DB_ID + " = "
+            + CreateStory.SB_ID + ";";
 
     // Used in the AddPlaces class to populate the ListView
     public static final String GRAB_PLACES_DETAILS = "SELECT "
             + DB_ID + ", "
             + STORY_PLACE_NAME + ", "
             + STORY_PLACE_LOCATION + " FROM "
-            + STORY_PLACES_TABLE
-            + ";";
+            + STORY_PLACES_TABLE + " WHERE "
+            + DB_ID + " = "
+            + CreateStory.SB_ID + ";";
 
     // Used in the AddPlotline class to populate the ListView
     public static final String GRAB_PLOTLINE_DETALIS = "SELECT "
             + DB_ID + ", "
             + STORY_MAIN_PLOTLINE + ", "
             + STORY_PLOTLINE + " FROM "
-            + STORY_PLOTLINE_TABLE
-            + ";";
+            + STORY_PLOTLINE_TABLE + " WHERE "
+            + DB_ID + " = "
+            + CreateStory.SB_ID + ";";
 }

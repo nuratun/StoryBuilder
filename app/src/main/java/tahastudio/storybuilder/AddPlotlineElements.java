@@ -1,5 +1,6 @@
 package tahastudio.storybuilder;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -51,16 +52,20 @@ public class AddPlotlineElements extends Fragment {
                     Toast.makeText(context, "You must enter at least"
                             + " a summary of the plot", Toast.LENGTH_LONG).show();
                 } else {
+                    // Convert EditText fields to the equivalent strings
+                    String convert_plotline = plotline.getText().toString();
+                    String convert_notes = notes.getText().toString();
+
                     // Instantiate instance of AsyncTask to send input to background thread
                     addPlotlineTask plotlineTask = new addPlotlineTask(
                             context,
                             false,
-                            plotline,
-                            notes);
+                            convert_plotline,
+                            convert_notes);
                     plotlineTask.execute();
                 }
                 // Return to AddPlotline
-                getActivity().getFragmentManager().popBackStack();
+                getFragmentManager().popBackStackImmediate();
             }
         });
         // Return the layout
@@ -70,15 +75,17 @@ public class AddPlotlineElements extends Fragment {
     // Need to create a constructor to pass in multiple values
     private class addPlotlineTask extends AsyncTask<Void, Void, Boolean> {
         private Context context;
+        private ContentValues values;
+        private SQLDatabase db;
         Boolean main_plot;
-        EditText plotline;
-        EditText notes;
+        String plotline;
+        String notes;
 
         public addPlotlineTask(
                 Context context,
                 Boolean main_plot,
-                EditText plotline,
-                EditText notes) {
+                String plotline,
+                String notes) {
             this.context = context;
             this.main_plot = main_plot;
             this.plotline = plotline;
@@ -96,14 +103,16 @@ public class AddPlotlineElements extends Fragment {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            SBValues send = new SBValues();
+            db = new SQLDatabase(context);
+            values = new ContentValues();
 
             try {
-                send.processValues(context, Constants.STORY_PLOTLINE,
-                        plotline,
-                        Constants.STORY_PLOTLINE_TABLE);
-                send.processValues(context, Constants.STORY_PLOTLINE_NOTES, notes,
-                        Constants.STORY_PLOTLINE_TABLE);
+                values.put(Constants.STORY_PLOTLINE, plotline);
+                values.put(Constants.STORY_PLOTLINE_NOTES, notes);
+
+                // Insert the rows
+                db.insertElements(values, Constants.STORY_PLOTLINE_TABLE, CreateStory.SB_ID);
+
                 return true;
             } catch (Exception e) {
                 e.printStackTrace();

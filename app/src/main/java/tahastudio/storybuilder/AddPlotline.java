@@ -16,7 +16,7 @@ import android.widget.ListView;
  * 3rd tab for SB
  */
 public class AddPlotline extends Fragment {
-    private ListView add_plotline_listview;
+    private View add_plotline_layout;
 
     public AddPlotline() {
 
@@ -26,14 +26,10 @@ public class AddPlotline extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View add_plotline_layout = inflater.inflate(
+        add_plotline_layout = inflater.inflate(
                 R.layout.fragment_add_plotline,
                 container,
                 false);
-
-        // Find the ListView for this layout
-        add_plotline_listview = (ListView) add_plotline_layout
-                .findViewById(R.id.add_plotline_list);
 
         // Call the AsyncTask to populate the ListView
         setPlotlineList plotlineList = new setPlotlineList();
@@ -45,7 +41,7 @@ public class AddPlotline extends Fragment {
 
     // Use the AsyncTask to populate the ListView with the plotlines for this story
     private class setPlotlineList extends AsyncTask<Void, Void, Cursor> {
-        private Context context;
+        private Context context = getActivity().getApplicationContext();
         private SQLDatabase db;
 
         @Override
@@ -55,8 +51,7 @@ public class AddPlotline extends Fragment {
 
         @Override
         protected Cursor doInBackground(Void... params) {
-            // Get an instance of the application context
-            context = getActivity().getApplicationContext();
+            // Get a new db instance and set the context
             db = new SQLDatabase(context);
 
             try {
@@ -81,17 +76,21 @@ public class AddPlotline extends Fragment {
 
             // Get the widget list
             int[] widgets = new int[] {
-                    R.id.add_plotline_list
+                    R.id.db_id,
+                    R.id.name_info,
+                    R.id.extra_info
             };
 
             SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
                     context,
-                    R.layout.fragment_add_plotline,
+                    R.layout.tab_view,
                     result,
                     columns,
                     widgets,
                     0);
 
+            ListView add_plotline_listview = (ListView) add_plotline_layout
+                    .findViewById(R.id.plotline_listview);
             add_plotline_listview.setAdapter(cursorAdapter);
         }
     }

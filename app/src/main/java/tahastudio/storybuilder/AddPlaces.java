@@ -16,7 +16,7 @@ import android.widget.ListView;
  * Second tab for SB
  */
 public class AddPlaces extends Fragment {
-    private ListView add_places_listview;
+    private View add_place_layout;
 
     public AddPlaces() {
 
@@ -26,14 +26,10 @@ public class AddPlaces extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment and return it
-        View add_place_layout = inflater.inflate(
+        add_place_layout = inflater.inflate(
                 R.layout.fragment_add_places,
                 container,
                 false);
-
-        // Find the ListView in the layout
-        add_places_listview = (ListView) add_place_layout
-                .findViewById(R.id.add_places_list);
 
         // Call the AsyncTask to populate the ListView
         setPlaceList placeList = new setPlaceList();
@@ -45,7 +41,7 @@ public class AddPlaces extends Fragment {
 
     // This AsyncTask will populate the ListView with the places in this story
     private class setPlaceList extends AsyncTask<Void, Void, Cursor> {
-        private Context context;
+        private Context context = getActivity().getApplicationContext();
         private SQLDatabase db;
 
         @Override
@@ -55,8 +51,7 @@ public class AddPlaces extends Fragment {
 
         @Override
         protected Cursor doInBackground(Void... params) {
-            // Get an instance of the application context for the db
-            context = getActivity().getApplicationContext();
+            // Get a new db instance and set the context
             db = new SQLDatabase(context);
 
             try {
@@ -79,19 +74,24 @@ public class AddPlaces extends Fragment {
                     Constants.STORY_PLACE_LOCATION
             };
 
-            // Get the ListView widget
+            // Get the TextView widgets
             int[] widgets = new int[] {
-                    R.id.add_places_list
+                    R.id.db_id,
+                    R.id.name_info,
+                    R.id.extra_info
             };
 
             SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
                     context,
-                    R.layout.fragment_add_places,
+                    R.layout.tab_view,
                     result,
                     columns,
                     widgets,
                     0);
 
+            // Find the ListView in the layout
+            ListView add_places_listview = (ListView) add_place_layout
+                    .findViewById(R.id.places_listview);
             add_places_listview.setAdapter(cursorAdapter);
         }
     }

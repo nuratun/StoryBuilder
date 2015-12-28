@@ -69,8 +69,8 @@ public class StoryBuilderMain extends AppCompatActivity {
     }
 
     // Call the SBDialog class to create the dialog box. User will input data to the
-    // dialog box to create a new story from the FAB
-    public void showSBDialog() {
+    // dialog box to create a new story from the FAB. It will send the data to CreateStoryTask
+    private void showSBDialog() {
         SBDialog newDialog = new SBDialog();
         newDialog.show(getSupportFragmentManager(), "story_creation");
     }
@@ -89,7 +89,6 @@ public class StoryBuilderMain extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }

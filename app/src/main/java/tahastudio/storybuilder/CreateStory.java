@@ -16,8 +16,10 @@ import android.widget.TextView;
 public class CreateStory extends AppCompatActivity {
     // To programmatically add in the element fragments
     FragmentManager fragmentManager = getSupportFragmentManager();
-    // Need to get APIs from FragmentTransaction to add, replace or remove fragments
-    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+    // Make the story db id public so other classes can access it
+    // Will grab it from the Intent extras
+    public static Integer SB_ID;
 
     // To be used for the checkboxes
     private String character_type;
@@ -40,67 +42,81 @@ public class CreateStory extends AppCompatActivity {
         // Find the title so we can add in the user's story title
         TextView story_title = (TextView) findViewById(R.id.story_title);
 
-        Intent get_title = getIntent(); // Get the Intent sent from StoryBuilderMain
+        Intent get_title = getIntent(); // Get the Intent sent from CreateStoryTask
         String title = get_title.getStringExtra("title"); // Get the title from the intent
         story_title.setText(title); // Set the TextView for this activity
 
+        Intent get_id = getIntent(); // Get the id Intent sent from CreateStoryTask
+        SB_ID = get_id.getIntExtra("result", 0); // Set it as a public variable
+
         // Find the FAB menu and add the actions
-        com.getbase.floatingactionbutton.FloatingActionsMenu fab =
+        final com.getbase.floatingactionbutton.FloatingActionsMenu fab =
                 (com.getbase.floatingactionbutton.FloatingActionsMenu) findViewById(R.id.fab);
 
+        // TODO -> Factor out into one method - begin
         // Find the inner menu for adding a character
         com.getbase.floatingactionbutton.FloatingActionButton characters_fab =
                 (com.getbase.floatingactionbutton.FloatingActionButton)
                         findViewById(R.id.characters);
+
+        characters_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Collapse the menu fab
+                fab.collapse();
+
+                // Need to get APIs from FragmentTransaction to add, replace or remove fragments
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                // Add the fragment, add it to the backstack, and commit it
+                fragmentTransaction
+                        .add(R.id.story_creation_layout, new AddCharacterElements())
+                        .addToBackStack("add_the_character")
+                        .commit();
+            }
+        });
 
         // Find the inner menu for adding a place
         com.getbase.floatingactionbutton.FloatingActionButton place_fab =
                 (com.getbase.floatingactionbutton.FloatingActionButton)
                         findViewById(R.id.places);
 
-        // Find the inner menu for adding a plot
-        com.getbase.floatingactionbutton.FloatingActionButton plot_fab =
-                (com.getbase.floatingactionbutton.FloatingActionButton)
-                        findViewById(R.id.plots);
-
-        // Now add the buttons to the menu
-        // TODO -> below is causing following error: The specified child already has a parent.
-        // You must call removeView() on the child's parent first.
-        fab.addButton(characters_fab);
-        fab.addButton(place_fab);
-        fab.addButton(plot_fab);
-
-        // Now create the menu clicks for each button menu
-        characters_fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Add the fragment, add it to the backstack, and commit it
-                fragmentTransaction
-                        .add(R.id.add_characters_tab, new AddCharacterElements())
-                        .addToBackStack("add_the_character")
-                        .commit();
-            }
-        });
-
         place_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Collapse the menu fab
+                fab.collapse();
+
+                // Need to get APIs from FragmentTransaction to add, replace or remove fragments
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 // Add the fragment, add it to the backstack, and commit it
-                fragmentTransaction.add(R.id.add_places_tab, new AddPlaceElements())
+                fragmentTransaction
+                        .add(R.id.story_creation_layout, new AddPlaceElements())
                         .addToBackStack("add_the_place")
                         .commit();
             }
         });
 
+        // Find the inner menu for adding a plot
+        com.getbase.floatingactionbutton.FloatingActionButton plot_fab =
+                (com.getbase.floatingactionbutton.FloatingActionButton)
+                        findViewById(R.id.plots);
+
         plot_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Collapse the menu fab
+                fab.collapse();
+
+                // Need to get APIs from FragmentTransaction to add, replace or remove fragments
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 // Add the fragment, add it to the backstack, and commit it
-                fragmentTransaction.add(R.id.add_plotline_tab, new AddPlotlineElements())
+                fragmentTransaction
+                        .add(R.id.story_creation_layout, new AddPlotlineElements())
                         .addToBackStack("add_the_plot")
                         .commit();
             }
         });
+        // TODO -> Factor out into one method - end
 
          // Find the TabLayout in activity_create_story.xml
         TabLayout tab_layout = (TabLayout) findViewById(R.id.tab_layout);
@@ -108,8 +124,8 @@ public class CreateStory extends AppCompatActivity {
         // Add the number tabs, and set the title for each one. Still need the
         // content for each tab, which the TabViewer class will fill
         tab_layout.addTab(tab_layout.newTab().setText("Characters"));
-        tab_layout.addTab(tab_layout.newTab().setText("Plotline"));
         tab_layout.addTab(tab_layout.newTab().setText("Places"));
+        tab_layout.addTab(tab_layout.newTab().setText("Plotlines"));
         tab_layout.setTabGravity(tab_layout.GRAVITY_FILL);
 
         // ViewPager allows flipping left and right through pages of data
@@ -196,7 +212,7 @@ public class CreateStory extends AppCompatActivity {
     }
 
     // Create the tables on a background thread
-    private class createStoryTask extends AsyncTask<Integer, Void, Boolean> {
+    private class storyTablesTask extends AsyncTask<Integer, Void, Boolean> {
 
         @Override
         protected void onPreExecute() {
@@ -213,6 +229,7 @@ public class CreateStory extends AppCompatActivity {
             boolean completed = false;
             SQLDatabase db = new SQLDatabase(CreateStory.this);
 
+            // Create the
             try {
                 db.insertTheID(params[0]);
                 completed = true;

@@ -8,8 +8,8 @@
     tools:context="tahastudio.storybuilder.AddCharacters">
 
     <ListView
-        android:id="@+id/add_characters_list"
+        android:id="@+id/characters_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-</RelativeLayout>
+    </RelativeLayout>
