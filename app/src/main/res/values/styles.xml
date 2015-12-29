@@ -1,25 +1,27 @@
 <resources>
     <!-- Base theme applied no matter what API -->
     <style name="ActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!--If you are using revision 22.1 please use just windowNoTitle. Without android:-->
         <item name="android:windowNoTitle">true</item>
-        <!--We will be using the toolbar so no need to show ActionBar-->
         <item name="android:windowActionBar">false</item>
-        <!-- Set theme colors from http://www.google.com/design/spec/style/color.html#color-color-palette-->
-        <!-- colorPrimary is used for the default action bar background -->
-        <item name="colorPrimary">#2196F3</item>
-        <!-- colorPrimaryDark is used for the status bar -->
-        <item name="colorPrimaryDark">#1976D2</item>
-        <!-- colorAccent is used as the default value for colorControlActivated
-             which is used to tint widgets -->
-        <item name="colorAccent">#FF4081</item>
-        <!-- You can also set colorControlNormal, colorControlActivated
-            colorControlHighlight and colorSwitchThumbNormal. -->
+        <item name="colorPrimary">@color/ColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ColorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimaryAccent</item>
+    </style>
+
+    <!-- For the main activity XML -->
+    <style name="StoryBuilderTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorForeground">@color/colorUpperBackground</item>
+        <item name="android:colorBackground">@color/colorLowerBackground</item>
     </style>
 
     <!-- change color Popup -->
     <style name="ActionBarPopupTheme" parent="ThemeOverlay.AppCompat.Light" >
-        <item name="android:background">@color/white</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:background">#3949AB</item>
+        <item name="android:textColor">#d0d0d0</item>
+    </style>
+
+    <!-- For the ListViews when a user adds in a story element -->
+    <style name="ListViewTheme" parent="Base.TextAppearance.AppCompat.Display1">
+        <item name="android:text">#000000</item>
     </style>
 </resources>

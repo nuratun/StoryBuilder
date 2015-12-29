@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="quotes">
+        <item>“I love deadlines. I love the whooshing noise they make as they go by.”
+            ― Douglas Adams</item>
+        <item>“There is no greater agony than bearing an untold story inside you.”
+            ― Maya Angelou</item>
+        <item>“There is nothing to writing. All you do is sit down at a typewriter and bleed.”
+            ― Ernest Hemingway</item>
+        <item>“If you don't have time to read, you don't have the time (or the tools) to write.
+            Simple as that.” ― Stephen King</item>
+        <item>“If there's a book that you want to read, but it hasn't been written yet, then
+            you must write it.” ― Toni Morrison</item>
+        <item>“One day I will find the right words, and they will be simple.”
+            ― Jack Kerouac</item>
+        <item>“No tears in the writer, no tears in the reader. No surprise in the writer, no
+            surprise in the reader.” ― Robert Frost</item>
+        <item>“The difference between the right word and the almost right word is the
+            difference between lightning and a lightning bug.” ― Mark Twain</item>
+        <item>“Writing is a socially acceptable form of schizophrenia.” ― E.L. Doctorow</item>
+        <item>“History will be kind to me for I intend to write it.” ― Winston S. Churchill</item>
+        <item>“How vain it is to sit down to write when you have not stood up to live.”
+            ― Henry David Thoreau</item>
+        <item>“Start writing, no matter what. The water does not flow until the faucet is
+            turned on.” ― Louis L'Amour</item>
+        <item>“Writing starts with living.” ― L.L. Barkat</item>
+        <item>“I write because, if I don't, my characters will murder me in my sleep.”
+            ― Astrid 'Artistikem' Cruz</item>
+        <item>“Write to amuse? What an appalling suggestion! I write to make people anxious
+            and miserable and to worsen their indigestion.” ― Wendy Cope</item>
+        <item>“The historian records, but the novelist creates.” ― E.M. Forster</item>
+        <item>“A great many people have come up to me and asked how I manage to get so much
+            work done and still keep looking so dissipated.” ― Robert Benchley</item>
+        <item>“The hard part is putting one word after another.” ― Jo Linsdell</item>
+        <item>“Writing is a lot like making soup. My subconscious cooks the idea, but I have to
+            sit down at the computer to pour it out.” ― Robin Wells</item>
+        <item>“I prefer the pen. There is something elemental about the glide and flow of nib
+            and ink on paper.” ― James Robertson</item>
+        <item>“There's an old rule of theater that goes, 'If there's a gun on the mantel in
+            Act I, it must go off in Act III.' The reverse is also true.” ― Stephen King</item>
+        <item>“Write quickly and you will never write well; write well, and you will soon
+            write quickly.” ― Marcus Fabius Quintilianus</item>
+        <item>“The awful part of the writing game is that you can never be sure the stuff is
+            any good.” ― P.G. Wodehouse</item>
+        <item>“I do not wish to comment on the work; if it does not speak for itself, it is
+            a failure.” ― George Orwell</item>
+        <item>“Sometimes the body gets out of bed an hour before the brain.” ― Peter James West</item>
+        <item>“I want to write an unreliable narrator. In fact, he’ll be so unreliable that
+            I’m not even sure he’ll show up to narrate.” ― Jarod Kintz</item>
+        <item>“I hope you enjoy reading my book as much as I didn’t enjoy writing it. Just
+            kidding! I hope you don’t enjoy it at all.” ― Jarod Kintz</item>
+        <item>“If you can listen to or read anything, but misspelled words offend you,
+            raise your hadn.” ― Jarod Kintz</item>
+        <item>“I want to write a book called “Conversations.” Of course, it’s all talk at
+            this point.” ― Jarod Kintz</item>
+        <item>“The artist must manage to make posterity believe that he never existed.”
+            ― Gustave Flaubert</item>
+        <item>“No iron can pierce the human heart as chillingly as a full stop placed at the
+            right time.” ― Isaac Babel</item>
+        <item>“The average novel invariably reads like a detective's report. It is drab and
+            tedious because it is never objective.” ― Natsume Sōseki</item>
+        <item>“Science fiction is very well suited to asking philosophical questions; questions
+            about the nature of reality, what it means to be human, how do we know the things that
+            we think we know.” ― Ted Chiang</item>
+        <item>“I know writers who use subtext, and they're all cowards.” ― Garth Marenghi</item>
+        <item>“You will learn more about writing from one hour of reading than you will in six
+            hours of writing.” ― John McAleer</item>
+        <item>“No one writes anything worth writing, unless he writes entirely for the sake
+            of his subject.” ― Arthur Schopenhauer</item>
+        <item>“Be prepared to work hard to be a writer.” ― Sandra Brown</item>
+        <item>“&#8230;writers are often the worst judges of what they have written.”
+            ― StephenKing</item>
+        <item>Good writing is supposed to evoke sensation in the reader - not the fact that
+            it is raining, but the feeling of being rained upon. - E. L. Doctorow</item>
+        <item>I'm writing a book. I've got the page numbers done. - Steven Wright</item>
+        <item>The main problem with writing in verse is, if your fourth line doesn't come out
+            right, you've got to throw four lines away and figure out a whole new way to attack
+            the problem. So the mortality rate is terrific. - Dr. Seuss</item>
+        <item>“Humility is an essential quality in writers who want to write well.”
+            ― Margaret Jean Langstaff</item>
+        <item>“I write to escape. I haven't managed it yet, but I'm working on it”
+            ― William Meikle</item>
+        <item>“When a character comes to life, it’s like meeting a new friend for the first
+            time.” ― Lynette Mather</item>
+        <item>“To be a well-favoured man is the gift of fortune; but to write and read comes
+            by nature.” ― William Shakespeare</item>
+        <item>“Sure, it's simple writing for kids…just as simple as bringing them up.”
+            ― Ursula K. Le Guin</item>
+        <item>“Write when you least feel like it, because that's when you write best.”
+            ― Nema Al-Araby</item>
+        <item>“I wanted to write the most beautiful poem but that is impossible; the world has
+            written its own.” ― Dejan Stojanovic</item>
+        <item>“Write every day. Even if it's only a letter.” ― Julia Bell</item>
+        <item>“I intend all my characters must escape from impossible situations; if they are
+            not in trouble, then as a writer, I am.” ― Cleveland W. Gibson</item>
+        <item>“Sometimes I’ll read a book and feel it was written just for me. Then I’ll flip
+            the book over to look at the cover to see who wrote it, only to discover that it
+            feels like it was written for me because it was written by me.” ― Jarod Kintz</item>
+        <item>“Literature is the art of writing something that will be read twice.”
+            ― Cyril Connolly</item>
+        <item>“The purpose of writing is to hold a mirror to nature, but too much today is
+            written from small mirrors in vanity cases.” ― John Mason Brown</item>
+        <item>“Many of the characters are fools and they're always playing tricks on me and
+            treating me badly.” ― Jorge Luis Borges</item>
+        <item>“Life's adventures make great reading!” ― Denise Robbins</item>
+        <item>“Inspiration comes and goes, creativity is the result of practice.”
+            ― Phil Cousineau</item>
+        <item>“The paper is patient, but the reader is not.”
+            ― Joseph Joubert</item>
+        <item>“Yes, it's hard to write, but it's harder not to.” ― Carl Van Doren</item>
+        <item>“Many people can and have written books, but many have nothing to say.”
+            ― Amy Rogers</item>
+        <item>“I wonder what the retirement age is in the novel business. The day you die.”
+            ― Yasunari Kawabata</item>
+        <item>“If the desire to write is not accompanied by actual writing, then the desire must be not to write.”
+― Hugh Prather</item>
+        <item>
+“After being turned down by numerous publishers, he decided to write for posterity.”
+― George Ade</item>
+        <item>“When a writer tries to explain too much, he's out of time before he begins.”
+― Isaac Bashevis Singer</item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+    </string-array>
+
+
+</resources>

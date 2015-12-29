@@ -4,29 +4,35 @@
     android:padding="30dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:background="@color/colorPopUp"
     android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create A New Story" />
+        android:layout_height="match_parent"
+        android:text="Create A New Story"
+        android:textColor="@color/colorPopupText"
+        android:padding="10dp" />
 
     <EditText
         android:id="@+id/sb_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColorHint="@color/colorPopupText"
         android:hint="Title Your Story" />
 
     <EditText
         android:id="@+id/sb_genre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColorHint="@color/colorPopupText"
         android:hint="Genre" />
 
     <EditText
         android:id="@+id/sb_notes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColorHint="@color/colorPopupText"
         android:hint="Synopsis/Notes" />
 
 

@@ -1,4 +1,5 @@
 <RelativeLayout
+    android:id="@+id/mainView"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,45 +11,35 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+    <RelativeLayout
+        android:id="@+id/topView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorUpperBackground"
         android:layout_below="@+id/toolbar">
 
-        <LinearLayout
-            android:id="@+id/topView"
+        <TextView
+            android:id="@+id/instructions"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@android:color/holo_green_dark"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_margin="40dp"
+            android:text="@string/instructions" />
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/instructions"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="2"
-                android:gravity="center"
-                android:text="@string/instructions" />
+    <RelativeLayout
+        android:id="@+id/bottomView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorLowerBackground"
+        android:layout_below="@+id/topView"
+        android:orientation="vertical" >
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/bottomView"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@android:color/holo_blue_dark"
-            android:layout_weight="2"
-            android:orientation="vertical" >
-
-            <ListView
-                android:id="@+id/story_list"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-        </LinearLayout>
-    </LinearLayout>
+        <ListView
+            android:id="@+id/story_list"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
 
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"

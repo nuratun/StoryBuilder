@@ -19,7 +19,7 @@ public class CreateStory extends AppCompatActivity {
 
     // Make the story db id public so other classes can access it
     // Will grab it from the Intent extras
-    public static Integer SB_ID;
+    public static int SB_ID;
 
     // To be used for the checkboxes
     private String character_type;
@@ -47,8 +47,8 @@ public class CreateStory extends AppCompatActivity {
         story_title.setText(title); // Set the TextView for this activity
 
         // TODO - Check why correct ID is not being passed
-        Intent get_id = getIntent(); // Get the id Intent sent from CreateStoryTask
-        SB_ID = get_id.getIntExtra("result", 0); // Set it as a public variable
+        // Get the id Intent sent from CreateStoryTask and set it as a public variable
+        SB_ID = getIntent().getExtras().getInt("id");
 
         // Find the FAB menu and add the actions
         final com.getbase.floatingactionbutton.FloatingActionsMenu fab =
