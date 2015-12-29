@@ -93,6 +93,13 @@ public class Constants {
             + "REFERENCES " + STORY_TABLE + "(" + DB_ID + DB_COMMA + STORY_NAME + ")"
             + " )";
 
+    // Used in StoryBuilderMain to populate the ListView
+    public static final String GRAB_STORY_DETAILS = "SELECT "
+            + DB_ID + ", "
+            + STORY_NAME + ", "
+            + STORY_GENRE + " FROM "
+            + STORY_TABLE + ";";
+
     // Used in AddCharacters class to populate the ListView
     public static final String GRAB_CHARACTER_DETAILS = "SELECT "
             + DB_ID + ", "

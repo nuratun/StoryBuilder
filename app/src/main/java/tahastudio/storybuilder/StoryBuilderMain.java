@@ -1,11 +1,19 @@
 package tahastudio.storybuilder;
 
+import android.content.Context;
+import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.Random;
 
 /**
  * This is the main activity of StoryBuilder
@@ -34,6 +42,18 @@ public class StoryBuilderMain extends AppCompatActivity {
         drawer_layout = (android.support.v4.widget.DrawerLayout)
                 findViewById(R.id.drawer_layout); // Find the drawer
         // TODO -> Set the drawer
+
+        // Find the ListView and TextView to send to storyTaskList
+        ListView story_list = (ListView) findViewById(R.id.story_list);
+        TextView empty = (TextView) findViewById(R.id.empty);
+        storyListTask storyListTask = new storyListTask(story_list, empty);
+        storyListTask.execute();
+
+        // Find the TextView in the layout and then run the randomQuoteTask
+        // to generate a random quote in the top textview
+        TextView textView = (TextView) findViewById(R.id.quote);
+        randomQuoteTask randomQuoteTask = new randomQuoteTask(textView);
+        randomQuoteTask.execute();
 
         // Now find the FAB and call the dialog box when it's clicked
         the_fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -93,6 +113,98 @@ public class StoryBuilderMain extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // AsyncTask used to generate random quote on start of activity
+    private class randomQuoteTask extends AsyncTask<Void, Void, String> {
+        private Random generator = new Random();
+        private TextView textView;
+        private String[] quote;
+
+        // Pass in the layout and TextView
+        public randomQuoteTask(TextView textView) {
+            this.textView = textView;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            // Grab the array from the quotes.xml file
+            quote = getResources().getStringArray(R.array.quotes);
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            return quote[generator.nextInt(quote.length)];
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            textView.setText(result);
+        }
+    }
+
+    private class storyListTask extends AsyncTask<Void, Void, Cursor> {
+        private Context context = getBaseContext();
+        private SQLDatabase db;
+        private ListView listView;
+        private TextView textView;
+
+        public storyListTask(ListView listView, TextView textView) {
+            this.listView = listView;
+            this.textView = textView;
+
+            listView.setEmptyView(textView);
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Cursor doInBackground(Void... params) {
+            db = new SQLDatabase(context);
+
+            // Try to get the list of stories in the db
+            try {
+                return db.getRows(Constants.GRAB_STORY_DETAILS);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Cursor result) {
+            super.onPostExecute(result);
+
+            if (result != null) {
+                // Get the column names
+                String[] columns = {
+                        Constants.STORY_NAME,
+                        Constants.STORY_GENRE
+                };
+
+                // Get the TextView widgets
+                int[] widgets = {
+                        R.id.name_info,
+                        R.id.extra_info
+                };
+
+                SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
+                        context,
+                        R.layout.tab_view,
+                        result,
+                        columns,
+                        widgets,
+                        0);
+
+                // Set the adapter on the ListView
+                listView.setAdapter(cursorAdapter);
+            }
+        }
     }
 
 }

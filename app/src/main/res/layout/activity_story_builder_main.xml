@@ -11,35 +11,28 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-    <RelativeLayout
-        android:id="@+id/topView"
+    <TextView
+        android:id="@+id/quote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:background="@color/colorUpperBackground"
-        android:layout_below="@+id/toolbar">
+        android:padding="40dp"
+        android:layout_below="@+id/toolbar" />
 
-        <TextView
-            android:id="@+id/instructions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_margin="40dp"
-            android:text="@string/instructions" />
-    </RelativeLayout>
+    <ListView
+        android:id="@+id/story_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/quote"/>
 
-    <RelativeLayout
-        android:id="@+id/bottomView"
+    <TextView
+        android:id="@+id/empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorLowerBackground"
-        android:layout_below="@+id/topView"
-        android:orientation="vertical" >
-
-        <ListView
-            android:id="@+id/story_list"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent" />
-    </RelativeLayout>
+        android:gravity="center"
+        android:layout_below="@+id/quote"
+        android:text="Nothing Here Yet" />
 
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
