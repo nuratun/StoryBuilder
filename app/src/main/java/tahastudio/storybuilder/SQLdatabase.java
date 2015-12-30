@@ -46,13 +46,29 @@ public class SQLDatabase extends SQLiteOpenHelper {
     }
 
     // Get the story ID back from database to create the other tables
+    // Location: CreateStoryTask
     public Integer getStoryID() {
         sbDatabase = this.getReadableDatabase();
-        Cursor cur = sbDatabase.rawQuery(Constants.GET_STORY_ID, null);
+        Cursor cursor = sbDatabase.rawQuery(Constants.GET_STORY_ID, null);
 
-        cur.moveToFirst(); // Move to the first position
-        int the_id = cur.getInt(0);
-        cur.close(); // Close the cursor when done
+        cursor.moveToFirst(); // Move to the first position
+        int the_id = cursor.getInt(0);
+        cursor.close(); // Close the cursor when done
+
+        return the_id;
+    }
+
+    // Get a story ID from database depending on what row user clicked
+    // on in StoryBuilderMain
+    // Location: showStoryTask
+    public Integer findStoryID(String result) {
+        sbDatabase = this.getReadableDatabase();
+        Cursor cursor =  sbDatabase.rawQuery(Constants.FIND_STORY_ID + "'"
+                + result + "';" , null);
+
+        cursor.moveToFirst(); // Move to the first position
+        int the_id = cursor.getInt(0);
+        cursor.close(); // Close the cursor when done
 
         return the_id;
     }
@@ -86,9 +102,9 @@ public class SQLDatabase extends SQLiteOpenHelper {
         sbDatabase.execSQL(query);
     }
 
+    // Location: AddCharacters, AddPlaces, AddPlotline
     public Cursor getRows(String query) {
         sbDatabase = this.getReadableDatabase();
-        Cursor result = sbDatabase.rawQuery(query, null);
-        return result;
+        return sbDatabase.rawQuery(query, null); // returns a cursors
     }
 }

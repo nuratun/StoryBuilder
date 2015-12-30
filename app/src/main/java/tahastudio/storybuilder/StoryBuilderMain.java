@@ -10,8 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Random;
 
@@ -21,14 +23,12 @@ import java.util.Random;
 public class StoryBuilderMain extends AppCompatActivity {
     // Add in toolbar, drawer, and FAB to the view
     android.support.v7.widget.Toolbar toolbar;
-    android.support.v4.widget.DrawerLayout drawer_layout;
+    //android.support.v4.widget.DrawerLayout drawer_layout;
     FloatingActionButton the_fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO -> Set the top view to be a random quote about writing
-        // Set the activity's view to start finding elements
         setContentView(R.layout.activity_story_builder_main);
 
         // TODO -> Call function to check if app has been run before.
@@ -39,23 +39,47 @@ public class StoryBuilderMain extends AppCompatActivity {
         setSupportActionBar(toolbar); // Set toolbar as the actionbar
         setTitle("StoryBuilder"); // Set title on actionbar
 
-        drawer_layout = (android.support.v4.widget.DrawerLayout)
-                findViewById(R.id.drawer_layout); // Find the drawer
+        //drawer_layout = (android.support.v4.widget.DrawerLayout)
+        //        findViewById(R.id.drawer_layout); // Find the drawer
         // TODO -> Set the drawer
 
         // Find the ListView and TextView to send to storyTaskList
-        ListView story_list = (ListView) findViewById(R.id.story_list);
+        // The empty TextView will be used if there are no stories to return
+        final ListView story_list = (ListView) findViewById(R.id.story_list);
         TextView empty = (TextView) findViewById(R.id.empty);
         storyListTask storyListTask = new storyListTask(story_list, empty);
         storyListTask.execute();
 
-        // Find the TextView in the layout and then run the randomQuoteTask
-        // to generate a random quote in the top textview
+        // Find the TextView in the layout and then run the
+        // randomQuoteTask to generate a random quote in it
         TextView textView = (TextView) findViewById(R.id.quote);
         randomQuoteTask randomQuoteTask = new randomQuoteTask(textView);
         randomQuoteTask.execute();
 
-        // Now find the FAB and call the dialog box when it's clicked
+        // When a user clicks on an item, grab the db_id, and pass it to
+        // CreateStory to return the story details from the db
+        story_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Clicking on a ListView row will return a cursor
+                // Get the position of the user click
+                Cursor get_item = (Cursor) story_list.getItemAtPosition(position);
+
+                // From the cursor, we can grab the title, so long as
+                // we know the db column name
+                String title = get_item.getString(
+                        get_item.getColumnIndex(Constants.STORY_NAME));
+
+                Toast.makeText(getBaseContext(), title, Toast.LENGTH_LONG).show();
+
+                // Call the showStoryTask to grab the id from the db and the
+                // AsyncTask will then create an intent to call CreateStory
+                ShowStoryTask showStoryTask = new ShowStoryTask(getBaseContext(), title);
+                showStoryTask.execute();
+            }
+        });
+
+        // Now find the FAB and call the dialog box when clicked
         the_fab = (FloatingActionButton) findViewById(R.id.fab);
         the_fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,13 +112,6 @@ public class StoryBuilderMain extends AppCompatActivity {
         }
     }
 
-    // Call the SBDialog class to create the dialog box. User will input data to the
-    // dialog box to create a new story from the FAB. It will send the data to CreateStoryTask
-    private void showSBDialog() {
-        SBDialog newDialog = new SBDialog();
-        newDialog.show(getSupportFragmentManager(), "story_creation");
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -113,6 +130,13 @@ public class StoryBuilderMain extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // Call the SBDialog class to create the dialog box. User will input data to the
+    // dialog box to create a new story from the FAB. It will send the data to CreateStoryTask
+    private void showSBDialog() {
+        SBDialog sbDialog = new SBDialog();
+        sbDialog.show(getSupportFragmentManager(), "story_creation");
     }
 
     // AsyncTask used to generate random quote on start of activity
@@ -145,6 +169,8 @@ public class StoryBuilderMain extends AppCompatActivity {
         }
     }
 
+    // This AsyncTask will return a list of stories saved in the db
+    // A user can click on one to return the saved data for that story
     private class storyListTask extends AsyncTask<Void, Void, Cursor> {
         private Context context = getBaseContext();
         private SQLDatabase db;
@@ -206,5 +232,4 @@ public class StoryBuilderMain extends AppCompatActivity {
             }
         }
     }
-
 }

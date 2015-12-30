@@ -15,6 +15,9 @@ import android.widget.ListView;
  * First tab for SB
  */
 public class AddCharacters extends Fragment {
+    // Need to make the AsyncTask global for this class in order
+    // to stop it when needed
+    private setCharacterList characterList;
     private View add_character_layout;
 
     public AddCharacters() {
@@ -24,19 +27,30 @@ public class AddCharacters extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         add_character_layout = inflater.inflate(
                 R.layout.fragment_add_characters,
                 container,
                 false);
 
         // Run the AsyncTask to fill in the ListView
-        setCharacterList characterList = new setCharacterList();
+        characterList = new setCharacterList();
         characterList.execute();
 
         // Return this view
         return add_character_layout;
     }
+
+    // Need to stop the AsyncTask when the back button is pressed otherwise
+    // it will continue running and mess up the global SB_ID variable
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        if ( characterList != null && characterList.getStatus() == AsyncTask.Status.RUNNING ) {
+            characterList.cancel(true);
+        }
+    }
+
 
     // This AsyncTask will populate the ListView with a list of characters saved for this story
     private class setCharacterList extends AsyncTask<Void, Void, Cursor> {
@@ -71,32 +85,36 @@ public class AddCharacters extends Fragment {
         protected void onPostExecute(Cursor result) {
             super.onPostExecute(result);
 
-            // Get the column names
-            String[] columns = new String[] {
-                    Constants.DB_ID,
-                    Constants.STORY_CHARACTER,
-                    Constants.STORY_AGE
-            };
+            // If this task hasn't been cancelled yet
+            if ( !isCancelled() ) {
 
-            // Get the TextView widgets
-            int[] widgets = new int[] {
-                    R.id.db_id,
-                    R.id.name_info,
-                    R.id.extra_info
-            };
+                // Get the column names
+                String[] columns = new String[]{
+                        Constants.DB_ID,
+                        Constants.STORY_CHARACTER,
+                        Constants.STORY_AGE
+                };
 
-            SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
-                    context,
-                    R.layout.tab_view,
-                    result,
-                    columns,
-                    widgets,
-                    0);
+                // Get the TextView widgets
+                int[] widgets = new int[]{
+                        R.id.db_id,
+                        R.id.name_info,
+                        R.id.extra_info
+                };
 
-            // Find the ListView in the layout
-            ListView add_characters_listview = (ListView) add_character_layout
-                    .findViewById(R.id.characters_listview);
-            add_characters_listview.setAdapter(cursorAdapter);
+                SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
+                        context,
+                        R.layout.tab_view,
+                        result,
+                        columns,
+                        widgets,
+                        0);
+
+                // Find the ListView in the layout
+                ListView add_characters_listview = (ListView) add_character_layout
+                        .findViewById(R.id.characters_listview);
+                add_characters_listview.setAdapter(cursorAdapter);
+            }
         }
     }
 }

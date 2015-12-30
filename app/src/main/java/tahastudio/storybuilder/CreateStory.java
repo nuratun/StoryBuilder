@@ -1,7 +1,6 @@
 package tahastudio.storybuilder;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -17,8 +16,7 @@ public class CreateStory extends AppCompatActivity {
     // To programmatically add in the element fragments
     FragmentManager fragmentManager = getSupportFragmentManager();
 
-    // Make the story db id public so other classes can access it
-    // Will grab it from the Intent extras
+    // Make the story _id public so other classes can access it
     public static int SB_ID;
 
     // To be used for the checkboxes
@@ -26,14 +24,14 @@ public class CreateStory extends AppCompatActivity {
     private String character_gender;
     private boolean plot;
 
-    // TODO -> Add create to https://github.com/futuresimple/android-floating-action-button
+    // TODO -> Add credit to https://github.com/futuresimple/android-floating-action-button
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_story);
 
-        // Find the toolbar and set the action bar
+        // Find the toolbar, set it, and set the title
         android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar)
                 findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -46,8 +44,7 @@ public class CreateStory extends AppCompatActivity {
         String title = get_title.getStringExtra("title"); // Get the title from the intent
         story_title.setText(title); // Set the TextView for this activity
 
-        // TODO - Check why correct ID is not being passed
-        // Get the id Intent sent from CreateStoryTask and set it as a public variable
+        // Get the id from CreateStoryTask and set it as the public variable
         SB_ID = getIntent().getExtras().getInt("id");
 
         // Find the FAB menu and add the actions
@@ -156,6 +153,16 @@ public class CreateStory extends AppCompatActivity {
         });
     }
 
+    // In order to clear out the db entries, we have to recreate
+    // the main activity when the user hits the back button
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        startActivity(new Intent(this, StoryBuilderMain.class));
+        this.finish();
+    }
+
     // May be a variation -> main character & the antagonist, just the main character
     // or just the antagonist.
     public void mCharacterCheckbox(View view) {
@@ -209,41 +216,6 @@ public class CreateStory extends AppCompatActivity {
                 default:
                     plot = false;
             }
-        }
-    }
-
-    // Create the tables on a background thread
-    private class storyTablesTask extends AsyncTask<Integer, Void, Boolean> {
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        protected void onProgressUpdate() {
-            super.onProgressUpdate();
-        }
-
-        @Override
-        protected Boolean doInBackground(Integer... params) {
-            // Set boolean value initially to false
-            boolean completed = false;
-            SQLDatabase db = new SQLDatabase(CreateStory.this);
-
-            // Create the
-            try {
-                db.insertTheID(params[0]);
-                completed = true;
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-            return completed;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean completed) {
-            super.onPostExecute(completed);
         }
     }
 }

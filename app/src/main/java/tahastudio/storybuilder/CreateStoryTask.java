@@ -60,7 +60,7 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
         intent.putExtra("id", result);
 
         // Need to add a flag or it will give an error
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         // Call the CreateStory class from this context
         context.startActivity(intent);

@@ -16,6 +16,9 @@ import android.widget.ListView;
  * 3rd tab for SB
  */
 public class AddPlotline extends Fragment {
+    // Need to make the AsyncTask global for this class in order
+    // to stop it when needed
+    setPlotlineList plotlineList;
     private View add_plotline_layout;
 
     public AddPlotline() {
@@ -25,18 +28,27 @@ public class AddPlotline extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         add_plotline_layout = inflater.inflate(
                 R.layout.fragment_add_plotline,
                 container,
                 false);
 
         // Call the AsyncTask to populate the ListView
-        setPlotlineList plotlineList = new setPlotlineList();
+        plotlineList = new setPlotlineList();
         plotlineList.execute();
 
         // Return the layout
         return add_plotline_layout;
+    }
+
+    // Need to stop the AsyncTask when the back button is pressed otherwise
+    // it will continue running and mess up the global SB_ID variable
+    public void onStop() {
+        super.onStop();
+
+        if ( plotlineList != null && plotlineList.getStatus() == AsyncTask.Status.RUNNING ) {
+            plotlineList.cancel(true);
+        }
     }
 
     // Use the AsyncTask to populate the ListView with the plotlines for this story
@@ -67,31 +79,35 @@ public class AddPlotline extends Fragment {
         protected void onPostExecute(Cursor result) {
             super.onPostExecute(result);
 
-            // Get the columns
-            String[] columns = new String[] {
-                    Constants.DB_ID,
-                    Constants.STORY_MAIN_PLOTLINE,
-                    Constants.STORY_PLOTLINE
-            };
+            // If this task hasn't been cancelled yet
+            if ( !isCancelled() ) {
 
-            // Get the widget list
-            int[] widgets = new int[] {
-                    R.id.db_id,
-                    R.id.name_info,
-                    R.id.extra_info
-            };
+                // Get the columns
+                String[] columns = new String[]{
+                        Constants.DB_ID,
+                        Constants.STORY_MAIN_PLOTLINE,
+                        Constants.STORY_PLOTLINE
+                };
 
-            SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
-                    context,
-                    R.layout.tab_view,
-                    result,
-                    columns,
-                    widgets,
-                    0);
+                // Get the widget list
+                int[] widgets = new int[]{
+                        R.id.db_id,
+                        R.id.name_info,
+                        R.id.extra_info
+                };
 
-            ListView add_plotline_listview = (ListView) add_plotline_layout
-                    .findViewById(R.id.plotline_listview);
-            add_plotline_listview.setAdapter(cursorAdapter);
+                SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
+                        context,
+                        R.layout.tab_view,
+                        result,
+                        columns,
+                        widgets,
+                        0);
+
+                ListView add_plotline_listview = (ListView) add_plotline_layout
+                        .findViewById(R.id.plotline_listview);
+                add_plotline_listview.setAdapter(cursorAdapter);
+            }
         }
     }
 }

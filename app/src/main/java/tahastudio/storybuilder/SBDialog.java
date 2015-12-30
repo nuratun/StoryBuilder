@@ -57,10 +57,7 @@ public class SBDialog extends DialogFragment {
                         } else {
 
                             Toast.makeText(getActivity().getApplicationContext(),
-                                    "Adding " + sb_story_title + " "
-                                    + sb_story_genre + " and "
-                                    + sb_story_notes,
-                                    Toast.LENGTH_LONG).show();
+                                    "Creating Story", Toast.LENGTH_LONG).show();
 
                             // Execute CreateStoryTask, to add entry into database. CreateStoryTask
                             // will take care of passing the values needed to StoryBuilderMain and

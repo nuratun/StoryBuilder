@@ -43,6 +43,12 @@ public class Constants {
     // Get latest story entry id from database
     public static final String GET_STORY_ID = "SELECT MAX(_id) FROM " + STORY_TABLE;
 
+    // Get a story entry id from database, going by the title
+    public static final String FIND_STORY_ID = "SELECT "
+            + DB_ID + " FROM "
+            + STORY_TABLE + " WHERE "
+            + STORY_NAME + " = ";
+
     // Create the story table. All other tables will reference the id and story name
     public static final String SQL_CREATE_STORY_TABLE = "CREATE TABLE "
             + STORY_TABLE + "("
