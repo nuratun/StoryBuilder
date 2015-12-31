@@ -18,7 +18,7 @@ import android.widget.ListView;
 public class AddPlaces extends Fragment {
     // Need to make the AsyncTask global for this class in order
     // to stop it when needed
-    setPlaceList placeList;
+    private setPlaceList placeList;
     private View add_place_layout;
 
     public AddPlaces() {
@@ -43,6 +43,7 @@ public class AddPlaces extends Fragment {
 
     // Need to stop the AsyncTask when the back button is pressed otherwise
     // it will continue running and mess up the global SB_ID variable
+    @Override
     public void onStop() {
         super.onStop();
 
@@ -103,6 +104,9 @@ public class AddPlaces extends Fragment {
                         columns,
                         widgets,
                         0);
+
+                // Notify thread the data has changed
+                cursorAdapter.notifyDataSetChanged();
 
                 // Find the ListView in the layout
                 ListView add_places_listview = (ListView) add_place_layout

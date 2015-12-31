@@ -112,8 +112,7 @@ public class Constants {
             + STORY_CHARACTER + ", "
             + STORY_AGE + " FROM "
             + STORY_CHARACTER_TABLE + " WHERE "
-            + DB_ID + " = "
-            + CreateStory.SB_ID + ";";
+            + DB_ID + " = ";
 
     // Used in the AddPlaces class to populate the ListView
     public static final String GRAB_PLACES_DETAILS = "SELECT "
@@ -121,8 +120,7 @@ public class Constants {
             + STORY_PLACE_NAME + ", "
             + STORY_PLACE_LOCATION + " FROM "
             + STORY_PLACES_TABLE + " WHERE "
-            + DB_ID + " = "
-            + CreateStory.SB_ID + ";";
+            + DB_ID + " = ";
 
     // Used in the AddPlotline class to populate the ListView
     public static final String GRAB_PLOTLINE_DETALIS = "SELECT "
@@ -130,6 +128,5 @@ public class Constants {
             + STORY_MAIN_PLOTLINE + ", "
             + STORY_PLOTLINE + " FROM "
             + STORY_PLOTLINE_TABLE + " WHERE "
-            + DB_ID + " = "
-            + CreateStory.SB_ID + ";";
+            + DB_ID + " = ";
 }

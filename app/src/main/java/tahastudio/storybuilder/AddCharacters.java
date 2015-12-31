@@ -40,8 +40,7 @@ public class AddCharacters extends Fragment {
         return add_character_layout;
     }
 
-    // Need to stop the AsyncTask when the back button is pressed otherwise
-    // it will continue running and mess up the global SB_ID variable
+    // Need to stop the AsyncTask when activity is paused
     @Override
     public void onStop() {
         super.onStop();
@@ -51,15 +50,15 @@ public class AddCharacters extends Fragment {
         }
     }
 
-
     // This AsyncTask will populate the ListView with a list of characters saved for this story
     private class setCharacterList extends AsyncTask<Void, Void, Cursor> {
-        private Context context = getActivity().getApplicationContext();
         private SQLDatabase db;
+        private Context context = getActivity().getApplicationContext();
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+
         }
 
         protected void onProgressUpdate() {
@@ -89,14 +88,14 @@ public class AddCharacters extends Fragment {
             if ( !isCancelled() ) {
 
                 // Get the column names
-                String[] columns = new String[]{
+                String[] columns = new String[] {
                         Constants.DB_ID,
                         Constants.STORY_CHARACTER,
                         Constants.STORY_AGE
                 };
 
                 // Get the TextView widgets
-                int[] widgets = new int[]{
+                int[] widgets = new int[] {
                         R.id.db_id,
                         R.id.name_info,
                         R.id.extra_info
@@ -110,10 +109,13 @@ public class AddCharacters extends Fragment {
                         widgets,
                         0);
 
-                // Find the ListView in the layout
+                // Notify thread the data has changed
+                cursorAdapter.notifyDataSetChanged();
+
                 ListView add_characters_listview = (ListView) add_character_layout
                         .findViewById(R.id.characters_listview);
                 add_characters_listview.setAdapter(cursorAdapter);
+
             }
         }
     }

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 /**
  * Separate AsyncTask to add a new story to the database. Will pass three strings
@@ -25,9 +26,12 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
         this.desc = desc;
     }
 
-     @Override
+    @Override
     protected void onPreExecute() {
         super.onPreExecute();
+
+        // Show a message to the user while creating the story in the background
+        Toast.makeText(context, "Creating story. Please wait...", Toast.LENGTH_LONG).show();
     }
 
     @Override

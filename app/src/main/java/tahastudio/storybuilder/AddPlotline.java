@@ -18,7 +18,7 @@ import android.widget.ListView;
 public class AddPlotline extends Fragment {
     // Need to make the AsyncTask global for this class in order
     // to stop it when needed
-    setPlotlineList plotlineList;
+    private setPlotlineList plotlineList;
     private View add_plotline_layout;
 
     public AddPlotline() {
@@ -43,6 +43,7 @@ public class AddPlotline extends Fragment {
 
     // Need to stop the AsyncTask when the back button is pressed otherwise
     // it will continue running and mess up the global SB_ID variable
+    @Override
     public void onStop() {
         super.onStop();
 
@@ -103,6 +104,9 @@ public class AddPlotline extends Fragment {
                         columns,
                         widgets,
                         0);
+
+                // Notify thread the data has changed
+                cursorAdapter.notifyDataSetChanged();
 
                 ListView add_plotline_listview = (ListView) add_plotline_layout
                         .findViewById(R.id.plotline_listview);

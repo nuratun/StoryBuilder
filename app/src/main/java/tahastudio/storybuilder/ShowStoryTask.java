@@ -22,7 +22,7 @@ public class ShowStoryTask extends AsyncTask<String, Void, Integer> {
     protected void onPreExecute() {
         super.onPreExecute();
         // Show a message to the user while loading the story in the background
-        Toast.makeText(context, "Loading Story", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Loading story. Please wait...", Toast.LENGTH_LONG).show();
     }
 
     @Override

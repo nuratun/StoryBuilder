@@ -102,9 +102,11 @@ public class SQLDatabase extends SQLiteOpenHelper {
         sbDatabase.execSQL(query);
     }
 
+    // Need to dynamically add in the SB_ID, as it will change
+    // depending on user selection
     // Location: AddCharacters, AddPlaces, AddPlotline
     public Cursor getRows(String query) {
         sbDatabase = this.getReadableDatabase();
-        return sbDatabase.rawQuery(query, null); // returns a cursors
+        return sbDatabase.rawQuery(query + CreateStory.SB_ID + ";", null);
     }
 }

@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Random;
 
@@ -70,7 +69,7 @@ public class StoryBuilderMain extends AppCompatActivity {
                 String title = get_item.getString(
                         get_item.getColumnIndex(Constants.STORY_NAME));
 
-                Toast.makeText(getBaseContext(), title, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getBaseContext(), title, Toast.LENGTH_LONG).show();
 
                 // Call the showStoryTask to grab the id from the db and the
                 // AsyncTask will then create an intent to call CreateStory
