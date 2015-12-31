@@ -1,7 +1,8 @@
 package tahastudio.storybuilder;
 
 /**
- * To store constants for SQL
+ * To store constants for SQL queries.
+ * These constants will not change throughout the lifecycle
  */
 public class Constants {
 

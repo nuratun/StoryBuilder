@@ -20,24 +20,23 @@ public class SBDialog extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        // This is the API to create a dialog box with different content. For this,
-        // just inflate a custom layout
+        //  API to create a dialog box with different content.
+        // For this instance, just inflate a custom layout
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-        // Get an instance of the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
-        // Inflate the layout for the dialog box. Parent view is set to null.
-        // Then add the buttons to the dialog box, dynamically, to create the
-        // story and to cancel it.
+        // Inflate layout for the dialog box. Parent view set to null.
+        // Add buttons to the dialog box dynamically, to either
+        // create the story or cancel it.
         builder.setView(inflater.inflate(R.layout.fragment_sbdialog, null))
                 .setPositiveButton(R.string.create_story, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        // Get the dialog view
+                        // Get dialog view
                         Dialog layout = (Dialog) dialog;
 
-                        // Grab the user input from the XML
+                        // Grab user input from XML
                         EditText the_story_title = (EditText) layout
                                 .findViewById(R.id.sb_title);
                         EditText the_story_genre = (EditText) layout
@@ -50,7 +49,7 @@ public class SBDialog extends DialogFragment {
                         String sb_story_genre = the_story_genre.getText().toString();
                         String sb_story_notes = the_story_notes.getText().toString();
 
-                        // Make sure both title and genre are non-empty strings
+                        // Make sure both title and genre are non-empty
                         if (sb_story_title.length() < 1 || sb_story_genre.length() < 1) {
                             Toast.makeText(getActivity().getApplicationContext(), "Both the title"
                                     + " and genre are required fields", Toast.LENGTH_LONG).show();
@@ -59,9 +58,9 @@ public class SBDialog extends DialogFragment {
                             Toast.makeText(getActivity().getApplicationContext(),
                                     "Creating Story", Toast.LENGTH_LONG).show();
 
-                            // Execute CreateStoryTask, to add entry into database. CreateStoryTask
-                            // will take care of passing the values needed to StoryBuilderMain and
-                            // starting the new activity on the postExecute method
+                            // Execute CreateStoryTask to add entry into database
+                            // CreateStoryTask will take care of passing values needed
+                            // back to the ShowStory class
                             CreateStoryTask task = new CreateStoryTask(
                                     getActivity().getApplicationContext(),
                                     sb_story_title,

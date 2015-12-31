@@ -18,7 +18,7 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
     String desc;
 
 
-    // We need to be able to pass more than one string to this background task
+    // We need to be able to pass more than one string to background
     public CreateStoryTask(Context context, String title, String genre, String desc) {
         this.context = context;
         this.title = title;
@@ -30,17 +30,16 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
     protected void onPreExecute() {
         super.onPreExecute();
 
-        // Show a message to the user while creating the story in the background
+        // Show message while creating the story in the background
         Toast.makeText(context, "Creating story. Please wait...", Toast.LENGTH_LONG).show();
     }
 
     @Override
     protected Integer doInBackground(String... params) {
-        // Instantiate new db instance
         SQLDatabase db = new SQLDatabase(context);
         db.getWritableDatabase();
 
-        // Instantiate a ContentValues instance to add in the data
+        // Instantiate a ContentValues instance to add in data
         ContentValues values = new ContentValues();
         values.put(Constants.STORY_NAME, title);
         values.put(Constants.STORY_GENRE, genre);
@@ -49,7 +48,7 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
         // Insert into the database
         db.insertRow(values, Constants.STORY_TABLE);
 
-        // Now get the id of the story to send as an Intent to the ShowStory class
+        // Get id of the story to send as an Intent to the ShowStory class
         db.getReadableDatabase();
         return db.getStoryID();
     }
@@ -58,12 +57,12 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
     protected void onPostExecute(Integer result) {
         super.onPostExecute(result);
 
-        // Now call the Intent creator, passing in the story id and title
+        // Call the Intent creator, passing in the story id and title
         Intent intent = new Intent(context, ShowStory.class);
         intent.putExtra("title", title);
         intent.putExtra("id", result);
 
-        // Need to add a flag or it will give an error
+        // Add a flag or get an exception raised
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         // Call the ShowStory class from this context

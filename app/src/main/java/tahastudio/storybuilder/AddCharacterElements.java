@@ -17,11 +17,11 @@ import android.widget.Toast;
  */
 public class AddCharacterElements extends Fragment {
     private Context context;
-    String name;
-    String age;
-    String birthplace;
-    String personality;
-    String notes;
+    String sb_name;
+    String sb_age;
+    String sb_birthplace;
+    String sb_personality;
+    String sb_notes;
 
     public AddCharacterElements() {
 
@@ -39,7 +39,7 @@ public class AddCharacterElements extends Fragment {
         // Get an instance of the application context
         context = getActivity().getApplicationContext();
 
-        // Now find the elements
+        // Find the layout elements
         final EditText name = (EditText) character_elements_layout
                 .findViewById(R.id.sb_character_name);
         final EditText age = (EditText) character_elements_layout
@@ -50,15 +50,14 @@ public class AddCharacterElements extends Fragment {
                 .findViewById(R.id.sb_character_personality);
         final EditText character_notes = (EditText) character_elements_layout
                 .findViewById(R.id.sb_character_notes);
+
         Button add_the_character = (Button) character_elements_layout
                 .findViewById(R.id.add_the_character);
-
-        // On button click, ensure that the required fields are filled out
         add_the_character.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO -> Add a cancel button
-                // Make sure the name field is not empty
+                // Make sure the name field != null
                 if ( name.length() < 1 ) {
                     Toast.makeText(context, "The character's name "
                             + "is a required field", Toast.LENGTH_LONG).show();
@@ -82,16 +81,15 @@ public class AddCharacterElements extends Fragment {
                                     convert_notes);
                     charactersTask.execute();
                 }
-                // Return to AddCharacters class
+                // Return to AddCharacters class on button click, immediately
                 getFragmentManager().popBackStackImmediate();
             }
         });
 
-        // Return the view
         return character_elements_layout;
     }
 
-    // Need to process more than one variable, so create a constructor in the class
+    // Pass multiple variables to the constructor
     private class addCharactersTask extends AsyncTask<Void, Void, Boolean> {
         private Context context;
         private ContentValues values;
@@ -102,7 +100,7 @@ public class AddCharacterElements extends Fragment {
         private String personality;
         private String notes;
 
-        // Constructor to pass in more than one value
+        // Constructor
         public addCharactersTask(Context context,
                                  String name,
                                  String age,

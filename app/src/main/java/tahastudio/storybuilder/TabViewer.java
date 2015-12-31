@@ -4,6 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+/**
+ * This class allows flipping through fragments as tabs
+ * Initliazed from: ShowStory
+ */
 public class TabViewer extends FragmentStatePagerAdapter {
     int sbTabs;
 
@@ -12,7 +16,7 @@ public class TabViewer extends FragmentStatePagerAdapter {
         this.sbTabs = nmTabs;
     }
 
-    // TODO -> Check about releasing tabs
+    // TODO -> Check into releasing tabs to save memory
     @Override
     public Fragment getItem(int position) {
 

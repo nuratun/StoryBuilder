@@ -16,8 +16,7 @@ import android.widget.ListView;
  * 3rd tab for SB
  */
 public class AddPlotline extends Fragment {
-    // Need to make the AsyncTask global for this class in order
-    // to stop it when needed
+    // Make the AsyncTask global to stop it when paused
     private setPlotlineList plotlineList;
     private View add_plotline_layout;
 
@@ -33,25 +32,34 @@ public class AddPlotline extends Fragment {
                 container,
                 false);
 
-        // Call the AsyncTask to populate the ListView
+        // AsyncTask to populate the ListView
         plotlineList = new setPlotlineList();
         plotlineList.execute();
 
-        // Return the layout
         return add_plotline_layout;
     }
 
-    // Need to stop the AsyncTask when user moves away from this fragment
+    // Stop the AsyncTask when user pauses fragment
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onPause() {
+        super.onPause();
 
         if ( plotlineList != null && plotlineList.getStatus() == AsyncTask.Status.RUNNING ) {
             plotlineList.cancel(true);
         }
     }
 
-    // Use the AsyncTask to populate the ListView with the plotlines for this story
+    // Resume on return
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if ( plotlineList == null && plotlineList.getStatus() == AsyncTask.Status.FINISHED ) {
+            plotlineList.execute();
+        }
+    }
+
+    // Populate the ListView with the plotlines for this story. Otherwise, return null
     private class setPlotlineList extends AsyncTask<Void, Void, Cursor> {
         private Context context = getActivity().getApplicationContext();
         private SQLDatabase db;
@@ -79,7 +87,7 @@ public class AddPlotline extends Fragment {
         protected void onPostExecute(Cursor result) {
             super.onPostExecute(result);
 
-            // If this task hasn't been cancelled yet
+            // If this task hasn't been cancelled yet (see onPause)
             if ( !isCancelled() ) {
 
                 // Get the columns
@@ -94,6 +102,7 @@ public class AddPlotline extends Fragment {
                         R.id.extra_info
                 };
 
+                // Set up the adapter
                 SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
                         context,
                         R.layout.tab_view,
@@ -105,6 +114,7 @@ public class AddPlotline extends Fragment {
                 // Notify thread the data has changed
                 cursorAdapter.notifyDataSetChanged();
 
+                // Initialize
                 ListView add_plotline_listview = (ListView) add_plotline_layout
                         .findViewById(R.id.plotline_listview);
                 add_plotline_listview.setAdapter(cursorAdapter);

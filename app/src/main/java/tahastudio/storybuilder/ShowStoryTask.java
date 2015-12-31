@@ -12,7 +12,7 @@ public class ShowStoryTask extends AsyncTask<String, Void, Integer> {
     private Context context;
     String title;
 
-    // Need to be able to pass the context and string from StoryBuilderMain
+    // Pass the context and string from StoryBuilderMain
     public ShowStoryTask(Context context, String title) {
         this.context = context;
         this.title = title;
@@ -21,7 +21,7 @@ public class ShowStoryTask extends AsyncTask<String, Void, Integer> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        // Show a message to the user while loading the story in the background
+        // Show a message while loading the story in the background
         Toast.makeText(context, "Loading story. Please wait...", Toast.LENGTH_LONG).show();
     }
 
@@ -30,7 +30,7 @@ public class ShowStoryTask extends AsyncTask<String, Void, Integer> {
         SQLDatabase db = new SQLDatabase(context);
         db.getReadableDatabase(); // Get a read on the db to grab the id
 
-        return db.findStoryID(title); // Return the Integer from the db
+        return db.findStoryID(title); // Return the Integer from the db, querying by title
     }
 
     @Override
@@ -39,10 +39,10 @@ public class ShowStoryTask extends AsyncTask<String, Void, Integer> {
 
         // Create a new Intent to pass info to ShowStory
         Intent intent = new Intent(context, ShowStory.class);
-        intent.putExtra("title", title); // Pass the string that was passed to this task
-        intent.putExtra("id", result);  // Pass the Integer that was passed from db
+        intent.putExtra("title", title); // Pass the string that was passed to from main activity
+        intent.putExtra("id", result);  // Pass the Integer that was passed from background thread
 
-        // Need to add a flag or it will result an exception
+        // Add a flag or get an exception raised
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
         // Call the intent from this context

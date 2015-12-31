@@ -16,8 +16,7 @@ import android.widget.ListView;
  * First tab for SB
  */
 public class AddCharacters extends Fragment {
-    // Need to make the AsyncTask global for this class in order
-    // to stop it when needed
+    // Make the AsyncTask global to stop it onPause
     private setCharacterList characterList;
     private View add_character_layout;
     private ListView add_characters_listview;
@@ -34,11 +33,11 @@ public class AddCharacters extends Fragment {
                 container,
                 false);
 
-        // Run the AsyncTask to fill in the ListView
+        // Run an AsyncTask to fill in the ListView from the db
         characterList = new setCharacterList();
         characterList.execute();
 
-        // TODO -> The below code is used twice here. Need to refactor
+        // TODO -> The below code is initialized twice. Need to refactor
         add_characters_listview = (ListView) add_character_layout
                 .findViewById(R.id.characters_listview);
 
@@ -59,21 +58,31 @@ public class AddCharacters extends Fragment {
             }
         });
 
-        // Return this view
         return add_character_layout;
     }
 
-    // Need to stop the AsyncTask when user moves away from this fragment
+    // Stop the AsyncTask when user pauses the fragment
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onPause() {
+        super.onPause();
 
         if ( characterList != null && characterList.getStatus() == AsyncTask.Status.RUNNING ) {
             characterList.cancel(true);
         }
     }
 
-    // This AsyncTask will populate the ListView with a list of characters saved for this story
+    // Resume on return
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if ( characterList == null && characterList.getStatus() == AsyncTask.Status.FINISHED ) {
+            characterList.execute();
+        }
+    }
+
+    // Populate the ListView with a list of characters saved for this story
+    // Otherwise, returns null
     private class setCharacterList extends AsyncTask<Void, Void, Cursor> {
         private Context context = getActivity().getApplicationContext();
         private SQLDatabase db;
@@ -107,7 +116,7 @@ public class AddCharacters extends Fragment {
         protected void onPostExecute(Cursor result) {
             super.onPostExecute(result);
 
-            // If this task hasn't been cancelled yet
+            // If this task hasn't been cancelled yet (see onPause)
             if ( !isCancelled() ) {
 
                 // Get the column names
@@ -122,6 +131,7 @@ public class AddCharacters extends Fragment {
                         R.id.extra_info
                 };
 
+                // Set up the adapter
                 SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
                         context,
                         R.layout.tab_view,
@@ -136,7 +146,6 @@ public class AddCharacters extends Fragment {
                 add_characters_listview = (ListView) add_character_layout
                         .findViewById(R.id.characters_listview);
                 add_characters_listview.setAdapter(cursorAdapter);
-
             }
         }
     }

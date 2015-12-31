@@ -34,7 +34,7 @@ public class AddPlaceElements extends Fragment {
         // Get an instance of this application context
         context = getActivity().getApplicationContext();
 
-        // Now start finding the elements
+        // Find layout elements
         final EditText place_name = (EditText) place_elements_layout
                 .findViewById(R.id.sb_place_name);
         final EditText place_location = (EditText) place_elements_layout
@@ -43,13 +43,13 @@ public class AddPlaceElements extends Fragment {
                 .findViewById(R.id.sb_place_desc);
         final EditText place_notes = (EditText) place_elements_layout
                 .findViewById(R.id.sb_place_notes);
+
         Button add_place = (Button) place_elements_layout
                 .findViewById(R.id.add_the_place);
-
         add_place.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Make sure name field is a non-empty value
+                // Make sure name field != null
                 if ( place_name.length() < 1 ) {
                     Toast.makeText(context, "Name is a required "
                             + "field", Toast.LENGTH_LONG).show();
@@ -71,15 +71,15 @@ public class AddPlaceElements extends Fragment {
                             convert_place_notes);
                     placesTask.execute();
                 }
-                // Return to AddPlaces class
+                // Return to AddPlaces on button click, immediately
                 getFragmentManager().popBackStackImmediate();
             }
         });
-        // Return the layout
+
         return place_elements_layout;
     }
 
-    // Need an AsyncTask with a constructor to pass in multiple values
+    // Pass multiple values to AsyncTask constructor
     private class addPlacesTask extends AsyncTask<Void, Void, Boolean> {
         private Context context;
         private ContentValues values;
@@ -89,6 +89,7 @@ public class AddPlaceElements extends Fragment {
         String description;
         String notes;
 
+        // Constructor
         public addPlacesTask(Context context,
                              String name,
                              String location,

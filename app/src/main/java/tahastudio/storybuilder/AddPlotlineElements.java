@@ -47,7 +47,7 @@ public class AddPlotlineElements extends Fragment {
         add_the_plot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Ensure the plotline field is a non-empty value
+                // Ensure plotline field != null
                 if (plotline.length() < 1) {
                     Toast.makeText(context, "You must enter at least"
                             + " a summary of the plot", Toast.LENGTH_LONG).show();
@@ -56,7 +56,7 @@ public class AddPlotlineElements extends Fragment {
                     String convert_plotline = plotline.getText().toString();
                     String convert_notes = notes.getText().toString();
 
-                    // Instantiate instance of AsyncTask to send input to background thread
+                    // AsyncTask to send input to background thread
                     addPlotlineTask plotlineTask = new addPlotlineTask(
                             context,
                             false,
@@ -64,15 +64,15 @@ public class AddPlotlineElements extends Fragment {
                             convert_notes);
                     plotlineTask.execute();
                 }
-                // Return to AddPlotline
+                // Return to AddPlotline on button click, immediately
                 getFragmentManager().popBackStackImmediate();
             }
         });
-        // Return the layout
+
         return plotline_elements_layout;
     }
 
-    // Need to create a constructor to pass in multiple values
+    // Pass in multiple values to constructor
     private class addPlotlineTask extends AsyncTask<Void, Void, Boolean> {
         private Context context;
         private ContentValues values;
@@ -81,6 +81,7 @@ public class AddPlotlineElements extends Fragment {
         String plotline;
         String notes;
 
+        // Constructor
         public addPlotlineTask(
                 Context context,
                 Boolean main_plot,
@@ -114,7 +115,7 @@ public class AddPlotlineElements extends Fragment {
                 // Insert the rows
                 db.insertRow(values, Constants.STORY_PLOTLINE_TABLE);
 
-                return true;
+                return true; // If successful
             } catch (Exception e) {
                 e.printStackTrace();
             }

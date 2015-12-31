@@ -16,8 +16,7 @@ import android.widget.ListView;
  * Second tab for SB
  */
 public class AddPlaces extends Fragment {
-    // Need to make the AsyncTask global for this class in order
-    // to stop it when needed
+    // Make the AsyncTask global to stop it on onPause
     private setPlaceList placeList;
     private View add_place_layout;
 
@@ -37,21 +36,30 @@ public class AddPlaces extends Fragment {
         placeList = new setPlaceList();
         placeList.execute();
 
-        // Return the layout
         return add_place_layout;
     }
 
-    // Need to stop the AsyncTask when user moves away from this fragment
+    // Stop the AsyncTask when user pauses the fragment
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onPause() {
+        super.onPause();
 
         if ( placeList != null && placeList.getStatus() == AsyncTask.Status.RUNNING ) {
             placeList.cancel(true);
         }
     }
 
-    // This AsyncTask will populate the ListView with the places in this story
+    // Resume on return
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if ( placeList == null && placeList.getStatus() == AsyncTask.Status.FINISHED ) {
+            placeList.execute();
+        }
+    }
+
+    // Populate the ListView with the places in this story. Otherwise, return null
     private class setPlaceList extends AsyncTask<Void, Void, Cursor> {
         private Context context = getActivity().getApplicationContext();
         private SQLDatabase db;
@@ -79,7 +87,7 @@ public class AddPlaces extends Fragment {
         protected void onPostExecute(Cursor result) {
             super.onPostExecute(result);
 
-            // If this task hasn't been cancelled yet
+            // If this task hasn't been cancelled yet (see onPause)
             if ( !isCancelled() ) {
 
                 // Get the column names
@@ -94,6 +102,7 @@ public class AddPlaces extends Fragment {
                         R.id.extra_info
                 };
 
+                // Set up the adapter
                 SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
                         context,
                         R.layout.tab_view,
@@ -105,7 +114,7 @@ public class AddPlaces extends Fragment {
                 // Notify thread the data has changed
                 cursorAdapter.notifyDataSetChanged();
 
-                // Find the ListView in the layout
+                // Initialize
                 ListView add_places_listview = (ListView) add_place_layout
                         .findViewById(R.id.places_listview);
                 add_places_listview.setAdapter(cursorAdapter);

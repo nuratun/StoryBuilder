@@ -20,9 +20,7 @@ import java.util.Random;
  * This is the main activity of StoryBuilder
  **/
 public class StoryBuilderMain extends AppCompatActivity {
-    // Add in toolbar, drawer, and FAB to the view
     android.support.v7.widget.Toolbar toolbar;
-    //android.support.v4.widget.DrawerLayout drawer_layout;
     FloatingActionButton the_fab;
 
     @Override
@@ -30,32 +28,27 @@ public class StoryBuilderMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story_builder_main);
 
-        // TODO -> Call function to check if app has been run before.
-        //checkFirstRun();
-
         toolbar = (android.support.v7.widget.Toolbar)
                 findViewById(R.id.toolbar); // Find the toolbar in the view
         setSupportActionBar(toolbar); // Set toolbar as the actionbar
         setTitle("StoryBuilder"); // Set title on actionbar
 
-        //drawer_layout = (android.support.v4.widget.DrawerLayout)
-        //        findViewById(R.id.drawer_layout); // Find the drawer
-        // TODO -> Set the drawer
+        // TODO -> Set up a drawer
 
-        // Find the ListView and TextView to send to storyTaskList
-        // The empty TextView will be used if there are no stories to return
-        final ListView story_list = (ListView) findViewById(R.id.story_list);
-        TextView empty = (TextView) findViewById(R.id.empty);
-        storyListTask storyListTask = new storyListTask(story_list, empty);
-        storyListTask.execute();
-
-        // Find the TextView in the layout and then run the
-        // randomQuoteTask to generate a random quote in it
-        TextView textView = (TextView) findViewById(R.id.quote);
+        TextView textView = (TextView) findViewById(R.id.quote); // TextView used for quotes
+        // randomQuoteTask will generate a random quote and place it in the above TextView
         randomQuoteTask randomQuoteTask = new randomQuoteTask(textView);
         randomQuoteTask.execute();
 
-        // When a user clicks on an item, grab the db_id, and pass it to
+        final ListView story_list = (ListView) findViewById(R.id.story_list); // Stories go here
+        TextView empty = (TextView) findViewById(R.id.empty); // TextView used if stories == null
+
+        // AsyncTask to find list of stories in db. If not null, return the list
+        // Otherwise, set up the empty TextView
+        storyListTask storyListTask = new storyListTask(story_list, empty);
+        storyListTask.execute();
+
+        // When a user clicks on a story, grab the title, and pass it to
         // ShowStory to return the story details from the db
         story_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -64,19 +57,19 @@ public class StoryBuilderMain extends AppCompatActivity {
                 // Get the position of the user click
                 Cursor cursor = (Cursor) story_list.getItemAtPosition(position);
 
-                // From the cursor, we can grab the title, so long as
-                // we know the db column name
+                // From the cursor, we can grab the title, going by column name
                 String title = cursor.getString(
                         cursor.getColumnIndex(Constants.STORY_NAME));
 
-                // Call the showStoryTask to grab the id from the db and the
-                // AsyncTask will then create an intent to call ShowStory
+                // ShowStoryTask class will grab the the story _id from the db
+                // and create an intent to call the ShowStory class
                 ShowStoryTask showStoryTask = new ShowStoryTask(getBaseContext(), title);
                 showStoryTask.execute();
             }
         });
 
-        // Now find the FAB and call the dialog box when clicked
+        // When FAB is clicked, a dialog box appears
+        // Returns: SBDialog class
         the_fab = (FloatingActionButton) findViewById(R.id.fab);
         the_fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,29 +77,6 @@ public class StoryBuilderMain extends AppCompatActivity {
                 showSBDialog();
             }
         });
-    }
-
-    // Method for checking if app has been run for the first time.
-    // If so, provide message. Otherwise, skip.
-    public void checkFirstRun() {
-
-        // Set the variable to true/false
-        boolean isFirstRun;
-
-        // First run is initially set to true
-        isFirstRun = getSharedPreferences("PREFERENCE", MODE_PRIVATE)
-                .getBoolean("isFirstRun", true);
-
-        // TODO -> Implement the pop-up box
-        if (isFirstRun) {
-            // Put dialog here
-
-            // Once run, update the preference. Only run again when app is updated
-            getSharedPreferences("PREFERENCE", MODE_PRIVATE)
-                    .edit()
-                    .putBoolean("isFirstRun", false)
-                    .apply();
-        }
     }
 
     @Override
@@ -129,14 +99,15 @@ public class StoryBuilderMain extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // Call the SBDialog class to create the dialog box. User will input data to the
-    // dialog box to create a new story from the FAB. It will send the data to CreateStoryTask
+    // Calls SBDialog class to create the story creation dialog
+    // User inputs data and creates a new story. Data is sent to the CreateStoryTask class
+    // Initialized from the FAB
     private void showSBDialog() {
         SBDialog sbDialog = new SBDialog();
         sbDialog.show(getSupportFragmentManager(), "story_creation");
     }
 
-    // AsyncTask used to generate random quote on start of activity
+    // AsyncTask to generate random quote on start of activity
     private class randomQuoteTask extends AsyncTask<Void, Void, String> {
         private Random generator = new Random();
         private TextView textView;
@@ -166,8 +137,10 @@ public class StoryBuilderMain extends AppCompatActivity {
         }
     }
 
-    // This AsyncTask will return a list of stories saved in the db
-    // A user can click on one to return the saved data for that story
+    // AsyncTask will return a list of stories saved in the db
+    // Clicking on one will return the saved data for that story
+    // by calling the ShowStory task
+    // Returns: A list of stories in db. On null, sets up an empty TextView
     private class storyListTask extends AsyncTask<Void, Void, Cursor> {
         private Context context = getBaseContext();
         private SQLDatabase db;
