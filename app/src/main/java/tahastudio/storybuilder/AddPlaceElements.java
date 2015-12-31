@@ -116,7 +116,7 @@ public class AddPlaceElements extends Fragment {
             values = new ContentValues();
 
             try {
-                values.put(Constants.DB_ID, CreateStory.SB_ID);
+                values.put(Constants.DB_ID, ShowStory.SB_ID);
                 values.put(Constants.STORY_PLACE_NAME, name);
                 values.put(Constants.STORY_PLACE_LOCATION, location);
                 values.put(Constants.STORY_PLACE_DESC, description);

@@ -41,8 +41,7 @@ public class AddPlotline extends Fragment {
         return add_plotline_layout;
     }
 
-    // Need to stop the AsyncTask when the back button is pressed otherwise
-    // it will continue running and mess up the global SB_ID variable
+    // Need to stop the AsyncTask when stopped
     @Override
     public void onStop() {
         super.onStop();
@@ -85,14 +84,12 @@ public class AddPlotline extends Fragment {
 
                 // Get the columns
                 String[] columns = new String[]{
-                        Constants.DB_ID,
                         Constants.STORY_MAIN_PLOTLINE,
                         Constants.STORY_PLOTLINE
                 };
 
                 // Get the widget list
                 int[] widgets = new int[]{
-                        R.id.db_id,
                         R.id.name_info,
                         R.id.extra_info
                 };

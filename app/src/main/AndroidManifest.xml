@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CreateStory"
+            android:name=".ShowStory"
             android:label="@string/title_activity_create_story"
             android:parentActivityName=".StoryBuilderMain">
             <meta-data

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="tahastudio.storybuilder.CreateStory">
+    tools:context="tahastudio.storybuilder.ShowStory">
 
     <include
         android:id="@+id/toolbar"

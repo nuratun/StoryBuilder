@@ -49,7 +49,7 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
         // Insert into the database
         db.insertRow(values, Constants.STORY_TABLE);
 
-        // Now get the id of the story to send as an Intent to the CreateStory class
+        // Now get the id of the story to send as an Intent to the ShowStory class
         db.getReadableDatabase();
         return db.getStoryID();
     }
@@ -59,14 +59,14 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
         super.onPostExecute(result);
 
         // Now call the Intent creator, passing in the story id and title
-        Intent intent = new Intent(context, CreateStory.class);
+        Intent intent = new Intent(context, ShowStory.class);
         intent.putExtra("title", title);
         intent.putExtra("id", result);
 
         // Need to add a flag or it will give an error
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-        // Call the CreateStory class from this context
+        // Call the ShowStory class from this context
         context.startActivity(intent);
     }
 }

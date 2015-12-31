@@ -40,7 +40,7 @@ public class AddCharacters extends Fragment {
         return add_character_layout;
     }
 
-    // Need to stop the AsyncTask when activity is paused
+    // Need to stop the AsyncTask when stopped
     @Override
     public void onStop() {
         super.onStop();
@@ -52,8 +52,8 @@ public class AddCharacters extends Fragment {
 
     // This AsyncTask will populate the ListView with a list of characters saved for this story
     private class setCharacterList extends AsyncTask<Void, Void, Cursor> {
-        private SQLDatabase db;
         private Context context = getActivity().getApplicationContext();
+        private SQLDatabase db;
 
         @Override
         protected void onPreExecute() {
@@ -89,14 +89,12 @@ public class AddCharacters extends Fragment {
 
                 // Get the column names
                 String[] columns = new String[] {
-                        Constants.DB_ID,
                         Constants.STORY_CHARACTER,
                         Constants.STORY_AGE
                 };
 
                 // Get the TextView widgets
                 int[] widgets = new int[] {
-                        R.id.db_id,
                         R.id.name_info,
                         R.id.extra_info
                 };

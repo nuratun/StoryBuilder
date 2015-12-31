@@ -56,7 +56,7 @@ public class StoryBuilderMain extends AppCompatActivity {
         randomQuoteTask.execute();
 
         // When a user clicks on an item, grab the db_id, and pass it to
-        // CreateStory to return the story details from the db
+        // ShowStory to return the story details from the db
         story_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -69,10 +69,8 @@ public class StoryBuilderMain extends AppCompatActivity {
                 String title = get_item.getString(
                         get_item.getColumnIndex(Constants.STORY_NAME));
 
-                //Toast.makeText(getBaseContext(), title, Toast.LENGTH_LONG).show();
-
                 // Call the showStoryTask to grab the id from the db and the
-                // AsyncTask will then create an intent to call CreateStory
+                // AsyncTask will then create an intent to call ShowStory
                 ShowStoryTask showStoryTask = new ShowStoryTask(getBaseContext(), title);
                 showStoryTask.execute();
             }

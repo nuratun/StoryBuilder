@@ -41,8 +41,7 @@ public class AddPlaces extends Fragment {
         return add_place_layout;
     }
 
-    // Need to stop the AsyncTask when the back button is pressed otherwise
-    // it will continue running and mess up the global SB_ID variable
+    // Need to stop the AsyncTask when stopped
     @Override
     public void onStop() {
         super.onStop();
@@ -85,14 +84,12 @@ public class AddPlaces extends Fragment {
 
                 // Get the column names
                 String[] columns = new String[]{
-                        Constants.DB_ID,
                         Constants.STORY_PLACE_NAME,
                         Constants.STORY_PLACE_LOCATION
                 };
 
                 // Get the TextView widgets
                 int[] widgets = new int[]{
-                        R.id.db_id,
                         R.id.name_info,
                         R.id.extra_info
                 };

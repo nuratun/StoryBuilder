@@ -128,7 +128,7 @@ public class AddCharacterElements extends Fragment {
             values = new ContentValues();
 
             try {
-                values.put(Constants.DB_ID, CreateStory.SB_ID);
+                values.put(Constants.DB_ID, ShowStory.SB_ID);
                 values.put(Constants.STORY_CHARACTER, name);
                 values.put(Constants.STORY_AGE, age);
                 values.put(Constants.STORY_BIRTHPLACE, birthplace);

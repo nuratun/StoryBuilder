@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 /**
- * AsyncTask to grab story details from db and send to CreateStory
+ * AsyncTask to grab story details from db and send to ShowStory
  */
 public class ShowStoryTask extends AsyncTask<String, Void, Integer> {
     private Context context;
@@ -37,8 +37,8 @@ public class ShowStoryTask extends AsyncTask<String, Void, Integer> {
     protected void onPostExecute(Integer result) {
         super.onPostExecute(result);
 
-        // Create a new Intent to pass info to CreateStory
-        Intent intent = new Intent(context, CreateStory.class);
+        // Create a new Intent to pass info to ShowStory
+        Intent intent = new Intent(context, ShowStory.class);
         intent.putExtra("title", title); // Pass the string that was passed to this task
         intent.putExtra("id", result);  // Pass the Integer that was passed from db
 

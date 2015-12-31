@@ -12,7 +12,7 @@ import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-public class CreateStory extends AppCompatActivity {
+public class ShowStory extends AppCompatActivity {
     // To programmatically add in the element fragments
     FragmentManager fragmentManager = getSupportFragmentManager();
 

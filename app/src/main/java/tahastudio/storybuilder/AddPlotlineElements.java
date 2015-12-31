@@ -107,7 +107,7 @@ public class AddPlotlineElements extends Fragment {
             values = new ContentValues();
 
             try {
-                values.put(Constants.DB_ID, CreateStory.SB_ID);
+                values.put(Constants.DB_ID, ShowStory.SB_ID);
                 values.put(Constants.STORY_PLOTLINE, plotline);
                 values.put(Constants.STORY_PLOTLINE_NOTES, notes);
 
