@@ -9,6 +9,7 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 /**
@@ -19,6 +20,7 @@ public class AddCharacters extends Fragment {
     // to stop it when needed
     private setCharacterList characterList;
     private View add_character_layout;
+    private ListView add_characters_listview;
 
     public AddCharacters() {
 
@@ -36,11 +38,32 @@ public class AddCharacters extends Fragment {
         characterList = new setCharacterList();
         characterList.execute();
 
+        // TODO -> The below code is used twice here. Need to refactor
+        add_characters_listview = (ListView) add_character_layout
+                .findViewById(R.id.characters_listview);
+
+        // When a user clicks on a character row, bring up a new fragment with edit fields
+        add_characters_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Click on a row will return a cursor. The cursor will hold that row data
+                Cursor cursor = (Cursor) add_characters_listview.getItemAtPosition(position);
+
+                // Grab the first field from the row to send to UpdateElementsTask
+                String name = cursor.getString(cursor.getColumnIndex(Constants.STORY_CHARACTER));
+
+                // Send the context, table int, and character name to UpdateElementsTask
+                UpdateElementsTask updateElementsTask =
+                        new UpdateElementsTask(getContext(), 0, name);
+                updateElementsTask.execute();
+            }
+        });
+
         // Return this view
         return add_character_layout;
     }
 
-    // Need to stop the AsyncTask when stopped
+    // Need to stop the AsyncTask when user moves away from this fragment
     @Override
     public void onStop() {
         super.onStop();
@@ -110,7 +133,7 @@ public class AddCharacters extends Fragment {
                 // Notify thread the data has changed
                 cursorAdapter.notifyDataSetChanged();
 
-                ListView add_characters_listview = (ListView) add_character_layout
+                add_characters_listview = (ListView) add_character_layout
                         .findViewById(R.id.characters_listview);
                 add_characters_listview.setAdapter(cursorAdapter);
 

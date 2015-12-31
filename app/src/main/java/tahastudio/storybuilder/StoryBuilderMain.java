@@ -62,12 +62,12 @@ public class StoryBuilderMain extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Clicking on a ListView row will return a cursor
                 // Get the position of the user click
-                Cursor get_item = (Cursor) story_list.getItemAtPosition(position);
+                Cursor cursor = (Cursor) story_list.getItemAtPosition(position);
 
                 // From the cursor, we can grab the title, so long as
                 // we know the db column name
-                String title = get_item.getString(
-                        get_item.getColumnIndex(Constants.STORY_NAME));
+                String title = cursor.getString(
+                        cursor.getColumnIndex(Constants.STORY_NAME));
 
                 // Call the showStoryTask to grab the id from the db and the
                 // AsyncTask will then create an intent to call ShowStory

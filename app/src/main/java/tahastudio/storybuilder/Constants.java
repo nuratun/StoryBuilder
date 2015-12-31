@@ -129,4 +129,21 @@ public class Constants {
             + STORY_PLOTLINE + " FROM "
             + STORY_PLOTLINE_TABLE + " WHERE "
             + DB_ID + " = ";
+
+    // Used in UpdateElementTask to grab the row selected in AddCharacters
+    public static final String GRAB_CHARACTER_ROW_DETAILS = "SELECT * FROM "
+            + STORY_CHARACTER_TABLE + " WHERE "
+            + STORY_CHARACTER + " = ";
+
+    // Used in UpdateElementTask to grab the row selected in AddPlaces
+    public static final String GRAB_PLACE_ROW_DETAILS = "SELECT * FROM "
+            + STORY_PLACES_TABLE + " WHERE "
+            + STORY_PLACE_NAME + " = ";
+
+    // Used in UpdateElementTask to grab the row selected in AddPlotline
+    public static final String GRAB_PLOTLINE_ROW_DETAILS = "SELECT * FROM "
+            + STORY_PLOTLINE_TABLE + " WHERE "
+            + STORY_PLOTLINE + " = ";
+
+
 }

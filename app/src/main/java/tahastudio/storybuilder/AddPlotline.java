@@ -41,7 +41,7 @@ public class AddPlotline extends Fragment {
         return add_plotline_layout;
     }
 
-    // Need to stop the AsyncTask when stopped
+    // Need to stop the AsyncTask when user moves away from this fragment
     @Override
     public void onStop() {
         super.onStop();

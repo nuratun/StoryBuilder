@@ -36,13 +36,9 @@ public class SQLDatabase extends SQLiteOpenHelper {
         sbDatabase.insert(db, null, values);
     }
 
-    public void insertElements(ContentValues values, String table, Integer num) {
-        sbDatabase = this.getWritableDatabase();
-        sbDatabase.execSQL("INSERT INTO "
-                + table + " VALUES "
-                + values + " WHERE "
-                + Constants.DB_ID + " = "
-                + num);
+    public boolean updateRow(ContentValues values, String db) {
+
+        return true;
     }
 
     // Get the story ID back from database to create the other tables
@@ -73,40 +69,18 @@ public class SQLDatabase extends SQLiteOpenHelper {
         return the_id;
     }
 
-    // Insert ID into the characters, plotline, and places table
-    public void insertTheID(int id) {
-        sbDatabase = this.getWritableDatabase();
-        sbDatabase.execSQL("INSERT INTO "
-                + Constants.STORY_CHARACTER_TABLE + " ("
-                + Constants.DB_ID + ") VALUES ("
-                + id + ");");
-
-        sbDatabase.execSQL("INSERT INTO "
-                + Constants.STORY_PLOTLINE_TABLE + " ("
-                + Constants.DB_ID + ") VALUES ("
-                + id + ");");
-
-        sbDatabase.execSQL("INSERT INTO "
-                + Constants.STORY_PLACES_TABLE + " ("
-                + Constants.DB_ID + ") VALUES ("
-                + id + ");");
-    }
-
-    public boolean updateRow(ContentValues values, String db) {
-
-        return true;
-    }
-
-    public void runQuery(String query) {
-        sbDatabase = this.getReadableDatabase();
-        sbDatabase.execSQL(query);
-    }
-
-    // Need to dynamically add in the SB_ID, as it will change
-    // depending on user selection
+    // Need to dynamically add in the SB_ID to this query, as it will
+    // change depending on user selection
     // Location: AddCharacters, AddPlaces, AddPlotline
     public Cursor getRows(String query) {
         sbDatabase = this.getReadableDatabase();
-        return sbDatabase.rawQuery(query + CreateStory.SB_ID + ";", null);
+        return sbDatabase.rawQuery(query + ShowStory.SB_ID + ";", null);
+    }
+
+    // Get the story element user clicked on
+    // Location: AddCharacters, AddPlaces, AddPlotline
+    public Cursor getElementRow(String query, String name) {
+        sbDatabase = this.getReadableDatabase();
+        return sbDatabase.rawQuery(query + "'" + name + "';", null);
     }
 }

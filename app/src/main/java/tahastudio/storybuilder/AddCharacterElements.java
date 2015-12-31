@@ -17,6 +17,11 @@ import android.widget.Toast;
  */
 public class AddCharacterElements extends Fragment {
     private Context context;
+    String name;
+    String age;
+    String birthplace;
+    String personality;
+    String notes;
 
     public AddCharacterElements() {
 
@@ -91,11 +96,11 @@ public class AddCharacterElements extends Fragment {
         private Context context;
         private ContentValues values;
         private SQLDatabase db;
-        String name;
-        String age;
-        String birthplace;
-        String personality;
-        String notes;
+        private String name;
+        private String age;
+        private String birthplace;
+        private String personality;
+        private String notes;
 
         // Constructor to pass in more than one value
         public addCharactersTask(Context context,
