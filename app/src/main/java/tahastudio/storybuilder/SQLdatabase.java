@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * This class holds all the SQL queries used elsewhere in the app
+ */
 public class SQLDatabase extends SQLiteOpenHelper {
     private SQLiteDatabase sbDatabase;
 
@@ -23,7 +26,7 @@ public class SQLDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sbDatabase, int old_ver, int new_ver) {
-        // Remove when going into production
+        // TODO -> Remove when going into production
         sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_TABLE);
         sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_CHARACTER_TABLE);
         sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_PLACES_TABLE);
