@@ -1,4 +1,4 @@
-package tahastudio.storybuilder;
+package tahastudio.storybuilder.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -8,6 +8,9 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import tahastudio.storybuilder.tasks.CreateStoryTask;
+import tahastudio.storybuilder.R;
 
 /**
  * Fragment to bring up dialog box where user can input story details

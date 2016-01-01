@@ -1,9 +1,12 @@
-package tahastudio.storybuilder;
+package tahastudio.storybuilder.tasks;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.widget.Toast;
+
+import tahastudio.storybuilder.utils.Constants;
+import tahastudio.storybuilder.utils.SQLDatabase;
 
 /**
  * An AsyncTask to grab the data from a row and query the db. Will pass in

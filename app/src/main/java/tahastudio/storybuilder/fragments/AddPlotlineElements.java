@@ -1,4 +1,4 @@
-package tahastudio.storybuilder;
+package tahastudio.storybuilder.fragments;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -12,6 +12,11 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import tahastudio.storybuilder.R;
+import tahastudio.storybuilder.ShowStory;
+import tahastudio.storybuilder.utils.Constants;
+import tahastudio.storybuilder.utils.SQLDatabase;
 
 /**
  * Fragment to replace ListView in AddPlotline. Is called by AddPlotline.

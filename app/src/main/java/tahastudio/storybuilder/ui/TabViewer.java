@@ -1,12 +1,16 @@
-package tahastudio.storybuilder;
+package tahastudio.storybuilder.ui;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import tahastudio.storybuilder.fragments.AddCharacters;
+import tahastudio.storybuilder.fragments.AddPlaces;
+import tahastudio.storybuilder.fragments.AddPlotline;
+
 /**
  * This class allows flipping through fragments as tabs
- * Initliazed from: ShowStory
+ * Initialized from: ShowStory
  */
 public class TabViewer extends FragmentStatePagerAdapter {
     int sbTabs;

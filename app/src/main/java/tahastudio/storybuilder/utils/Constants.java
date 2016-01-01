@@ -1,4 +1,4 @@
-package tahastudio.storybuilder;
+package tahastudio.storybuilder.utils;
 
 /**
  * To store constants for SQL queries.

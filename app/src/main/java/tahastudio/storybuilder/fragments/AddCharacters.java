@@ -1,4 +1,4 @@
-package tahastudio.storybuilder;
+package tahastudio.storybuilder.fragments;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -11,6 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import tahastudio.storybuilder.R;
+import tahastudio.storybuilder.tasks.UpdateElementsTask;
+import tahastudio.storybuilder.utils.Constants;
+import tahastudio.storybuilder.utils.SQLDatabase;
 
 /**
  * First tab for SB

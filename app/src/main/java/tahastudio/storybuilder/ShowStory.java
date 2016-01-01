@@ -1,7 +1,6 @@
 package tahastudio.storybuilder;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -12,6 +11,11 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.TextView;
+
+import tahastudio.storybuilder.fragments.AddCharacterElements;
+import tahastudio.storybuilder.fragments.AddPlaceElements;
+import tahastudio.storybuilder.fragments.AddPlotlineElements;
+import tahastudio.storybuilder.ui.TabViewer;
 
 public class ShowStory extends AppCompatActivity {
     // To programmatically add in the element fragments
@@ -153,20 +157,6 @@ public class ShowStory extends AppCompatActivity {
 
             }
         });
-    }
-
-    public void sendToCharacterElements(Cursor cursor) {
-        // APIs from FragmentTransaction to add, replace or remove fragments
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        AddCharacterElements addCharacterElements = new AddCharacterElements();
-        addCharacterElements.initalizeStrings(cursor);
-
-        // Add the fragment, add it to the backstack, and commit it
-        fragmentTransaction
-                .add(R.id.story_creation_layout, addCharacterElements)
-                .addToBackStack("update_character")
-                .commit();
     }
 
     // Recreate main activity when back button is pressed. Seems to improve performance.
