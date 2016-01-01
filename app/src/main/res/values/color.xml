@@ -7,8 +7,12 @@
     <color name="colorPrimaryAccent">#43A047</color>
     <color name="colorUpperBackground">#4CAF50</color>
     <color name="colorLowerBackground">#E8F5E9</color>
-    <color name="colorPopUp">#3949AB</color>
+    <color name="colorPopUp">#3F51B5</color>
     <color name="colorPopupText">#d0d0d0</color>
+    <color name="colorPopupTextHint">#9FA8DA</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+
+    <!-- For icons -->
+    <color name="icons_green">#4CAF50</color>
 </resources>

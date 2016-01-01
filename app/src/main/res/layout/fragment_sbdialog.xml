@@ -10,30 +10,38 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Create A New Story"
+        android:text="@string/dialog_instructions"
+        android:drawableStart="@drawable/ic_story"
+        android:gravity="center"
         android:textColor="@color/colorPopupText"
-        android:padding="10dp" />
+        android:textSize="25sp" />
 
     <EditText
         android:id="@+id/sb_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColorHint="@color/colorPopupText"
-        android:hint="Title Your Story" />
+        android:textColorHint="@color/colorPopupTextHint"
+        android:drawableStart="@drawable/ic_dialog_title"
+        android:drawablePadding="10dp"
+        android:hint="@string/dialog_title" />
 
     <EditText
         android:id="@+id/sb_genre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColorHint="@color/colorPopupText"
-        android:hint="Genre" />
+        android:drawableStart="@drawable/ic_dialog_genre"
+        android:drawablePadding="10dp"
+        android:textColorHint="@color/colorPopupTextHint"
+        android:hint="@string/dialog_genre" />
 
     <EditText
         android:id="@+id/sb_notes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColorHint="@color/colorPopupText"
-        android:hint="Synopsis/Notes" />
+        android:drawableStart="@drawable/ic_dialog_synopsis"
+        android:drawablePadding="10dp"
+        android:textColorHint="@color/colorPopupTextHint"
+        android:hint="@string/dialog_desc" />
 
 
 </LinearLayout>

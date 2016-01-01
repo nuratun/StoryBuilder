@@ -11,6 +11,11 @@
         android:id="@+id/characters_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        style="@style/ListViewTheme" />
+        android:padding="20dp"
+        android:divider="@color/white"
+        android:headerDividersEnabled="true"
+        android:footerDividersEnabled="true"
+        android:dividerHeight="2dp"
+        android:background="@color/colorLowerBackground" />
 
     </RelativeLayout>

@@ -5,6 +5,14 @@
     <string name="empty">Nothing here yet. Once you save a story, it will appear here.</string>
     <string name="title_activity_create_story">Create a New Story</string>
 
+    <!-- SBDialog -->
+    <string name="dialog_instructions">Create a story</string>
+    <string name="dialog_title">Title</string>
+    <string name="dialog_desc">Synopsis/Description</string>
+    <string name="dialog_genre">Genre</string>
+    <string name="create_story">Create</string>
+    <string name="cancel_story">Cancel</string>
+
     <!-- For ShowStory -->
     <string name="title_activity_add_characters">Add New Characters</string>
     <string name="title_activity_add_plotline">Add A Plotline</string>
@@ -17,9 +25,29 @@
     <string name="tab_places">Places</string>
 
     <string name="title_activity_tab_viewer">TabViewer</string>
-    <string name="title_activity_sqldatabase">SQLdatabase</string>
+    <string name="title_activity_sqldatabase">SQLDatabase</string>
 
-    <!-- For dialog box -->
-    <string name="create_story">Create</string>
-    <string name="cancel_story">Cancel</string>
+    <!-- For the AddCharacterElements -->
+    <string name="character_instructions">Add A Character</string>
+    <string name="character_name">Name</string>
+    <string name="character_age">Age</string>
+    <string name="character_protagonist">Main Character</string>
+    <string name="character_antagonist">Antagonist</string>
+    <string name="character_gender">Gender</string>
+    <string name="character_male">Male</string>
+    <string name="character_female">Female</string>
+    <string name="character_other">Other</string>
+    <string name="character_birth">Place of birth</string>
+    <string name="character_personality">Personality</string>
+    <string name="character_notes">Notes</string>
+    <string name="character_add">Add the character</string>
+    
+    <!-- For the AddPlaceElements -->
+    <string name="place_instructions">Add A Place/Location</string>
+    <string name="place_name">Name</string>
+    <string name="place_location">Location</string>
+    <string name="place_desc">Description</string>
+    <string name="place_notes">Notes</string>
+    <string name="place_add">Add the place</string>
+
 </resources>

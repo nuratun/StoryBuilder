@@ -24,29 +24,32 @@
         android:id="@+id/story_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/quote" />
+        android:padding="20dp"
+        android:divider="@color/white"
+        android:headerDividersEnabled="true"
+        android:footerDividersEnabled="true"
+        android:dividerHeight="2dp"
+        android:background="@color/colorLowerBackground"
+        android:layout_below="@id/quote"/>
 
     <TextView
         android:id="@+id/empty"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:layout_margin="50dp"
         android:text="@string/empty"
+        android:textSize="20sp"
         android:layout_below="@id/quote" />
-
-    <!--<android.support.v4.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" /> -->
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:src="@drawable/ic_add_black_48dp"
+        android:src="@drawable/ic_add"
         app:layout_anchorGravity="bottom|right|end"
-        android:layout_margin="20dp"
+        android:layout_margin="16dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true" />
 </RelativeLayout>
