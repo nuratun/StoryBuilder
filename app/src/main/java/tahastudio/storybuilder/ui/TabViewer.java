@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import tahastudio.storybuilder.fragments.AddCharacters;
 import tahastudio.storybuilder.fragments.AddPlaces;
-import tahastudio.storybuilder.fragments.AddPlotline;
+import tahastudio.storybuilder.fragments.AddPlots;
 
 /**
  * This class allows flipping through fragments as tabs
@@ -32,7 +32,7 @@ public class TabViewer extends FragmentStatePagerAdapter {
                 AddPlaces sbTab2 = new AddPlaces();
                 return sbTab2;
             case 2:
-                AddPlotline sbTab3 = new AddPlotline();
+                AddPlots sbTab3 = new AddPlots();
                 return sbTab3;
             default:
                 return null;

@@ -1,4 +1,4 @@
-package tahastudio.storybuilder.utils;
+package tahastudio.storybuilder.db;
 
 /**
  * To store constants for SQL queries.
@@ -7,7 +7,7 @@ package tahastudio.storybuilder.utils;
 public class Constants {
 
     // Version number must change if database changes
-    public static final int DATABASE_VERSION = 12;
+    public static final int DATABASE_VERSION = 14;
     public static final String DATABASE_NAME = "sql.db";
 
     // Set up table schema for the story
@@ -20,19 +20,20 @@ public class Constants {
 
     // Set up table schema for characters
     public static final String STORY_CHARACTER_TABLE = "sb_characters";
-    public static final String STORY_CHARACTER = "name";
-    public static final String STORY_MAIN = "main";
-    public static final String STORY_GENDER = "gender";
-    public static final String STORY_AGE = "age";
-    public static final String STORY_BIRTHPLACE = "birthplace";
-    public static final String STORY_PERSONALITY = "personality";
+    public static final String STORY_CHARACTER_NAME = "name";
+    public static final String STORY_CHARACTER_POSITION = "position";
+    public static final String STORY_CHARACTER_GENDER = "gender";
+    public static final String STORY_CHARACTER_AGE = "age";
+    public static final String STORY_CHARACTER_BIRTHPLACE = "birthplace";
+    public static final String STORY_CHARACTER_PERSONALITY = "personality";
     public static final String STORY_CHARACTER_NOTES = "notes";
 
-    // Set up table schema for plotline
-    public static final String STORY_PLOTLINE_TABLE = "sb_plotline";
-    public static final String STORY_MAIN_PLOTLINE = "main_plotline";
-    public static final String STORY_PLOTLINE = "sb_plotline_desc";
-    public static final String STORY_PLOTLINE_NOTES = "plotline_notes";
+    // Set up table schema for plots
+    public static final String STORY_PLOT_TABLE = "sb_plot";
+    public static final String STORY_MAIN_PLOT = "main_plot";
+    public static final String STORY_PLOT_TITLE = "plot_title";
+    public static final String STORY_PLOT_DESC = "sb_plot_desc";
+    public static final String STORY_PLOT_NOTES = "plot_notes";
 
     // Set up table schema for places
     public static final String STORY_PLACES_TABLE = "sb_places";
@@ -62,12 +63,12 @@ public class Constants {
     // Create the character table, with foreign keys from the story table
     public static final String SQL_CREATE_CHARACTERS = "CREATE TABLE "
             + STORY_CHARACTER_TABLE + "("
-            + STORY_CHARACTER + " text, "
-            + STORY_MAIN + " tinyint(1), "
-            + STORY_GENDER + " text, "
-            + STORY_AGE + " integer, "
-            + STORY_BIRTHPLACE + " text, "
-            + STORY_PERSONALITY + " text, "
+            + STORY_CHARACTER_NAME + " text, "
+            + STORY_CHARACTER_POSITION + " tinyint(1), "
+            + STORY_CHARACTER_GENDER + " text, "
+            + STORY_CHARACTER_AGE + " integer, "
+            + STORY_CHARACTER_BIRTHPLACE + " text, "
+            + STORY_CHARACTER_PERSONALITY + " text, "
             + STORY_CHARACTER_NOTES + " text, "
             + DB_ID + " integer, "
             + STORY_NAME + " text, "
@@ -75,12 +76,13 @@ public class Constants {
             + "REFERENCES " + STORY_TABLE + "(" + DB_ID + DB_COMMA + STORY_NAME + ")"
             + " )";
 
-    // Create the plotline table, with foreign keys from the story table
-    public static final String SQL_CREATE_PLOTLINE = "CREATE TABLE "
-            + STORY_PLOTLINE_TABLE + "("
-            + STORY_MAIN_PLOTLINE + " text, "
-            + STORY_PLOTLINE + " text, "
-            + STORY_PLOTLINE_NOTES + " text, "
+    // Create the plot table, with foreign keys from the story table
+    public static final String SQL_CREATE_PLOT = "CREATE TABLE "
+            + STORY_PLOT_TABLE + "("
+            + STORY_MAIN_PLOT + " integer, "
+            + STORY_PLOT_TITLE + " text, "
+            + STORY_PLOT_DESC + " text, "
+            + STORY_PLOT_NOTES + " text, "
             + DB_ID + " integer,"
             + STORY_NAME + " text, "
             + "FOREIGN KEY(" + DB_ID + DB_COMMA + STORY_NAME + ") "
@@ -110,8 +112,8 @@ public class Constants {
     // Used in AddCharacters class to populate the ListView
     public static final String GRAB_CHARACTER_DETAILS = "SELECT "
             + DB_ID + ", "
-            + STORY_CHARACTER + ", "
-            + STORY_AGE + " FROM "
+            + STORY_CHARACTER_NAME + ", "
+            + STORY_CHARACTER_AGE + " FROM "
             + STORY_CHARACTER_TABLE + " WHERE "
             + DB_ID + " = ";
 
@@ -123,28 +125,28 @@ public class Constants {
             + STORY_PLACES_TABLE + " WHERE "
             + DB_ID + " = ";
 
-    // Used in the AddPlotline class to populate the ListView
-    public static final String GRAB_PLOTLINE_DETALIS = "SELECT "
+    // Used in the AddPlots class to populate the ListView
+    public static final String GRAB_PLOT_DETALIS = "SELECT "
             + DB_ID + ", "
-            + STORY_MAIN_PLOTLINE + ", "
-            + STORY_PLOTLINE + " FROM "
-            + STORY_PLOTLINE_TABLE + " WHERE "
+            + STORY_MAIN_PLOT + ", "
+            + STORY_PLOT_TITLE + " FROM "
+            + STORY_PLOT_TABLE + " WHERE "
             + DB_ID + " = ";
 
     // Used in UpdateElementTask to grab the row selected in AddCharacters
     public static final String GRAB_CHARACTER_ROW_DETAILS = "SELECT * FROM "
             + STORY_CHARACTER_TABLE + " WHERE "
-            + STORY_CHARACTER + " = ";
+            + STORY_CHARACTER_NAME + " = ";
 
     // Used in UpdateElementTask to grab the row selected in AddPlaces
     public static final String GRAB_PLACE_ROW_DETAILS = "SELECT * FROM "
             + STORY_PLACES_TABLE + " WHERE "
             + STORY_PLACE_NAME + " = ";
 
-    // Used in UpdateElementTask to grab the row selected in AddPlotline
-    public static final String GRAB_PLOTLINE_ROW_DETAILS = "SELECT * FROM "
-            + STORY_PLOTLINE_TABLE + " WHERE "
-            + STORY_PLOTLINE + " = ";
+    // Used in UpdateElementTask to grab the row selected in AddPlots
+    public static final String GRAB_PLOT_ROW_DETAILS = "SELECT * FROM "
+            + STORY_PLOT_TABLE + " WHERE "
+            + STORY_PLOT_TITLE + " = ";
 
 
 }

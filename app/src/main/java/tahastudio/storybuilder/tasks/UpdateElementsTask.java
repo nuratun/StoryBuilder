@@ -5,16 +5,16 @@ import android.database.Cursor;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import tahastudio.storybuilder.utils.Constants;
-import tahastudio.storybuilder.utils.SQLDatabase;
+import tahastudio.storybuilder.db.Constants;
+import tahastudio.storybuilder.db.SQLDatabase;
 
 /**
  * An AsyncTask to grab the data from a row and query the db. Will pass in
  * an int to determine what table to grab data from.
  * 0 -> Characters
  * 1 -> Places
- * 2 -> Plotlines
- * Location: AddCharacterElements, AddPlaceElements, AddPlotlineElements
+ * 2 -> Plots
+ * Location: AddCharacterElements, AddPlaceElements, AddPlotElements
  */
 public class UpdateElementsTask extends AsyncTask<String, Void, Cursor> {
     private Context context;
@@ -44,7 +44,7 @@ public class UpdateElementsTask extends AsyncTask<String, Void, Cursor> {
             case 1:
                 return db.getElementRow(Constants.GRAB_PLACE_ROW_DETAILS, data);
             case 2:
-                return db.getElementRow(Constants.GRAB_PLOTLINE_ROW_DETAILS, data);
+                return db.getElementRow(Constants.GRAB_PLOT_ROW_DETAILS, data);
             default:
                 break;
         }
@@ -55,6 +55,9 @@ public class UpdateElementsTask extends AsyncTask<String, Void, Cursor> {
     protected void onPostExecute(Cursor result) {
         super.onPostExecute(result);
 
-        // TODO -> Create separate class to show values. On button click, edit values
+        // Override this method in the following classes:
+        // ShowCharacters, ShowPlaces, ShowPlots
+
+        // Do nothing here
     }
 }

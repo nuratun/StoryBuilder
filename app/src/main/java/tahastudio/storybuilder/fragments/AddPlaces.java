@@ -9,11 +9,12 @@ import android.support.v4.widget.SimpleCursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import tahastudio.storybuilder.R;
-import tahastudio.storybuilder.utils.Constants;
-import tahastudio.storybuilder.utils.SQLDatabase;
+import tahastudio.storybuilder.db.Constants;
+import tahastudio.storybuilder.db.SQLDatabase;
 
 
 /**
@@ -22,10 +23,20 @@ import tahastudio.storybuilder.utils.SQLDatabase;
 public class AddPlaces extends Fragment {
     // Make the AsyncTask global to stop it on onPause
     private setPlaceList placeList;
+
     private View add_place_layout;
+    private ListView add_places_listview;
+
+    // For interface method
+    placeListener placeCallback;
 
     public AddPlaces() {
 
+    }
+
+    // Interface to send ListView click back to ShowStory
+    public interface placeListener {
+        void onPlaceSelected(String name);
     }
 
     @Override
@@ -40,7 +51,37 @@ public class AddPlaces extends Fragment {
         placeList = new setPlaceList();
         placeList.execute();
 
+        // TODO -> The below code is initialized twice. Need to refactor
+        add_places_listview =
+                (ListView) add_place_layout.findViewById(R.id.places_listview);
+
+        // Clicking on a place row will bring up a new fragment with info
+        // TODO --> Long click brings up the delete option
+        add_places_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Return a cursor with the row data
+                Cursor cursor = (Cursor) add_places_listview.getItemAtPosition(position);
+
+                // Grab the first field from the row and cast it to a string
+                // Send to the interface. Implemented in ShowStory
+                placeCallback.onPlaceSelected
+                        (cursor.getString(cursor.getColumnIndex(Constants.STORY_PLACE_NAME)));
+            }
+        });
+
         return add_place_layout;
+    }
+
+    // Ensure ShowStory implements the interface
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        try {
+            placeCallback = (placeListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + "must implement placeListener");
+        }
     }
 
     // Stop the AsyncTask when user pauses the fragment
@@ -119,7 +160,7 @@ public class AddPlaces extends Fragment {
                 cursorAdapter.notifyDataSetChanged();
 
                 // Initialize
-                ListView add_places_listview = (ListView) add_place_layout
+                add_places_listview = (ListView) add_place_layout
                         .findViewById(R.id.places_listview);
                 add_places_listview.setAdapter(cursorAdapter);
             }

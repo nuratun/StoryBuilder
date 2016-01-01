@@ -13,9 +13,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import tahastudio.storybuilder.R;
-import tahastudio.storybuilder.tasks.UpdateElementsTask;
-import tahastudio.storybuilder.utils.Constants;
-import tahastudio.storybuilder.utils.SQLDatabase;
+import tahastudio.storybuilder.db.Constants;
+import tahastudio.storybuilder.db.SQLDatabase;
 
 /**
  * First tab for SB
@@ -23,47 +22,65 @@ import tahastudio.storybuilder.utils.SQLDatabase;
 public class AddCharacters extends Fragment {
     // Make the AsyncTask global to stop it onPause
     private setCharacterList characterList;
+
+    // Make view components accessible across the class
     private View add_character_layout;
     private ListView add_characters_listview;
+
+    // For interface method
+    characterListener characterCallback;
 
     public AddCharacters() {
 
     }
 
+    // Interface to send ListView click back to ShowStory
+    public interface characterListener {
+        void onCharacterSelected(String name);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        add_character_layout = inflater.inflate(
-                R.layout.fragment_add_characters,
-                container,
-                false);
+        add_character_layout =
+                inflater.inflate(R.layout.fragment_add_characters, container, false);
 
         // Run an AsyncTask to fill in the ListView from the db
         characterList = new setCharacterList();
         characterList.execute();
 
         // TODO -> The below code is initialized twice. Need to refactor
-        add_characters_listview = (ListView) add_character_layout
-                .findViewById(R.id.characters_listview);
+        add_characters_listview =
+                (ListView) add_character_layout.findViewById(R.id.characters_listview);
 
-        // When a user clicks on a character row, bring up a new fragment with edit fields
+        // Clicking on a character row will bring up a new fragment with info
+        // TODO --> Long click brings up the delete option
         add_characters_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Click on a row will return a cursor. The cursor will hold that row data
+                // Return a cursor with the row data
                 Cursor cursor = (Cursor) add_characters_listview.getItemAtPosition(position);
 
-                // Grab the first field from the row to send to UpdateElementsTask
-                String name = cursor.getString(cursor.getColumnIndex(Constants.STORY_CHARACTER));
-
-                // Send the context, table int, and character name to UpdateElementsTask
-                UpdateElementsTask updateElementsTask =
-                        new UpdateElementsTask(getContext(), 0, name);
-                updateElementsTask.execute();
+                // Grab the first field from the row and cast it to a string
+                // Send to the interface. Implemented in ShowStory
+                characterCallback.onCharacterSelected
+                        (cursor.getString(cursor.getColumnIndex(Constants.STORY_CHARACTER_NAME)));
             }
         });
 
         return add_character_layout;
+    }
+
+    // Ensure ShowStory implements the interface
+    @Override
+    public void onAttach(Context context) {
+       super.onAttach(context);
+
+        try {
+            characterCallback = (characterListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + " must implement characterListener");
+        }
     }
 
     // Stop the AsyncTask when user pauses the fragment
@@ -86,8 +103,8 @@ public class AddCharacters extends Fragment {
         }
     }
 
-    // Populate the ListView with a list of characters saved for this story
-    // Otherwise, returns null
+    // Populate the ListView with characters saved for this story
+    // Otherwise, return null
     private class setCharacterList extends AsyncTask<Void, Void, Cursor> {
         private Context context = getActivity().getApplicationContext();
         private SQLDatabase db;
@@ -126,8 +143,8 @@ public class AddCharacters extends Fragment {
 
                 // Get the column names
                 String[] columns = new String[] {
-                        Constants.STORY_CHARACTER,
-                        Constants.STORY_AGE
+                        Constants.STORY_CHARACTER_NAME,
+                        Constants.STORY_CHARACTER_AGE
                 };
 
                 // Get the TextView widgets
@@ -148,8 +165,8 @@ public class AddCharacters extends Fragment {
                 // Notify thread the data has changed
                 cursorAdapter.notifyDataSetChanged();
 
-                add_characters_listview = (ListView) add_character_layout
-                        .findViewById(R.id.characters_listview);
+                add_characters_listview =
+                        (ListView) add_character_layout.findViewById(R.id.characters_listview);
                 add_characters_listview.setAdapter(cursorAdapter);
             }
         }

@@ -14,8 +14,8 @@ import android.widget.Toast;
 
 import tahastudio.storybuilder.R;
 import tahastudio.storybuilder.ShowStory;
-import tahastudio.storybuilder.utils.Constants;
-import tahastudio.storybuilder.utils.SQLDatabase;
+import tahastudio.storybuilder.db.Constants;
+import tahastudio.storybuilder.db.SQLDatabase;
 
 /**
  * Fragment to replace ListView in AddCharacters. Is called by AddCharacters.
@@ -137,10 +137,10 @@ public class AddCharacterElements extends Fragment {
 
             try {
                 values.put(Constants.DB_ID, ShowStory.SB_ID);
-                values.put(Constants.STORY_CHARACTER, name);
-                values.put(Constants.STORY_AGE, age);
-                values.put(Constants.STORY_BIRTHPLACE, birthplace);
-                values.put(Constants.STORY_PERSONALITY, personality);
+                values.put(Constants.STORY_CHARACTER_NAME, name);
+                values.put(Constants.STORY_CHARACTER_AGE, age);
+                values.put(Constants.STORY_CHARACTER_BIRTHPLACE, birthplace);
+                values.put(Constants.STORY_CHARACTER_PERSONALITY, personality);
                 values.put(Constants.STORY_CHARACTER_NOTES, notes);
 
                 // Insert the rows

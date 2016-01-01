@@ -8,17 +8,31 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import tahastudio.storybuilder.fragments.AddCharacterElements;
+import tahastudio.storybuilder.fragments.AddCharacters;
 import tahastudio.storybuilder.fragments.AddPlaceElements;
-import tahastudio.storybuilder.fragments.AddPlotlineElements;
+import tahastudio.storybuilder.fragments.AddPlaces;
+import tahastudio.storybuilder.fragments.AddPlotElements;
+import tahastudio.storybuilder.fragments.AddPlots;
+import tahastudio.storybuilder.fragments.ShowCharacter;
+import tahastudio.storybuilder.fragments.ShowPlace;
+import tahastudio.storybuilder.fragments.ShowPlot;
 import tahastudio.storybuilder.ui.TabViewer;
 
-public class ShowStory extends AppCompatActivity {
-    // To programmatically add in the element fragments
+/**
+ * This class will show a list of saved characters, places, and plots,
+ * as well as the FAB menu to add elements to the story.
+ * Implements: characterListener, placeListener, plotListener
+ */
+public class ShowStory extends AppCompatActivity implements
+        AddCharacters.characterListener,
+        AddPlaces.placeListener,
+        AddPlots.plotListener {
+    // To programmatically add in the fragments
+    // TODO -> Too much re-used code. Factor into one method
     FragmentManager fragmentManager = getSupportFragmentManager();
 
     // Create public static reference, so other classes can access it
@@ -37,8 +51,8 @@ public class ShowStory extends AppCompatActivity {
         setContentView(R.layout.activity_create_story);
 
         // Find the toolbar, set it, and set the title
-        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar)
-                findViewById(R.id.toolbar);
+        android.support.v7.widget.Toolbar toolbar =
+                (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setTitle("StoryBuilder");
 
@@ -114,7 +128,7 @@ public class ShowStory extends AppCompatActivity {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 // Add the fragment, add it to the backstack, commit it
                 fragmentTransaction
-                        .add(R.id.story_creation_layout, new AddPlotlineElements())
+                        .add(R.id.story_creation_layout, new AddPlotElements())
                         .addToBackStack("add_the_plot")
                         .commit();
             }
@@ -128,7 +142,7 @@ public class ShowStory extends AppCompatActivity {
         // will be provided by the TabViewer method
         tab_layout.addTab(tab_layout.newTab().setText("Characters"));
         tab_layout.addTab(tab_layout.newTab().setText("Places"));
-        tab_layout.addTab(tab_layout.newTab().setText("Plotlines"));
+        tab_layout.addTab(tab_layout.newTab().setText("Plots"));
         tab_layout.setTabGravity(tab_layout.GRAVITY_FILL);
 
         // ViewPager allows flipping left and right through pages (tabs) of data
@@ -159,7 +173,65 @@ public class ShowStory extends AppCompatActivity {
         });
     }
 
-    // Recreate main activity when back button is pressed. Seems to improve performance.
+    // Implement the AddCharacters interface method for a ListView click
+    public void onCharacterSelected(String name) {
+        // Bundle info and send user to the new fragment, ShowCharacter
+        Bundle bundle = new Bundle();
+        bundle.putString("name", name);
+
+        // Set up the fragment with the bundle
+        ShowCharacter showCharacter = new ShowCharacter();
+        showCharacter.setArguments(bundle);
+
+        // APIs from FragmentTransaction to add, replace or remove fragments
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        // Replace the current fragment, add it to the backstack, commit it
+        fragmentTransaction
+                .replace(R.id.story_creation_layout, showCharacter)
+                .addToBackStack("show_character")
+                .commit();
+    }
+
+    // Implement the AddPlaces interface method for a ListView click
+    public void onPlaceSelected(String name) {
+        // Bundle info and send user to the new fragment, ShowPlace
+        Bundle bundle = new Bundle();
+        bundle.putString("name", name);
+
+        // Set up the fragment with the bundle
+        ShowPlace showPlace = new ShowPlace();
+        showPlace.setArguments(bundle);
+
+        // APIs from FragmentTransaction to add, replace or remove fragments
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        // Replace the current fragment, add it to the backstack, commit it
+        fragmentTransaction
+                .replace(R.id.story_creation_layout, showPlace)
+                .addToBackStack("show_place")
+                .commit();
+    }
+
+    // Implement the AddPlots interface method for a ListView click
+    public void onPlotSelected(String name) {
+        // Bundle info and send user to the new fragment, ShowPlot
+        Bundle bundle = new Bundle();
+        bundle.putString("name", name);
+
+        // Set up the fragment with the bundle
+        ShowPlot showPlot = new ShowPlot();
+        showPlot.setArguments(bundle);
+
+        // APIs from FragmentTransaction to add, replace or remove fragments
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        // Replace the current fragment, add it to the backstack, commit it
+        fragmentTransaction
+                .replace(R.id.story_creation_layout, showPlot)
+                .addToBackStack("show_plot")
+                .commit();
+    }
+
+    // Recreate main activity when back button is pressed
+    // Reason: Performance
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -173,15 +245,15 @@ public class ShowStory extends AppCompatActivity {
     // or just the antagonist.
     public void mCharacterCheckbox(View view) {
         // Is a checkbox checked?
-        boolean checked = ((CheckBox) view).isChecked();
+        boolean checked = ((RadioButton) view).isChecked();
 
         switch (view.getId()) {
-            case R.id.main_character_checkbox:
+            case R.id.sb_character_main:
                 if ( checked ) {
                     character_type = "Protagonist";
                     break;
                 }
-            case R.id.antagonist_character_checkbox:
+            case R.id.sb_character_antagonist:
                 if ( checked ) {
                     character_type += "Antagonist";
                     break;

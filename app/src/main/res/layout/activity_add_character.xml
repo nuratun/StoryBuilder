@@ -30,19 +30,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <CheckBox
-            android:id="@+id/main_character_checkbox"
+        <RadioButton
+            android:id="@+id/sb_character_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Main Character" />
 
-        <CheckBox
-            android:id="@+id/antagonist_character_checkbox"
+        <RadioButton
+            android:id="@+id/sb_character_antagonist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Main Antagonist"
-            android:layout_gravity="right"
-            android:layout_toEndOf="@id/main_character_checkbox" />
+            android:layout_gravity="end"
+            android:layout_toEndOf="@id/sb_character_main" />
 
     </RelativeLayout>
 
@@ -69,14 +69,12 @@
             android:id="@+id/female_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@id/male_gender"
             android:text="Female" />
 
         <RadioButton
             android:id="@+id/other_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@id/female_gender"
             android:text="Other" />
     </LinearLayout>
 

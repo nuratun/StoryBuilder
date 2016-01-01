@@ -16,11 +16,18 @@
 
 
     <EditText
-        android:id="@+id/sb_plotline"
+        android:id="@+id/sb_plotline_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/main_plot_checkbox"
-        android:hint="Describe the plot here" />
+        android:hint="Title (e.g. Sara finds a hidden city)" />
+
+    <EditText
+        android:id="@+id/sb_plotline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sb_plotline_name"
+        android:hint="Describe this plot line" />
 
 
     <EditText

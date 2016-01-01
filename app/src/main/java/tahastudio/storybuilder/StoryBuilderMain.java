@@ -18,8 +18,8 @@ import java.util.Random;
 
 import tahastudio.storybuilder.tasks.ShowStoryTask;
 import tahastudio.storybuilder.ui.SBDialog;
-import tahastudio.storybuilder.utils.Constants;
-import tahastudio.storybuilder.utils.SQLDatabase;
+import tahastudio.storybuilder.db.Constants;
+import tahastudio.storybuilder.db.SQLDatabase;
 
 /**
  * This is the main activity of StoryBuilder

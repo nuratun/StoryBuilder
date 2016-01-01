@@ -7,8 +7,8 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import tahastudio.storybuilder.ShowStory;
-import tahastudio.storybuilder.utils.Constants;
-import tahastudio.storybuilder.utils.SQLDatabase;
+import tahastudio.storybuilder.db.Constants;
+import tahastudio.storybuilder.db.SQLDatabase;
 
 /**
  * Separate AsyncTask to add a new story to the database. Will pass three strings

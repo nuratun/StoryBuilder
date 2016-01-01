@@ -14,8 +14,8 @@ import android.widget.Toast;
 
 import tahastudio.storybuilder.R;
 import tahastudio.storybuilder.ShowStory;
-import tahastudio.storybuilder.utils.Constants;
-import tahastudio.storybuilder.utils.SQLDatabase;
+import tahastudio.storybuilder.db.Constants;
+import tahastudio.storybuilder.db.SQLDatabase;
 
 /**
  * Fragment to replace ListView in AddPlaces. Is called by AddPlaces.

@@ -57,10 +57,6 @@ public class SBDialog extends DialogFragment {
                             Toast.makeText(getActivity().getApplicationContext(), "Both the title"
                                     + " and genre are required fields", Toast.LENGTH_LONG).show();
                         } else {
-
-                            Toast.makeText(getActivity().getApplicationContext(),
-                                    "Creating Story", Toast.LENGTH_LONG).show();
-
                             // Execute CreateStoryTask to add entry into database
                             // CreateStoryTask will take care of passing values needed
                             // back to the ShowStory class

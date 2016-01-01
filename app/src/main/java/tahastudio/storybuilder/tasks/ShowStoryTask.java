@@ -6,7 +6,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import tahastudio.storybuilder.ShowStory;
-import tahastudio.storybuilder.utils.SQLDatabase;
+import tahastudio.storybuilder.db.SQLDatabase;
 
 /**
  * AsyncTask to grab story details from db and send to ShowStory
