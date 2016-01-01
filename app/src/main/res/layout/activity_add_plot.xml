@@ -8,40 +8,55 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/plot_instructions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:drawableStart="@drawable/ic_plotline"
+        android:paddingBottom="20dp"
+        android:textSize="20sp"
+        android:text="@string/plot_instructions"/>
+
     <CheckBox
         android:id="@+id/main_plot_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Main plotline" />
-
+        android:layout_centerHorizontal="true"
+        android:text="@string/plot_main"
+        android:layout_below="@+id/plot_instructions"/>
 
     <EditText
         android:id="@+id/sb_plotline_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/main_plot_checkbox"
-        android:hint="Title (e.g. Sara finds a hidden city)" />
+        android:paddingBottom="20dp"
+        android:hint="@string/plot_title" />
 
     <EditText
         android:id="@+id/sb_plotline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
         android:layout_below="@+id/sb_plotline_name"
-        android:hint="Describe this plot line" />
-
+        android:hint="@string/plot_desc" />
 
     <EditText
         android:id="@+id/sb_plotline_notes"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
         android:layout_below="@id/sb_plotline"
-        android:hint="Notes" />
+        android:hint="@string/plot_notes" />
 
     <Button
         android:id="@+id/add_the_plotline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:layout_below="@id/sb_plotline_notes"
-        android:text="Add" />
+        android:text="@string/plot_add" />
 
 </RelativeLayout>

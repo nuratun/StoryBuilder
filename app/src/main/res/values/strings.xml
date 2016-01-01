@@ -50,4 +50,12 @@
     <string name="place_notes">Notes</string>
     <string name="place_add">Add the place</string>
 
+    <!-- For the AddPlotElements -->
+    <string name="plot_instructions">Add A Plot Line</string>
+    <string name="plot_main">Main Plot</string>
+    <string name="plot_title">Title (e.g. Sara finds a lost city)</string>
+    <string name="plot_desc">Describe the plot line</string>
+    <string name="plot_notes">Notes</string>
+    <string name="plot_add">Add the plot</string>
+
 </resources>
