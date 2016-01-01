@@ -50,13 +50,30 @@
         android:layout_below="@id/sb_plotline"
         android:hint="@string/plot_notes" />
 
-    <Button
-        android:id="@+id/add_the_plotline"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:orientation="horizontal"
         android:layout_below="@id/sb_plotline_notes"
-        android:text="@string/plot_add" />
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/plot_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:textColor="@color/colorPopupTextHint"
+            android:padding="10dp"
+            android:text="@string/cancel"/>
+
+        <Button
+            android:id="@+id/add_the_plotline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@color/colorPopUp"
+            android:text="@string/plot_add" />
+    </LinearLayout>
 
 </RelativeLayout>

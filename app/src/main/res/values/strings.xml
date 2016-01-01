@@ -40,7 +40,7 @@
     <string name="character_birth">Place of birth</string>
     <string name="character_personality">Personality</string>
     <string name="character_notes">Notes</string>
-    <string name="character_add">Add the character</string>
+    <string name="character_add">Add</string>
     
     <!-- For the AddPlaceElements -->
     <string name="place_instructions">Add A Place/Location</string>
@@ -48,7 +48,7 @@
     <string name="place_location">Location</string>
     <string name="place_desc">Description</string>
     <string name="place_notes">Notes</string>
-    <string name="place_add">Add the place</string>
+    <string name="place_add">Add</string>
 
     <!-- For the AddPlotElements -->
     <string name="plot_instructions">Add A Plot Line</string>
@@ -56,6 +56,9 @@
     <string name="plot_title">Title (e.g. Sara finds a lost city)</string>
     <string name="plot_desc">Describe the plot line</string>
     <string name="plot_notes">Notes</string>
-    <string name="plot_add">Add the plot</string>
+    <string name="plot_add">Add</string>
+
+    <!-- For all activities/fragments -->
+    <string name="cancel">Cancel</string>
 
 </resources>
