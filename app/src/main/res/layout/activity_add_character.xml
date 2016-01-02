@@ -121,9 +121,10 @@
             android:id="@+id/character_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="10dp"
+            style="?android:attr/borderlessButtonStyle"
             android:background="@color/white"
             android:textColor="@color/colorPopupTextHint"
-            android:padding="10dp"
             android:text="@string/cancel"/>
 
         <Button
@@ -131,6 +132,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
+            style="?android:attr/borderlessButtonStyle"
             android:background="@color/colorPopUp"
             android:text="@string/character_add" />
     </LinearLayout>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="genre">
+        <item>Adventure</item>
+        <item>Comedy</item>
+        <item>Comic</item>
+        <item>Drama</item>
+        <item>Fantasy</item>
+        <item>General</item>
+        <item>Historical</item>
+        <item>Kids</item>
+        <item>Mystery</item>
+        <item>Poetry</item>
+        <item>Romance</item>
+        <item>Science Fiction</item>
+        <item>Sports</item>
+        <item>Thriller</item>
+        <item>Urban</item>
+        <item>Western</item>
+        <item>Women</item>
+        <item>Young Adult</item>
+    </string-array>
+</resources>

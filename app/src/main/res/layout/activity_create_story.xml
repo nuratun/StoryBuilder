@@ -19,11 +19,11 @@
 
         <TextView
             android:id="@+id/story_title"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_centerHorizontal="true"
             android:padding="10dp"
-            android:drawablePadding="20dp"
+            android:drawablePadding="5dp"
             android:drawableStart="@drawable/ic_story" />
 
         <android.support.design.widget.TabLayout
@@ -68,8 +68,6 @@
                 android:layout_height="wrap_content"
                 android:title="Add a Plotline"
                 android:clickable="true" />
-
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
     </RelativeLayout>
-
 </RelativeLayout>
