@@ -10,12 +10,12 @@ import android.widget.EditText;
 
 import tahastudio.storybuilder.R;
 import tahastudio.storybuilder.db.Constants;
-import tahastudio.storybuilder.tasks.UpdateElementsTask;
+import tahastudio.storybuilder.tasks.ShowElementsTask;
 
 /**
  * Fragment to show saved place info from db
- * Calls: UpdateElementsTask
- * Overrides: UpdateElementsTask.onPostExecute()
+ * Calls: ShowElementsTask
+ * Overrides: ShowElementsTask.onPostExecute()
  */
 public class ShowPlace extends Fragment {
 
@@ -48,7 +48,7 @@ public class ShowPlace extends Fragment {
         // Therefore, to receive the return value, override onPostExecute
         // Int 1 == places table in db
         // Name is string from bundle
-        new UpdateElementsTask(getContext(), 1, name) {
+        new ShowElementsTask(getContext(), 1, name) {
             @Override
             public void onPostExecute(Cursor result) {
                 if ( result != null ) {

@@ -1,23 +1,25 @@
 package tahastudio.storybuilder.fragments;
 
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 
 import tahastudio.storybuilder.R;
 import tahastudio.storybuilder.db.Constants;
-import tahastudio.storybuilder.tasks.UpdateElementsTask;
+import tahastudio.storybuilder.tasks.ShowElementsTask;
 
 /**
  * Fragment to show saved character info from db
- * Calls: UpdateElementsTask
- * Overrides: UpdateElementsTask.onPostExecute()
+ * Calls: ShowElementsTask
+ * Overrides: ShowElementsTask.onPostExecute()
  */
 public class ShowCharacter extends Fragment {
 
@@ -57,7 +59,7 @@ public class ShowCharacter extends Fragment {
         // Therefore, to receive the return value, override onPostExecute
         // Int 0 == characters table in db
         // Name is string from bundle
-        new UpdateElementsTask(getContext(), 0, name) {
+        new ShowElementsTask(getContext(), 0, name) {
             @Override
             protected void onPostExecute(Cursor result) {
                 if ( result != null ) {
@@ -76,6 +78,28 @@ public class ShowCharacter extends Fragment {
                 }
             }
         }.execute();
+
+        // On button click, update the db row
+        Button update_character =
+                (Button) show_character_layout.findViewById(R.id.add_the_character);
+        update_character.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO --> Get boolean (1 | 0) for radiobutton
+                ContentValues values = new ContentValues();
+                values.put(Constants.STORY_CHARACTER_NAME,
+                        character_name.getText().toString());
+                values.put(Constants.STORY_CHARACTER_AGE,
+                        character_age.getText().toString());
+                values.put(Constants.STORY_CHARACTER_BIRTHPLACE,
+                        character_birthplace.getText().toString());
+                values.put(Constants.STORY_CHARACTER_PERSONALITY,
+                        character_personality.getText().toString());
+                values.put(Constants.STORY_CHARACTER_NOTES,
+                        character_notes.getText().toString());
+
+            }
+        });
 
         return show_character_layout;
     }

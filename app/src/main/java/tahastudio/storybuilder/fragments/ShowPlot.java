@@ -11,12 +11,12 @@ import android.widget.EditText;
 
 import tahastudio.storybuilder.R;
 import tahastudio.storybuilder.db.Constants;
-import tahastudio.storybuilder.tasks.UpdateElementsTask;
+import tahastudio.storybuilder.tasks.ShowElementsTask;
 
 /**
  * Fragment to show saved plot info from db
- * Calls: UpdateElementsTask
- * Overrides: UpdateElementsTask.onPostExecute()
+ * Calls: ShowElementsTask
+ * Overrides: ShowElementsTask.onPostExecute()
  */
 public class ShowPlot extends Fragment {
 
@@ -47,7 +47,7 @@ public class ShowPlot extends Fragment {
         // Therefore, to receive the return value, override onPostExecute
         // Int 2 == plots table in db
         // Name is string from bundle
-        new UpdateElementsTask(getContext(), 2, name) {
+        new ShowElementsTask(getContext(), 2, name) {
             @Override
             protected void onPostExecute(Cursor result) {
                 if ( result != null ) {
