@@ -3,6 +3,7 @@ package tahastudio.storybuilder;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
@@ -31,8 +32,8 @@ public class ShowStory extends AppCompatActivity implements
         AddCharacters.characterListener,
         AddPlaces.placeListener,
         AddPlots.plotListener {
+
     // To programmatically add in the fragments
-    // TODO -> Too much re-used code. Factor into one method
     FragmentManager fragmentManager = getSupportFragmentManager();
 
     // Create public static reference, so other classes can access it
@@ -70,7 +71,6 @@ public class ShowStory extends AppCompatActivity implements
         final com.getbase.floatingactionbutton.FloatingActionsMenu fab =
                 (com.getbase.floatingactionbutton.FloatingActionsMenu) findViewById(R.id.fab);
 
-        // TODO -> Factor out into one method - begin
         // Find the inner menu for adding a character
         com.getbase.floatingactionbutton.FloatingActionButton characters_fab =
                 (com.getbase.floatingactionbutton.FloatingActionButton)
@@ -82,13 +82,8 @@ public class ShowStory extends AppCompatActivity implements
                 // Collapse the menu fab on click
                 fab.collapse();
 
-                // APIs from FragmentTransaction to add, replace or remove fragments
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                // Add the fragment, add it to the backstack, commit it
-                fragmentTransaction
-                        .add(R.id.story_creation_layout, new AddCharacterElements())
-                        .addToBackStack("add_the_character")
-                        .commit();
+                // Call re-factored method for fragment transaction
+                onFragmentSelected(new AddCharacterElements(), "add_the_character");
             }
         });
 
@@ -103,13 +98,8 @@ public class ShowStory extends AppCompatActivity implements
                 // Collapse the menu fab on click
                 fab.collapse();
 
-                // APIs from FragmentTransaction to add, replace or remove fragments
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                // Add the fragment, add it to the backstack, commit it
-                fragmentTransaction
-                        .add(R.id.story_creation_layout, new AddPlaceElements())
-                        .addToBackStack("add_the_place")
-                        .commit();
+                // Call re-factored method for fragment transaction
+                onFragmentSelected(new AddPlaceElements(), "add_the_place");
             }
         });
 
@@ -124,16 +114,10 @@ public class ShowStory extends AppCompatActivity implements
                 // Collapse the menu fab on click
                 fab.collapse();
 
-                // APIs from FragmentTransaction to add, replace or remove fragments
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                // Add the fragment, add it to the backstack, commit it
-                fragmentTransaction
-                        .add(R.id.story_creation_layout, new AddPlotElements())
-                        .addToBackStack("add_the_plot")
-                        .commit();
+                // Call re-factored method for fragment transaction
+                onFragmentSelected(new AddPlotElements(), "add_the_plot");
             }
         });
-        // TODO -> Factor out into one method - end
 
          // Find the TabLayout in the XML
         TabLayout tab_layout = (TabLayout) findViewById(R.id.tab_layout);
@@ -183,13 +167,8 @@ public class ShowStory extends AppCompatActivity implements
         ShowCharacter showCharacter = new ShowCharacter();
         showCharacter.setArguments(bundle);
 
-        // APIs from FragmentTransaction to add, replace or remove fragments
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        // Replace the current fragment, add it to the backstack, commit it
-        fragmentTransaction
-                .replace(R.id.story_creation_layout, showCharacter)
-                .addToBackStack("show_character")
-                .commit();
+        // Call re-factored method for fragment transaction
+        onFragmentSelected(showCharacter, "show_character");
     }
 
     // Implement the AddPlaces interface method for a ListView click
@@ -202,13 +181,8 @@ public class ShowStory extends AppCompatActivity implements
         ShowPlace showPlace = new ShowPlace();
         showPlace.setArguments(bundle);
 
-        // APIs from FragmentTransaction to add, replace or remove fragments
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        // Replace the current fragment, add it to the backstack, commit it
-        fragmentTransaction
-                .replace(R.id.story_creation_layout, showPlace)
-                .addToBackStack("show_place")
-                .commit();
+        // Call re-factored method for fragment transaction
+        onFragmentSelected(showPlace, "show_place");
     }
 
     // Implement the AddPlots interface method for a ListView click
@@ -221,23 +195,19 @@ public class ShowStory extends AppCompatActivity implements
         ShowPlot showPlot = new ShowPlot();
         showPlot.setArguments(bundle);
 
-        // APIs from FragmentTransaction to add, replace or remove fragments
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        // Replace the current fragment, add it to the backstack, commit it
-        fragmentTransaction
-                .replace(R.id.story_creation_layout, showPlot)
-                .addToBackStack("show_plot")
-                .commit();
+        // Call re-factored method for fragment transaction
+        onFragmentSelected(showPlot, "show_plot");
     }
 
-    // Recreate main activity when back button is pressed
-    // Reason: Performance
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        startActivity(new Intent(this, StoryBuilderMain.class));
-        this.finish();
+    // Re-factored method for all fragment transactions
+    public void onFragmentSelected(Fragment fragment, String tag) {
+        // APIs from FragmentTransaction to add, replace or remove fragments
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        // Add the fragment, add it to the backstack, commit it
+        fragmentTransaction
+                .add(R.id.story_creation_layout, fragment)
+                .addToBackStack(tag)
+                .commit();
     }
 
     // TODO -> All the methods below

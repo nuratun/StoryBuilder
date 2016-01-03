@@ -21,12 +21,6 @@ import tahastudio.storybuilder.db.SQLDatabase;
  * Fragment to replace ListView in AddCharacters. Is called by AddCharacters.
  */
 public class AddCharacterElements extends Fragment {
-    private Context context;
-    String sb_name;
-    String sb_age;
-    String sb_birthplace;
-    String sb_personality;
-    String sb_notes;
 
     public AddCharacterElements() {
 
@@ -40,9 +34,6 @@ public class AddCharacterElements extends Fragment {
                 R.layout.activity_add_character,
                 container,
                 false);
-
-        // Get an instance of the application context
-        context = getActivity().getApplicationContext();
 
         // Find the layout elements
         final EditText name = (EditText) character_elements_layout
@@ -64,26 +55,19 @@ public class AddCharacterElements extends Fragment {
                 // TODO -> Add a cancel button
                 // Make sure the name field != null
                 if ( name.length() < 1 ) {
-                    Toast.makeText(context, "The character's name "
+                    Toast.makeText(getContext(), "The character's name "
                             + "is a required field", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    // Convert the EditText fields to the equivalent string
-                    String convert_name = name.getText().toString();
-                    String convert_age = age.getText().toString();
-                    String convert_birthplace = birthplace.getText().toString();
-                    String convert_personality = personality.getText().toString();
-                    String convert_notes = character_notes.getText().toString();
-
-                    // Send them to a background thread to process in the db
+                    // Send converted strings to a background thread to process in the db
                     addCharactersTask charactersTask =
                             new addCharactersTask(
-                                    context,
-                                    convert_name,
-                                    convert_age,
-                                    convert_birthplace,
-                                    convert_personality,
-                                    convert_notes);
+                                    getContext(),
+                                    name.getText().toString(),
+                                    age.getText().toString(),
+                                    birthplace.getText().toString(),
+                                    personality.getText().toString(),
+                                    character_notes.getText().toString());
                     charactersTask.execute();
                 }
                 // Return to AddCharacters class on button click, immediately

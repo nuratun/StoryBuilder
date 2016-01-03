@@ -47,7 +47,7 @@ public class ShowPlot extends Fragment {
         // Therefore, to receive the return value, override onPostExecute
         // Int 2 == plots table in db
         // Name is string from bundle
-        new ShowElementsTask(getContext(), 2, name) {
+        new ShowElementsTask(getContext(), Constants.PLOTS_TABLE, name) {
             @Override
             protected void onPostExecute(Cursor result) {
                 if ( result != null ) {

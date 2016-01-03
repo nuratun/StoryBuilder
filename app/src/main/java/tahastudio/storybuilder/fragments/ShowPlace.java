@@ -48,7 +48,7 @@ public class ShowPlace extends Fragment {
         // Therefore, to receive the return value, override onPostExecute
         // Int 1 == places table in db
         // Name is string from bundle
-        new ShowElementsTask(getContext(), 1, name) {
+        new ShowElementsTask(getContext(), Constants.PLACES_TABLES, name) {
             @Override
             public void onPostExecute(Cursor result) {
                 if ( result != null ) {

@@ -22,7 +22,6 @@ import tahastudio.storybuilder.db.SQLDatabase;
  * Fragment to replace ListView in AddPlots. Is called by AddPlots.
  */
 public class AddPlotElements extends Fragment {
-    private Context context;
 
     public AddPlotElements() {
     }
@@ -35,9 +34,6 @@ public class AddPlotElements extends Fragment {
                 R.layout.activity_add_plot,
                 container,
                 false);
-
-        // Get an instance of this context
-        context = getActivity().getApplicationContext();
 
         // Find the elements in the layout
         final CheckBox main_plot = (CheckBox) plotline_elements_layout
@@ -56,21 +52,17 @@ public class AddPlotElements extends Fragment {
             public void onClick(View v) {
                 // Ensure plotline field != null
                 if (plotline.length() < 1) {
-                    Toast.makeText(context, "You must enter at least"
+                    Toast.makeText(getContext(), "You must enter at least"
                             + " a summary of the plot", Toast.LENGTH_LONG).show();
                 } else {
-                    // Convert EditText fields to the equivalent strings
-                    String convert_plot_title = plotline_title.getText().toString();
-                    String convert_plotline = plotline.getText().toString();
-                    String convert_notes = notes.getText().toString();
 
-                    // AsyncTask to send input to background thread
+                    // Send converted strings to background thread
                     addPlotlineTask plotlineTask = new addPlotlineTask(
-                            context,
+                            getContext(),
                             false,
-                            convert_plot_title,
-                            convert_plotline,
-                            convert_notes);
+                            plotline_title.getText().toString(),
+                            plotline.getText().toString(),
+                            notes.getText().toString());
                     plotlineTask.execute();
                 }
                 // Return to AddPlots on button click, immediately

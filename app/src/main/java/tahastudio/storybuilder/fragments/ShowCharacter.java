@@ -15,6 +15,7 @@ import android.widget.RadioButton;
 import tahastudio.storybuilder.R;
 import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.tasks.ShowElementsTask;
+import tahastudio.storybuilder.tasks.UpdateElementsTask;
 
 /**
  * Fragment to show saved character info from db
@@ -59,12 +60,13 @@ public class ShowCharacter extends Fragment {
         // Therefore, to receive the return value, override onPostExecute
         // Int 0 == characters table in db
         // Name is string from bundle
-        new ShowElementsTask(getContext(), 0, name) {
+        new ShowElementsTask(getContext(), Constants.CHARACTERS_TABLE, name) {
             @Override
             protected void onPostExecute(Cursor result) {
                 if ( result != null ) {
                     result.moveToFirst();
 
+                    // Get the saved data and present it to the user
                     character_name.setText(result.getString(
                             result.getColumnIndex(Constants.STORY_CHARACTER_NAME)));
                     character_age.setText(result.getString(
@@ -98,6 +100,22 @@ public class ShowCharacter extends Fragment {
                 values.put(Constants.STORY_CHARACTER_NOTES,
                         character_notes.getText().toString());
 
+                UpdateElementsTask updateElementsTask = new UpdateElementsTask
+                        (getContext(), values, Constants.STORY_CHARACTER_TABLE);
+                updateElementsTask.execute();
+
+                // Go back to the previous fragment
+                getFragmentManager().popBackStackImmediate();
+            }
+        });
+
+        Button cancel_update =
+                (Button) show_character_layout.findViewById(R.id.character_cancel);
+        cancel_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Leave the fragment immediately
+                getFragmentManager().popBackStackImmediate();
             }
         });
 

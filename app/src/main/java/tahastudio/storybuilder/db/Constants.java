@@ -7,7 +7,7 @@ package tahastudio.storybuilder.db;
 public class Constants {
 
     // Version number must change if database changes
-    public static final int DATABASE_VERSION = 14;
+    public static final int DATABASE_VERSION = 15;
     public static final String DATABASE_NAME = "sql.db";
 
     // Set up table schema for the story
@@ -148,5 +148,8 @@ public class Constants {
             + STORY_PLOT_TABLE + " WHERE "
             + STORY_PLOT_TITLE + " = ";
 
-
+    // Used in ShowCharacter, ShowPlace, ShowPlot, and ShowElementsTask
+    public static final String CHARACTERS_TABLE = "sb_characters";
+    public static final String PLACES_TABLES = "sb_places";
+    public static final String PLOTS_TABLE = "sb_plots";
 }

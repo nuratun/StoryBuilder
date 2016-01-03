@@ -21,7 +21,8 @@ import tahastudio.storybuilder.db.SQLDatabase;
  * Fragment to replace ListView in AddPlaces. Is called by AddPlaces.
  */
 public class AddPlaceElements extends Fragment {
-    private Context context;
+
+    // TODO -> Combine all *Element classes into one, with variable
 
     public AddPlaceElements() {
 
@@ -35,9 +36,6 @@ public class AddPlaceElements extends Fragment {
                 R.layout.activity_add_place,
                 container,
                 false);
-
-        // Get an instance of this application context
-        context = getActivity().getApplicationContext();
 
         // Find layout elements
         final EditText place_name = (EditText) place_elements_layout
@@ -56,24 +54,19 @@ public class AddPlaceElements extends Fragment {
             public void onClick(View v) {
                 // Make sure name field != null
                 if ( place_name.length() < 1 ) {
-                    Toast.makeText(context, "Name is a required "
+                    Toast.makeText(getContext(), "Name is a required "
                             + "field", Toast.LENGTH_LONG).show();
                 }
 
                 else {
-                    // Convert EditText fields to equivalent strings
-                    String convert_place_name = place_name.getText().toString();
-                    String convert_place_location = place_location.getText().toString();
-                    String convert_place_description = place_description.getText().toString();
-                    String convert_place_notes = place_notes.getText().toString();
 
-                    // Send to background thread
+                    // Send converted string to background thread
                     addPlacesTask placesTask = new addPlacesTask(
-                            context,
-                            convert_place_name,
-                            convert_place_location,
-                            convert_place_description,
-                            convert_place_notes);
+                            getContext(),
+                            place_name.getText().toString(),
+                            place_location.getText().toString(),
+                            place_description.getText().toString(),
+                            place_notes.getText().toString());
                     placesTask.execute();
                 }
                 // Return to AddPlaces on button click, immediately

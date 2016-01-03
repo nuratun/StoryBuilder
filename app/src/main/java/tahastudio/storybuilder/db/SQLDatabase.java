@@ -41,9 +41,9 @@ public class SQLDatabase extends SQLiteOpenHelper {
         sbDatabase.insert(db, null, values);
     }
 
-    public boolean updateRow(ContentValues values, String db) {
-
-        return true;
+    public void updateRow(ContentValues values, String db, int id) {
+        sbDatabase = this.getWritableDatabase();
+        sbDatabase.update(db, values, "_id = " + id, null);
     }
 
     // Get the story ID back from database to create the other tables
