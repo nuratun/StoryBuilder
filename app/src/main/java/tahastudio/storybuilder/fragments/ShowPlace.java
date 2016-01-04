@@ -1,16 +1,19 @@
 package tahastudio.storybuilder.fragments;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import tahastudio.storybuilder.R;
 import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.tasks.ShowElementsTask;
+import tahastudio.storybuilder.tasks.UpdateElementsTask;
 
 /**
  * Fragment to show saved place info from db
@@ -39,6 +42,10 @@ public class ShowPlace extends Fragment {
                 (EditText) add_place_layout.findViewById(R.id.sb_place_desc);
         final EditText place_notes =
                 (EditText) add_place_layout.findViewById(R.id.sb_place_notes);
+        Button place_add =
+                (Button) add_place_layout.findViewById(R.id.add_the_place);
+        Button cancel =
+                (Button) add_place_layout.findViewById(R.id.place_cancel);
 
         // Grab the bundle info from ShowStory
         Bundle bundle = this.getArguments();
@@ -46,7 +53,6 @@ public class ShowPlace extends Fragment {
 
         // The following AsyncTask is contained in its own class.
         // Therefore, to receive the return value, override onPostExecute
-        // Int 1 == places table in db
         // Name is string from bundle
         new ShowElementsTask(getContext(), Constants.PLACES_TABLES, name) {
             @Override
@@ -65,6 +71,33 @@ public class ShowPlace extends Fragment {
                 }
             }
         }.execute();
+
+        // On button click, update the db row
+        place_add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContentValues values = new ContentValues();
+                values.put(Constants.STORY_PLACE_NAME, place_name.getText().toString());
+                values.put(Constants.STORY_PLACE_LOCATION, place_location.getText().toString());
+                values.put(Constants.STORY_PLACE_DESC, place_desc.getText().toString());
+                values.put(Constants.STORY_PLACE_NOTES, place_notes.getText().toString());
+
+                UpdateElementsTask updateElementsTask = new UpdateElementsTask
+                        (getContext(), values, Constants.STORY_PLACES_TABLE);
+                updateElementsTask.execute();
+
+                // Return to previous fragment, immediately
+                getFragmentManager().popBackStackImmediate();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Return to previous fragment
+                getFragmentManager().popBackStackImmediate();
+            }
+        });
 
         return add_place_layout;
     }

@@ -7,7 +7,7 @@ package tahastudio.storybuilder.db;
 public class Constants {
 
     // Version number must change if database changes
-    public static final int DATABASE_VERSION = 15;
+    public static final int DATABASE_VERSION = 17;
     public static final String DATABASE_NAME = "sql.db";
 
     // Set up table schema for the story
@@ -21,7 +21,7 @@ public class Constants {
     // Set up table schema for characters
     public static final String STORY_CHARACTER_TABLE = "sb_characters";
     public static final String STORY_CHARACTER_NAME = "name";
-    public static final String STORY_CHARACTER_POSITION = "position";
+    public static final String STORY_CHARACTER_TYPE = "type";
     public static final String STORY_CHARACTER_GENDER = "gender";
     public static final String STORY_CHARACTER_AGE = "age";
     public static final String STORY_CHARACTER_BIRTHPLACE = "birthplace";
@@ -64,7 +64,7 @@ public class Constants {
     public static final String SQL_CREATE_CHARACTERS = "CREATE TABLE "
             + STORY_CHARACTER_TABLE + "("
             + STORY_CHARACTER_NAME + " text, "
-            + STORY_CHARACTER_POSITION + " tinyint(1), "
+            + STORY_CHARACTER_TYPE + " text, "
             + STORY_CHARACTER_GENDER + " text, "
             + STORY_CHARACTER_AGE + " integer, "
             + STORY_CHARACTER_BIRTHPLACE + " text, "
@@ -79,7 +79,7 @@ public class Constants {
     // Create the plot table, with foreign keys from the story table
     public static final String SQL_CREATE_PLOT = "CREATE TABLE "
             + STORY_PLOT_TABLE + "("
-            + STORY_MAIN_PLOT + " integer, "
+            + STORY_MAIN_PLOT + " text, "
             + STORY_PLOT_TITLE + " text, "
             + STORY_PLOT_DESC + " text, "
             + STORY_PLOT_NOTES + " text, "
@@ -152,4 +152,17 @@ public class Constants {
     public static final String CHARACTERS_TABLE = "sb_characters";
     public static final String PLACES_TABLES = "sb_places";
     public static final String PLOTS_TABLE = "sb_plots";
+
+    // Used in ShowStory
+    public static final String CHARACTER_TYPE_PROTAGONIST = "protagonist";
+    public static final String CHARACTER_TYPE_ANTAGONIST = "antagonist";
+    public static final String CHARACTER_TYPE_OTHER = "other";
+
+    public static final String CHARACTER_GENDER_MALE = "male";
+    public static final String CHARACTER_GENDER_FEMALE = "female";
+    public static final String CHARACTER_GENDER_OTHER = "other";
+
+    public static final String PLOT_MAIN = "main";
+    public static final String PLOT_SUPPORTING = "other";
+
 }

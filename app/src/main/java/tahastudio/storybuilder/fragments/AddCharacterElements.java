@@ -65,6 +65,8 @@ public class AddCharacterElements extends Fragment {
                                     getContext(),
                                     name.getText().toString(),
                                     age.getText().toString(),
+                                    ShowStory.CHARACTER_TYPE, // Methods for these public strings
+                                    ShowStory.CHARACTER_GENDER, // are in the ShowStory class
                                     birthplace.getText().toString(),
                                     personality.getText().toString(),
                                     character_notes.getText().toString());
@@ -85,6 +87,8 @@ public class AddCharacterElements extends Fragment {
         private SQLDatabase db;
         private String name;
         private String age;
+        private String type;
+        private String gender;
         private String birthplace;
         private String personality;
         private String notes;
@@ -93,12 +97,16 @@ public class AddCharacterElements extends Fragment {
         public addCharactersTask(Context context,
                                  String name,
                                  String age,
+                                 String type,
+                                 String gender,
                                  String birthplace,
                                  String personality,
                                  String notes) {
             this.context = context;
             this.name = name;
             this.age = age;
+            this.type = type;
+            this.gender = gender;
             this.birthplace = birthplace;
             this.personality = personality;
             this.notes = notes;
@@ -123,6 +131,8 @@ public class AddCharacterElements extends Fragment {
                 values.put(Constants.DB_ID, ShowStory.SB_ID);
                 values.put(Constants.STORY_CHARACTER_NAME, name);
                 values.put(Constants.STORY_CHARACTER_AGE, age);
+                values.put(Constants.STORY_CHARACTER_TYPE, type);
+                values.put(Constants.STORY_CHARACTER_GENDER, gender);
                 values.put(Constants.STORY_CHARACTER_BIRTHPLACE, birthplace);
                 values.put(Constants.STORY_CHARACTER_PERSONALITY, personality);
                 values.put(Constants.STORY_CHARACTER_NOTES, notes);

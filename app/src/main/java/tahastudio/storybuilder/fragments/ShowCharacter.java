@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 
 import tahastudio.storybuilder.R;
+import tahastudio.storybuilder.ShowStory;
 import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.tasks.ShowElementsTask;
 import tahastudio.storybuilder.tasks.UpdateElementsTask;
@@ -24,27 +25,19 @@ import tahastudio.storybuilder.tasks.UpdateElementsTask;
  */
 public class ShowCharacter extends Fragment {
 
-    public ShowCharacter() {
-
-    }
+    public ShowCharacter() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View show_character_layout =
+        final View show_character_layout =
                 inflater.inflate(R.layout.activity_add_character, container, false);
 
-        // TODO -> Update fields on button click
-        // Find the elements
+        // Find the elements: text
         final EditText character_name =
                 (EditText) show_character_layout.findViewById(R.id.sb_character_name);
         final EditText character_age =
                 (EditText) show_character_layout.findViewById(R.id.sb_character_age);
-        final RadioButton character_protagonist =
-                (RadioButton) show_character_layout.findViewById(R.id.sb_character_main);
-        RadioButton character_antagonist =
-                (RadioButton) show_character_layout.findViewById(R.id.sb_character_antagonist);
-        // TODO -> Add in gender radiobutton
         final EditText character_birthplace =
                 (EditText) show_character_layout.findViewById(R.id.sb_character_birthplace);
         final EditText character_personality =
@@ -52,19 +45,59 @@ public class ShowCharacter extends Fragment {
         final EditText character_notes =
                 (EditText) show_character_layout.findViewById(R.id.sb_character_notes);
 
+        // Find the elements: radio buttons
+        final RadioButton character_protagonist =
+                (RadioButton) show_character_layout.findViewById(R.id.sb_character_main);
+        final RadioButton character_antagonist =
+                (RadioButton) show_character_layout.findViewById(R.id.sb_character_antagonist);
+        final RadioButton gender_male =
+                (RadioButton) show_character_layout.findViewById(R.id.male_gender);
+        final RadioButton gender_female =
+                (RadioButton) show_character_layout.findViewById(R.id.female_gender);
+        final RadioButton gender_other =
+                (RadioButton) show_character_layout.findViewById(R.id.other_gender);
+
         // Grab the bundle info from ShowStory
         Bundle bundle = this.getArguments();
         String name = bundle.getString("name");
 
         // The following AsyncTask is contained in its own class.
         // Therefore, to receive the return value, override onPostExecute
-        // Int 0 == characters table in db
         // Name is string from bundle
         new ShowElementsTask(getContext(), Constants.CHARACTERS_TABLE, name) {
             @Override
             protected void onPostExecute(Cursor result) {
                 if ( result != null ) {
                     result.moveToFirst();
+
+                    // Check if user saved the character as the protagonist.
+                    if ( result.getString(result.getColumnIndex
+                            (Constants.STORY_CHARACTER_TYPE))
+                            .equals(Constants.CHARACTER_TYPE_PROTAGONIST) ) {
+                        character_protagonist.setChecked(true); // If true, select the radio button.
+                    } // Check if user saved the character as the antagonist.
+                    else if ( result.getString( result.getColumnIndex
+                            (Constants.STORY_CHARACTER_TYPE))
+                            .equals(Constants.CHARACTER_TYPE_ANTAGONIST) ) {
+                        character_antagonist.setChecked(true); // If true, select the radio button.
+                    } // Otherwise, select nothing
+
+                    // Check if user selected character gender as male
+                    if ( result.getString(result.getColumnIndex
+                            (Constants.STORY_CHARACTER_GENDER))
+                            .equals(Constants.CHARACTER_GENDER_MALE) ) {
+                        gender_male.setChecked(true); // If true, select the radio button.
+                    } // Check if user selected character gender as female
+                    else if ( result.getString(result.getColumnIndex
+                            (Constants.STORY_CHARACTER_GENDER))
+                            .equals(Constants.CHARACTER_GENDER_FEMALE) ) {
+                        gender_female.setChecked(true); // If true, select the radio button.
+                    } // Check if user selected character gender as other
+                    else if ( result.getString(result.getColumnIndex
+                            (Constants.STORY_CHARACTER_GENDER))
+                            .equals(Constants.CHARACTER_GENDER_OTHER)) {
+                        gender_other.setChecked(true);  // If true, select the radio button.
+                    } // Otherwise, select nothing.
 
                     // Get the saved data and present it to the user
                     character_name.setText(result.getString(
@@ -87,12 +120,15 @@ public class ShowCharacter extends Fragment {
         update_character.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO --> Get boolean (1 | 0) for radiobutton
                 ContentValues values = new ContentValues();
                 values.put(Constants.STORY_CHARACTER_NAME,
                         character_name.getText().toString());
                 values.put(Constants.STORY_CHARACTER_AGE,
                         character_age.getText().toString());
+                values.put(Constants.STORY_CHARACTER_TYPE,
+                        ShowStory.CHARACTER_TYPE);
+                values.put(Constants.STORY_CHARACTER_GENDER,
+                        ShowStory.CHARACTER_GENDER);
                 values.put(Constants.STORY_CHARACTER_BIRTHPLACE,
                         character_birthplace.getText().toString());
                 values.put(Constants.STORY_CHARACTER_PERSONALITY,
@@ -100,6 +136,7 @@ public class ShowCharacter extends Fragment {
                 values.put(Constants.STORY_CHARACTER_NOTES,
                         character_notes.getText().toString());
 
+                // Send to the AsyncTask
                 UpdateElementsTask updateElementsTask = new UpdateElementsTask
                         (getContext(), values, Constants.STORY_CHARACTER_TABLE);
                 updateElementsTask.execute();

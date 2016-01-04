@@ -51,15 +51,14 @@ public class AddPlotElements extends Fragment {
             @Override
             public void onClick(View v) {
                 // Ensure plotline field != null
-                if (plotline.length() < 1) {
+                if (plotline_title.length() < 1) {
                     Toast.makeText(getContext(), "You must enter at least"
-                            + " a summary of the plot", Toast.LENGTH_LONG).show();
+                            + " a short description of the plot", Toast.LENGTH_LONG).show();
                 } else {
-
                     // Send converted strings to background thread
                     addPlotlineTask plotlineTask = new addPlotlineTask(
                             getContext(),
-                            false,
+                            ShowStory.PLOT_TYPE, // This is set in the ShowStory method, mPlotline
                             plotline_title.getText().toString(),
                             plotline.getText().toString(),
                             notes.getText().toString());
@@ -78,20 +77,19 @@ public class AddPlotElements extends Fragment {
         private Context context;
         private ContentValues values;
         private SQLDatabase db;
-        Boolean main_plot;
+        String plot;
         String plot_title;
         String plotline;
         String notes;
 
         // Constructor
-        public addPlotlineTask(
-                Context context,
-                Boolean main_plot,
-                String plot_title,
-                String plotline,
-                String notes) {
+        public addPlotlineTask(Context context,
+                               String plot,
+                               String plot_title,
+                               String plotline,
+                               String notes) {
             this.context = context;
-            this.main_plot = main_plot;
+            this.plot = plot;
             this.plot_title = plot_title;
             this.plotline = plotline;
             this.notes = notes;
@@ -113,6 +111,7 @@ public class AddPlotElements extends Fragment {
 
             try {
                 values.put(Constants.DB_ID, ShowStory.SB_ID);
+                values.put(Constants.STORY_MAIN_PLOT, plot);
                 values.put(Constants.STORY_PLOT_TITLE, plot_title);
                 values.put(Constants.STORY_PLOT_DESC, plotline);
                 values.put(Constants.STORY_PLOT_NOTES, notes);

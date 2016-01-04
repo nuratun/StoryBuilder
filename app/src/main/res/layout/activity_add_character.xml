@@ -29,7 +29,8 @@
             android:id="@+id/sb_character_main"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/character_protagonist" />
+            android:text="@string/character_protagonist"
+            android:onClick="mCharacterCheckbox" />
 
         <RadioButton
             android:id="@+id/sb_character_antagonist"
@@ -37,6 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:text="@string/character_antagonist"
+            android:onClick="mCharacterCheckbox"
             android:layout_toEndOf="@id/sb_character_main" />
 
     </RelativeLayout>
@@ -80,19 +82,22 @@
             android:id="@+id/male_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/character_male" />
+            android:text="@string/character_male"
+            android:onClick="characterGender"/>
 
         <RadioButton
             android:id="@+id/female_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/character_female" />
+            android:text="@string/character_female"
+            android:onClick="characterGender"/>
 
         <RadioButton
             android:id="@+id/other_gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/character_other" />
+            android:text="@string/character_other"
+            android:onClick="characterGender"/>
     </LinearLayout>
 
     <EditText
@@ -135,7 +140,7 @@
             style="?android:attr/borderlessButtonStyle"
             android:background="@color/white"
             android:textColor="@color/colorPopupTextHint"
-            android:text="@string/cancel"/>
+            android:text="@string/cancel" />
 
         <Button
             android:id="@+id/add_the_character"

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.fragments.AddCharacterElements;
 import tahastudio.storybuilder.fragments.AddCharacters;
 import tahastudio.storybuilder.fragments.AddPlaceElements;
@@ -40,9 +41,9 @@ public class ShowStory extends AppCompatActivity implements
     public static int SB_ID;
 
     // TODO -> To be used for the checkboxes
-    private String character_type;
-    private String character_gender;
-    private boolean plot;
+    public static String CHARACTER_TYPE;
+    public static String CHARACTER_GENDER;
+    public static String PLOT_TYPE;
 
     // TODO -> Add credit to https://github.com/futuresimple/android-floating-action-button
 
@@ -214,41 +215,43 @@ public class ShowStory extends AppCompatActivity implements
     // May be a variation -> main character & the antagonist, just the main character
     // or just the antagonist.
     public void mCharacterCheckbox(View view) {
-        // Is a checkbox checked?
         boolean checked = ((RadioButton) view).isChecked();
 
         switch (view.getId()) {
             case R.id.sb_character_main:
                 if ( checked ) {
-                    character_type = "Protagonist";
+                    CHARACTER_TYPE = Constants.CHARACTER_TYPE_PROTAGONIST;
                     break;
                 }
             case R.id.sb_character_antagonist:
                 if ( checked ) {
-                    character_type += "Antagonist";
+                    CHARACTER_TYPE = Constants.CHARACTER_TYPE_ANTAGONIST;
                     break;
                 }
+            default:
+                CHARACTER_TYPE = Constants.CHARACTER_TYPE_OTHER;
         }
     }
 
     public void characterGender(View view) {
-        // Is a radio button selected?
         boolean checked = ((RadioButton) view).isChecked();
 
         // Return which radio button was selected
         switch (view.getId()) {
             case R.id.male_gender:
                 if (checked)
-                    character_gender = "male";
+                    CHARACTER_GENDER = Constants.CHARACTER_GENDER_MALE;
                 break;
             case R.id.female_gender:
                 if (checked)
-                    character_gender = "female";
+                    CHARACTER_GENDER = Constants.CHARACTER_GENDER_FEMALE;
                 break;
             case R.id.other_gender:
                 if (checked)
-                    character_gender = "other";
+                    CHARACTER_GENDER = Constants.CHARACTER_GENDER_OTHER;
                 break;
+            default:
+                CHARACTER_GENDER = Constants.CHARACTER_GENDER_OTHER;
         }
     }
 
@@ -260,9 +263,9 @@ public class ShowStory extends AppCompatActivity implements
         if ( checked ) {
             switch (view.getId()) {
                 case R.id.main_plot_checkbox:
-                    plot = true;
+                    PLOT_TYPE = Constants.PLOT_MAIN;
                 default:
-                    plot = false;
+                    PLOT_TYPE = Constants.PLOT_SUPPORTING;
             }
         }
     }
