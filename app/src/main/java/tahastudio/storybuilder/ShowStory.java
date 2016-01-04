@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -76,6 +77,7 @@ public class ShowStory extends AppCompatActivity implements
         com.getbase.floatingactionbutton.FloatingActionButton characters_fab =
                 (com.getbase.floatingactionbutton.FloatingActionButton)
                         findViewById(R.id.characters);
+        characters_fab.setTitle("Add A Character");
 
         characters_fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +94,7 @@ public class ShowStory extends AppCompatActivity implements
         com.getbase.floatingactionbutton.FloatingActionButton place_fab =
                 (com.getbase.floatingactionbutton.FloatingActionButton)
                         findViewById(R.id.places);
+        place_fab.setTitle("Add A Place/Location");
 
         place_fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +111,7 @@ public class ShowStory extends AppCompatActivity implements
         com.getbase.floatingactionbutton.FloatingActionButton plot_fab =
                 (com.getbase.floatingactionbutton.FloatingActionButton)
                         findViewById(R.id.plots);
+        plot_fab.setTitle("Add A Plot");
 
         plot_fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -257,7 +261,7 @@ public class ShowStory extends AppCompatActivity implements
 
     public void mPlotline(View view) {
         // Is radio button selected?
-        boolean checked = ((RadioButton) view).isChecked();
+        boolean checked = ((CheckBox) view).isChecked();
 
         // If one of them is selected...
         if ( checked ) {

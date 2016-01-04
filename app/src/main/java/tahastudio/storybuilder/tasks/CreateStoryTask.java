@@ -67,7 +67,7 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
         intent.putExtra("id", result);
 
         // Add a flag or get an exception raised
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         // Call the ShowStory class from this context
         context.startActivity(intent);

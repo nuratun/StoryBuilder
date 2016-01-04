@@ -8,7 +8,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="@string/dialog_instructions"
         android:drawableStart="@drawable/ic_create_story"
@@ -21,8 +21,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textColorHint="@color/colorPopupTextHint"
-        android:drawableStart="@drawable/ic_dialog_title"
-        android:drawablePadding="10dp"
         android:hint="@string/dialog_title" />
 
     <Spinner
@@ -38,8 +36,6 @@
         android:id="@+id/sb_notes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_dialog_synopsis"
-        android:drawablePadding="10dp"
         android:textColorHint="@color/colorPopupTextHint"
         android:hint="@string/dialog_desc" />
 

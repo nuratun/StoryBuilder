@@ -13,6 +13,11 @@
     <string name="create_story">Create</string>
     <string name="cancel_story">Cancel</string>
 
+    <!-- For FAB menu -->
+    <string name="add_character">Add A Character</string>
+    <string name="add_place">Add A Place/Location</string>
+    <string name="add_plot">Add A Plot</string>
+
     <!-- For ShowStory -->
     <string name="title_activity_add_characters">Add New Characters</string>
     <string name="title_activity_add_plotline">Add A Plotline</string>
@@ -23,6 +28,15 @@
     <string name="tab_characters">Characters</string>
     <string name="tab_plotline">Plotline</string>
     <string name="tab_places">Places</string>
+
+    <!-- For the ShowStory lists -->
+    <string name="list_story_title">Title</string>
+    <string name="list_story_genre">Genre</string>
+    <string name="list_character_name">Name</string>
+    <string name="list_character_age">Age</string>
+    <string name="list_place_title">Name</string>
+    <string name="list_place_location">Location</string>
+    <string name="list_plot_title">Title</string>
 
     <string name="title_activity_tab_viewer">TabViewer</string>
     <string name="title_activity_sqldatabase">SQLDatabase</string>

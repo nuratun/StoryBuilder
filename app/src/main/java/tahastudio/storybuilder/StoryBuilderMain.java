@@ -16,10 +16,10 @@ import android.widget.TextView;
 
 import java.util.Random;
 
-import tahastudio.storybuilder.tasks.ShowStoryTask;
-import tahastudio.storybuilder.ui.SBDialog;
 import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.db.SQLDatabase;
+import tahastudio.storybuilder.tasks.ShowStoryTask;
+import tahastudio.storybuilder.ui.SBDialog;
 
 /**
  * This is the main activity of StoryBuilder
@@ -185,13 +185,15 @@ public class StoryBuilderMain extends AppCompatActivity {
                 // Get the column names
                 String[] columns = {
                         Constants.STORY_NAME,
-                        Constants.STORY_GENRE
+                        Constants.STORY_GENRE,
+                        Constants.STORY_NOTES
                 };
 
                 // Get the TextView widgets
                 int[] widgets = {
                         R.id.name_info,
-                        R.id.extra_info
+                        R.id.extra_info,
+                        R.id.desc
                 };
 
                 SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(

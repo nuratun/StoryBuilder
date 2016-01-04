@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context="tahastudio.storybuilder.ShowStory">
 
@@ -35,7 +37,9 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:background="@color/colorLowerBackground"
             android:layout_below="@id/tab_layout" />
 
         <com.getbase.floatingactionbutton.FloatingActionsMenu
@@ -46,27 +50,30 @@
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="16dp"
             android:layout_marginEnd="16dp"
+            app:fab_labelsPosition="left"
+            app:fab_labelStyle="@style/menu_labels_style"
+            app:fab_addButtonColorPressed="@color/ColorPrimaryDark"
             app:fab_addButtonColorNormal="@color/colorUpperBackground">
 
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/characters"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:title="Add a Character"
+                android:title="@string/add_character"
                 android:clickable="true" />
 
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/places"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:title="Add a Place"
+                android:title="@string/add_place"
                 android:clickable="true" />
 
             <com.getbase.floatingactionbutton.FloatingActionButton
                 android:id="@+id/plots"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:title="Add a Plotline"
+                android:title="@string/add_plot"
                 android:clickable="true" />
         </com.getbase.floatingactionbutton.FloatingActionsMenu>
     </RelativeLayout>

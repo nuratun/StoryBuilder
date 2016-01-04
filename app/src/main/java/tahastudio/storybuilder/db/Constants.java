@@ -106,7 +106,8 @@ public class Constants {
     public static final String GRAB_STORY_DETAILS = "SELECT "
             + DB_ID + ", "
             + STORY_NAME + ", "
-            + STORY_GENRE + " FROM "
+            + STORY_GENRE + ", "
+            + STORY_NOTES + " FROM "
             + STORY_TABLE + ";";
 
     // Used in AddCharacters class to populate the ListView
@@ -164,5 +165,9 @@ public class Constants {
 
     public static final String PLOT_MAIN = "main";
     public static final String PLOT_SUPPORTING = "other";
+
+    // Used in StoryBuilderMain
+    public static final String SB_STORY_TITLE = "Title";
+    public static final String SB_STORY_GENRE = "Genre";
 
 }

@@ -46,7 +46,7 @@ public class ShowStoryTask extends AsyncTask<String, Void, Integer> {
         intent.putExtra("id", result);  // Pass the Integer that was passed from background thread
 
         // Add a flag or get an exception raised
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         // Call the intent from this context
         context.startActivity(intent);
