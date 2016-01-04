@@ -17,27 +17,29 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:background="@color/colorUpperBackground"
-        android:padding="30dp"
+        android:padding="10dp"
         android:layout_below="@+id/toolbar" />
 
     <ListView
         android:id="@+id/story_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:divider="@color/white"
+        android:padding="10dp"
+        android:divider="@color/ColorPrimaryDark"
         android:headerDividersEnabled="true"
         android:footerDividersEnabled="true"
-        android:dividerHeight="2dp"
+        android:dividerHeight="1dp"
         android:background="@color/colorLowerBackground"
         android:layout_below="@id/quote"/>
 
     <TextView
         android:id="@+id/empty"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:layout_margin="50dp"
+        android:drawableTop="@drawable/open_book"
+        android:drawablePadding="10dp"
         android:text="@string/empty"
         android:textSize="20sp"
         android:layout_below="@id/quote" />
