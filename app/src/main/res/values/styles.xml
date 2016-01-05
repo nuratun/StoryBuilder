@@ -3,15 +3,16 @@
     <style name="ActionBarTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowActionBar">false</item>
-        <item name="colorPrimary">@color/ColorPrimary</item>
-        <item name="colorPrimaryDark">@color/ColorPrimaryDark</item>
+        <item name="android:textColor">@color/black_semi_transparent</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorPrimaryAccent</item>
     </style>
 
     <!-- For the main activity XML -->
     <style name="StoryBuilderTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:colorForeground">@color/colorUpperBackground</item>
-        <item name="android:colorBackground">@color/colorLowerBackground</item>
+        <item name="android:colorForeground">@color/colorRow</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
     </style>
 
     <!-- change color Popup -->
@@ -25,9 +26,161 @@
         <item name="android:text">#000000</item>
     </style>
 
-    <!-- For the FAB menu -->
+    <!-- Text fonts and sizes -->
+    <style name="text_header">
+        <item name="android:fontFamily">@string/fontHeader</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="text_subheader">
+        <item name="android:fontFamily">@string/fontRegular</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="text_body">
+        <item name="android:fontFamily">@string/fontRegular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/black_semi_transparent</item>
+    </style>
+
+    <style name="text_popup">
+        <item name="android:fontFamily">@string/fontHeader</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/colorPopupText</item>
+    </style>
+
+    <style name="text_popupHint">
+        <item name="android:fontFamily">@string/fontThin</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@color/colorPopupTextHint</item>
+    </style>
+
+    <!-- Regular FAB -->
+    <style name="fab_regular">
+        <item name="android:src">@drawable/ic_add</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+    </style>
+
+    <!-- FAB -->
+    <style name="fab_theme">
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:layout_marginEnd">16dp</item>
+    </style>
+
+    <!-- FAB menu -->
     <style name="menu_labels_style">
         <item name="android:background">@drawable/fab_labels</item>
         <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!-- Quote -->
+    <style name="quote">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:fontFamily">@string/fontRegular</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="empty_view">
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@color/colorBackground</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">50dp</item>
+        <item name="android:fontFamily">@string/fontRegular</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:drawableTop">@drawable/open_book</item>
+        <item name="android:drawablePadding">10dp</item>
+    </style>
+
+    <!-- For ViewPager -->
+    <style name="viewpager">
+        <item name="android:background">@color/colorBackground</item>
+    </style>
+
+    <!-- For TabLayout -->
+    <style name="tablayout">
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:text">@string/fontThin</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/colorPopupTextHint</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <!-- For both radio buttons and checkboxes -->
+    <style name="radio_buttons">
+        <item name="android:fontFamily">@string/fontRegular</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/black_semi_transparent</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+    </style>
+
+    <!-- For input fields -->
+    <style name="list_items">
+        <item name="android:fontFamily">@string/fontRegular</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/black_semi_transparent</item>
+        <item name="android:padding">15dp</item>
+        <item name="android:layout_marginLeft">25dp</item>
+        <item name="android:layout_marginRight">25dp</item>
+    </style>
+
+    <!-- For ListViews -->
+    <style name="rows">
+        <item name="android:fontFamily">@string/fontRegular</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/black_semi_transparent</item>
+        <item name="android:background">@color/colorRow</item>
+        <item name="android:dividerHeight">5dp</item>
+        <item name="android:headerDividersEnabled">true</item>
+        <item name="android:footerDividersEnabled">true</item>
+        <item name="android:divider">@color/colorBackground</item>
+    </style>
+
+    <!-- For OK and Cancel buttons -->
+    <style name="button_add">
+        <item name="android:fontFamily">@string/fontHeader</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textColor">@color/black_semi_transparent</item>
+        <item name="android:background">@color/ColorTopView</item>
+        <item name="android:padding">10dp</item>
+
+    </style>
+
+    <style name="button_cancel">
+        <item name="android:fontFamily">@string/fontThin</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@color/half_black</item>
+        <item name="android:background">@color/colorBackground</item>
+        <item name="android:padding">10dp</item>
     </style>
 </resources>

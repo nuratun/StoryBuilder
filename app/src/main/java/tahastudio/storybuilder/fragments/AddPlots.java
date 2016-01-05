@@ -34,9 +34,7 @@ public class AddPlots extends Fragment {
         void onPlotSelected(String name);
     }
 
-    public AddPlots() {
-
-    }
+    public AddPlots() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -151,13 +149,13 @@ public class AddPlots extends Fragment {
                         widgets,
                         0);
 
-                // Notify thread the data has changed
-                cursorAdapter.notifyDataSetChanged();
-
                 // Initialize
                 add_plotline_listview = (ListView) add_plotline_layout
                         .findViewById(R.id.plotline_listview);
                 add_plotline_listview.setAdapter(cursorAdapter);
+
+                // Notify thread the data has changed
+                cursorAdapter.notifyDataSetChanged();
             }
         }
     }

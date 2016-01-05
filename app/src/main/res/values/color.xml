@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Color schemes: http://www.google.com/design/spec/style/color.html#color-color-palette -->
-    <!-- In use: Indigo and Green -->
-    <color name="ColorPrimary">#1B5E20</color>
-    <color name="ColorPrimaryDark">#3F51B5</color>
+    <!-- In use: Green and Grey -->
+    <color name="colorPrimary">#2E7D32</color>
+    <color name="colorPrimaryDark">#1B5E20</color>
     <color name="colorPrimaryAccent">#43A047</color>
-    <color name="colorUpperBackground">#4CAF50</color>
-    <color name="colorLowerBackground">#E8F5E9</color>
-    <color name="colorPopUp">#3F51B5</color>
-    <color name="colorPopupText">#d0d0d0</color>
-    <color name="colorPopupTextHint">#9FA8DA</color>
+    <color name="ColorStatusBar">#1B5E20</color>
+    <color name="ColorTopView">#2E7D32</color>
+    <color name="colorAccent">#00C853</color>
+    <color name="colorBackground">#BDBDBD</color>
+    <color name="colorRow">#FAFAFA</color>
+    <color name="colorHeader">#F5F5F5</color>
+    <color name="colorPopUp">#1B5E20</color>
+    <color name="colorPopupText">#FAFAFA</color>
+    <color name="colorPopupTextHint">#E0E0E0</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
 

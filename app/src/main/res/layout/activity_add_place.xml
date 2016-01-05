@@ -3,78 +3,79 @@
     android:id="@+id/add_place"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:padding="20dp"
-    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/add_place_instructions"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/activity_add_place_top"
+        android:theme="@style/text_header"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:paddingBottom="20dp"
-        android:drawableStart="@drawable/ic_place"
-        android:textSize="20sp"
-        android:text="@string/place_instructions"/>
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:theme="@style/text_header"
+            android:id="@+id/add_place_instructions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_place"
+            android:text="@string/place_instructions"/>
+    </LinearLayout>
 
     <EditText
         android:id="@+id/sb_place_name"
+        android:theme="@style/list_items"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:hint="@string/place_name"
-        android:layout_below="@+id/add_place_instructions"/>
+        android:layout_below="@+id/activity_add_place_top"/>
 
     <EditText
         android:id="@+id/sb_place_location"
+        android:theme="@style/list_items"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:hint="@string/place_location"
         android:layout_below="@+id/sb_place_name"/>
 
     <EditText
         android:id="@+id/sb_place_desc"
+        android:theme="@style/list_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:hint="@string/place_desc"
         android:layout_below="@+id/sb_place_location"/>
 
     <EditText
         android:id="@+id/sb_place_notes"
+        android:theme="@style/list_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
         android:hint="@string/place_notes"
         android:layout_below="@+id/sb_place_desc"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         android:gravity="end|bottom"
         android:layout_below="@id/sb_place_notes">
 
         <Button
             android:id="@+id/place_cancel"
+            android:theme="@style/button_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?android:attr/borderlessButtonStyle"
-            android:padding="10dp"
-            android:background="@color/white"
-            android:textColor="@color/colorPopupTextHint"
             android:text="@string/cancel"/>
 
         <Button
             android:id="@+id/add_the_place"
+            android:theme="@style/button_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             style="?android:attr/borderlessButtonStyle"
-            android:background="@color/colorPopUp"
             android:text="@string/place_add" />
     </LinearLayout>
 

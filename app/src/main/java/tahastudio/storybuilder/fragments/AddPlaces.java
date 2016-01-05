@@ -30,9 +30,7 @@ public class AddPlaces extends Fragment {
     // For interface method
     placeListener placeCallback;
 
-    public AddPlaces() {
-
-    }
+    public AddPlaces() { }
 
     // Interface to send ListView click back to ShowStory
     public interface placeListener {
@@ -54,7 +52,6 @@ public class AddPlaces extends Fragment {
         // TODO -> The below code is initialized twice. Need to refactor
         add_places_listview =
                 (ListView) add_place_layout.findViewById(R.id.places_listview);
-
         // Clicking on a place row will bring up a new fragment with info
         // TODO --> Long click brings up the delete option
         add_places_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -99,9 +96,10 @@ public class AddPlaces extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if ( placeList == null && placeList.getStatus() == AsyncTask.Status.FINISHED ) {
+        if ( placeList.getStatus() == AsyncTask.Status.FINISHED ) {
             placeList.execute();
         }
+
     }
 
     // Populate the ListView with the places in this story. Otherwise, return null
@@ -156,13 +154,13 @@ public class AddPlaces extends Fragment {
                         widgets,
                         0);
 
-                // Notify thread the data has changed
-                cursorAdapter.notifyDataSetChanged();
-
                 // Initialize
                 add_places_listview = (ListView) add_place_layout
                         .findViewById(R.id.places_listview);
                 add_places_listview.setAdapter(cursorAdapter);
+
+                // Notify thread the data has changed
+                cursorAdapter.notifyDataSetChanged();
             }
         }
     }

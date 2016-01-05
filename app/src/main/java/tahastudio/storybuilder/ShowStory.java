@@ -41,7 +41,6 @@ public class ShowStory extends AppCompatActivity implements
     // Create public static reference, so other classes can access it
     public static int SB_ID;
 
-    // TODO -> To be used for the checkboxes
     public static String CHARACTER_TYPE;
     public static String CHARACTER_GENDER;
     public static String PLOT_TYPE;
@@ -208,14 +207,13 @@ public class ShowStory extends AppCompatActivity implements
     public void onFragmentSelected(Fragment fragment, String tag) {
         // APIs from FragmentTransaction to add, replace or remove fragments
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        // Add the fragment, add it to the backstack, commit it
+        // Replace the fragment, add it to backstack, commit it
         fragmentTransaction
                 .add(R.id.story_creation_layout, fragment)
                 .addToBackStack(tag)
                 .commit();
     }
 
-    // TODO -> All the methods below
     // May be a variation -> main character & the antagonist, just the main character
     // or just the antagonist.
     public void mCharacterCheckbox(View view) {

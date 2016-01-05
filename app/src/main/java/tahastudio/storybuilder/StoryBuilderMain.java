@@ -1,6 +1,7 @@
 package tahastudio.storybuilder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -28,6 +29,9 @@ public class StoryBuilderMain extends AppCompatActivity {
     android.support.v7.widget.Toolbar toolbar;
     FloatingActionButton the_fab;
 
+    ListView story_list;
+    TextView empty;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,13 +49,12 @@ public class StoryBuilderMain extends AppCompatActivity {
         randomQuoteTask randomQuoteTask = new randomQuoteTask(textView);
         randomQuoteTask.execute();
 
-        final ListView story_list = (ListView) findViewById(R.id.story_list); // Stories go here
-        TextView empty = (TextView) findViewById(R.id.empty); // TextView used if stories == null
+        story_list = (ListView) findViewById(R.id.story_list); // Stories go here
+        empty = (TextView) findViewById(R.id.empty); // TextView used if stories == null
 
         // AsyncTask to find list of stories in db. If not null, return the list
-        // Otherwise, set up the empty TextView
-        storyListTask storyListTask = new storyListTask(story_list, empty);
-        storyListTask.execute();
+        // Otherwise, set up the empty TextView. Call the public method.
+        callStoryListTask(story_list, empty);
 
         // When a user clicks on a story, grab the title, and pass it to
         // ShowStory to return the story details from the db
@@ -104,12 +107,27 @@ public class StoryBuilderMain extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // To update the ListView whenever a new story is created
+    // The integers are not used, as the dialog box will exit
+    // if the story has not been created
+    @Override
+    protected void onActivityResult(int request, int result, Intent data) {
+        callStoryListTask(story_list, empty);
+
+    }
+
     // Calls SBDialog class to create the story creation dialog
     // User inputs data and creates a new story. Data is sent to the CreateStoryTask class
     // Initialized from the FAB
     private void showSBDialog() {
         SBDialog sbDialog = new SBDialog();
         sbDialog.show(getSupportFragmentManager(), "story_creation");
+    }
+
+    // Makes the storyListTask public, so fragments can access it
+    public void callStoryListTask(ListView list, TextView empty) {
+        storyListTask storyListTask = new storyListTask(list, empty);
+        storyListTask.execute();
     }
 
     // AsyncTask to generate random quote on start of activity
@@ -206,6 +224,10 @@ public class StoryBuilderMain extends AppCompatActivity {
 
                 // Set the adapter on the ListView
                 listView.setAdapter(cursorAdapter);
+
+                // Notify thread the data has changed
+                cursorAdapter.notifyDataSetChanged();
+                cursorAdapter.notifyDataSetInvalidated();
             }
         }
     }

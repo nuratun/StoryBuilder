@@ -30,9 +30,7 @@ public class AddCharacters extends Fragment {
     // For interface method
     characterListener characterCallback;
 
-    public AddCharacters() {
-
-    }
+    public AddCharacters() { }
 
     // Interface to send ListView click back to ShowStory
     public interface characterListener {
@@ -98,7 +96,7 @@ public class AddCharacters extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if ( characterList == null && characterList.getStatus() == AsyncTask.Status.FINISHED ) {
+        if ( characterList.getStatus() == AsyncTask.Status.FINISHED ) {
             characterList.execute();
         }
     }
@@ -162,12 +160,12 @@ public class AddCharacters extends Fragment {
                         widgets,
                         0);
 
-                // Notify thread the data has changed
-                cursorAdapter.notifyDataSetChanged();
-
                 add_characters_listview =
                         (ListView) add_character_layout.findViewById(R.id.characters_listview);
                 add_characters_listview.setAdapter(cursorAdapter);
+
+                // Notify thread the data has changed
+                cursorAdapter.notifyDataSetChanged();
             }
         }
     }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/story_creation_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -13,68 +13,74 @@
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
-    <RelativeLayout
-        android:id="@+id/story_creation_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/toolbar" >
+    <LinearLayout
+        android:id="@+id/story_creation_textview"
+        android:theme="@style/text_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_below="@+id/toolbar">
 
         <TextView
             android:id="@+id/story_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:padding="10dp"
             android:drawablePadding="5dp"
             android:drawableStart="@drawable/ic_story" />
+    </LinearLayout>
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:layout_below="@+id/story_title" />
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        android:theme="@style/tablayout"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/story_creation_textview" />
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/pager"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:background="@color/colorLowerBackground"
-            android:layout_below="@id/tab_layout" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:theme="@style/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tab_layout" />
 
-        <com.getbase.floatingactionbutton.FloatingActionsMenu
-            android:id="@+id/fab"
+    <com.getbase.floatingactionbutton.FloatingActionsMenu
+        android:id="@+id/fab"
+        android:theme="@style/fab_theme"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_width="wrap_content"
+        app:fab_addButtonColorPressed="@color/colorPrimaryDark"
+        app:fab_addButtonColorNormal="@color/colorPrimary"
+        android:layout_height="wrap_content">
+
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/characters"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="16dp"
-            app:fab_labelsPosition="left"
-            app:fab_labelStyle="@style/menu_labels_style"
-            app:fab_addButtonColorPressed="@color/ColorPrimaryDark"
-            app:fab_addButtonColorNormal="@color/colorUpperBackground">
+            app:fab_addButtonColorPressed="@color/colorPrimaryDark"
+            app:fab_addButtonColorNormal="@color/colorPrimary"
+            android:title="@string/add_character"
+            android:clickable="true" />
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/characters"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:title="@string/add_character"
-                android:clickable="true" />
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/places"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_addButtonColorPressed="@color/colorPrimaryDark"
+            app:fab_addButtonColorNormal="@color/colorPrimary"
+            android:title="@string/add_place"
+            android:clickable="true" />
 
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/places"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:title="@string/add_place"
-                android:clickable="true" />
-
-            <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/plots"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:title="@string/add_plot"
-                android:clickable="true" />
-        </com.getbase.floatingactionbutton.FloatingActionsMenu>
-    </RelativeLayout>
+        <com.getbase.floatingactionbutton.FloatingActionButton
+            android:id="@+id/plots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_addButtonColorPressed="@color/colorPrimaryDark"
+            app:fab_addButtonColorNormal="@color/colorPrimary"
+            android:title="@string/add_plot"
+            android:clickable="true" />
+    </com.getbase.floatingactionbutton.FloatingActionsMenu>
 </RelativeLayout>

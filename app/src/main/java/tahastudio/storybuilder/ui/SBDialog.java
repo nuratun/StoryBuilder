@@ -74,7 +74,7 @@ public class SBDialog extends DialogFragment {
                 } else {
                     // Execute CreateStoryTask to add entry into database
                     // CreateStoryTask will pass values needed back to ShowStory
-                    CreateStoryTask task = new CreateStoryTask(
+                            CreateStoryTask task = new CreateStoryTask(
                             getContext(),
                             the_story_title.getText().toString(), // Pass as string
                             sb_story_genre, // Already a string

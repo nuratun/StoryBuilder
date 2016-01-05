@@ -72,32 +72,40 @@ public class ShowCharacter extends Fragment {
 
                     // Check if user saved the character as the protagonist.
                     if ( result.getString(result.getColumnIndex
-                            (Constants.STORY_CHARACTER_TYPE))
+                            (Constants.STORY_CHARACTER_TYPE)) != null && result.getString
+                            (result.getColumnIndex(Constants.STORY_CHARACTER_TYPE))
                             .equals(Constants.CHARACTER_TYPE_PROTAGONIST) ) {
                         character_protagonist.setChecked(true); // If true, select the radio button.
                     } // Check if user saved the character as the antagonist.
-                    else if ( result.getString( result.getColumnIndex
-                            (Constants.STORY_CHARACTER_TYPE))
+                    else if ( result.getString(result.getColumnIndex
+                            (Constants.STORY_CHARACTER_TYPE)) != null && result.getString
+                            (result.getColumnIndex(Constants.STORY_CHARACTER_TYPE))
                             .equals(Constants.CHARACTER_TYPE_ANTAGONIST) ) {
                         character_antagonist.setChecked(true); // If true, select the radio button.
-                    } // Otherwise, select nothing
+                    }
 
                     // Check if user selected character gender as male
                     if ( result.getString(result.getColumnIndex
+                            (Constants.STORY_CHARACTER_GENDER)) != null &&
+                            result.getString(result.getColumnIndex
                             (Constants.STORY_CHARACTER_GENDER))
                             .equals(Constants.CHARACTER_GENDER_MALE) ) {
                         gender_male.setChecked(true); // If true, select the radio button.
                     } // Check if user selected character gender as female
                     else if ( result.getString(result.getColumnIndex
+                            (Constants.STORY_CHARACTER_GENDER)) != null &&
+                            result.getString(result.getColumnIndex
                             (Constants.STORY_CHARACTER_GENDER))
                             .equals(Constants.CHARACTER_GENDER_FEMALE) ) {
                         gender_female.setChecked(true); // If true, select the radio button.
                     } // Check if user selected character gender as other
                     else if ( result.getString(result.getColumnIndex
+                            (Constants.STORY_CHARACTER_GENDER)) != null &&
+                            result.getString(result.getColumnIndex
                             (Constants.STORY_CHARACTER_GENDER))
                             .equals(Constants.CHARACTER_GENDER_OTHER)) {
                         gender_other.setChecked(true);  // If true, select the radio button.
-                    } // Otherwise, select nothing.
+                    }
 
                     // Get the saved data and present it to the user
                     character_name.setText(result.getString(

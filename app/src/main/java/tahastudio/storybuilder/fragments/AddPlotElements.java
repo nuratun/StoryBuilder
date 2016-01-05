@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -36,8 +35,6 @@ public class AddPlotElements extends Fragment {
                 false);
 
         // Find the elements in the layout
-        final CheckBox main_plot = (CheckBox) plotline_elements_layout
-                .findViewById(R.id.main_plot_checkbox);
         final EditText plotline_title = (EditText) plotline_elements_layout
                 .findViewById(R.id.sb_plotline_name);
         final EditText plotline = (EditText) plotline_elements_layout
@@ -46,6 +43,8 @@ public class AddPlotElements extends Fragment {
                 .findViewById(R.id.sb_plotline_notes);
         Button add_the_plot = (Button) plotline_elements_layout
                 .findViewById(R.id.add_the_plotline);
+        Button plot_cancel = (Button) plotline_elements_layout
+                .findViewById(R.id.plot_cancel);
 
         add_the_plot.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +64,14 @@ public class AddPlotElements extends Fragment {
                     plotlineTask.execute();
                 }
                 // Return to AddPlots on button click, immediately
+                getFragmentManager().popBackStackImmediate();
+            }
+        });
+
+        plot_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Return to AddPlots without saving anything
                 getFragmentManager().popBackStackImmediate();
             }
         });

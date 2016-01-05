@@ -46,9 +46,11 @@ public class AddPlaceElements extends Fragment {
                 .findViewById(R.id.sb_place_desc);
         final EditText place_notes = (EditText) place_elements_layout
                 .findViewById(R.id.sb_place_notes);
-
         Button add_place = (Button) place_elements_layout
                 .findViewById(R.id.add_the_place);
+        Button place_cancel = (Button) place_elements_layout
+                .findViewById(R.id.place_cancel);
+
         add_place.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +72,14 @@ public class AddPlaceElements extends Fragment {
                     placesTask.execute();
                 }
                 // Return to AddPlaces on button click, immediately
+                getFragmentManager().popBackStackImmediate();
+            }
+        });
+
+        place_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Return to AddPlaces, without saving anything
                 getFragmentManager().popBackStackImmediate();
             }
         });

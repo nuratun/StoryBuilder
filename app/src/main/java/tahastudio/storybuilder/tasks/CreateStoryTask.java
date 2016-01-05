@@ -1,5 +1,6 @@
 package tahastudio.storybuilder.tasks;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -69,7 +70,10 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
         // Add a flag or get an exception raised
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        // Call the ShowStory class from this context
-        context.startActivity(intent);
+        // Create the story, calling the ShowStory class from this context
+        // The activity is for the onActivityResult method in StoryBuilderMain
+        // Need to pass in an integer, though if this is successful, the
+        // automatic assumption is that a story has been created.
+        ((Activity) context).startActivityForResult(intent, 1);
     }
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="large">48dp</string>
+    <string name="medium">24dp</string>
+    <string name="small">12dp</string>
+    <string name="textHeader">24sp</string>
+    <string name="textSubHeading">16sp</string>
+    <string name="textTitle">20sp</string>
+    <string name="textBody">14sp</string>
+    <string name="textButton">14sp</string>
+</resources>

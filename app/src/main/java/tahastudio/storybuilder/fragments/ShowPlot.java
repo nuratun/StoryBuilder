@@ -22,10 +22,10 @@ import tahastudio.storybuilder.tasks.UpdateElementsTask;
  * Overrides: ShowElementsTask.onPostExecute()
  */
 public class ShowPlot extends Fragment {
+    // For the main plot checkbox
+    private String main;
 
-    public ShowPlot() {
-
-    }
+    public ShowPlot() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -34,8 +34,6 @@ public class ShowPlot extends Fragment {
         View show_plot_layout =
                 inflater.inflate(R.layout.activity_add_plot, container, false);
 
-        // TODO -> Add in the checkbox
-        // TODO -> Update fields on button click
         // Find the elements
         final CheckBox plot_main =
                 (CheckBox) show_plot_layout.findViewById(R.id.main_plot_checkbox);
@@ -84,6 +82,15 @@ public class ShowPlot extends Fragment {
             @Override
             public void onClick(View v) {
                 ContentValues values = new ContentValues();
+
+                if ( plot_main.isChecked() ) {
+                    // Set the class wide string to the constant
+                    main = Constants.PLOT_MAIN;
+                } else {
+                    main = "False";
+                }
+
+                values.put(Constants.STORY_MAIN_PLOT, main);
                 values.put(Constants.STORY_PLOT_TITLE, plot_title.getText().toString());
                 values.put(Constants.STORY_PLOT_DESC, plot_desc.getText().toString());
                 values.put(Constants.STORY_PLOT_NOTES, plot_notes.getText().toString());

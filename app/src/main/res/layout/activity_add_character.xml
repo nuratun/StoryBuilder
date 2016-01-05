@@ -3,27 +3,34 @@
     android:id="@+id/add_character"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:padding="20dp"
-    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/add_character_instructions"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/activity_add_character_top"
+        android:theme="@style/text_header"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:drawableStart="@drawable/ic_character"
-        android:textSize="20sp"
-        android:text="@string/character_instructions" />
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            android:theme="@style/text_header"
+            android:id="@+id/add_character_instructions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_character"
+            android:text="@string/character_instructions" />
+
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/add_character_position"
+        android:theme="@style/radio_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:padding="10dp"
-        android:layout_below="@id/add_character_instructions">
+        android:layout_below="@id/activity_add_character_top">
 
         <RadioButton
             android:id="@+id/sb_character_main"
@@ -51,32 +58,34 @@
 
         <EditText
             android:id="@+id/sb_character_name"
+            android:theme="@style/list_items"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/character_name" />
 
         <EditText
             android:id="@+id/sb_character_age"
+            android:theme="@style/list_items"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/character_age"
             android:layout_alignParentEnd="true" />
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/character_gender_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:text="@string/character_gender"
-        android:layout_below="@id/add_character_details" />
-
     <LinearLayout
         android:id="@+id/gender"
+        android:theme="@style/radio_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@id/character_gender_textview">
+        android:layout_below="@id/add_character_details">
+
+        <TextView
+            android:id="@+id/character_gender_textview"
+            android:theme="@style/radio_buttons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/character_gender" />
 
         <RadioButton
             android:id="@+id/male_gender"
@@ -102,53 +111,49 @@
 
     <EditText
         android:id="@+id/sb_character_birthplace"
+        android:theme="@style/list_items"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp"
         android:hint="@string/character_birth"
         android:layout_below="@id/gender"/>
 
     <EditText
         android:id="@+id/sb_character_personality"
+        android:theme="@style/list_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp"
         android:hint="@string/character_personality"
         android:layout_below="@id/sb_character_birthplace"/>
 
     <EditText
         android:id="@+id/sb_character_notes"
+        android:theme="@style/list_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp"
         android:hint="@string/character_notes"
         android:layout_below="@id/sb_character_personality"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         android:gravity="end|bottom"
         android:layout_below="@id/sb_character_notes">
 
         <Button
+            android:theme="@style/button_cancel"
             android:id="@+id/character_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             style="?android:attr/borderlessButtonStyle"
-            android:background="@color/white"
-            android:textColor="@color/colorPopupTextHint"
             android:text="@string/cancel" />
 
         <Button
+            android:theme="@style/button_add"
             android:id="@+id/add_the_character"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             style="?android:attr/borderlessButtonStyle"
-            android:background="@color/colorPopUp"
             android:text="@string/character_add" />
     </LinearLayout>
 

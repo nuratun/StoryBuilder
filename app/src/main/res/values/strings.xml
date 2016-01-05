@@ -2,7 +2,7 @@
     <!-- StoryBuilderMain -->
     <string name="app_name">StoryBuilder</string>
     <string name="action_settings">Settings</string>
-    <string name="empty">Nothing here yet. Once you save a story, it will appear here.</string>
+    <string name="empty">Nothing here yet.</string>
     <string name="title_activity_create_story">Create a New Story</string>
 
     <!-- SBDialog -->
