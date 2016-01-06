@@ -2,20 +2,20 @@
 <RelativeLayout
     android:id="@+id/add_place"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="tahastudio.storybuilder.ShowStory">
 
     <LinearLayout
         android:id="@+id/activity_add_place_top"
-        android:theme="@style/text_header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
         <TextView
-            android:theme="@style/text_header"
             android:id="@+id/add_place_instructions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,7 +25,6 @@
 
     <EditText
         android:id="@+id/sb_place_name"
-        android:theme="@style/list_items"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/place_name"
@@ -33,7 +32,6 @@
 
     <EditText
         android:id="@+id/sb_place_location"
-        android:theme="@style/list_items"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/place_location"
@@ -41,7 +39,6 @@
 
     <EditText
         android:id="@+id/sb_place_desc"
-        android:theme="@style/list_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/place_desc"
@@ -49,7 +46,6 @@
 
     <EditText
         android:id="@+id/sb_place_notes"
-        android:theme="@style/list_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/place_notes"
@@ -64,7 +60,6 @@
 
         <Button
             android:id="@+id/place_cancel"
-            android:theme="@style/button_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?android:attr/borderlessButtonStyle"
@@ -72,7 +67,6 @@
 
         <Button
             android:id="@+id/add_the_place"
-            android:theme="@style/button_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?android:attr/borderlessButtonStyle"

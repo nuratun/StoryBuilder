@@ -37,11 +37,6 @@ public class StoryBuilderMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story_builder_main);
 
-        toolbar = (android.support.v7.widget.Toolbar)
-                findViewById(R.id.toolbar); // Find the toolbar in the view
-        setSupportActionBar(toolbar); // Set toolbar as the actionbar
-        setTitle("StoryBuilder"); // Set title on actionbar
-
         // TODO -> Set up a drawer
 
         TextView textView = (TextView) findViewById(R.id.quote); // TextView used for quotes
@@ -78,7 +73,7 @@ public class StoryBuilderMain extends AppCompatActivity {
 
         // When FAB is clicked, a dialog box appears
         // Returns: SBDialog class
-        the_fab = (FloatingActionButton) findViewById(R.id.fab);
+        the_fab = (android.support.design.widget.FloatingActionButton) findViewById(R.id.fab);
         the_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

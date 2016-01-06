@@ -2,13 +2,14 @@
 <RelativeLayout
     android:id="@+id/add_plotline"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="tahastudio.storybuilder.ShowStory">
 
     <LinearLayout
         android:id="@+id/activity_add_plot_top"
-        android:theme="@style/text_header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -25,7 +26,6 @@
 
     <CheckBox
         android:id="@+id/main_plot_checkbox"
-        android:theme="@style/radio_buttons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -35,7 +35,6 @@
 
     <EditText
         android:id="@+id/sb_plotline_name"
-        android:theme="@style/list_items"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/main_plot_checkbox"
@@ -43,7 +42,6 @@
 
     <EditText
         android:id="@+id/sb_plotline"
-        android:theme="@style/list_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/sb_plotline_name"
@@ -51,7 +49,6 @@
 
     <EditText
         android:id="@+id/sb_plotline_notes"
-        android:theme="@style/list_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/sb_plotline"
@@ -66,7 +63,6 @@
 
         <Button
             android:id="@+id/plot_cancel"
-            android:theme="@style/button_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?android:attr/borderlessButtonStyle"
@@ -74,7 +70,6 @@
 
         <Button
             android:id="@+id/add_the_plotline"
-            android:theme="@style/button_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?android:attr/borderlessButtonStyle"

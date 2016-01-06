@@ -52,12 +52,6 @@ public class ShowStory extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_story);
 
-        // Find the toolbar, set it, and set the title
-        android.support.v7.widget.Toolbar toolbar =
-                (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        setTitle("StoryBuilder");
-
         // TextView to be used for story title
         TextView story_title = (TextView) findViewById(R.id.story_title);
 

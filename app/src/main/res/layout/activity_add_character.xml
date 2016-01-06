@@ -2,20 +2,20 @@
 <RelativeLayout
     android:id="@+id/add_character"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="tahastudio.storybuilder.ShowStory">
 
     <LinearLayout
         android:id="@+id/activity_add_character_top"
-        android:theme="@style/text_header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
         <TextView
-            android:theme="@style/text_header"
             android:id="@+id/add_character_instructions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,7 +26,6 @@
 
     <RelativeLayout
         android:id="@+id/add_character_position"
-        android:theme="@style/radio_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
@@ -58,14 +57,12 @@
 
         <EditText
             android:id="@+id/sb_character_name"
-            android:theme="@style/list_items"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/character_name" />
 
         <EditText
             android:id="@+id/sb_character_age"
-            android:theme="@style/list_items"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/character_age"
@@ -74,7 +71,6 @@
 
     <LinearLayout
         android:id="@+id/gender"
-        android:theme="@style/radio_buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -82,7 +78,6 @@
 
         <TextView
             android:id="@+id/character_gender_textview"
-            android:theme="@style/radio_buttons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/character_gender" />
@@ -111,7 +106,6 @@
 
     <EditText
         android:id="@+id/sb_character_birthplace"
-        android:theme="@style/list_items"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/character_birth"
@@ -119,7 +113,6 @@
 
     <EditText
         android:id="@+id/sb_character_personality"
-        android:theme="@style/list_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/character_personality"
@@ -127,7 +120,6 @@
 
     <EditText
         android:id="@+id/sb_character_notes"
-        android:theme="@style/list_items"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/character_notes"
@@ -141,7 +133,6 @@
         android:layout_below="@id/sb_character_notes">
 
         <Button
-            android:theme="@style/button_cancel"
             android:id="@+id/character_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -149,7 +140,6 @@
             android:text="@string/cancel" />
 
         <Button
-            android:theme="@style/button_add"
             android:id="@+id/add_the_character"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

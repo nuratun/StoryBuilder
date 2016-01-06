@@ -4,11 +4,9 @@
     android:padding="30dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/colorPopUp"
     android:orientation="vertical">
 
     <TextView
-        android:theme="@style/text_popup"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="@string/dialog_instructions"
@@ -18,14 +16,12 @@
 
     <EditText
         android:id="@+id/sb_title"
-        android:theme="@style/text_popupHint"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:hint="@string/dialog_title" />
 
     <Spinner
         android:id="@+id/sb_genre"
-        android:theme="@style/text_popupHint"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/ic_dialog_genre"
@@ -33,7 +29,6 @@
 
     <EditText
         android:id="@+id/sb_notes"
-        android:theme="@style/text_popupHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/dialog_desc" />

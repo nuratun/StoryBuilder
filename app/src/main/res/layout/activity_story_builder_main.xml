@@ -4,37 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/divider"
     tools:context=".StoryBuilderMain">
-
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar" />
 
     <TextView
         android:id="@+id/quote"
-        android:theme="@style/quote"
+        android:theme="@style/Headers"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar" />
+        android:layout_height="wrap_content" />
 
     <ListView
         android:id="@+id/story_list"
-        android:theme="@style/rows"
+        android:theme="@style/List"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/quote"/>
+        android:layout_below="@id/quote" />
 
     <TextView
         android:id="@+id/empty"
-        android:theme="@style/empty_view"
+        android:theme="@style/Empty"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:text="@string/empty"
         android:layout_below="@id/quote" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
-        android:theme="@style/fab_regular"
+        android:src="@drawable/ic_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
