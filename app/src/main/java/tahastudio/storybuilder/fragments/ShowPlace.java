@@ -30,7 +30,7 @@ public class ShowPlace extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         View add_place_layout =
-                inflater.inflate(R.layout.activity_add_place, container, false);
+                inflater.inflate(R.layout.activity_add_location, container, false);
 
         // TODO -> Update fields on button click
         // Find the elements
@@ -54,20 +54,20 @@ public class ShowPlace extends Fragment {
         // The following AsyncTask is contained in its own class.
         // Therefore, to receive the return value, override onPostExecute
         // Name is string from bundle
-        new ShowElementsTask(getContext(), Constants.PLACES_TABLES, name) {
+        new ShowElementsTask(getContext(), Constants.LOCATIONS_TABLE, name) {
             @Override
             public void onPostExecute(Cursor result) {
                 if ( result != null ) {
                     result.moveToFirst();
 
                     place_name.setText(result.getString(
-                            result.getColumnIndex(Constants.STORY_PLACE_NAME)));
+                            result.getColumnIndex(Constants.STORY_LOCATION_NAME)));
                     place_location.setText(result.getString(
-                            result.getColumnIndex(Constants.STORY_PLACE_LOCATION)));
+                            result.getColumnIndex(Constants.STORY_LOCATION_LOCATION)));
                     place_desc.setText(result.getString(
-                            result.getColumnIndex(Constants.STORY_PLACE_DESC)));
+                            result.getColumnIndex(Constants.STORY_LOCATION_DESC)));
                     place_notes.setText(result.getString(
-                            result.getColumnIndex(Constants.STORY_PLACE_NOTES)));
+                            result.getColumnIndex(Constants.STORY_LOCATION_NOTES)));
                 }
             }
         }.execute();
@@ -77,13 +77,13 @@ public class ShowPlace extends Fragment {
             @Override
             public void onClick(View v) {
                 ContentValues values = new ContentValues();
-                values.put(Constants.STORY_PLACE_NAME, place_name.getText().toString());
-                values.put(Constants.STORY_PLACE_LOCATION, place_location.getText().toString());
-                values.put(Constants.STORY_PLACE_DESC, place_desc.getText().toString());
-                values.put(Constants.STORY_PLACE_NOTES, place_notes.getText().toString());
+                values.put(Constants.STORY_LOCATION_NAME, place_name.getText().toString());
+                values.put(Constants.STORY_LOCATION_LOCATION, place_location.getText().toString());
+                values.put(Constants.STORY_LOCATION_DESC, place_desc.getText().toString());
+                values.put(Constants.STORY_LOCATION_NOTES, place_notes.getText().toString());
 
                 UpdateElementsTask updateElementsTask = new UpdateElementsTask
-                        (getContext(), values, Constants.STORY_PLACES_TABLE);
+                        (getContext(), values, Constants.LOCATIONS_TABLE);
                 updateElementsTask.execute();
 
                 // Return to previous fragment, immediately

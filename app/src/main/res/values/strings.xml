@@ -15,28 +15,28 @@
 
     <!-- For FAB menu -->
     <string name="add_character">Add A Character</string>
-    <string name="add_place">Add A Place/Location</string>
-    <string name="add_plot">Add A Plot</string>
+    <string name="add_location">Add A Location</string>
+    <string name="add_event">Add An Event</string>
 
     <!-- For ShowStory -->
     <string name="title_activity_add_characters">Add New Characters</string>
-    <string name="title_activity_add_plotline">Add A Plotline</string>
-    <string name="title_activity_add_places">Add Places</string>
+    <string name="title_activity_add_event">Add Events</string>
+    <string name="title_activity_add_locations">Add Locations</string>
     <string name="title_activity_add_character">Add A Character</string>
 
     <!-- For the ShowStory tabs -->
     <string name="tab_characters">Characters</string>
-    <string name="tab_plotline">Plotline</string>
-    <string name="tab_places">Places</string>
+    <string name="tab_event">Events</string>
+    <string name="tab_locations">Locations</string>
 
     <!-- For the ShowStory lists -->
     <string name="list_story_title">Title</string>
     <string name="list_story_genre">Genre</string>
     <string name="list_character_name">Name</string>
     <string name="list_character_age">Age</string>
-    <string name="list_place_title">Name</string>
-    <string name="list_place_location">Location</string>
-    <string name="list_plot_title">Title</string>
+    <string name="list_location_title">Name</string>
+    <string name="list_location_location">Location</string>
+    <string name="list_event_title">Title</string>
 
     <string name="title_activity_tab_viewer">TabViewer</string>
     <string name="title_activity_sqldatabase">SQLDatabase</string>
@@ -56,21 +56,20 @@
     <string name="character_notes">Notes</string>
     <string name="character_add">OK</string>
     
-    <!-- For the AddPlaceElements -->
-    <string name="place_instructions">Add A Place/Location</string>
-    <string name="place_name">Name</string>
-    <string name="place_location">Location</string>
-    <string name="place_desc">Description</string>
-    <string name="place_notes">Notes</string>
-    <string name="place_add">OK</string>
+    <!-- For the AddLocationElements -->
+    <string name="location_instructions">Add A Location</string>
+    <string name="location_name">Name</string>
+    <string name="location_location">Location</string>
+    <string name="location_desc">Description</string>
+    <string name="location_notes">Notes</string>
+    <string name="location_add">OK</string>
 
-    <!-- For the AddPlotElements -->
-    <string name="plot_instructions">Add A Plot Line</string>
-    <string name="plot_main">Main Plot</string>
-    <string name="plot_title">Title (e.g. Sara finds a lost city)</string>
-    <string name="plot_desc">Describe the plot line</string>
-    <string name="plot_notes">Notes</string>
-    <string name="plot_add">OK</string>
+    <!-- For the AddEventElements -->
+    <string name="event_instructions">Add A Event</string>
+    <string name="event_title">Title (e.g. Sara finds a lost city)</string>
+    <string name="event_desc">Describe the event</string>
+    <string name="event_notes">Notes</string>
+    <string name="event_add">OK</string>
 
     <!-- For all activities/fragments -->
     <string name="cancel">Cancel</string>

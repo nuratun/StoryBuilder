@@ -9,31 +9,30 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.fragments.AddCharacterElements;
 import tahastudio.storybuilder.fragments.AddCharacters;
-import tahastudio.storybuilder.fragments.AddPlaceElements;
-import tahastudio.storybuilder.fragments.AddPlaces;
-import tahastudio.storybuilder.fragments.AddPlotElements;
-import tahastudio.storybuilder.fragments.AddPlots;
+import tahastudio.storybuilder.fragments.AddEventElements;
+import tahastudio.storybuilder.fragments.AddEvents;
+import tahastudio.storybuilder.fragments.AddLocationElements;
+import tahastudio.storybuilder.fragments.AddLocations;
 import tahastudio.storybuilder.fragments.ShowCharacter;
 import tahastudio.storybuilder.fragments.ShowPlace;
-import tahastudio.storybuilder.fragments.ShowPlot;
+import tahastudio.storybuilder.fragments.ShowEvent;
 import tahastudio.storybuilder.ui.TabViewer;
 
 /**
- * This class will show a list of saved characters, places, and plots,
+ * This class will show a list of saved characters, places, and events,
  * as well as the FAB menu to add elements to the story.
- * Implements: characterListener, placeListener, plotListener
+ * Implements: characterListener, placeListener, eventListener
  */
 public class ShowStory extends AppCompatActivity implements
         AddCharacters.characterListener,
-        AddPlaces.placeListener,
-        AddPlots.plotListener {
+        AddLocations.placeListener,
+        AddEvents.eventListener {
 
     // To programmatically add in the fragments
     FragmentManager fragmentManager = getSupportFragmentManager();
@@ -43,7 +42,6 @@ public class ShowStory extends AppCompatActivity implements
 
     public static String CHARACTER_TYPE;
     public static String CHARACTER_GENDER;
-    public static String PLOT_TYPE;
 
     // TODO -> Add credit to https://github.com/futuresimple/android-floating-action-button
 
@@ -96,24 +94,24 @@ public class ShowStory extends AppCompatActivity implements
                 fab.collapse();
 
                 // Call re-factored method for fragment transaction
-                onFragmentSelected(new AddPlaceElements(), "add_the_place");
+                onFragmentSelected(new AddLocationElements(), "add_the_place");
             }
         });
 
-        // Find the inner menu for adding a plot
-        com.getbase.floatingactionbutton.FloatingActionButton plot_fab =
+        // Find the inner menu for adding an event
+        com.getbase.floatingactionbutton.FloatingActionButton events_fab =
                 (com.getbase.floatingactionbutton.FloatingActionButton)
-                        findViewById(R.id.plots);
-        plot_fab.setTitle("Add A Plot");
+                        findViewById(R.id.events);
+        events_fab.setTitle("Add An Event");
 
-        plot_fab.setOnClickListener(new View.OnClickListener() {
+        events_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Collapse the menu fab on click
                 fab.collapse();
 
                 // Call re-factored method for fragment transaction
-                onFragmentSelected(new AddPlotElements(), "add_the_plot");
+                onFragmentSelected(new AddEventElements(), "add_the_event");
             }
         });
 
@@ -124,7 +122,7 @@ public class ShowStory extends AppCompatActivity implements
         // will be provided by the TabViewer method
         tab_layout.addTab(tab_layout.newTab().setText("Characters"));
         tab_layout.addTab(tab_layout.newTab().setText("Places"));
-        tab_layout.addTab(tab_layout.newTab().setText("Plots"));
+        tab_layout.addTab(tab_layout.newTab().setText("Events"));
         tab_layout.setTabGravity(tab_layout.GRAVITY_FILL);
 
         // ViewPager allows flipping left and right through pages (tabs) of data
@@ -169,7 +167,7 @@ public class ShowStory extends AppCompatActivity implements
         onFragmentSelected(showCharacter, "show_character");
     }
 
-    // Implement the AddPlaces interface method for a ListView click
+    // Implement the AddLocations interface method for a ListView click
     public void onPlaceSelected(String name) {
         // Bundle info and send user to the new fragment, ShowPlace
         Bundle bundle = new Bundle();
@@ -183,18 +181,18 @@ public class ShowStory extends AppCompatActivity implements
         onFragmentSelected(showPlace, "show_place");
     }
 
-    // Implement the AddPlots interface method for a ListView click
-    public void onPlotSelected(String name) {
-        // Bundle info and send user to the new fragment, ShowPlot
+    // Implement the AddEvents interface method for a ListView click
+    public void onEventSelected(String name) {
+        // Bundle info and send user to the new fragment, ShowEvent
         Bundle bundle = new Bundle();
         bundle.putString("name", name);
 
         // Set up the fragment with the bundle
-        ShowPlot showPlot = new ShowPlot();
-        showPlot.setArguments(bundle);
+        ShowEvent showEvent = new ShowEvent();
+        showEvent.setArguments(bundle);
 
         // Call re-factored method for fragment transaction
-        onFragmentSelected(showPlot, "show_plot");
+        onFragmentSelected(showEvent, "show_event");
     }
 
     // Re-factored method for all fragment transactions
@@ -248,21 +246,6 @@ public class ShowStory extends AppCompatActivity implements
                 break;
             default:
                 CHARACTER_GENDER = Constants.CHARACTER_GENDER_OTHER;
-        }
-    }
-
-    public void mPlotline(View view) {
-        // Is radio button selected?
-        boolean checked = ((CheckBox) view).isChecked();
-
-        // If one of them is selected...
-        if ( checked ) {
-            switch (view.getId()) {
-                case R.id.main_plot_checkbox:
-                    PLOT_TYPE = Constants.PLOT_MAIN;
-                default:
-                    PLOT_TYPE = Constants.PLOT_SUPPORTING;
-            }
         }
     }
 }

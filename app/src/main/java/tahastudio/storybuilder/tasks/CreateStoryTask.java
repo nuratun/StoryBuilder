@@ -48,7 +48,7 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
         ContentValues values = new ContentValues();
         values.put(Constants.STORY_NAME, title);
         values.put(Constants.STORY_GENRE, genre);
-        values.put(Constants.STORY_NOTES, desc);
+        values.put(Constants.STORY_DESC, desc);
 
         // Insert into the database
         db.insertRow(values, Constants.STORY_TABLE);

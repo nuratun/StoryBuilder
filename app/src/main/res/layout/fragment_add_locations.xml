@@ -1,14 +1,14 @@
 <RelativeLayout
-    android:id="@+id/add_plotline_tab"
+    android:id="@+id/add_locations_tab"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.AddPlots">
+    tools:context=".fragments.AddLocations">
 
     <ListView
-        android:id="@+id/plotline_listview"
+        android:id="@+id/locations_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

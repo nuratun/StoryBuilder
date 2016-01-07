@@ -23,12 +23,10 @@ import tahastudio.storybuilder.tasks.ShowStoryTask;
 import tahastudio.storybuilder.ui.SBDialog;
 
 /**
- * This is the main activity of StoryBuilder
+ * Main activity of StoryBuilder
  **/
 public class StoryBuilderMain extends AppCompatActivity {
-    android.support.v7.widget.Toolbar toolbar;
     FloatingActionButton the_fab;
-
     ListView story_list;
     TextView empty;
 
@@ -139,7 +137,7 @@ public class StoryBuilderMain extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            // Grab the array from the quotes.xml file
+            // Grab the array from the quotes resources file
             quote = getResources().getStringArray(R.array.quotes);
         }
 
@@ -151,7 +149,7 @@ public class StoryBuilderMain extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            textView.setText(result);
+            textView.setText(result); // Set the quote on the TextView
         }
     }
 
@@ -199,7 +197,7 @@ public class StoryBuilderMain extends AppCompatActivity {
                 String[] columns = {
                         Constants.STORY_NAME,
                         Constants.STORY_GENRE,
-                        Constants.STORY_NOTES
+                        Constants.STORY_DESC
                 };
 
                 // Get the TextView widgets

@@ -20,7 +20,7 @@ import tahastudio.storybuilder.db.SQLDatabase;
 /**
  * Second tab for SB
  */
-public class AddPlaces extends Fragment {
+public class AddLocations extends Fragment {
     // Make the AsyncTask global to stop it on onPause
     private setPlaceList placeList;
 
@@ -30,7 +30,7 @@ public class AddPlaces extends Fragment {
     // For interface method
     placeListener placeCallback;
 
-    public AddPlaces() { }
+    public AddLocations() { }
 
     // Interface to send ListView click back to ShowStory
     public interface placeListener {
@@ -41,7 +41,7 @@ public class AddPlaces extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         add_place_layout = inflater.inflate(
-                R.layout.fragment_add_places,
+                R.layout.fragment_add_locations,
                 container,
                 false);
 
@@ -63,7 +63,7 @@ public class AddPlaces extends Fragment {
                 // Grab the first field from the row and cast it to a string
                 // Send to the interface. Implemented in ShowStory
                 placeCallback.onPlaceSelected
-                        (cursor.getString(cursor.getColumnIndex(Constants.STORY_PLACE_NAME)));
+                        (cursor.getString(cursor.getColumnIndex(Constants.STORY_LOCATION_NAME)));
             }
         });
 
@@ -119,7 +119,7 @@ public class AddPlaces extends Fragment {
 
             try {
                 // Create a Cursor object to hold the rows
-                return db.getRows(Constants.GRAB_PLACES_DETAILS);
+                return db.getRows(Constants.GRAB_LOCATION_DETAILS);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -135,8 +135,8 @@ public class AddPlaces extends Fragment {
 
                 // Get the column names
                 String[] columns = new String[]{
-                        Constants.STORY_PLACE_NAME,
-                        Constants.STORY_PLACE_LOCATION
+                        Constants.STORY_LOCATION_NAME,
+                        Constants.STORY_LOCATION_LOCATION
                 };
 
                 // Get the TextView widgets

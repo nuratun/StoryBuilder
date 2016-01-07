@@ -12,7 +12,7 @@ import tahastudio.storybuilder.db.SQLDatabase;
  * An AsyncTask to grab the data from a row and query the db. Will pass in
  * an int to determine what table to grab data from, and populate fields.
  * Override onPostExecute in separate class files
- * Location: AddCharacterElements, AddPlaceElements, AddPlotElements
+ * Location: AddCharacterElements, AddLocationElements, AddEventElements
  */
 public class ShowElementsTask extends AsyncTask<String, Void, Cursor> {
     private Context context;
@@ -39,9 +39,9 @@ public class ShowElementsTask extends AsyncTask<String, Void, Cursor> {
         switch (table) {
             case Constants.CHARACTERS_TABLE:
                 return db.getElementRow(Constants.GRAB_CHARACTER_ROW_DETAILS, data);
-            case Constants.PLACES_TABLES:
+            case Constants.LOCATIONS_TABLE:
                 return db.getElementRow(Constants.GRAB_PLACE_ROW_DETAILS, data);
-            case Constants.PLOTS_TABLE:
+            case Constants.EVENTS_TABLE:
                 return db.getElementRow(Constants.GRAB_PLOT_ROW_DETAILS, data);
             default:
                 break;

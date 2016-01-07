@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:id="@+id/add_plotline"
+    android:id="@+id/add_location"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -9,71 +9,67 @@
     tools:context="tahastudio.storybuilder.ShowStory">
 
     <LinearLayout
-        android:id="@+id/activity_add_plot_top"
+        android:id="@+id/activity_add_location_top"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/plot_instructions"
+            android:id="@+id/add_location_instructions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_plotline"
-            android:text="@string/plot_instructions"/>
-
+            android:drawableStart="@drawable/ic_place"
+            android:text="@string/place_instructions"/>
     </LinearLayout>
 
-    <CheckBox
-        android:id="@+id/main_plot_checkbox"
+    <EditText
+        android:id="@+id/sb_location_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="@string/plot_main"
-        android:onClick="mPlotline"
-        android:layout_below="@+id/activity_add_plot_top"/>
+        android:hint="@string/place_name"
+        android:layout_below="@+id/activity_add_location_top"/>
 
     <EditText
-        android:id="@+id/sb_plotline_name"
+        android:id="@+id/sb_location_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/main_plot_checkbox"
-        android:hint="@string/plot_title" />
+        android:hint="@string/place_location"
+        android:layout_below="@+id/sb_location_name"/>
 
     <EditText
-        android:id="@+id/sb_plotline"
+        android:id="@+id/sb_location_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/sb_plotline_name"
-        android:hint="@string/plot_desc" />
+        android:hint="@string/place_desc"
+        android:layout_below="@+id/sb_location_location"/>
 
     <EditText
-        android:id="@+id/sb_plotline_notes"
+        android:id="@+id/sb_location_notes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sb_plotline"
-        android:hint="@string/plot_notes" />
+        android:hint="@string/place_notes"
+        android:layout_below="@+id/sb_location_desc"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:layout_below="@id/sb_plotline_notes"
-        android:gravity="end|bottom">
+        android:gravity="end|bottom"
+        android:layout_below="@id/sb_location_notes">
 
         <Button
-            android:id="@+id/plot_cancel"
+            android:id="@+id/location_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?android:attr/borderlessButtonStyle"
             android:text="@string/cancel"/>
 
         <Button
-            android:id="@+id/add_the_plotline"
+            android:id="@+id/add_the_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?android:attr/borderlessButtonStyle"
-            android:text="@string/plot_add" />
+            android:text="@string/place_add" />
     </LinearLayout>
-
 </RelativeLayout>

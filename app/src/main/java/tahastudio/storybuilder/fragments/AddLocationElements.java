@@ -18,13 +18,13 @@ import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.db.SQLDatabase;
 
 /**
- * Fragment to replace ListView in AddPlaces. Is called by AddPlaces.
+ * Fragment to replace ListView in AddLocations. Is called by AddLocations.
  */
-public class AddPlaceElements extends Fragment {
+public class AddLocationElements extends Fragment {
 
     // TODO -> Combine all *Element classes into one, with variable
 
-    public AddPlaceElements() {
+    public AddLocationElements() {
 
     }
 
@@ -33,7 +33,7 @@ public class AddPlaceElements extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View place_elements_layout = inflater.inflate(
-                R.layout.activity_add_place,
+                R.layout.activity_add_location,
                 container,
                 false);
 
@@ -71,7 +71,7 @@ public class AddPlaceElements extends Fragment {
                             place_notes.getText().toString());
                     placesTask.execute();
                 }
-                // Return to AddPlaces on button click, immediately
+                // Return to AddLocations on button click, immediately
                 getFragmentManager().popBackStackImmediate();
             }
         });
@@ -79,7 +79,7 @@ public class AddPlaceElements extends Fragment {
         place_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Return to AddPlaces, without saving anything
+                // Return to AddLocations, without saving anything
                 getFragmentManager().popBackStackImmediate();
             }
         });

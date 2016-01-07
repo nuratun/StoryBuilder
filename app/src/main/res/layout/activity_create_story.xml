@@ -60,10 +60,10 @@
             android:clickable="true" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/plots"
+            android:id="@+id/events"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:title="@string/add_plot"
+            android:title="@string/add_event"
             android:clickable="true" />
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 </RelativeLayout>

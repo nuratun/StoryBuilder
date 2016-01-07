@@ -20,51 +20,51 @@ import tahastudio.storybuilder.db.SQLDatabase;
 /**
  * 3rd tab for SB
  */
-public class AddPlots extends Fragment {
+public class AddEvents extends Fragment {
     // Make the AsyncTask global to stop it when paused
-    private setPlotList plotList;
+    private setEventList eventList;
 
-    private View add_plotline_layout;
-    private ListView add_plotline_listview;
+    private View add_event_layout;
+    private ListView add_event_listview;
 
-    plotListener plotCallback;
+    eventListener eventCallback;
 
     // Interface to send ListView click back to ShowStory
-    public interface plotListener {
-        void onPlotSelected(String name);
+    public interface eventListener {
+        void onEventSelected(String name);
     }
 
-    public AddPlots() { }
+    public AddEvents() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        add_plotline_layout = inflater.inflate(
-                R.layout.fragment_add_plots,
+        add_event_layout = inflater.inflate(
+                R.layout.fragment_add_events,
                 container,
                 false);
 
         // AsyncTask to populate the ListView
-        plotList = new setPlotList();
-        plotList.execute();
+        eventList = new setEventList();
+        eventList.execute();
 
         // TODO -> The below code is initialized twice. Need to refactor
-        add_plotline_listview =
-                (ListView) add_plotline_layout.findViewById(R.id.plotline_listview);
-        add_plotline_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        add_event_listview =
+                (ListView) add_event_layout.findViewById(R.id.event_listview);
+        add_event_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Return a cursor with the row data
-                Cursor cursor = (Cursor) add_plotline_listview.getItemAtPosition(position);
+                Cursor cursor = (Cursor) add_event_listview.getItemAtPosition(position);
 
                 // Grab the first field from the row and cast it to a string
                 // Send to the interface. Implemented in ShowStory
-                plotCallback.onPlotSelected
-                        (cursor.getString(cursor.getColumnIndex(Constants.STORY_PLOT_TITLE)));
+                eventCallback.onEventSelected
+                        (cursor.getString(cursor.getColumnIndex(Constants.STORY_EVENT_LINER)));
             }
         });
 
-        return add_plotline_layout;
+        return add_event_layout;
     }
 
     // Ensure ShowStory implements the interface
@@ -73,9 +73,9 @@ public class AddPlots extends Fragment {
         super.onAttach(context);
 
         try {
-            plotCallback = (plotListener) context;
+            eventCallback = (eventListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement plotListener");
+            throw new ClassCastException(context.toString() + " must implement eventListener");
         }
     }
 
@@ -84,8 +84,8 @@ public class AddPlots extends Fragment {
     public void onPause() {
         super.onPause();
 
-        if ( plotList != null && plotList.getStatus() == AsyncTask.Status.RUNNING ) {
-            plotList.cancel(true);
+        if ( eventList != null && eventList.getStatus() == AsyncTask.Status.RUNNING ) {
+            eventList.cancel(true);
         }
     }
 
@@ -94,13 +94,13 @@ public class AddPlots extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if ( plotList == null && plotList.getStatus() == AsyncTask.Status.FINISHED ) {
-            plotList.execute();
+        if ( eventList == null && eventList.getStatus() == AsyncTask.Status.FINISHED ) {
+            eventList.execute();
         }
     }
 
-    // Populate the ListView with the plotlines for this story. Otherwise, return null
-    private class setPlotList extends AsyncTask<Void, Void, Cursor> {
+    // Populate the ListView with the events for this story. Otherwise, return null
+    private class setEventList extends AsyncTask<Void, Void, Cursor> {
         private Context context = getActivity().getApplicationContext();
         private SQLDatabase db;
 
@@ -116,7 +116,7 @@ public class AddPlots extends Fragment {
 
             try {
                 // Return a cursor object that holds the rows
-                return db.getRows(Constants.GRAB_PLOT_DETALIS);
+                return db.getRows(Constants.GRAB_EVENT_DETALIS);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -132,7 +132,7 @@ public class AddPlots extends Fragment {
 
                 // Get the columns
                 String[] columns = new String[]{
-                        Constants.STORY_PLOT_TITLE
+                        Constants.STORY_EVENT_LINER
                 };
 
                 // Get the widget list
@@ -150,9 +150,9 @@ public class AddPlots extends Fragment {
                         0);
 
                 // Initialize
-                add_plotline_listview = (ListView) add_plotline_layout
-                        .findViewById(R.id.plotline_listview);
-                add_plotline_listview.setAdapter(cursorAdapter);
+                add_event_listview = (ListView) add_event_layout
+                        .findViewById(R.id.event_listview);
+                add_event_listview.setAdapter(cursorAdapter);
 
                 // Notify thread the data has changed
                 cursorAdapter.notifyDataSetChanged();

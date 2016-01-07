@@ -7,7 +7,7 @@ package tahastudio.storybuilder.db;
 public class Constants {
 
     // Version number must change if database changes
-    public static final int DATABASE_VERSION = 17;
+    public static final int DATABASE_VERSION = 18;
     public static final String DATABASE_NAME = "sql.db";
 
     // Set up table schema for the story
@@ -16,31 +16,39 @@ public class Constants {
     public static final String STORY_TABLE = "sb_story";
     public static final String STORY_NAME = "title";
     public static final String STORY_GENRE = "genre";
-    public static final String STORY_NOTES = "notes";
+    public static final String STORY_DESC = "desc";
 
     // Set up table schema for characters
     public static final String STORY_CHARACTER_TABLE = "sb_characters";
-    public static final String STORY_CHARACTER_NAME = "name";
-    public static final String STORY_CHARACTER_TYPE = "type";
-    public static final String STORY_CHARACTER_GENDER = "gender";
-    public static final String STORY_CHARACTER_AGE = "age";
-    public static final String STORY_CHARACTER_BIRTHPLACE = "birthplace";
-    public static final String STORY_CHARACTER_PERSONALITY = "personality";
-    public static final String STORY_CHARACTER_NOTES = "notes";
+    public static final String STORY_CHARACTER_NAME = "character_name";
+    public static final String STORY_CHARACTER_TYPE = "character_type";
+    public static final String STORY_CHARACTER_GENDER = "character_gender";
+    public static final String STORY_CHARACTER_AGE = "character_age";
+    public static final String STORY_CHARACTER_BIRTHPLACE = "character_birthplace";
+    public static final String STORY_CHARACTER_HISTORY = "character_history";
+    public static final String STORY_CHARACTER_GOALS = "character_goals";
+    public static final String STORY_CHARACTER_CONFLICTS = "character_conflicts";
+    public static final String STORY_CHARACTER_EPIPHANY = "character_epiphany";
+    public static final String STORY_CHARACTER_PERSONALITY = "character_personality";
+    public static final String STORY_CHARACTER_STORYLINE = "character_storyline";
+    public static final String STORY_CHARACTER_NOTES = "character_notes";
 
-    // Set up table schema for plots
-    public static final String STORY_PLOT_TABLE = "sb_plot";
-    public static final String STORY_MAIN_PLOT = "main_plot";
-    public static final String STORY_PLOT_TITLE = "plot_title";
-    public static final String STORY_PLOT_DESC = "sb_plot_desc";
-    public static final String STORY_PLOT_NOTES = "plot_notes";
+    // Set up table schema for events
+    public static final String STORY_EVENT_TABLE = "sb_event";
+    public static final String STORY_EVENT_LINER = "event_liner";
+    public static final String STORY_EVENT_DESC = "event_desc";
+    public static final String STORY_EVENT_CHARACTERS = "event_characters";
+    public static final String STORY_EVENT_SUMMARY = "event_summary";
+    public static final String STORY_EVENT_NOTES = "event_notes";
 
-    // Set up table schema for places
-    public static final String STORY_PLACES_TABLE = "sb_places";
-    public static final String STORY_PLACE_NAME = "place_name";
-    public static final String STORY_PLACE_LOCATION = "place_location";
-    public static final String STORY_PLACE_DESC = "place_description";
-    public static final String STORY_PLACE_NOTES = "place_notes";
+    // Set up table schema for locations
+    public static final String STORY_LOCATION_TABLE = "sb_location";
+    public static final String STORY_LOCATION_NAME = "location_name";
+    public static final String STORY_LOCATION_LOCATION = "location_location";
+    public static final String STORY_LOCATION_DESC = "location_description";
+    public static final String STORY_LOCATION_IMPORTANCE = "location_importance";
+    public static final String STORY_LOCATION_EVENTS = "location_events";
+    public static final String STORY_LOCATION_NOTES = "location_notes";
 
     // Get latest story entry id from database
     public static final String GET_STORY_ID = "SELECT MAX(_id) FROM " + STORY_TABLE;
@@ -57,7 +65,7 @@ public class Constants {
             + DB_ID + " integer primary key autoincrement, "
             + STORY_NAME + " text, "
             + STORY_GENRE + " text, "
-            + STORY_NOTES + " text "
+            + STORY_DESC + " text "
             + " )";
 
     // Create the character table, with foreign keys from the story table
@@ -68,7 +76,12 @@ public class Constants {
             + STORY_CHARACTER_GENDER + " text, "
             + STORY_CHARACTER_AGE + " integer, "
             + STORY_CHARACTER_BIRTHPLACE + " text, "
+            + STORY_CHARACTER_HISTORY + " text, "
+            + STORY_CHARACTER_GOALS + " text, "
+            + STORY_CHARACTER_CONFLICTS + " text, "
+            + STORY_CHARACTER_EPIPHANY + " text, "
             + STORY_CHARACTER_PERSONALITY + " text, "
+            + STORY_CHARACTER_STORYLINE + " text, "
             + STORY_CHARACTER_NOTES + " text, "
             + DB_ID + " integer, "
             + STORY_NAME + " text, "
@@ -76,26 +89,29 @@ public class Constants {
             + "REFERENCES " + STORY_TABLE + "(" + DB_ID + DB_COMMA + STORY_NAME + ")"
             + " )";
 
-    // Create the plot table, with foreign keys from the story table
-    public static final String SQL_CREATE_PLOT = "CREATE TABLE "
-            + STORY_PLOT_TABLE + "("
-            + STORY_MAIN_PLOT + " text, "
-            + STORY_PLOT_TITLE + " text, "
-            + STORY_PLOT_DESC + " text, "
-            + STORY_PLOT_NOTES + " text, "
+    // Create the event table, with foreign keys from the story table
+    public static final String SQL_CREATE_EVENTS = "CREATE TABLE "
+            + STORY_EVENT_TABLE + "("
+            + STORY_EVENT_LINER + " text, "
+            + STORY_EVENT_DESC + " text, "
+            + STORY_EVENT_CHARACTERS + " text, "
+            + STORY_EVENT_SUMMARY + " text, "
+            + STORY_EVENT_NOTES + " text, "
             + DB_ID + " integer,"
             + STORY_NAME + " text, "
             + "FOREIGN KEY(" + DB_ID + DB_COMMA + STORY_NAME + ") "
             + "REFERENCES " + STORY_TABLE + "(" + DB_ID + DB_COMMA + STORY_NAME + ")"
             + " )";
 
-    // Create the places table, with foreign keys from the story table
-    public static final String SQL_CREATE_PLACES = "CREATE TABLE "
-            + STORY_PLACES_TABLE + "("
-            + STORY_PLACE_NAME + " text, "
-            + STORY_PLACE_LOCATION + " text, "
-            + STORY_PLACE_DESC + " text, "
-            + STORY_PLACE_NOTES + " text, "
+    // Create the locations table, with foreign keys from the story table
+    public static final String SQL_CREATE_LOCATIONS = "CREATE TABLE "
+            + STORY_LOCATION_TABLE + "("
+            + STORY_LOCATION_NAME + " text, "
+            + STORY_LOCATION_LOCATION + " text, "
+            + STORY_LOCATION_DESC + " text, "
+            + STORY_LOCATION_IMPORTANCE + " text,"
+            + STORY_LOCATION_EVENTS + " text,"
+            + STORY_LOCATION_NOTES + " text, "
             + DB_ID + " integer, "
             + STORY_NAME + " text, "
             + "FOREIGN KEY(" + DB_ID + DB_COMMA + STORY_NAME + ") "
@@ -107,7 +123,7 @@ public class Constants {
             + DB_ID + ", "
             + STORY_NAME + ", "
             + STORY_GENRE + ", "
-            + STORY_NOTES + " FROM "
+            + STORY_DESC + " FROM "
             + STORY_TABLE + ";";
 
     // Used in AddCharacters class to populate the ListView
@@ -118,20 +134,20 @@ public class Constants {
             + STORY_CHARACTER_TABLE + " WHERE "
             + DB_ID + " = ";
 
-    // Used in the AddPlaces class to populate the ListView
-    public static final String GRAB_PLACES_DETAILS = "SELECT "
+    // Used in the AddLocations class to populate the ListView
+    public static final String GRAB_LOCATION_DETAILS = "SELECT "
             + DB_ID + ", "
-            + STORY_PLACE_NAME + ", "
-            + STORY_PLACE_LOCATION + " FROM "
-            + STORY_PLACES_TABLE + " WHERE "
+            + STORY_LOCATION_NAME + ", "
+            + STORY_LOCATION_LOCATION + " FROM "
+            + STORY_LOCATION_TABLE + " WHERE "
             + DB_ID + " = ";
 
-    // Used in the AddPlots class to populate the ListView
-    public static final String GRAB_PLOT_DETALIS = "SELECT "
+    // Used in the AddEvents class to populate the ListView
+    public static final String GRAB_EVENT_DETALIS = "SELECT "
             + DB_ID + ", "
-            + STORY_MAIN_PLOT + ", "
-            + STORY_PLOT_TITLE + " FROM "
-            + STORY_PLOT_TABLE + " WHERE "
+            + STORY_EVENT_LINER + ", "
+            + STORY_EVENT_CHARACTERS + " FROM "
+            + STORY_EVENT_TABLE + " WHERE "
             + DB_ID + " = ";
 
     // Used in UpdateElementTask to grab the row selected in AddCharacters
@@ -139,20 +155,20 @@ public class Constants {
             + STORY_CHARACTER_TABLE + " WHERE "
             + STORY_CHARACTER_NAME + " = ";
 
-    // Used in UpdateElementTask to grab the row selected in AddPlaces
+    // Used in UpdateElementTask to grab the row selected in AddLocations
     public static final String GRAB_PLACE_ROW_DETAILS = "SELECT * FROM "
-            + STORY_PLACES_TABLE + " WHERE "
-            + STORY_PLACE_NAME + " = ";
+            + STORY_LOCATION_TABLE + " WHERE "
+            + STORY_LOCATION_NAME + " = ";
 
-    // Used in UpdateElementTask to grab the row selected in AddPlots
+    // Used in UpdateElementTask to grab the row selected in AddEvents
     public static final String GRAB_PLOT_ROW_DETAILS = "SELECT * FROM "
-            + STORY_PLOT_TABLE + " WHERE "
-            + STORY_PLOT_TITLE + " = ";
+            + STORY_EVENT_TABLE + " WHERE "
+            + STORY_EVENT_DESC + " = ";
 
-    // Used in ShowCharacter, ShowPlace, ShowPlot, and ShowElementsTask
+    // Used in ShowCharacter, ShowLocation, ShowEvent, and ShowElementsTask
     public static final String CHARACTERS_TABLE = "sb_characters";
-    public static final String PLACES_TABLES = "sb_places";
-    public static final String PLOTS_TABLE = "sb_plots";
+    public static final String LOCATIONS_TABLE = "sb_locations";
+    public static final String EVENTS_TABLE = "sb_events";
 
     // Used in ShowStory
     public static final String CHARACTER_TYPE_PROTAGONIST = "protagonist";
@@ -162,9 +178,6 @@ public class Constants {
     public static final String CHARACTER_GENDER_MALE = "male";
     public static final String CHARACTER_GENDER_FEMALE = "female";
     public static final String CHARACTER_GENDER_OTHER = "other";
-
-    public static final String PLOT_MAIN = "main";
-    public static final String PLOT_SUPPORTING = "other";
 
     // Used in StoryBuilderMain
     public static final String SB_STORY_TITLE = "Title";

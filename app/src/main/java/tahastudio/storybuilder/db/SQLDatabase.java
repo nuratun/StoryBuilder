@@ -22,8 +22,8 @@ public class SQLDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sbDatabase) {
         sbDatabase.execSQL(Constants.SQL_CREATE_STORY_TABLE);
         sbDatabase.execSQL(Constants.SQL_CREATE_CHARACTERS);
-        sbDatabase.execSQL(Constants.SQL_CREATE_PLACES);
-        sbDatabase.execSQL(Constants.SQL_CREATE_PLOT);
+        sbDatabase.execSQL(Constants.SQL_CREATE_LOCATIONS);
+        sbDatabase.execSQL(Constants.SQL_CREATE_EVENTS);
     }
 
     @Override
@@ -31,8 +31,8 @@ public class SQLDatabase extends SQLiteOpenHelper {
         // TODO -> Remove when going into production
         sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_TABLE);
         sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_CHARACTER_TABLE);
-        sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_PLACES_TABLE);
-        sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_PLOT_TABLE);
+        sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_EVENT_TABLE);
+        sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_LOCATION_TABLE);
         onCreate(sbDatabase);
     }
 
@@ -76,14 +76,14 @@ public class SQLDatabase extends SQLiteOpenHelper {
 
     // Need to dynamically add in the SB_ID to this query, as it will
     // change depending on user selection
-    // Location: AddCharacters, AddPlaces, AddPlots
+    // Location: AddCharacters, AddLocations, AddEvents
     public Cursor getRows(String query) {
         sbDatabase = this.getReadableDatabase();
         return sbDatabase.rawQuery(query + ShowStory.SB_ID + ";", null);
     }
 
     // Get the story element user clicked on
-    // Location: AddCharacters, AddPlaces, AddPlots
+    // Location: AddCharacters, AddLocations, AddEvents
     public Cursor getElementRow(String query, String name) {
         sbDatabase = this.getReadableDatabase();
         return sbDatabase.rawQuery(query + "'" + name + "';", null);

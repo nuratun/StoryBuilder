@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
-    android:id="@+id/add_place"
+    android:id="@+id/add_event"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
@@ -9,68 +9,62 @@
     tools:context="tahastudio.storybuilder.ShowStory">
 
     <LinearLayout
-        android:id="@+id/activity_add_place_top"
+        android:id="@+id/activity_add_event_top"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/add_place_instructions"
+            android:id="@+id/event_instructions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_place"
-            android:text="@string/place_instructions"/>
+            android:drawableStart="@drawable/ic_event"
+            android:text="@string/event_instructions"/>
+
     </LinearLayout>
 
     <EditText
-        android:id="@+id/sb_place_name"
+        android:id="@+id/sb_event_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/place_name"
-        android:layout_below="@+id/activity_add_place_top"/>
+        android:layout_below="@id/main_event_checkbox"
+        android:hint="@string/event_title" />
 
     <EditText
-        android:id="@+id/sb_place_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/place_location"
-        android:layout_below="@+id/sb_place_name"/>
-
-    <EditText
-        android:id="@+id/sb_place_desc"
+        android:id="@+id/sb_event"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/place_desc"
-        android:layout_below="@+id/sb_place_location"/>
+        android:layout_below="@+id/sb_event_name"
+        android:hint="@string/event_desc" />
 
     <EditText
-        android:id="@+id/sb_place_notes"
+        android:id="@+id/sb_event_notes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/place_notes"
-        android:layout_below="@+id/sb_place_desc"/>
+        android:layout_below="@id/sb_event"
+        android:hint="@string/event_notes" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        android:gravity="end|bottom"
-        android:layout_below="@id/sb_place_notes">
+        android:layout_below="@id/sb_event_notes"
+        android:gravity="end|bottom">
 
         <Button
-            android:id="@+id/place_cancel"
+            android:id="@+id/event_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?android:attr/borderlessButtonStyle"
             android:text="@string/cancel"/>
 
         <Button
-            android:id="@+id/add_the_place"
+            android:id="@+id/add_the_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?android:attr/borderlessButtonStyle"
-            android:text="@string/place_add" />
+            android:text="@string/event_add" />
     </LinearLayout>
 
 </RelativeLayout>
