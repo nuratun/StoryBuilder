@@ -7,30 +7,46 @@
     android:layout_height="match_parent"
     android:background="@color/divider">
 
-    <LinearLayout
-        android:orientation="horizontal"
+    <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="6dp"
         android:layout_marginRight="6dp"
         android:layout_marginTop="4dp"
         android:layout_marginBottom="4dp"
         android:background="@drawable/card_list">
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/name_info"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:layout_gravity="start|center_vertical"
+                android:layout_gravity="center_vertical"
                 android:textAllCaps="true"
-                android:textColor="@color/primary_text" />
+                android:textColor="@color/primary_text"
+                android:paddingTop="15dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
 
+            <TextView
+                android:id="@+id/extra_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/secondary_text"
+                android:paddingTop="15dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <TextView
                 android:id="@+id/desc"
@@ -39,16 +55,11 @@
                 android:layout_weight="1"
                 android:layout_gravity="start|center_vertical"
                 android:textColor="@color/secondary_text"
-                android:paddingTop="10dp" />
-        </LinearLayout>
+                android:paddingTop="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
 
-        <TextView
-            android:id="@+id/extra_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start|center_vertical"
-            android:textColor="@color/secondary_text"
-            android:paddingTop="10dp" />
-    </LinearLayout>
+        </TableRow>
+    </TableLayout>
 
 </RelativeLayout>

@@ -8,17 +8,17 @@
             <solid android:color="@color/cards" />
         </shape>
     </item>
-    <item android:bottom="2dp">
+    <item android:bottom="4dp">
         <shape
             android:shape="rectangle"
             android:dither="true">
             <corners android:radius="4dp" />
             <solid android:color="@color/cards" />
             <padding
-                android:bottom="8dp"
+                android:bottom="4dp"
                 android:left="8dp"
                 android:right="8dp"
-                android:top="8dp" />
+                android:top="4dp" />
         </shape>
     </item>
 </layer-list>
