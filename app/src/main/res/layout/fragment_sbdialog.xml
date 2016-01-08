@@ -1,18 +1,19 @@
 <LinearLayout
     android:id="@+id/add_story"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:padding="30dp"
+    android:theme="@style/Dialog"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
-        android:theme="@styles/Headers"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="@string/dialog_instructions"
+        android:textAllCaps="true"
+        android:textColor="@color/primary_text_light"
         android:drawableStart="@drawable/ic_create_story"
-        android:drawablePadding="5dp"
+        android:drawablePadding="10dp"
         android:gravity="center" />
 
     <EditText

@@ -19,36 +19,36 @@
             android:id="@+id/add_location_instructions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_place"
-            android:text="@string/place_instructions"/>
+            android:drawableStart="@drawable/ic_location"
+            android:text="@string/location_instructions"/>
     </LinearLayout>
 
     <EditText
         android:id="@+id/sb_location_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/place_name"
+        android:hint="@string/location_name"
         android:layout_below="@+id/activity_add_location_top"/>
 
     <EditText
         android:id="@+id/sb_location_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/place_location"
+        android:hint="@string/location_location"
         android:layout_below="@+id/sb_location_name"/>
 
     <EditText
         android:id="@+id/sb_location_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/place_desc"
+        android:hint="@string/location_desc"
         android:layout_below="@+id/sb_location_location"/>
 
     <EditText
         android:id="@+id/sb_location_notes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/place_notes"
+        android:hint="@string/location_notes"
         android:layout_below="@+id/sb_location_desc"/>
 
     <LinearLayout
@@ -70,6 +70,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?android:attr/borderlessButtonStyle"
-            android:text="@string/place_add" />
+            android:text="@string/location_add" />
     </LinearLayout>
 </RelativeLayout>

@@ -16,36 +16,34 @@ import tahastudio.storybuilder.tasks.ShowElementsTask;
 import tahastudio.storybuilder.tasks.UpdateElementsTask;
 
 /**
- * Fragment to show saved place info from db
+ * Fragment to show saved location info from db
  * Calls: ShowElementsTask
  * Overrides: ShowElementsTask.onPostExecute()
  */
-public class ShowPlace extends Fragment {
+public class ShowLocation extends Fragment {
 
-    public ShowPlace() {
-    }
+    public ShowLocation() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        View add_place_layout =
+        View add_location_layout =
                 inflater.inflate(R.layout.activity_add_location, container, false);
 
-        // TODO -> Update fields on button click
         // Find the elements
-        final EditText place_name =
-                (EditText) add_place_layout.findViewById(R.id.sb_place_name);
-        final EditText place_location =
-                (EditText) add_place_layout.findViewById(R.id.sb_place_location);
-        final EditText place_desc =
-                (EditText) add_place_layout.findViewById(R.id.sb_place_desc);
-        final EditText place_notes =
-                (EditText) add_place_layout.findViewById(R.id.sb_place_notes);
-        Button place_add =
-                (Button) add_place_layout.findViewById(R.id.add_the_place);
+        final EditText location_name =
+                (EditText) add_location_layout.findViewById(R.id.sb_location_name);
+        final EditText location_location =
+                (EditText) add_location_layout.findViewById(R.id.sb_location_location);
+        final EditText location_desc =
+                (EditText) add_location_layout.findViewById(R.id.sb_location_desc);
+        final EditText location_notes =
+                (EditText) add_location_layout.findViewById(R.id.sb_location_notes);
+        Button location_add =
+                (Button) add_location_layout.findViewById(R.id.add_the_location);
         Button cancel =
-                (Button) add_place_layout.findViewById(R.id.place_cancel);
+                (Button) add_location_layout.findViewById(R.id.location_cancel);
 
         // Grab the bundle info from ShowStory
         Bundle bundle = this.getArguments();
@@ -60,27 +58,27 @@ public class ShowPlace extends Fragment {
                 if ( result != null ) {
                     result.moveToFirst();
 
-                    place_name.setText(result.getString(
+                    location_name.setText(result.getString(
                             result.getColumnIndex(Constants.STORY_LOCATION_NAME)));
-                    place_location.setText(result.getString(
+                    location_location.setText(result.getString(
                             result.getColumnIndex(Constants.STORY_LOCATION_LOCATION)));
-                    place_desc.setText(result.getString(
+                    location_desc.setText(result.getString(
                             result.getColumnIndex(Constants.STORY_LOCATION_DESC)));
-                    place_notes.setText(result.getString(
+                    location_notes.setText(result.getString(
                             result.getColumnIndex(Constants.STORY_LOCATION_NOTES)));
                 }
             }
         }.execute();
 
         // On button click, update the db row
-        place_add.setOnClickListener(new View.OnClickListener() {
+        location_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ContentValues values = new ContentValues();
-                values.put(Constants.STORY_LOCATION_NAME, place_name.getText().toString());
-                values.put(Constants.STORY_LOCATION_LOCATION, place_location.getText().toString());
-                values.put(Constants.STORY_LOCATION_DESC, place_desc.getText().toString());
-                values.put(Constants.STORY_LOCATION_NOTES, place_notes.getText().toString());
+                values.put(Constants.STORY_LOCATION_NAME, location_name.getText().toString());
+                values.put(Constants.STORY_LOCATION_LOCATION, location_location.getText().toString());
+                values.put(Constants.STORY_LOCATION_DESC, location_desc.getText().toString());
+                values.put(Constants.STORY_LOCATION_NOTES, location_notes.getText().toString());
 
                 UpdateElementsTask updateElementsTask = new UpdateElementsTask
                         (getContext(), values, Constants.LOCATIONS_TABLE);
@@ -99,6 +97,6 @@ public class ShowPlace extends Fragment {
             }
         });
 
-        return add_place_layout;
+        return add_location_layout;
     }
 }

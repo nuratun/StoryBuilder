@@ -20,18 +20,18 @@ import tahastudio.storybuilder.fragments.AddEvents;
 import tahastudio.storybuilder.fragments.AddLocationElements;
 import tahastudio.storybuilder.fragments.AddLocations;
 import tahastudio.storybuilder.fragments.ShowCharacter;
-import tahastudio.storybuilder.fragments.ShowPlace;
+import tahastudio.storybuilder.fragments.ShowLocation;
 import tahastudio.storybuilder.fragments.ShowEvent;
 import tahastudio.storybuilder.ui.TabViewer;
 
 /**
- * This class will show a list of saved characters, places, and events,
+ * This class will show a list of saved characters, locations, and events,
  * as well as the FAB menu to add elements to the story.
- * Implements: characterListener, placeListener, eventListener
+ * Implements: characterListener, locationListener, eventListener
  */
 public class ShowStory extends AppCompatActivity implements
         AddCharacters.characterListener,
-        AddLocations.placeListener,
+        AddLocations.locationListener,
         AddEvents.eventListener {
 
     // To programmatically add in the fragments
@@ -81,20 +81,20 @@ public class ShowStory extends AppCompatActivity implements
             }
         });
 
-        // Find the inner menu for adding a place
-        com.getbase.floatingactionbutton.FloatingActionButton place_fab =
+        // Find the inner menu for adding a location
+        com.getbase.floatingactionbutton.FloatingActionButton location_fab =
                 (com.getbase.floatingactionbutton.FloatingActionButton)
-                        findViewById(R.id.places);
-        place_fab.setTitle("Add A Place/Location");
+                        findViewById(R.id.locations);
+        location_fab.setTitle("Add A Location");
 
-        place_fab.setOnClickListener(new View.OnClickListener() {
+        location_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // Collapse the menu fab on click
                 fab.collapse();
 
                 // Call re-factored method for fragment transaction
-                onFragmentSelected(new AddLocationElements(), "add_the_place");
+                onFragmentSelected(new AddLocationElements(), "add_the_location");
             }
         });
 
@@ -121,7 +121,7 @@ public class ShowStory extends AppCompatActivity implements
         // Add the number tabs, set the title for each one. Content
         // will be provided by the TabViewer method
         tab_layout.addTab(tab_layout.newTab().setText("Characters"));
-        tab_layout.addTab(tab_layout.newTab().setText("Places"));
+        tab_layout.addTab(tab_layout.newTab().setText("Locations"));
         tab_layout.addTab(tab_layout.newTab().setText("Events"));
         tab_layout.setTabGravity(tab_layout.GRAVITY_FILL);
 
@@ -168,17 +168,17 @@ public class ShowStory extends AppCompatActivity implements
     }
 
     // Implement the AddLocations interface method for a ListView click
-    public void onPlaceSelected(String name) {
-        // Bundle info and send user to the new fragment, ShowPlace
+    public void onLocationSelected(String name) {
+        // Bundle info and send user to the new fragment, ShowLocation
         Bundle bundle = new Bundle();
         bundle.putString("name", name);
 
         // Set up the fragment with the bundle
-        ShowPlace showPlace = new ShowPlace();
-        showPlace.setArguments(bundle);
+        ShowLocation showLocation = new ShowLocation();
+        showLocation.setArguments(bundle);
 
         // Call re-factored method for fragment transaction
-        onFragmentSelected(showPlace, "show_place");
+        onFragmentSelected(showLocation, "show_location");
     }
 
     // Implement the AddEvents interface method for a ListView click

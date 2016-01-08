@@ -28,7 +28,7 @@
         android:id="@+id/sb_event_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/main_event_checkbox"
+        android:layout_below="@id/activity_add_event_top"
         android:hint="@string/event_title" />
 
     <EditText

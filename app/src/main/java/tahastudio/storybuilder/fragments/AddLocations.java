@@ -22,52 +22,52 @@ import tahastudio.storybuilder.db.SQLDatabase;
  */
 public class AddLocations extends Fragment {
     // Make the AsyncTask global to stop it on onPause
-    private setPlaceList placeList;
+    private setLocationList locationList;
 
-    private View add_place_layout;
-    private ListView add_places_listview;
+    private View add_location_layout;
+    private ListView add_locations_listview;
 
     // For interface method
-    placeListener placeCallback;
+    locationListener locationCallback;
 
     public AddLocations() { }
 
     // Interface to send ListView click back to ShowStory
-    public interface placeListener {
-        void onPlaceSelected(String name);
+    public interface locationListener {
+        void onLocationSelected(String name);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        add_place_layout = inflater.inflate(
+        add_location_layout = inflater.inflate(
                 R.layout.fragment_add_locations,
                 container,
                 false);
 
         // Call the AsyncTask to populate the ListView
-        placeList = new setPlaceList();
-        placeList.execute();
+        locationList = new setLocationList();
+        locationList.execute();
 
         // TODO -> The below code is initialized twice. Need to refactor
-        add_places_listview =
-                (ListView) add_place_layout.findViewById(R.id.places_listview);
-        // Clicking on a place row will bring up a new fragment with info
+        add_locations_listview =
+                (ListView) add_location_layout.findViewById(R.id.locations_listview);
+        // Clicking on a location row will bring up a new fragment with info
         // TODO --> Long click brings up the delete option
-        add_places_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        add_locations_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Return a cursor with the row data
-                Cursor cursor = (Cursor) add_places_listview.getItemAtPosition(position);
+                Cursor cursor = (Cursor) add_locations_listview.getItemAtPosition(position);
 
                 // Grab the first field from the row and cast it to a string
                 // Send to the interface. Implemented in ShowStory
-                placeCallback.onPlaceSelected
+                locationCallback.onLocationSelected
                         (cursor.getString(cursor.getColumnIndex(Constants.STORY_LOCATION_NAME)));
             }
         });
 
-        return add_place_layout;
+        return add_location_layout;
     }
 
     // Ensure ShowStory implements the interface
@@ -75,9 +75,9 @@ public class AddLocations extends Fragment {
         super.onAttach(context);
 
         try {
-            placeCallback = (placeListener) context;
+            locationCallback = (locationListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + "must implement placeListener");
+            throw new ClassCastException(context.toString() + "must implement locationListener");
         }
     }
 
@@ -86,8 +86,8 @@ public class AddLocations extends Fragment {
     public void onPause() {
         super.onPause();
 
-        if ( placeList != null && placeList.getStatus() == AsyncTask.Status.RUNNING ) {
-            placeList.cancel(true);
+        if ( locationList != null && locationList.getStatus() == AsyncTask.Status.RUNNING ) {
+            locationList.cancel(true);
         }
     }
 
@@ -96,14 +96,14 @@ public class AddLocations extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if ( placeList.getStatus() == AsyncTask.Status.FINISHED ) {
-            placeList.execute();
+        if ( locationList.getStatus() == AsyncTask.Status.FINISHED ) {
+            locationList.execute();
         }
 
     }
 
-    // Populate the ListView with the places in this story. Otherwise, return null
-    private class setPlaceList extends AsyncTask<Void, Void, Cursor> {
+    // Populate the ListView with the locations in this story. Otherwise, return null
+    private class setLocationList extends AsyncTask<Void, Void, Cursor> {
         private Context context = getActivity().getApplicationContext();
         private SQLDatabase db;
 
@@ -155,9 +155,9 @@ public class AddLocations extends Fragment {
                         0);
 
                 // Initialize
-                add_places_listview = (ListView) add_place_layout
-                        .findViewById(R.id.places_listview);
-                add_places_listview.setAdapter(cursorAdapter);
+                add_locations_listview = (ListView) add_location_layout
+                        .findViewById(R.id.locations_listview);
+                add_locations_listview.setAdapter(cursorAdapter);
 
                 // Notify thread the data has changed
                 cursorAdapter.notifyDataSetChanged();

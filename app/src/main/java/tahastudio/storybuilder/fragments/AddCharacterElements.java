@@ -22,9 +22,7 @@ import tahastudio.storybuilder.db.SQLDatabase;
  */
 public class AddCharacterElements extends Fragment {
 
-    public AddCharacterElements() {
-
-    }
+    public AddCharacterElements() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,7 +50,6 @@ public class AddCharacterElements extends Fragment {
         add_the_character.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO -> Add a cancel button
                 // Make sure the name field != null
                 if ( name.length() < 1 ) {
                     Toast.makeText(getContext(), "The character's name "
@@ -73,6 +70,16 @@ public class AddCharacterElements extends Fragment {
                     charactersTask.execute();
                 }
                 // Return to AddCharacters class on button click, immediately
+                getFragmentManager().popBackStackImmediate();
+            }
+        });
+
+        Button cancel = (Button) character_elements_layout
+                .findViewById(R.id.character_cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Return to AddCharacters, immediately.
                 getFragmentManager().popBackStackImmediate();
             }
         });
