@@ -18,7 +18,7 @@ import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.db.SQLDatabase;
 
 /**
- * Fragment to replace ListView in AddCharacters. Is called by AddCharacters.
+ * Fragment to replace ListView in AddCharacters. Called by AddCharacters.
  */
 public class AddCharacterElements extends Fragment {
 
@@ -117,7 +117,6 @@ public class AddCharacterElements extends Fragment {
             this.birthplace = birthplace;
             this.personality = personality;
             this.notes = notes;
-
         }
 
         @Override

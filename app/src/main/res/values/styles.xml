@@ -54,9 +54,15 @@
         <item name="android:textAlignment">center</item>
     </style>
 
-    <style name="fab_labels_style" parent="StoryBuilderTheme">
+    <style name="Fab" parent="StoryBuilderTheme">
         <item name="android:background">@drawable/fab_label_background</item>
         <item name="android:textColor">@color/primary_text_light</item>
+    </style>
+
+    <style name="Fragment" parent="StoryBuilderTheme">
+        <item name="android:background">@color/cards</item>
+        <item name="android:textColor">@color/primary_text</item>
+        <item name="android:padding">10dp</item>
     </style>
 
 </resources>

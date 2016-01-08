@@ -74,4 +74,18 @@
     <!-- For all activities/fragments -->
     <string name="cancel">Cancel</string>
 
+    <!-- About page -->
+    <string name="sb_title">About StoryBuilder</string>
+    <string name="developer_header">Developed by</string>
+    <string name="developer">Taha Studio</string>
+    <string name="developer_email">tahastudio@gmail.com</string>
+
+    <string name="credit_header">Credits</string>
+    <string name="fab_credit">FAB menu by</string>
+    <string name="fab_author_name">Jerzy Chalupski</string>
+    <string name="fab_link">https://github.com/futuresimple/android-floating-action-button</string>
+
+    <string name="icons_credit">Icons designed by</string>
+    <string name="icons">Freepik (Flaticon)</string>
+    <string name="icons_link">www.freepik.com</string>
 </resources>
