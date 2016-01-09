@@ -43,8 +43,6 @@ public class ShowStory extends AppCompatActivity implements
     public static String CHARACTER_TYPE;
     public static String CHARACTER_GENDER;
 
-    // TODO -> Add credit to https://github.com/futuresimple/android-floating-action-button
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

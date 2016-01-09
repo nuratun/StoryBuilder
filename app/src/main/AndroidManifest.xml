@@ -35,6 +35,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tahastudio.storybuilder.StoryBuilderMain" />
         </activity>
+
+        <activity
+            android:name=".About"
+            android:label="@string/about_activity"
+            android:parentActivityName=".StoryBuilderMain">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tahastudio.storybuilder.StoryBuilderMain" />
+        </activity>
     </application>
 
 </manifest>
