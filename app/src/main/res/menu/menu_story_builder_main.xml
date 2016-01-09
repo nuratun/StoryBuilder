@@ -12,5 +12,6 @@
         android:title="Search"
         android:orderInCategory="200"
         android:icon="@drawable/ic_search"
-        app:showAsAction="always" />
+        android:actionViewClass="android.widget.SearchView"
+        app:showAsAction="collapseActionView|ifRoom" />
 </menu>

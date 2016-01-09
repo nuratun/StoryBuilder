@@ -25,6 +25,9 @@
                 <action android:name="android.intent.action.MAINACTIVITY" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
 
         <activity
@@ -34,6 +37,9 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tahastudio.storybuilder.StoryBuilderMain" />
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
 
         <activity

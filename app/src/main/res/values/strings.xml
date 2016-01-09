@@ -4,7 +4,8 @@
     <string name="about">About</string>
     <string name="about_activity">About StoryBuilder</string>
     <string name="empty">Nothing here yet.</string>
-    <string name="title_activity_create_story">Create a New Story</string>
+    <string name="title_activity_create_story">Story Creation</string>
+    <string name="search_hint">Search stories</string>
 
     <!-- SBDialog -->
     <string name="dialog_instructions">Create a story</string>
