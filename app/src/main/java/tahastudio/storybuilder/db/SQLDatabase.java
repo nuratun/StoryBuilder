@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
 
 import tahastudio.storybuilder.ShowStory;
 
@@ -75,7 +76,7 @@ public class SQLDatabase extends SQLiteOpenHelper {
     }
 
     // Need to dynamically add in the SB_ID to this query, as it will
-    // change depending on user selection
+    // change depending on user story selection
     // Location: AddCharacters, AddLocations, AddEvents
     public Cursor getRows(String query) {
         sbDatabase = this.getReadableDatabase();
@@ -87,5 +88,25 @@ public class SQLDatabase extends SQLiteOpenHelper {
     public Cursor getElementRow(String query, String name) {
         sbDatabase = this.getReadableDatabase();
         return sbDatabase.rawQuery(query + "'" + name + "';", null);
+    }
+
+    // For user search queries
+    public Cursor getSearchResults(String query, String[] columns) {
+        String matches = "Results...";
+        String[] selectionArgs = new String[] { query + "*" };
+
+        return query(matches, selectionArgs, columns);
+    }
+
+    private Cursor query(String matches, String[] selectionArgs, String[] columns) {
+        sbDatabase = this.getReadableDatabase();
+
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+        builder.setTables(Constants.STORY_TABLE);
+        builder.setTables(Constants.STORY_CHARACTER_TABLE);
+        builder.setTables(Constants.STORY_LOCATION_TABLE);
+        builder.setTables(Constants.STORY_EVENT_TABLE);
+
+
     }
 }
