@@ -7,6 +7,9 @@
     <string name="title_activity_create_story">Story Creation</string>
     <string name="search_hint">Search stories</string>
 
+    <!-- For the search layout -->
+    <string name="search_query_empty_view">Generating results...</string>
+
     <!-- SBDialog -->
     <string name="dialog_instructions">Create a story</string>
     <string name="dialog_title">Title</string>

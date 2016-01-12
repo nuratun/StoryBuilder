@@ -100,13 +100,25 @@ public class SQLDatabase extends SQLiteOpenHelper {
 
     private Cursor query(String matches, String[] selectionArgs, String[] columns) {
         sbDatabase = this.getReadableDatabase();
-
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+
+        // Tables to search
         builder.setTables(Constants.STORY_TABLE);
         builder.setTables(Constants.STORY_CHARACTER_TABLE);
         builder.setTables(Constants.STORY_LOCATION_TABLE);
         builder.setTables(Constants.STORY_EVENT_TABLE);
 
+        Cursor cursor = builder.query(sbDatabase, columns, matches, selectionArgs,
+                null, null, null);
 
+        if ( cursor == null ) {
+            return null;
+        }
+        else if ( !cursor.moveToFirst() ) {
+            cursor.close();
+            return null;
+        }
+
+        return cursor;
     }
 }
