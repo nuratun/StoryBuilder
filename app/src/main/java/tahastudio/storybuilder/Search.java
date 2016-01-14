@@ -65,7 +65,7 @@ public class Search extends AppCompatActivity {
 
         @Override
         protected Cursor doInBackground (String...params) {
-            return db.getSearchResults(params[0], null);
+            return db.getSearchResults(query, null);
         }
 
         @Override

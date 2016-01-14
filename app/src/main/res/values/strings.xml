@@ -8,7 +8,7 @@
     <string name="search_hint">Search stories</string>
 
     <!-- For the search layout -->
-    <string name="search_query_empty_view">Generating results...</string>
+    <string name="search_query_empty_view">Generating results&#8230;</string>
 
     <!-- SBDialog -->
     <string name="dialog_instructions">Create a story</string>

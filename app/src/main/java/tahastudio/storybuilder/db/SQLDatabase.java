@@ -91,14 +91,24 @@ public class SQLDatabase extends SQLiteOpenHelper {
     }
 
     // For user search queries
-    public Cursor getSearchResults(String query, String[] columns) {
-        String matches = "Results...";
-        String[] selectionArgs = new String[] { query + "*" };
+    public Cursor getSearchResults(String find, String[] columns) {
+        columns = new String[] {
+                Constants.STORY_CHARACTER_NAME,
+                Constants.STORY_CHARACTER_BIRTHPLACE,
+                Constants.STORY_CHARACTER_HISTORY,
+                Constants.STORY_CHARACTER_CONFLICTS,
+                Constants.STORY_CHARACTER_PERSONALITY,
+                Constants.STORY_CHARACTER_STORYLINE,
+                Constants.STORY_EVENT_LINER,
+                Constants.STORY_EVENT_DESC,
+                Constants.STORY_LOCATION_NAME,
+                Constants.STORY_LOCATION_EVENTS,
+                Constants.STORY_LOCATION_DESC };
 
-        return query(matches, selectionArgs, columns);
+        return query(find, columns);
     }
 
-    private Cursor query(String matches, String[] selectionArgs, String[] columns) {
+    private Cursor query(String find, String[] columns) {
         sbDatabase = this.getReadableDatabase();
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
 
@@ -108,8 +118,13 @@ public class SQLDatabase extends SQLiteOpenHelper {
         builder.setTables(Constants.STORY_LOCATION_TABLE);
         builder.setTables(Constants.STORY_EVENT_TABLE);
 
-        Cursor cursor = builder.query(sbDatabase, columns, matches, selectionArgs,
-                null, null, null);
+        Cursor cursor = builder.query(sbDatabase,
+                columns,
+                "find="+find,
+                new String[] { find },
+                Constants.DB_ID,
+                null,
+                Constants.DB_ID);
 
         if ( cursor == null ) {
             return null;

@@ -26,8 +26,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
+                android:name="android.app.default_searchable"
+                android:value=".Search" />
         </activity>
 
         <activity
@@ -38,8 +38,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tahastudio.storybuilder.StoryBuilderMain" />
             <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
+                android:name="android.app.default_searchable"
+                android:value=".Search" />
         </activity>
 
         <!-- Try to move into a fragment -->
@@ -56,6 +56,11 @@
             android:name=".Search"
             android:label="Search"
             android:parentActivityName=".StoryBuilderMain">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="tahastudio.storybuilder.StoryBuilderMain" />
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
             <intent-filter>
             <action android:name="android.intent.action.SEARCH" />
         </intent-filter>

@@ -1,13 +1,14 @@
 package tahastudio.storybuilder;
 
 import android.app.SearchManager;
+import android.app.SearchableInfo;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.widget.SearchView;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -87,14 +88,18 @@ public class StoryBuilderMain extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_story_builder_main, menu);
 
-        // Set up the search configuration
+        // Enable the search service
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        // Using the latest support libraries
+        android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView)
+                menu.findItem(R.id.action_search).getActionView();
 
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        SearchableInfo searchableInfo = searchManager.getSearchableInfo(new ComponentName
+                (this, Search.class)); // Send query as intent to the search activity
 
-
+        searchView.setSearchableInfo(searchableInfo);
+        searchView.setSubmitButtonEnabled(true);
 
         return true;
     }
@@ -108,6 +113,7 @@ public class StoryBuilderMain extends AppCompatActivity {
             startActivity(new Intent(this, About.class));
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
