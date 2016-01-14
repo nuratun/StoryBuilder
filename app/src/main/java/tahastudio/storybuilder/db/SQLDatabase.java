@@ -92,6 +92,9 @@ public class SQLDatabase extends SQLiteOpenHelper {
 
     // For user search queries
     public Cursor getSearchResults(String find, String[] columns) {
+        sbDatabase = this.getReadableDatabase();
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+
         columns = new String[] {
                 Constants.STORY_CHARACTER_NAME,
                 Constants.STORY_CHARACTER_BIRTHPLACE,
@@ -104,13 +107,6 @@ public class SQLDatabase extends SQLiteOpenHelper {
                 Constants.STORY_LOCATION_NAME,
                 Constants.STORY_LOCATION_EVENTS,
                 Constants.STORY_LOCATION_DESC };
-
-        return query(find, columns);
-    }
-
-    private Cursor query(String find, String[] columns) {
-        sbDatabase = this.getReadableDatabase();
-        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
 
         // Tables to search
         builder.setTables(Constants.STORY_TABLE);

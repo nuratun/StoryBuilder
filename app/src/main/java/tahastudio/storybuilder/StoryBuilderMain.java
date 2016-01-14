@@ -88,19 +88,6 @@ public class StoryBuilderMain extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_story_builder_main, menu);
 
-        // Enable the search service
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-
-        // Using the latest support libraries
-        android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView)
-                menu.findItem(R.id.action_search).getActionView();
-
-        SearchableInfo searchableInfo = searchManager.getSearchableInfo(new ComponentName
-                (this, Search.class)); // Send query as intent to the search activity
-
-        searchView.setSearchableInfo(searchableInfo);
-        searchView.setSubmitButtonEnabled(true);
-
         return true;
     }
 

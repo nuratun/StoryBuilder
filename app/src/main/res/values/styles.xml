@@ -65,4 +65,10 @@
         <item name="android:padding">10dp</item>
     </style>
 
+    <style name="Splash" parent="StoryBuilderTheme">
+        <item name="android:windowBackground">@drawable/splash</item>
+        <item name="android:background">@color/primary_dark</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
 </resources>
