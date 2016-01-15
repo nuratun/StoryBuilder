@@ -90,6 +90,13 @@ public class SQLDatabase extends SQLiteOpenHelper {
         return sbDatabase.rawQuery(query + "'" + name + "';", null);
     }
 
+    // Get the story genre to set the drawable
+    // Location: ShowStory
+    public Cursor getStoryGenre() {
+        sbDatabase = this.getReadableDatabase();
+        return sbDatabase.rawQuery(Constants.GET_STORY_GENRE + ShowStory.SB_ID + ";", null);
+    }
+
     // For user search queries
     public Cursor getSearchResults(String find, String[] columns) {
         sbDatabase = this.getReadableDatabase();

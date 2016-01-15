@@ -160,12 +160,12 @@ public class AddCharacters extends Fragment {
                         widgets,
                         0);
 
+                // Notify thread the data has changed
+                cursorAdapter.notifyDataSetChanged();
+
                 add_characters_listview =
                         (ListView) add_character_layout.findViewById(R.id.characters_listview);
                 add_characters_listview.setAdapter(cursorAdapter);
-
-                // Notify thread the data has changed
-                cursorAdapter.notifyDataSetChanged();
             }
         }
     }

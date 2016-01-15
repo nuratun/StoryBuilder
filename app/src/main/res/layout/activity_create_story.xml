@@ -9,36 +9,31 @@
     android:orientation="vertical"
     tools:context="tahastudio.storybuilder.ShowStory">
 
-    <LinearLayout
-        android:id="@+id/story_creation_textview"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:layout_below="@+id/tab_layout">
-
-        <TextView
-            android:id="@+id/story_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawablePadding="5dp" />
-    </LinearLayout>
-
     <android.support.design.widget.TabLayout
         android:id="@+id/tab_layout"
         android:theme="@style/Tabs"
         android:layout_height="wrap_content"
         android:layout_width="match_parent" />
 
+    <TextView
+        android:id="@+id/story_title"
+        android:theme="@style/TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="5dp"
+        android:layout_below="@id/tab_layout" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tab_layout" />
+        android:layout_below="@id/story_title" />
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/fab"
         fab:fab_labelStyle="@style/Fab"
+        fab:fab_addButtonColorNormal="@color/accent"
+        fab:fab_addButtonColorPressed="@color/primary"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="16dp"
@@ -49,6 +44,10 @@
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/characters"
             android:theme="@style/Fab"
+            android:src="@drawable/ic_character"
+            fab:fab_colorNormal="@color/primary"
+            fab:fab_colorNormalPressed="@color/primary_dark"
+            fab:fabSize="mini"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_title="@string/add_character"
@@ -57,6 +56,10 @@
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/locations"
             android:theme="@style/Fab"
+            android:src="@drawable/ic_location"
+            fab:fab_colorNormal="@color/primary"
+            fab:fab_colorNormalPressed="@color/primary_dark"
+            fab:fabSize="mini"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_title="@string/add_location"
@@ -65,6 +68,10 @@
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/events"
             android:theme="@style/Fab"
+            android:src="@drawable/ic_event"
+            fab:fab_colorNormal="@color/primary"
+            fab:fab_colorNormalPressed="@color/primary_dark"
+            fab:fabSize="mini"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             fab:fab_title="@string/add_event"

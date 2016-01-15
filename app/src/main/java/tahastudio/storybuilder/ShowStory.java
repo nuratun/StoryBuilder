@@ -1,6 +1,8 @@
 package tahastudio.storybuilder;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -13,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 
 import tahastudio.storybuilder.db.Constants;
+import tahastudio.storybuilder.db.SQLDatabase;
 import tahastudio.storybuilder.fragments.AddCharacterElements;
 import tahastudio.storybuilder.fragments.AddCharacters;
 import tahastudio.storybuilder.fragments.AddEventElements;
@@ -20,8 +23,8 @@ import tahastudio.storybuilder.fragments.AddEvents;
 import tahastudio.storybuilder.fragments.AddLocationElements;
 import tahastudio.storybuilder.fragments.AddLocations;
 import tahastudio.storybuilder.fragments.ShowCharacter;
-import tahastudio.storybuilder.fragments.ShowLocation;
 import tahastudio.storybuilder.fragments.ShowEvent;
+import tahastudio.storybuilder.fragments.ShowLocation;
 import tahastudio.storybuilder.ui.TabViewer;
 
 /**
@@ -48,15 +51,13 @@ public class ShowStory extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_story);
 
-        // TextView to be used for story title
-        TextView story_title = (TextView) findViewById(R.id.story_title);
-
-        Intent get_title = getIntent(); // Get the Intent from CreateStoryTask
-        String title = get_title.getStringExtra("title"); // Get the title from the intent
-        story_title.setText(title); // Set the above TextView as the title
-
         // Set the public static variable as the story _id from the db
         SB_ID = getIntent().getExtras().getInt("id");
+
+        Intent get_title = getIntent(); // Get the Intent from CreateStoryTask
+        // Grab the string and pass to the AsyncTask, setStoryTitle
+        setStoryTitle setStoryTitle = new setStoryTitle(get_title.getStringExtra("title"));
+        setStoryTitle.execute();
 
         // Find the FAB menu and add the actions
         final com.getbase.floatingactionbutton.FloatingActionsMenu fab =
@@ -140,14 +141,10 @@ public class ShowStory extends AppCompatActivity implements
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabUnselected(TabLayout.Tab tab) { }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) { }
         });
     }
 
@@ -244,6 +241,44 @@ public class ShowStory extends AppCompatActivity implements
                 break;
             default:
                 CHARACTER_GENDER = Constants.CHARACTER_GENDER_OTHER;
+        }
+    }
+
+    // This AsyncTask will set the TextView
+    public class setStoryTitle extends AsyncTask<String, Void, String> {
+        private TextView story_title = (TextView) findViewById(R.id.story_title);
+        private String title;
+
+        public setStoryTitle(String title) {
+            this.title = title;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            story_title.setText(title); // Set the story title on the top TextView
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            SQLDatabase db = new SQLDatabase(getBaseContext());
+            Cursor cursor = db.getStoryGenre(); // Grab the genre string from the db
+
+            if ( cursor.moveToFirst() ) { // If not null...
+                return cursor.getString(cursor.getColumnIndex
+                        (Constants.STORY_GENRE)); // ... return the string
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            int pic = getBaseContext().getResources().getIdentifier // Find the drawable
+                    (result.toLowerCase(), "drawable", getPackageName()); // by the return string
+
+            story_title.setCompoundDrawablesWithIntrinsicBounds(pic, 0, 0, 0);
         }
     }
 }

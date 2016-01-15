@@ -154,13 +154,13 @@ public class AddLocations extends Fragment {
                         widgets,
                         0);
 
+                // Notify thread the data has changed
+                cursorAdapter.notifyDataSetChanged();
+
                 // Initialize
                 add_locations_listview = (ListView) add_location_layout
                         .findViewById(R.id.locations_listview);
                 add_locations_listview.setAdapter(cursorAdapter);
-
-                // Notify thread the data has changed
-                cursorAdapter.notifyDataSetChanged();
             }
         }
     }

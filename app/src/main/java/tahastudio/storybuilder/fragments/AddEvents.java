@@ -149,13 +149,13 @@ public class AddEvents extends Fragment {
                         widgets,
                         0);
 
+                // Notify thread the data has changed
+                cursorAdapter.notifyDataSetChanged();
+
                 // Initialize
                 add_event_listview = (ListView) add_event_layout
                         .findViewById(R.id.event_listview);
                 add_event_listview.setAdapter(cursorAdapter);
-
-                // Notify thread the data has changed
-                cursorAdapter.notifyDataSetChanged();
             }
         }
     }

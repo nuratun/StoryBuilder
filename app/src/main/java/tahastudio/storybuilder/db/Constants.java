@@ -179,8 +179,8 @@ public class Constants {
     public static final String CHARACTER_GENDER_FEMALE = "female";
     public static final String CHARACTER_GENDER_OTHER = "other";
 
-    // Used in StoryBuilderMain
-    public static final String SB_STORY_TITLE = "Title";
-    public static final String SB_STORY_GENRE = "Genre";
+    public static final String GET_STORY_GENRE = "SELECT GENRE FROM "
+            + STORY_TABLE + " WHERE "
+            + DB_ID + " = ";
 
 }
