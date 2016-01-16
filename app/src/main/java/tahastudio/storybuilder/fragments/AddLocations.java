@@ -99,7 +99,6 @@ public class AddLocations extends Fragment {
         if ( locationList.getStatus() == AsyncTask.Status.FINISHED ) {
             locationList.execute();
         }
-
     }
 
     // Populate the ListView with the locations in this story. Otherwise, return null

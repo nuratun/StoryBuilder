@@ -109,11 +109,39 @@
         android:layout_below="@id/gender"/>
 
     <EditText
+        android:id="@+id/sb_character_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/character_history"
+        android:layout_below="@id/sb_character_birthplace" />
+
+    <EditText
+        android:id="@+id/sb_character_goals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/character_goals"
+        android:layout_below="@id/sb_character_history" />
+
+    <EditText
+        android:id="@+id/sb_character_conflicts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/character_conflicts"
+        android:layout_below="@id/sb_character_goals" />
+
+    <EditText
+        android:id="@+id/sb_character_epiphany"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/character_epiphany"
+        android:layout_below="@id/sb_character_conflicts" />
+
+    <EditText
         android:id="@+id/sb_character_personality"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/character_personality"
-        android:layout_below="@id/sb_character_birthplace"/>
+        android:layout_below="@id/sb_character_epiphany"/>
 
     <EditText
         android:id="@+id/sb_character_notes"
@@ -124,10 +152,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="end|bottom"
-        android:layout_below="@id/sb_character_notes">
+        android:gravity="bottom|end"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true">
 
         <Button
             android:id="@+id/character_cancel"
@@ -141,7 +170,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?android:attr/borderlessButtonStyle"
-            android:text="@string/character_add" />
+            android:text="@string/OK" />
     </LinearLayout>
 
 </RelativeLayout>

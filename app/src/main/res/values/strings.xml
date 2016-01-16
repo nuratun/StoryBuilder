@@ -57,27 +57,33 @@
     <string name="character_female">Female</string>
     <string name="character_other">Other</string>
     <string name="character_birth">Place of birth</string>
+    <string name="character_history">The history of this character, or the character\'s past</string>
+    <string name="character_goals">What is this character\'s goals?</string>
+    <string name="character_conflicts">Describe this character\'s conflicts</string>
+    <string name="character_epiphany">What epiphany changes this character?</string>
     <string name="character_personality">Personality</string>
     <string name="character_notes">Notes</string>
-    <string name="character_add">OK</string>
-    
+
     <!-- For the AddLocationElements -->
     <string name="location_instructions">Add A Location</string>
-    <string name="location_name">Name</string>
-    <string name="location_location">Location</string>
+    <string name="location_name">Name or title</string>
+    <string name="location_location">Located where (e.g. country, planet, locality)?</string>
     <string name="location_desc">Description</string>
+    <string name="location_importance">Importance of this location to the story</string>
+    <string name="location_events">What events take place in this location?</string>
     <string name="location_notes">Notes</string>
-    <string name="location_add">OK</string>
 
     <!-- For the AddEventElements -->
     <string name="event_instructions">Add A Event</string>
     <string name="event_title">Title (e.g. Sara finds a lost city)</string>
-    <string name="event_desc">Describe the event</string>
+    <string name="event_desc">Describe what takes place during this event or act</string>
+    <string name="event_characters">What characters make an appearance here?</string>
+    <string name="event_summary">Summary of this story event/act</string>
     <string name="event_notes">Notes</string>
-    <string name="event_add">OK</string>
 
     <!-- For all activities/fragments -->
     <string name="cancel">Cancel</string>
+    <string name="OK">Save</string>
 
     <!-- About page -->
     <string name="sb_title">About StoryBuilder</string>

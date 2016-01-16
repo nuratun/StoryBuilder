@@ -94,7 +94,7 @@ public class AddEvents extends Fragment {
     public void onResume() {
         super.onResume();
 
-        if ( eventList == null && eventList.getStatus() == AsyncTask.Status.FINISHED ) {
+        if ( eventList.getStatus() == AsyncTask.Status.FINISHED ) {
             eventList.execute();
         }
     }

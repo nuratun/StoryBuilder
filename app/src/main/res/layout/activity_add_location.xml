@@ -47,18 +47,33 @@
         android:layout_below="@+id/sb_location_location"/>
 
     <EditText
+        android:id="@+id/sb_location_importance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/location_importance"
+        android:layout_below="@+id/sb_location_desc"/>
+
+    <EditText
+        android:id="@+id/sb_location_events"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/location_events"
+        android:layout_below="@+id/sb_location_importance"/>
+
+    <EditText
         android:id="@+id/sb_location_notes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/location_notes"
-        android:layout_below="@+id/sb_location_desc"/>
+        android:layout_below="@+id/sb_location_events"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="end|bottom"
-        android:layout_below="@id/sb_location_notes">
+        android:background="@color/white"
+        android:layout_alignParentBottom="true">
 
         <Button
             android:id="@+id/location_cancel"
@@ -72,6 +87,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="?android:attr/borderlessButtonStyle"
-            android:text="@string/location_add" />
+            android:text="@string/OK" />
     </LinearLayout>
 </RelativeLayout>
