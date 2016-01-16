@@ -76,9 +76,9 @@ public class SBDialog extends DialogFragment {
                     // CreateStoryTask will pass values needed back to ShowStory
                             CreateStoryTask task = new CreateStoryTask(
                             getContext(),
-                            the_story_title.getText().toString(), // Pass as string
+                            the_story_title.getText().toString().replace("'","\'"), // Pass string
                             sb_story_genre, // Already a string
-                            the_story_notes.getText().toString()); // Pass as string
+                            the_story_notes.getText().toString().replace("'","\'")); // Pass string
                     task.execute();
                 }
             }

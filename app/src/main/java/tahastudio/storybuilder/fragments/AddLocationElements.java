@@ -24,9 +24,7 @@ public class AddLocationElements extends Fragment {
 
     // TODO -> Combine all *Element classes into one, with variable
 
-    public AddLocationElements() {
-
-    }
+    public AddLocationElements() { }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,6 +42,11 @@ public class AddLocationElements extends Fragment {
                 .findViewById(R.id.sb_location_location);
         final EditText location_description = (EditText) location_elements_layout
                 .findViewById(R.id.sb_location_desc);
+        final EditText location_importance = (EditText) location_elements_layout
+                .findViewById(R.id.sb_location_importance);
+        final EditText location_events = (EditText) location_elements_layout
+                .findViewById(R.id.sb_location_events);
+
         final EditText location_notes = (EditText) location_elements_layout
                 .findViewById(R.id.sb_location_notes);
         Button add_location = (Button) location_elements_layout
@@ -59,16 +62,16 @@ public class AddLocationElements extends Fragment {
                     Toast.makeText(getContext(), "Name is a required "
                             + "field", Toast.LENGTH_LONG).show();
                 }
-
                 else {
-
                     // Send converted string to background thread
                     addLocationsTask locationsTask = new addLocationsTask(
                             getContext(),
-                            location_name.getText().toString(),
-                            location_location.getText().toString(),
-                            location_description.getText().toString(),
-                            location_notes.getText().toString());
+                            location_name.getText().toString().replace("'","\'"),
+                            location_location.getText().toString().replace("'","\'"),
+                            location_description.getText().toString().replace("'","\'"),
+                            location_importance.getText().toString().replace("'","\'"),
+                            location_events.getText().toString().replace("'","\'"),
+                            location_notes.getText().toString().replace("'","\'"));
                     locationsTask.execute();
                 }
                 // Return to AddLocations on button click, immediately
@@ -95,18 +98,24 @@ public class AddLocationElements extends Fragment {
         String name;
         String location;
         String description;
+        String importance;
+        String events;
         String notes;
 
         // Constructor
         public addLocationsTask(Context context,
-                             String name,
-                             String location,
-                             String description,
-                             String notes) {
+                                String name,
+                                String location,
+                                String description,
+                                String importance,
+                                String events,
+                                String notes) {
             this.context = context;
             this.name = name;
             this.location = location;
             this.description = description;
+            this.importance = importance;
+            this.events = events;
             this.notes = notes;
         }
 
@@ -129,6 +138,8 @@ public class AddLocationElements extends Fragment {
                 values.put(Constants.STORY_LOCATION_NAME, name);
                 values.put(Constants.STORY_LOCATION_LOCATION, location);
                 values.put(Constants.STORY_LOCATION_DESC, description);
+                values.put(Constants.STORY_LOCATION_IMPORTANCE, importance);
+                values.put(Constants.STORY_LOCATION_EVENTS, events);
                 values.put(Constants.STORY_LOCATION_NOTES, notes);
 
                 // Insert the rows

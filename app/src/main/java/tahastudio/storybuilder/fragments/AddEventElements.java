@@ -38,6 +38,10 @@ public class AddEventElements extends Fragment {
                 .findViewById(R.id.sb_event_name);
         final EditText event = (EditText) event_elements_layout
                 .findViewById(R.id.sb_event);
+        final EditText characters = (EditText) event_elements_layout
+                .findViewById(R.id.sb_event_characters);
+        final EditText summary = (EditText) event_elements_layout
+                .findViewById(R.id.sb_event_summary);
         final EditText notes = (EditText) event_elements_layout
                 .findViewById(R.id.sb_event_notes);
         Button add_the_event = (Button) event_elements_layout
@@ -56,9 +60,11 @@ public class AddEventElements extends Fragment {
                     // Send converted strings to background thread
                     addEventTask eventTask = new addEventTask(
                             getContext(),
-                            event_title.getText().toString(),
-                            event.getText().toString(),
-                            notes.getText().toString());
+                            event_title.getText().toString().replace("'","\'"),
+                            event.getText().toString().replace("'","\'"),
+                            characters.getText().toString().replace("'","\'"),
+                            summary.getText().toString().replace("'","\'"),
+                            notes.getText().toString().replace("'","\'"));
                     eventTask.execute();
                 }
                 // Return to AddEvents on button click, immediately
@@ -84,16 +90,22 @@ public class AddEventElements extends Fragment {
         private SQLDatabase db;
         String event_title;
         String event;
+        String characters;
+        String summary;
         String notes;
 
         // Constructor
         public addEventTask(Context context,
-                               String event_title,
-                               String event,
-                               String notes) {
+                            String event_title,
+                            String event,
+                            String characters,
+                            String summary,
+                            String notes) {
             this.context = context;
             this.event_title = event_title;
             this.event = event;
+            this.characters = characters;
+            this.summary = summary;
             this.notes = notes;
         }
 
@@ -115,6 +127,8 @@ public class AddEventElements extends Fragment {
                 values.put(Constants.DB_ID, ShowStory.SB_ID);
                 values.put(Constants.STORY_EVENT_LINER, event_title);
                 values.put(Constants.STORY_EVENT_DESC, event);
+                values.put(Constants.STORY_EVENT_CHARACTERS, characters);
+                values.put(Constants.STORY_EVENT_SUMMARY, summary);
                 values.put(Constants.STORY_EVENT_NOTES, notes);
 
                 // Insert the rows

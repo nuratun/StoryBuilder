@@ -40,6 +40,14 @@ public class AddCharacterElements extends Fragment {
                 .findViewById(R.id.sb_character_age);
         final EditText birthplace = (EditText) character_elements_layout
                 .findViewById(R.id.sb_character_birthplace);
+        final EditText history = (EditText) character_elements_layout
+                .findViewById(R.id.sb_character_history);
+        final EditText goals = (EditText) character_elements_layout
+                .findViewById(R.id.sb_character_goals);
+        final EditText conflicts = (EditText) character_elements_layout
+                .findViewById(R.id.sb_character_conflicts);
+        final EditText epiphany = (EditText) character_elements_layout
+                .findViewById(R.id.sb_character_epiphany);
         final EditText personality = (EditText) character_elements_layout
                 .findViewById(R.id.sb_character_personality);
         final EditText character_notes = (EditText) character_elements_layout
@@ -60,13 +68,17 @@ public class AddCharacterElements extends Fragment {
                     addCharactersTask charactersTask =
                             new addCharactersTask(
                                     getContext(),
-                                    name.getText().toString(),
-                                    age.getText().toString(),
+                                    name.getText().toString().replace("'","\'"), // Escape all
+                                    age.getText().toString().replace("'", "\'"), // apostrophe's
                                     ShowStory.CHARACTER_TYPE, // Methods for these public strings
                                     ShowStory.CHARACTER_GENDER, // are in the ShowStory class
-                                    birthplace.getText().toString(),
-                                    personality.getText().toString(),
-                                    character_notes.getText().toString());
+                                    birthplace.getText().toString().replace("'","\'"),
+                                    history.getText().toString().replace("'","\'"),
+                                    goals.getText().toString().replace("'","\'"),
+                                    conflicts.getText().toString().replace("'","\'"),
+                                    epiphany.getText().toString().replace("'","\'"),
+                                    personality.getText().toString().replace("'","\'"),
+                                    character_notes.getText().toString().replace("'","\'"));
                     charactersTask.execute();
                 }
                 // Return to AddCharacters class on button click, immediately
@@ -97,6 +109,10 @@ public class AddCharacterElements extends Fragment {
         private String type;
         private String gender;
         private String birthplace;
+        private String history;
+        private String goals;
+        private String conflicts;
+        private String epiphany;
         private String personality;
         private String notes;
 
@@ -107,6 +123,10 @@ public class AddCharacterElements extends Fragment {
                                  String type,
                                  String gender,
                                  String birthplace,
+                                 String history,
+                                 String goals,
+                                 String conflicts,
+                                 String epiphany,
                                  String personality,
                                  String notes) {
             this.context = context;
@@ -115,6 +135,10 @@ public class AddCharacterElements extends Fragment {
             this.type = type;
             this.gender = gender;
             this.birthplace = birthplace;
+            this.history = history;
+            this.goals = goals;
+            this.conflicts = conflicts;
+            this.epiphany = epiphany;
             this.personality = personality;
             this.notes = notes;
         }
@@ -140,6 +164,10 @@ public class AddCharacterElements extends Fragment {
                 values.put(Constants.STORY_CHARACTER_TYPE, type);
                 values.put(Constants.STORY_CHARACTER_GENDER, gender);
                 values.put(Constants.STORY_CHARACTER_BIRTHPLACE, birthplace);
+                values.put(Constants.STORY_CHARACTER_HISTORY, history);
+                values.put(Constants.STORY_CHARACTER_GOALS, goals);
+                values.put(Constants.STORY_CHARACTER_CONFLICTS, conflicts);
+                values.put(Constants.STORY_CHARACTER_EPIPHANY, epiphany);
                 values.put(Constants.STORY_CHARACTER_PERSONALITY, personality);
                 values.put(Constants.STORY_CHARACTER_NOTES, notes);
 
