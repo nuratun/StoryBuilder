@@ -68,17 +68,17 @@ public class AddCharacterElements extends Fragment {
                     addCharactersTask charactersTask =
                             new addCharactersTask(
                                     getContext(),
-                                    name.getText().toString().replace("'","\'"), // Escape all
-                                    age.getText().toString().replace("'", "\'"), // apostrophe's
+                                    name.getText().toString(),
+                                    age.getText().toString(),
                                     ShowStory.CHARACTER_TYPE, // Methods for these public strings
                                     ShowStory.CHARACTER_GENDER, // are in the ShowStory class
-                                    birthplace.getText().toString().replace("'","\'"),
-                                    history.getText().toString().replace("'","\'"),
-                                    goals.getText().toString().replace("'","\'"),
-                                    conflicts.getText().toString().replace("'","\'"),
-                                    epiphany.getText().toString().replace("'","\'"),
-                                    personality.getText().toString().replace("'","\'"),
-                                    character_notes.getText().toString().replace("'","\'"));
+                                    birthplace.getText().toString(),
+                                    history.getText().toString(),
+                                    goals.getText().toString(),
+                                    conflicts.getText().toString(),
+                                    epiphany.getText().toString(),
+                                    personality.getText().toString(),
+                                    character_notes.getText().toString());
                     charactersTask.execute();
                 }
                 // Return to AddCharacters class on button click, immediately

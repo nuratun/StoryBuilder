@@ -65,8 +65,7 @@ public class SQLDatabase extends SQLiteOpenHelper {
     // Location: showStoryTask
     public Integer findStoryID(String result) {
         sbDatabase = this.getReadableDatabase();
-        Cursor cursor =  sbDatabase.rawQuery(Constants.FIND_STORY_ID + "'"
-                + result + "';" , null);
+        Cursor cursor =  sbDatabase.rawQuery(Constants.FIND_STORY_ID, new String[] { result });
 
         cursor.moveToFirst(); // Move to the first position
         int the_id = cursor.getInt(0);

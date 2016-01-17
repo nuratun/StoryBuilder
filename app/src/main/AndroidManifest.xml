@@ -29,6 +29,7 @@
         <activity
             android:name=".ShowStory"
             android:label="@string/title_activity_create_story"
+            android:windowSoftInputMode="adjustResize"
             android:parentActivityName=".StoryBuilderMain">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

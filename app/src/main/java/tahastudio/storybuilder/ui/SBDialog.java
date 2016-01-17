@@ -69,16 +69,16 @@ public class SBDialog extends DialogFragment {
             public void onClick(DialogInterface dialog, int id) {
                 // Make sure both title and genre != null
                 if (the_story_title.length() < 1 || sb_story_genre.length() < 1) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Both the title"
+                    Toast.makeText(getActivity().getApplicationContext(), "Both title"
                             + " and genre are required fields", Toast.LENGTH_LONG).show();
                 } else {
                     // Execute CreateStoryTask to add entry into database
                     // CreateStoryTask will pass values needed back to ShowStory
                             CreateStoryTask task = new CreateStoryTask(
                             getContext(),
-                            the_story_title.getText().toString().replace("'","\'"), // Pass string
+                            the_story_title.getText().toString(),
                             sb_story_genre, // Already a string
-                            the_story_notes.getText().toString().replace("'","\'")); // Pass string
+                            the_story_notes.getText().toString());
                     task.execute();
                 }
             }

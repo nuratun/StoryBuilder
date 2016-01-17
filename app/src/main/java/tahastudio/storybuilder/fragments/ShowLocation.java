@@ -31,6 +31,10 @@ public class ShowLocation extends Fragment {
         View add_location_layout =
                 inflater.inflate(R.layout.activity_add_location, container, false);
 
+        // Grab the bundle info from ShowStory
+        Bundle bundle = this.getArguments();
+        String name = bundle.getString("name");
+
         // Find the elements
         final EditText location_name =
                 (EditText) add_location_layout.findViewById(R.id.sb_location_name);
@@ -38,16 +42,12 @@ public class ShowLocation extends Fragment {
                 (EditText) add_location_layout.findViewById(R.id.sb_location_location);
         final EditText location_desc =
                 (EditText) add_location_layout.findViewById(R.id.sb_location_desc);
+        final EditText location_importance =
+                (EditText) add_location_layout.findViewById(R.id.sb_location_importance);
+        final EditText location_events =
+                (EditText) add_location_layout.findViewById(R.id.sb_location_events);
         final EditText location_notes =
                 (EditText) add_location_layout.findViewById(R.id.sb_location_notes);
-        Button location_add =
-                (Button) add_location_layout.findViewById(R.id.add_the_location);
-        Button cancel =
-                (Button) add_location_layout.findViewById(R.id.location_cancel);
-
-        // Grab the bundle info from ShowStory
-        Bundle bundle = this.getArguments();
-        String name = bundle.getString("name");
 
         // The following AsyncTask is contained in its own class.
         // Therefore, to receive the return value, override onPostExecute
@@ -55,8 +55,7 @@ public class ShowLocation extends Fragment {
         new ShowElementsTask(getContext(), Constants.LOCATIONS_TABLE, name) {
             @Override
             public void onPostExecute(Cursor result) {
-                if ( result != null ) {
-                    result.moveToFirst();
+                if ( result.moveToFirst() ) {
 
                     location_name.setText(result.getString(
                             result.getColumnIndex(Constants.STORY_LOCATION_NAME)));
@@ -64,21 +63,34 @@ public class ShowLocation extends Fragment {
                             result.getColumnIndex(Constants.STORY_LOCATION_LOCATION)));
                     location_desc.setText(result.getString(
                             result.getColumnIndex(Constants.STORY_LOCATION_DESC)));
+                    location_importance.setText(result.getString(
+                            result.getColumnIndex(Constants.STORY_LOCATION_IMPORTANCE)));
+                    location_events.setText(result.getString(
+                            result.getColumnIndex(Constants.STORY_LOCATION_EVENTS)));
                     location_notes.setText(result.getString(
                             result.getColumnIndex(Constants.STORY_LOCATION_NOTES)));
                 }
             }
         }.execute();
 
-        // On button click, update the db row
+        // On the save button click, update the db row
+        Button location_add =  (Button) add_location_layout.findViewById(R.id.add_the_location);
         location_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ContentValues values = new ContentValues();
-                values.put(Constants.STORY_LOCATION_NAME, location_name.getText().toString());
-                values.put(Constants.STORY_LOCATION_LOCATION, location_location.getText().toString());
-                values.put(Constants.STORY_LOCATION_DESC, location_desc.getText().toString());
-                values.put(Constants.STORY_LOCATION_NOTES, location_notes.getText().toString());
+                values.put(Constants.STORY_LOCATION_NAME,
+                        location_name.getText().toString());
+                values.put(Constants.STORY_LOCATION_LOCATION,
+                        location_location.getText().toString());
+                values.put(Constants.STORY_LOCATION_DESC,
+                        location_desc.getText().toString());
+                values.put(Constants.STORY_LOCATION_IMPORTANCE,
+                        location_importance.getText().toString());
+                values.put(Constants.STORY_LOCATION_EVENTS,
+                        location_events.getText().toString());
+                values.put(Constants.STORY_LOCATION_NOTES,
+                        location_notes.getText().toString());
 
                 UpdateElementsTask updateElementsTask = new UpdateElementsTask
                         (getContext(), values, Constants.LOCATIONS_TABLE);
@@ -89,6 +101,7 @@ public class ShowLocation extends Fragment {
             }
         });
 
+        Button cancel = (Button) add_location_layout.findViewById(R.id.location_cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -66,12 +66,12 @@ public class AddLocationElements extends Fragment {
                     // Send converted string to background thread
                     addLocationsTask locationsTask = new addLocationsTask(
                             getContext(),
-                            location_name.getText().toString().replace("'","\'"),
-                            location_location.getText().toString().replace("'","\'"),
-                            location_description.getText().toString().replace("'","\'"),
-                            location_importance.getText().toString().replace("'","\'"),
-                            location_events.getText().toString().replace("'","\'"),
-                            location_notes.getText().toString().replace("'","\'"));
+                            location_name.getText().toString(),
+                            location_location.getText().toString(),
+                            location_description.getText().toString(),
+                            location_importance.getText().toString(),
+                            location_events.getText().toString(),
+                            location_notes.getText().toString());
                     locationsTask.execute();
                 }
                 // Return to AddLocations on button click, immediately

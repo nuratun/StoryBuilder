@@ -33,6 +33,10 @@ public class ShowCharacter extends Fragment {
         final View show_character_layout =
                 inflater.inflate(R.layout.activity_add_character, container, false);
 
+        // Grab the bundle info from ShowStory
+        Bundle bundle = this.getArguments();
+        String name = bundle.getString("name");
+
         // Find the elements: text
         final EditText character_name =
                 (EditText) show_character_layout.findViewById(R.id.sb_character_name);
@@ -40,6 +44,14 @@ public class ShowCharacter extends Fragment {
                 (EditText) show_character_layout.findViewById(R.id.sb_character_age);
         final EditText character_birthplace =
                 (EditText) show_character_layout.findViewById(R.id.sb_character_birthplace);
+        final EditText character_history =
+                (EditText) show_character_layout.findViewById(R.id.sb_character_history);
+        final EditText character_goals =
+                (EditText) show_character_layout.findViewById(R.id.sb_character_goals);
+        final EditText character_conflicts =
+                (EditText) show_character_layout.findViewById(R.id.sb_character_conflicts);
+        final EditText character_epiphany =
+                (EditText) show_character_layout.findViewById(R.id.sb_character_epiphany);
         final EditText character_personality =
                 (EditText) show_character_layout.findViewById(R.id.sb_character_personality);
         final EditText character_notes =
@@ -57,18 +69,13 @@ public class ShowCharacter extends Fragment {
         final RadioButton gender_other =
                 (RadioButton) show_character_layout.findViewById(R.id.other_gender);
 
-        // Grab the bundle info from ShowStory
-        Bundle bundle = this.getArguments();
-        String name = bundle.getString("name");
-
         // The following AsyncTask is contained in its own class.
         // Therefore, to receive the return value, override onPostExecute
         // Name is string from bundle
         new ShowElementsTask(getContext(), Constants.CHARACTERS_TABLE, name) {
             @Override
             protected void onPostExecute(Cursor result) {
-                if ( result != null ) {
-                    result.moveToFirst();
+                if ( result.moveToFirst() ) {
 
                     // Check if user saved the character as the protagonist.
                     if ( result.getString(result.getColumnIndex
@@ -114,6 +121,14 @@ public class ShowCharacter extends Fragment {
                             result.getColumnIndex(Constants.STORY_CHARACTER_AGE)));
                     character_birthplace.setText(result.getString(
                             result.getColumnIndex(Constants.STORY_CHARACTER_BIRTHPLACE)));
+                    character_history.setText(result.getString(
+                            result.getColumnIndex(Constants.STORY_CHARACTER_HISTORY)));
+                    character_goals.setText(result.getString(
+                            result.getColumnIndex(Constants.STORY_CHARACTER_GOALS)));
+                    character_conflicts.setText(result.getString(
+                            result.getColumnIndex(Constants.STORY_CHARACTER_CONFLICTS)));
+                    character_epiphany.setText(result.getString(
+                            result.getColumnIndex(Constants.STORY_CHARACTER_EPIPHANY)));
                     character_personality.setText(result.getString(
                             result.getColumnIndex(Constants.STORY_CHARACTER_PERSONALITY)));
                     character_notes.setText(result.getString(
@@ -139,6 +154,14 @@ public class ShowCharacter extends Fragment {
                         ShowStory.CHARACTER_GENDER);
                 values.put(Constants.STORY_CHARACTER_BIRTHPLACE,
                         character_birthplace.getText().toString());
+                values.put(Constants.STORY_CHARACTER_HISTORY,
+                        character_history.getText().toString());
+                values.put(Constants.STORY_CHARACTER_GOALS,
+                        character_goals.getText().toString());
+                values.put(Constants.STORY_CHARACTER_CONFLICTS,
+                        character_conflicts.getText().toString());
+                values.put(Constants.STORY_CHARACTER_EPIPHANY,
+                        character_epiphany.getText().toString());
                 values.put(Constants.STORY_CHARACTER_PERSONALITY,
                         character_personality.getText().toString());
                 values.put(Constants.STORY_CHARACTER_NOTES,
@@ -154,8 +177,7 @@ public class ShowCharacter extends Fragment {
             }
         });
 
-        Button cancel_update =
-                (Button) show_character_layout.findViewById(R.id.character_cancel);
+        Button cancel_update = (Button) show_character_layout.findViewById(R.id.character_cancel);
         cancel_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

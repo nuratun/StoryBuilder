@@ -60,11 +60,11 @@ public class AddEventElements extends Fragment {
                     // Send converted strings to background thread
                     addEventTask eventTask = new addEventTask(
                             getContext(),
-                            event_title.getText().toString().replace("'","\'"),
-                            event.getText().toString().replace("'","\'"),
-                            characters.getText().toString().replace("'","\'"),
-                            summary.getText().toString().replace("'","\'"),
-                            notes.getText().toString().replace("'","\'"));
+                            event_title.getText().toString(),
+                            event.getText().toString(),
+                            characters.getText().toString(),
+                            summary.getText().toString(),
+                            notes.getText().toString());
                     eventTask.execute();
                 }
                 // Return to AddEvents on button click, immediately

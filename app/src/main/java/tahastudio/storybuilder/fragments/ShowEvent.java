@@ -31,21 +31,21 @@ public class ShowEvent extends Fragment {
         View show_event_layout =
                 inflater.inflate(R.layout.activity_add_event, container, false);
 
+        // Grab the bundle info from ShowStory
+        Bundle bundle = this.getArguments();
+        String name = bundle.getString("name");
+
         // Find the elements
         final EditText event_title =
                 (EditText) show_event_layout.findViewById(R.id.sb_event_name);
         final EditText event_desc =
                 (EditText) show_event_layout.findViewById(R.id.sb_event);
+        final EditText event_characters =
+                (EditText) show_event_layout.findViewById(R.id.sb_event_characters);
+        final EditText event_summary =
+                (EditText) show_event_layout.findViewById(R.id.sb_event_summary);
         final EditText event_notes =
                 (EditText) show_event_layout.findViewById(R.id.sb_event_notes);
-        Button add_event =
-                (Button) show_event_layout.findViewById(R.id.add_the_event);
-        Button cancel =
-                (Button) show_event_layout.findViewById(R.id.event_cancel);
-
-        // Grab the bundle info from ShowStory
-        Bundle bundle = this.getArguments();
-        String name = bundle.getString("name");
 
         // The following AsyncTask is contained in its own class.
         // Therefore, to receive the return value, override onPostExecute
@@ -53,28 +53,39 @@ public class ShowEvent extends Fragment {
         new ShowElementsTask(getContext(), Constants.EVENTS_TABLE, name) {
             @Override
             protected void onPostExecute(Cursor result) {
-                if ( result != null ) {
-                    result.moveToFirst();
+                if ( result.moveToFirst() ) {
 
                     event_title.setText(result.getString(
                             result.getColumnIndex(Constants.STORY_EVENT_LINER)));
                     event_desc.setText(result.getString(
                             result.getColumnIndex(Constants.STORY_EVENT_DESC)));
+                    event_characters.setText(result.getString(
+                            result.getColumnIndex(Constants.STORY_EVENT_CHARACTERS)));
+                    event_summary.setText(result.getString(
+                            result.getColumnIndex(Constants.STORY_EVENT_SUMMARY)));
                     event_notes.setText(result.getString(
                             result.getColumnIndex(Constants.STORY_EVENT_NOTES)));
                 }
             }
         }.execute();
 
-        // On button click, update the db row
+        // On the save button click, update the db row
+        Button add_event = (Button) show_event_layout.findViewById(R.id.add_the_event);
         add_event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ContentValues values = new ContentValues();
 
-                values.put(Constants.STORY_EVENT_LINER, event_title.getText().toString());
-                values.put(Constants.STORY_EVENT_DESC, event_desc.getText().toString());
-                values.put(Constants.STORY_EVENT_NOTES, event_notes.getText().toString());
+                values.put(Constants.STORY_EVENT_LINER,
+                        event_title.getText().toString());
+                values.put(Constants.STORY_EVENT_DESC,
+                        event_desc.getText().toString());
+                values.put(Constants.STORY_EVENT_CHARACTERS,
+                        event_characters.getText().toString());
+                values.put(Constants.STORY_EVENT_SUMMARY,
+                        event_summary.getText().toString());
+                values.put(Constants.STORY_EVENT_NOTES,
+                        event_notes.getText().toString());
 
                 UpdateElementsTask updateElementsTask = new UpdateElementsTask
                         (getContext(), values, Constants.STORY_EVENT_TABLE);
@@ -86,6 +97,7 @@ public class ShowEvent extends Fragment {
         });
 
         // Cancel button
+        Button cancel = (Button) show_event_layout.findViewById(R.id.event_cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
