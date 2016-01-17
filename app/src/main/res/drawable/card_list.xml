@@ -15,10 +15,10 @@
             <corners android:radius="4dp" />
             <solid android:color="@color/cards" />
             <padding
-                android:bottom="4dp"
+                android:bottom="5dp"
                 android:left="8dp"
                 android:right="8dp"
-                android:top="4dp" />
+                android:top="5dp" />
         </shape>
     </item>
 </layer-list>

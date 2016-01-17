@@ -7,7 +7,7 @@ package tahastudio.storybuilder.db;
 public class Constants {
 
     // Version number must change if database changes
-    public static final int DATABASE_VERSION = 22;
+    public static final int DATABASE_VERSION = 24;
     public static final String DATABASE_NAME = "sql.db";
 
     // Set up table schema for the story
@@ -34,7 +34,7 @@ public class Constants {
     public static final String STORY_CHARACTER_NOTES = "character_notes";
 
     // Set up table schema for events
-    public static final String STORY_EVENT_TABLE = "sb_event";
+    public static final String STORY_EVENT_TABLE = "sb_events";
     public static final String STORY_EVENT_LINER = "event_liner";
     public static final String STORY_EVENT_DESC = "event_desc";
     public static final String STORY_EVENT_CHARACTERS = "event_characters";
@@ -42,7 +42,7 @@ public class Constants {
     public static final String STORY_EVENT_NOTES = "event_notes";
 
     // Set up table schema for locations
-    public static final String STORY_LOCATION_TABLE = "sb_location";
+    public static final String STORY_LOCATION_TABLE = "sb_locations";
     public static final String STORY_LOCATION_NAME = "location_name";
     public static final String STORY_LOCATION_LOCATION = "location_location";
     public static final String STORY_LOCATION_DESC = "location_description";
@@ -153,22 +153,17 @@ public class Constants {
     // Used in UpdateElementTask to grab the row selected in AddCharacters
     public static final String GRAB_CHARACTER_ROW_DETAILS = "SELECT * FROM "
             + STORY_CHARACTER_TABLE + " WHERE "
-            + STORY_CHARACTER_NAME + " = ";
+            + STORY_CHARACTER_NAME + " = ?";
 
     // Used in UpdateElementTask to grab the row selected in AddLocations
-    public static final String GRAB_PLACE_ROW_DETAILS = "SELECT * FROM "
+    public static final String GRAB_LOCATION_ROW_DETAILS = "SELECT * FROM "
             + STORY_LOCATION_TABLE + " WHERE "
-            + STORY_LOCATION_NAME + " = ";
+            + STORY_LOCATION_NAME + " = ?";
 
     // Used in UpdateElementTask to grab the row selected in AddEvents
-    public static final String GRAB_PLOT_ROW_DETAILS = "SELECT * FROM "
+    public static final String GRAB_EVENT_ROW_DETAILS = "SELECT * FROM "
             + STORY_EVENT_TABLE + " WHERE "
-            + STORY_EVENT_DESC + " = ";
-
-    // Used in ShowCharacter, ShowLocation, ShowEvent, and ShowElementsTask
-    public static final String CHARACTERS_TABLE = "sb_characters";
-    public static final String LOCATIONS_TABLE = "sb_locations";
-    public static final String EVENTS_TABLE = "sb_events";
+            + STORY_EVENT_LINER + " = ?";
 
     // Used in ShowStory
     public static final String CHARACTER_TYPE_PROTAGONIST = "protagonist";

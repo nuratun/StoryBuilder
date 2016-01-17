@@ -24,27 +24,26 @@ public class AddEvents extends Fragment {
     // Make the AsyncTask global to stop it when paused
     private setEventList eventList;
 
+    // Make view components accessible across the class
     private View add_event_layout;
     private ListView add_event_listview;
 
+    // For interface method
     eventListener eventCallback;
+
+    public AddEvents() { }
 
     // Interface to send ListView click back to ShowStory
     public interface eventListener {
         void onEventSelected(String name);
     }
 
-    public AddEvents() { }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        add_event_layout = inflater.inflate(
-                R.layout.fragment_add_events,
-                container,
-                false);
+        add_event_layout = inflater.inflate(R.layout.fragment_add_events, container, false);
 
-        // AsyncTask to populate the ListView
+        // Run an AsyncTask to fill in the ListView from the db
         eventList = new setEventList();
         eventList.execute();
 
@@ -118,8 +117,7 @@ public class AddEvents extends Fragment {
                 // Return a cursor object that holds the rows
                 return db.getRows(Constants.GRAB_EVENT_DETALIS);
             } catch (Exception e) {
-                e.printStackTrace();
-            }
+                e.printStackTrace(); }
             return null;
         }
 
@@ -127,36 +125,31 @@ public class AddEvents extends Fragment {
         protected void onPostExecute(Cursor result) {
             super.onPostExecute(result);
 
-            // If this task hasn't been cancelled yet (see onPause)
-            if ( !isCancelled() ) {
+            // Get the columns
+            String[] columns = new String[]{
+                Constants.STORY_EVENT_LINER
+            };
 
-                // Get the columns
-                String[] columns = new String[]{
-                        Constants.STORY_EVENT_LINER
-                };
+            // Get the widget list
+            int[] widgets = new int[]{
+                R.id.name_info
+            };
 
-                // Get the widget list
-                int[] widgets = new int[]{
-                        R.id.name_info
-                };
+            // Set up the adapter
+            SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
+                    context,
+                    R.layout.tab_view,
+                    result,
+                    columns,
+                    widgets,
+                    0);
 
-                // Set up the adapter
-                SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
-                        context,
-                        R.layout.tab_view,
-                        result,
-                        columns,
-                        widgets,
-                        0);
+            // Notify thread the data has changed
+            cursorAdapter.notifyDataSetChanged();
 
-                // Notify thread the data has changed
-                cursorAdapter.notifyDataSetChanged();
-
-                // Initialize
-                add_event_listview = (ListView) add_event_layout
-                        .findViewById(R.id.event_listview);
-                add_event_listview.setAdapter(cursorAdapter);
-            }
+            // Initialize
+            add_event_listview = (ListView) add_event_layout.findViewById(R.id.event_listview);
+            add_event_listview.setAdapter(cursorAdapter);
         }
     }
 }

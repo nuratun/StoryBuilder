@@ -72,7 +72,7 @@ public class ShowCharacter extends Fragment {
         // The following AsyncTask is contained in its own class.
         // Therefore, to receive the return value, override onPostExecute
         // Name is string from bundle
-        new ShowElementsTask(getContext(), Constants.CHARACTERS_TABLE, name) {
+        new ShowElementsTask(getContext(), Constants.STORY_CHARACTER_TABLE, name) {
             @Override
             protected void onPostExecute(Cursor result) {
                 if ( result.moveToFirst() ) {
@@ -144,6 +144,7 @@ public class ShowCharacter extends Fragment {
             @Override
             public void onClick(View v) {
                 ContentValues values = new ContentValues();
+
                 values.put(Constants.STORY_CHARACTER_NAME,
                         character_name.getText().toString());
                 values.put(Constants.STORY_CHARACTER_AGE,

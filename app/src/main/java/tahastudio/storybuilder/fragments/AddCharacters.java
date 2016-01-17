@@ -127,8 +127,7 @@ public class AddCharacters extends Fragment {
                 return db.getRows(Constants.GRAB_CHARACTER_DETAILS);
             }
             catch (Exception e) {
-                e.printStackTrace();
-            }
+                e.printStackTrace(); }
             return null;
         }
 
@@ -136,37 +135,33 @@ public class AddCharacters extends Fragment {
         protected void onPostExecute(Cursor result) {
             super.onPostExecute(result);
 
-            // If this task hasn't been cancelled yet (see onPause)
-            if ( !isCancelled() ) {
+            // Get the column names
+            String[] columns = new String[] {
+                    Constants.STORY_CHARACTER_NAME,
+                    Constants.STORY_CHARACTER_AGE
+            };
 
-                // Get the column names
-                String[] columns = new String[] {
-                        Constants.STORY_CHARACTER_NAME,
-                        Constants.STORY_CHARACTER_AGE
-                };
+            // Get the TextView widgets
+            int[] widgets = new int[] {
+                    R.id.name_info,
+                    R.id.extra_info
+            };
 
-                // Get the TextView widgets
-                int[] widgets = new int[] {
-                        R.id.name_info,
-                        R.id.extra_info
-                };
+            // Set up the adapter
+            SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
+                    context,
+                    R.layout.tab_view,
+                    result,
+                    columns,
+                    widgets,
+                    0);
 
-                // Set up the adapter
-                SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
-                        context,
-                        R.layout.tab_view,
-                        result,
-                        columns,
-                        widgets,
-                        0);
+            // Notify thread the data has changed
+            cursorAdapter.notifyDataSetChanged();
 
-                // Notify thread the data has changed
-                cursorAdapter.notifyDataSetChanged();
-
-                add_characters_listview =
-                        (ListView) add_character_layout.findViewById(R.id.characters_listview);
-                add_characters_listview.setAdapter(cursorAdapter);
-            }
+            add_characters_listview =
+                    (ListView) add_character_layout.findViewById(R.id.characters_listview);
+            add_characters_listview.setAdapter(cursorAdapter);
         }
     }
 }

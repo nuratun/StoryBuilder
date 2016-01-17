@@ -34,6 +34,8 @@ public class SQLDatabase extends SQLiteOpenHelper {
         sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_CHARACTER_TABLE);
         sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_EVENT_TABLE);
         sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_LOCATION_TABLE);
+        sbDatabase.execSQL("DROP TABLE IF EXISTS " + "sb_event");
+        sbDatabase.execSQL("DROP TABLE IF EXISTS " + "sb_location");
         onCreate(sbDatabase);
     }
 
@@ -86,7 +88,7 @@ public class SQLDatabase extends SQLiteOpenHelper {
     // Location: AddCharacters, AddLocations, AddEvents
     public Cursor getElementRow(String query, String name) {
         sbDatabase = this.getReadableDatabase();
-        return sbDatabase.rawQuery(query + "'" + name + "';", null);
+        return sbDatabase.rawQuery(query, new String[] { name });
     }
 
     // Get the story genre to set the drawable

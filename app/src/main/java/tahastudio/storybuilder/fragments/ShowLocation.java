@@ -52,7 +52,7 @@ public class ShowLocation extends Fragment {
         // The following AsyncTask is contained in its own class.
         // Therefore, to receive the return value, override onPostExecute
         // Name is string from bundle
-        new ShowElementsTask(getContext(), Constants.LOCATIONS_TABLE, name) {
+        new ShowElementsTask(getContext(), Constants.STORY_LOCATION_TABLE, name) {
             @Override
             public void onPostExecute(Cursor result) {
                 if ( result.moveToFirst() ) {
@@ -93,7 +93,7 @@ public class ShowLocation extends Fragment {
                         location_notes.getText().toString());
 
                 UpdateElementsTask updateElementsTask = new UpdateElementsTask
-                        (getContext(), values, Constants.LOCATIONS_TABLE);
+                        (getContext(), values, Constants.STORY_LOCATION_TABLE);
                 updateElementsTask.execute();
 
                 // Return to previous fragment, immediately

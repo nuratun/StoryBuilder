@@ -37,12 +37,12 @@ public class ShowElementsTask extends AsyncTask<String, Void, Cursor> {
         SQLDatabase db = new SQLDatabase(context);
 
         switch (table) {
-            case Constants.CHARACTERS_TABLE:
+            case Constants.STORY_CHARACTER_TABLE:
                 return db.getElementRow(Constants.GRAB_CHARACTER_ROW_DETAILS, data);
-            case Constants.LOCATIONS_TABLE:
-                return db.getElementRow(Constants.GRAB_PLACE_ROW_DETAILS, data);
-            case Constants.EVENTS_TABLE:
-                return db.getElementRow(Constants.GRAB_PLOT_ROW_DETAILS, data);
+            case Constants.STORY_LOCATION_TABLE:
+                return db.getElementRow(Constants.GRAB_LOCATION_ROW_DETAILS, data);
+            case Constants.STORY_EVENT_TABLE:
+                return db.getElementRow(Constants.GRAB_EVENT_ROW_DETAILS, data);
             default:
                 break;
         }

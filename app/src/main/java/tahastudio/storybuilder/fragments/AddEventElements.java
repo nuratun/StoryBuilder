@@ -55,7 +55,7 @@ public class AddEventElements extends Fragment {
                 // Ensure event field != null
                 if (event_title.length() < 1) {
                     Toast.makeText(getContext(), "You must enter at least"
-                            + " a short description of the event", Toast.LENGTH_LONG).show();
+                            + " a one line description of this event", Toast.LENGTH_LONG).show();
                 } else {
                     // Send converted strings to background thread
                     addEventTask eventTask = new addEventTask(

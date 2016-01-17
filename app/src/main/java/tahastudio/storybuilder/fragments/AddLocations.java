@@ -40,12 +40,9 @@ public class AddLocations extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        add_location_layout = inflater.inflate(
-                R.layout.fragment_add_locations,
-                container,
-                false);
+        add_location_layout = inflater.inflate(R.layout.fragment_add_locations, container, false);
 
-        // Call the AsyncTask to populate the ListView
+        // Run an AsyncTask to fill in the ListView from the db
         locationList = new setLocationList();
         locationList.execute();
 
@@ -120,8 +117,7 @@ public class AddLocations extends Fragment {
                 // Create a Cursor object to hold the rows
                 return db.getRows(Constants.GRAB_LOCATION_DETAILS);
             } catch (Exception e) {
-                e.printStackTrace();
-            }
+                e.printStackTrace(); }
             return null;
         }
 
@@ -129,38 +125,34 @@ public class AddLocations extends Fragment {
         protected void onPostExecute(Cursor result) {
             super.onPostExecute(result);
 
-            // If this task hasn't been cancelled yet (see onPause)
-            if ( !isCancelled() ) {
+            // Get the column names
+            String[] columns = new String[]{
+                    Constants.STORY_LOCATION_NAME,
+                    Constants.STORY_LOCATION_LOCATION
+            };
 
-                // Get the column names
-                String[] columns = new String[]{
-                        Constants.STORY_LOCATION_NAME,
-                        Constants.STORY_LOCATION_LOCATION
-                };
+            // Get the TextView widgets
+            int[] widgets = new int[]{
+                    R.id.name_info,
+                    R.id.extra_info
+            };
 
-                // Get the TextView widgets
-                int[] widgets = new int[]{
-                        R.id.name_info,
-                        R.id.extra_info
-                };
+            // Set up the adapter
+            SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
+                    context,
+                    R.layout.tab_view,
+                    result,
+                    columns,
+                    widgets,
+                    0);
 
-                // Set up the adapter
-                SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
-                        context,
-                        R.layout.tab_view,
-                        result,
-                        columns,
-                        widgets,
-                        0);
+            // Notify thread the data has changed
+            cursorAdapter.notifyDataSetChanged();
 
-                // Notify thread the data has changed
-                cursorAdapter.notifyDataSetChanged();
-
-                // Initialize
-                add_locations_listview = (ListView) add_location_layout
-                        .findViewById(R.id.locations_listview);
-                add_locations_listview.setAdapter(cursorAdapter);
-            }
+            // Initialize
+            add_locations_listview = (ListView) add_location_layout
+                    .findViewById(R.id.locations_listview);
+            add_locations_listview.setAdapter(cursorAdapter);
         }
     }
 }

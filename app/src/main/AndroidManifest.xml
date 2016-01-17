@@ -30,13 +30,13 @@
             android:name=".ShowStory"
             android:label="@string/title_activity_create_story"
             android:windowSoftInputMode="adjustResize"
-            android:parentActivityName=".StoryBuilderMain">
+            android:launchMode="singleTop">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="tahastudio.storybuilder.StoryBuilderMain" />
         </activity>
 
-        <!-- Try to move into a fragment -->
+        <!-- TODO -> Try to move into a fragment -->
         <activity
             android:name=".About"
             android:label="@string/about_activity"

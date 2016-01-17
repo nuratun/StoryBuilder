@@ -50,7 +50,7 @@ public class ShowEvent extends Fragment {
         // The following AsyncTask is contained in its own class.
         // Therefore, to receive the return value, override onPostExecute
         // Name is string from bundle
-        new ShowElementsTask(getContext(), Constants.EVENTS_TABLE, name) {
+        new ShowElementsTask(getContext(), Constants.STORY_EVENT_TABLE, name) {
             @Override
             protected void onPostExecute(Cursor result) {
                 if ( result.moveToFirst() ) {
