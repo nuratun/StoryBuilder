@@ -231,7 +231,7 @@ public class ShowStory extends AppCompatActivity implements
                     break;
                 }
             default:
-                CHARACTER_TYPE = Constants.CHARACTER_TYPE_OTHER;
+                CHARACTER_TYPE = null;
         }
     }
 
@@ -253,7 +253,7 @@ public class ShowStory extends AppCompatActivity implements
                     CHARACTER_GENDER = Constants.CHARACTER_GENDER_OTHER;
                 break;
             default:
-                CHARACTER_GENDER = Constants.CHARACTER_GENDER_OTHER;
+                CHARACTER_GENDER = null;
         }
     }
 

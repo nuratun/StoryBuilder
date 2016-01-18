@@ -78,23 +78,15 @@ public class AddEvents extends Fragment {
         }
     }
 
-    // Stop the AsyncTask when user pauses fragment
+    // Start, or restart, the AsyncTask when fragment becomes visible to the user
     @Override
-    public void onPause() {
-        super.onPause();
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
 
-        if ( eventList != null && eventList.getStatus() == AsyncTask.Status.RUNNING ) {
-            eventList.cancel(true);
-        }
-    }
-
-    // Resume on return
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if ( eventList.getStatus() == AsyncTask.Status.FINISHED ) {
-            eventList.execute();
+        if ( isVisibleToUser ) { // isVisibleToUser is set to true as default
+            if ( eventList == null || eventList.getStatus() == AsyncTask.Status.FINISHED ) {
+                new setEventList().execute();
+            }
         }
     }
 
@@ -126,12 +118,12 @@ public class AddEvents extends Fragment {
             super.onPostExecute(result);
 
             // Get the columns
-            String[] columns = new String[]{
+            String[] columns = new String[] {
                 Constants.STORY_EVENT_LINER
             };
 
             // Get the widget list
-            int[] widgets = new int[]{
+            int[] widgets = new int[] {
                 R.id.name_info
             };
 

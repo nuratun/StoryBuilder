@@ -78,23 +78,15 @@ public class AddLocations extends Fragment {
         }
     }
 
-    // Stop the AsyncTask when user pauses the fragment
+    // Start, or restart, AsyncTask when user views the fragment
     @Override
-    public void onPause() {
-        super.onPause();
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
 
-        if ( locationList != null && locationList.getStatus() == AsyncTask.Status.RUNNING ) {
-            locationList.cancel(true);
-        }
-    }
-
-    // Resume on return
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if ( locationList.getStatus() == AsyncTask.Status.FINISHED ) {
-            locationList.execute();
+        if ( isVisibleToUser ) { // isVisibleToUser is set to true as default
+            if ( locationList == null || locationList.getStatus() == AsyncTask.Status.FINISHED ) {
+                new setLocationList().execute();
+            }
         }
     }
 

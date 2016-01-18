@@ -34,8 +34,6 @@ public class SQLDatabase extends SQLiteOpenHelper {
         sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_CHARACTER_TABLE);
         sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_EVENT_TABLE);
         sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_LOCATION_TABLE);
-        sbDatabase.execSQL("DROP TABLE IF EXISTS " + "sb_event");
-        sbDatabase.execSQL("DROP TABLE IF EXISTS " + "sb_location");
         onCreate(sbDatabase);
     }
 

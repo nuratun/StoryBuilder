@@ -1,92 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/add_event"
+    android:background="@color/white"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:fillViewport="true"
+    android:layout_height="match_parent"
     tools:context="tahastudio.storybuilder.ShowStory">
 
-    <RelativeLayout
-        android:padding="20dp"
-        android:background="@color/white"
+    <ScrollView
+        android:fillViewport="true"
         android:orientation="vertical"
+        android:paddingBottom="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/activity_add_event_top"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
+        <RelativeLayout
+            android:padding="20dp"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/event_instructions"
+            <LinearLayout
+                android:id="@+id/activity_add_event_top"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/event_instructions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/ic_event"
+                    android:text="@string/event_instructions"/>
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/sb_event_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_event"
-                android:text="@string/event_instructions"/>
+                android:hint="@string/event_title"
+                android:layout_below="@id/activity_add_event_top" />
 
-        </LinearLayout>
+            <EditText
+                android:id="@+id/sb_event"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/event_desc"
+                android:layout_below="@+id/sb_event_name" />
 
-        <EditText
-            android:id="@+id/sb_event_name"
+            <EditText
+                android:id="@+id/sb_event_characters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/event_characters"
+                android:layout_below="@+id/sb_event" />
+
+            <EditText
+                android:id="@+id/sb_event_summary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/event_summary"
+                android:layout_below="@+id/sb_event_characters" />
+
+            <EditText
+                android:id="@+id/sb_event_notes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/event_notes"
+                android:layout_below="@id/sb_event_summary" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:gravity="bottom|end"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/event_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/event_title"
-            android:layout_below="@id/activity_add_event_top" />
+            style="?android:attr/borderlessButtonStyle"
+            android:text="@string/cancel"/>
 
-        <EditText
-            android:id="@+id/sb_event"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/add_the_event"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/event_desc"
-            android:layout_below="@+id/sb_event_name" />
+            style="?android:attr/borderlessButtonStyle"
+            android:text="@string/OK" />
+    </LinearLayout>
 
-        <EditText
-            android:id="@+id/sb_event_characters"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/event_characters"
-            android:layout_below="@+id/sb_event" />
-
-        <EditText
-            android:id="@+id/sb_event_summary"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/event_summary"
-            android:layout_below="@+id/sb_event_characters" />
-
-        <EditText
-            android:id="@+id/sb_event_notes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/event_notes"
-            android:layout_below="@id/sb_event_summary" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="end|bottom"
-            android:background="@color/white"
-            android:layout_alignParentBottom="true">
-
-            <Button
-                android:id="@+id/event_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="?android:attr/borderlessButtonStyle"
-                android:text="@string/cancel"/>
-
-            <Button
-                android:id="@+id/add_the_event"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="?android:attr/borderlessButtonStyle"
-                android:text="@string/OK" />
-        </LinearLayout>
-    </RelativeLayout>
-</ScrollView>
+</RelativeLayout>

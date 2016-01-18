@@ -6,6 +6,9 @@
     <string name="empty">Nothing here yet.</string>
     <string name="title_activity_create_story">Story Creation</string>
     <string name="search_hint">Search stories</string>
+    <string name="version">Version 1.0</string>
+    <string name="open_source">StoryBuilder is released under the GPL license.</string>
+    <string name="sb_link">https://github.com/nuratun/StoryBuilder</string>
 
     <!-- For the search layout -->
     <string name="search_query_empty_view">Generating results&#8230;</string>

@@ -81,23 +81,17 @@ public class AddCharacters extends Fragment {
         }
     }
 
-    // Stop the AsyncTask when user pauses the fragment
+    // Start, or restart, the AsyncTask when fragment is visible to user
+    // This will only update the listview on user swipe
     @Override
-    public void onPause() {
-        super.onPause();
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
 
-        if ( characterList != null && characterList.getStatus() == AsyncTask.Status.RUNNING ) {
-            characterList.cancel(true);
-        }
-    }
-
-    // Resume on return
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if ( characterList.getStatus() == AsyncTask.Status.FINISHED ) {
-            characterList.execute();
+        if ( isVisibleToUser ) { // isVisibleToUser is set to true as default
+            if ( characterList == null ||
+                    characterList.getStatus() == AsyncTask.Status.FINISHED ) {
+                new setCharacterList().execute();
+            }
         }
     }
 

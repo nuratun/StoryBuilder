@@ -3,16 +3,20 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/add_character"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
     tools:context="tahastudio.storybuilder.ShowStory">
 
     <ScrollView
+        android:fillViewport="true"
+        android:orientation="vertical"
+        android:paddingBottom="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
+            android:padding="20dp"
             android:background="@color/white"
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -20,7 +24,7 @@
 
             <LinearLayout
                 android:id="@+id/activity_add_character_top"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:orientation="horizontal">
@@ -180,4 +184,5 @@
             style="?android:attr/borderlessButtonStyle"
             android:text="@string/OK" />
     </LinearLayout>
+
 </RelativeLayout>
