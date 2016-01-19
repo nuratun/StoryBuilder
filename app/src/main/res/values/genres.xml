@@ -7,18 +7,15 @@
         <item>Drama</item>
         <item>Fantasy</item>
         <item>General</item>
-        <item>Historical</item>
+        <item>Historical Fiction</item>
         <item>Horror</item>
         <item>Kids</item>
         <item>Mystery</item>
         <item>Poetry</item>
         <item>Romance</item>
         <item>Science Fiction</item>
-        <item>Sports</item>
         <item>Thriller</item>
-        <item>Urban</item>
         <item>Western</item>
-        <item>Women</item>
         <item>Young Adult</item>
     </string-array>
 </resources>

@@ -42,6 +42,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/location_name"
+                android:imeOptions="actionNext"
+                android:inputType="textCapSentences"
                 android:layout_below="@+id/activity_add_location_top"/>
 
             <EditText
@@ -49,6 +51,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/location_location"
+                android:imeOptions="actionNext"
+                android:inputType="textCapSentences|textMultiLine"
                 android:layout_below="@+id/sb_location_name"/>
 
             <EditText
@@ -56,6 +60,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/location_desc"
+                android:imeOptions="actionNext"
+                android:inputType="textCapSentences|textMultiLine"
                 android:layout_below="@+id/sb_location_location"/>
 
             <EditText
@@ -63,6 +69,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/location_importance"
+                android:imeOptions="actionNext"
+                android:inputType="textCapSentences|textMultiLine"
                 android:layout_below="@+id/sb_location_desc"/>
 
             <EditText
@@ -70,6 +78,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/location_events"
+                android:imeOptions="actionNext"
+                android:inputType="textCapSentences|textMultiLine"
                 android:layout_below="@+id/sb_location_importance"/>
 
             <EditText
@@ -77,6 +87,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/location_notes"
+                android:imeOptions="actionNext"
+                android:inputType="textCapSentences|textMultiLine"
                 android:layout_below="@+id/sb_location_events"/>
         </RelativeLayout>
     </ScrollView>

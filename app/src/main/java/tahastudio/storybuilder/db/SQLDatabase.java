@@ -13,10 +13,16 @@ import tahastudio.storybuilder.ShowStory;
  * This class holds all the SQL queries used elsewhere in the app
  */
 public class SQLDatabase extends SQLiteOpenHelper {
-    private SQLiteDatabase sbDatabase;
+    private static SQLiteDatabase sbDatabase;
 
     public SQLDatabase(Context context) {
         super(context, Constants.DATABASE_NAME, null, Constants.DATABASE_VERSION);
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        this.close();
+        super.finalize();
     }
 
     @Override

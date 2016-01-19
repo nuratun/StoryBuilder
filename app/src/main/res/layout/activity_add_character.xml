@@ -71,6 +71,8 @@
                     android:id="@+id/sb_character_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapSentences"
                     android:hint="@string/character_name" />
 
                 <EditText
@@ -116,6 +118,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/character_birth"
+                android:imeOptions="actionNext"
+                android:inputType="textCapSentences"
                 android:layout_below="@id/gender"/>
 
             <EditText
@@ -123,6 +127,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/character_history"
+                android:imeOptions="actionNext"
+                android:inputType="textCapSentences|textMultiLine"
                 android:layout_below="@id/sb_character_birthplace" />
 
             <EditText
@@ -130,6 +136,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/character_goals"
+                android:imeOptions="actionNext"
+                android:inputType="textCapSentences|textMultiLine"
                 android:layout_below="@id/sb_character_history" />
 
             <EditText
@@ -137,6 +145,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/character_conflicts"
+                android:imeOptions="actionNext"
+                android:inputType="textCapSentences|textMultiLine"
                 android:layout_below="@id/sb_character_goals" />
 
             <EditText
@@ -144,6 +154,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/character_epiphany"
+                android:imeOptions="actionNext"
+                android:inputType="textCapSentences|textMultiLine"
                 android:layout_below="@id/sb_character_conflicts" />
 
             <EditText
@@ -151,6 +163,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/character_personality"
+                android:imeOptions="actionNext"
+                android:inputType="textCapSentences|textMultiLine"
                 android:layout_below="@id/sb_character_epiphany"/>
 
             <EditText
@@ -158,6 +172,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/character_notes"
+                android:imeOptions="actionNext"
+                android:inputType="textCapSentences|textMultiLine"
                 android:layout_below="@id/sb_character_personality"/>
         </RelativeLayout>
     </ScrollView>

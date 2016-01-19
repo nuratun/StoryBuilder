@@ -60,7 +60,7 @@
     <string name="character_female">Female</string>
     <string name="character_other">Other</string>
     <string name="character_birth">Place of birth</string>
-    <string name="character_history">The history of this character, or the character\'s past</string>
+    <string name="character_history">This character\'s past</string>
     <string name="character_goals">What is this character\'s goals?</string>
     <string name="character_conflicts">Describe this character\'s conflicts</string>
     <string name="character_epiphany">What epiphany changes this character?</string>
@@ -79,9 +79,9 @@
     <!-- For the AddEventElements -->
     <string name="event_instructions">Add A Event</string>
     <string name="event_title">Title (e.g. Sara finds a lost city)</string>
-    <string name="event_desc">Describe what takes place during this event or act</string>
-    <string name="event_characters">What characters make an appearance here?</string>
-    <string name="event_summary">Summary of this story event/act</string>
+    <string name="event_desc">Describe the event</string>
+    <string name="event_characters">What characters make an appearance?</string>
+    <string name="event_summary">Summary of this event/act</string>
     <string name="event_notes">Notes</string>
 
     <!-- For all activities/fragments -->
@@ -91,7 +91,7 @@
     <!-- About page -->
     <string name="sb_title">About StoryBuilder</string>
     <string name="developer_header">Developed by</string>
-    <string name="developer">Taha Studio</string>
+    <string name="developer">TahaStudio</string>
     <string name="developer_email">tahastudio@gmail.com</string>
 
     <string name="credit_header">Credits</string>

@@ -147,7 +147,7 @@
         <item>"I just rearrange words into a pleasing order for money." ― Terry Pratchett</item>
         <item>"Writer's block, I just drove around it four times. All my favorite writers live there." ― Jarod Kintz</item>
         <item>"The world requires me to re-write its wretched dialogue!" ― Richard Greenberg</item>
-        <item>"Writers are always anxious, always on the run - from the telephone, from responsibilities, from the distractions of the world." ― Edna O'Brien</item>
+        <item>"Writers are always anxious, always on the run - from the telephone, from responsibilities, from the distractions of the world." ― Edna O\'Brien</item>
         <item>"As for my next book, I won't write it till it has grown heavy in my mind like a ripe pear; pendant, gravid, asking to be cut or it will fall." ― Virginia Woolf</item>
         <item>"Writing is the supreme solace." ― W. Somerset Maugham</item>
         <item>"My circumstances of unrelieved responsibility and permanent distraction necessitated the short story form." ― Raymond Carver</item>
@@ -171,9 +171,8 @@
         <item>"I don't write fantasy; I write historical novels about an imaginary place." ― Raymond E. Feist</item>
         <item>"Only half the story is true. The rest is necessary." ― John Yau</item>
         <item>"When my horse is running good, I don't stop to give him sugar." ― William Faulkner</item>
-        <item>"Writing doesn’t get easier with experience. The more you know, the harder it is to write." ― Tim O'Brien</item>
+        <item>"Writing doesn’t get easier with experience. The more you know, the harder it is to write." ― Tim O\'Brien</item>
         <item>"The writer's life: Hard days, lots of work, no money, too much silence. Nobody's fault. You chose it." ― Bill Barich</item>
-        <item>"He felt as he always did when he finished a book — queerly empty, let down, aware that for each little success he had paid a toll of absurdity." ― Stephen King, Misery</item>
         <item>"In writing a novel, when in doubt, have two guys come through the door with guns." ― Raymond Chandler</item>
         <item>"If a person is not talented enough to be a novelist, not smart enough to be a lawyer, and his hands are too shaky to perform operations, he becomes a journalist." ― Norman Mailer</item>
         <item>"Writing is the emotional morphine." ― Mariam Maarouf</item>
@@ -188,7 +187,7 @@
         <item>"A cliche is everything you've ever heard of." ― Janet Fitch</item>
         <item>"People who understand everything get no stories." ― Bertolt Brecht</item>
         <item>"The pen is mightier than the sword unless it's a real sword in which case the guy with the pen should run away fast." ― Roger Eschbacher</item>
-        <item>Write. Write more. Write even more. Write even more than that. Write when you don't want to. Write when you do. Write when you have something to say. Write when you don't. Write every day. Keep writing." ― Brian Clark</item>
+        <item>Write. Write more. Write even more. Write even more than that. Write when you don\'t want to. Write when you do. Write when you have something to say. Write when you don\'t. Write every day. Keep writing." ― Brian Clark</item>
         <item>"Reading maketh a full man; conference a ready man; and writing an exact man." ― Francis Bacon</item>
         <item>"The story I am writing exists, written in absolutely perfect fashion, some place, in the air. All I must do is find it, and copy it." ― Jules Renard</item>
         <item>"Writing in English is like throwing mud at a wall." ― Joseph Conrad</item>
@@ -205,7 +204,7 @@
         <item>"In displaying the psychology of your characters, minute particulars are essential. God save us from vague generalizations!" ― Anton Chekhov</item>
         <item>"Anyone who says writing is easy isn't doing it right." ― Amy Joy</item>
         <item>"Aha! Today I shall become an author! And I will auth and auth and auth and make a squillion dollars, whoopee!" ― Brian Jacques</item>
-        <item>"You can't judge a book by it's cover but you can sure sell a bunch of books if you have a good one." ― Jayce O'Neal</item>
+        <item>"You can't judge a book by it's cover but you can sure sell a bunch of books if you have a good one." ― Jayce O\'Neal</item>
         <item>"It's often a matter of sitting in front of the computer and worrying. It's what writing comes down to - worrying that things aren't going to work out." ― Khaled Hosseini</item>
         <item>"If you're silent for a long time, people just arrive in your mind." ― Alice Walker</item>
         <item>"If you have not done things worthy of being written about, at least write things worthy of being read." ― Giacomo Casanova</item>
@@ -218,6 +217,4 @@
         <item>"Everyone in the South has no time for reading because they are all too busy writing." ― William Faulkner</item>
         <item>"When you write about what you dream, you become a writer. When you dream about what you write, you become haunted by a curse." ― A. Saleh</item>
     </string-array>
-
-
 </resources>

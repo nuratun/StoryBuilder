@@ -41,7 +41,6 @@
                 android:paddingTop="15dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"/>
-
         </TableRow>
 
         <TableRow

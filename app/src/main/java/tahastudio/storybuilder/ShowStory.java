@@ -289,7 +289,8 @@ public class ShowStory extends AppCompatActivity implements
             super.onPostExecute(result);
 
             int pic = getBaseContext().getResources().getIdentifier // Find the drawable
-                    (result.toLowerCase(), "drawable", getPackageName()); // by the return string
+                    ("genre_" + result.replaceAll(" ", "_").toLowerCase(),
+                            "drawable", getPackageName());
 
             story_title.setCompoundDrawablesWithIntrinsicBounds(pic, 0, 0, 0);
         }

@@ -20,6 +20,8 @@
         android:id="@+id/sb_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:imeOptions="actionNext"
+        android:inputType="textCapSentences"
         android:hint="@string/dialog_title" />
 
     <Spinner
@@ -33,6 +35,8 @@
         android:id="@+id/sb_notes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:inputType="textMultiLine|textCapSentences"
         android:hint="@string/dialog_desc" />
 
 
