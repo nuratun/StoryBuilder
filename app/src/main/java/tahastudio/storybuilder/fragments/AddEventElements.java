@@ -87,7 +87,7 @@ public class AddEventElements extends Fragment {
     private class addEventTask extends AsyncTask<Void, Void, Boolean> {
         private Context context;
         private ContentValues values;
-        private SQLDatabase db;
+        private SQLDatabase db = SQLDatabase.getInstance(context);
         String event_title;
         String event;
         String characters;
@@ -120,7 +120,6 @@ public class AddEventElements extends Fragment {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            db = new SQLDatabase(context);
             values = new ContentValues();
 
             try {

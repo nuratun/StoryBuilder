@@ -13,16 +13,19 @@ import tahastudio.storybuilder.ShowStory;
  * This class holds all the SQL queries used elsewhere in the app
  */
 public class SQLDatabase extends SQLiteOpenHelper {
-    private static SQLiteDatabase sbDatabase;
+    private static SQLDatabase sbDatabase;
 
     public SQLDatabase(Context context) {
         super(context, Constants.DATABASE_NAME, null, Constants.DATABASE_VERSION);
     }
 
+    // Configuration for write-ahead logging, foreign key restraint and other things
     @Override
-    protected void finalize() throws Throwable {
-        this.close();
-        super.finalize();
+    public void onConfigure(SQLiteDatabase sbDatabase) {
+        super.onConfigure(sbDatabase);
+        sbDatabase.setForeignKeyConstraintsEnabled(true);
+        sbDatabase.execSQL("PRAGMA foreign_keys=ON;");
+
     }
 
     @Override
@@ -43,21 +46,31 @@ public class SQLDatabase extends SQLiteOpenHelper {
         onCreate(sbDatabase);
     }
 
-    public void insertRow(ContentValues values, String db) {
-        sbDatabase = this.getWritableDatabase();
-        sbDatabase.insert(db, null, values);
+    public static synchronized SQLDatabase getInstance(Context context) {
+        if ( sbDatabase == null ) {
+            sbDatabase = new SQLDatabase(context.getApplicationContext());
+        }
+        return sbDatabase;
     }
 
-    public void updateRow(ContentValues values, String db, int id) {
-        sbDatabase = this.getWritableDatabase();
-        sbDatabase.update(db, values, "_id = " + id, null);
+    public void insertRow(ContentValues values, String db) {
+        SQLiteDatabase helper = getWritableDatabase();
+
+        helper.insert(db, null, values);
+    }
+
+    public void updateRow(ContentValues values, String table, String column, int id) {
+        SQLiteDatabase helper = getWritableDatabase();
+
+        // Update the primary row listed in the string column where the value is id
+        helper.update(table, values, column + " = " + id, null);
     }
 
     // Get the story ID back from database to create the other tables
     // Location: CreateStoryTask
     public Integer getStoryID() {
-        sbDatabase = this.getReadableDatabase();
-        Cursor cursor = sbDatabase.rawQuery(Constants.GET_STORY_ID, null);
+        SQLiteDatabase helper = getReadableDatabase();
+        Cursor cursor = helper.rawQuery(Constants.GET_STORY_ID, null);
 
         cursor.moveToFirst(); // Move to the first position
         int the_id = cursor.getInt(0);
@@ -70,8 +83,8 @@ public class SQLDatabase extends SQLiteOpenHelper {
     // on in StoryBuilderMain
     // Location: showStoryTask
     public Integer findStoryID(String result) {
-        sbDatabase = this.getReadableDatabase();
-        Cursor cursor =  sbDatabase.rawQuery(Constants.FIND_STORY_ID, new String[] { result });
+        SQLiteDatabase helper = getReadableDatabase();
+        Cursor cursor =  helper.rawQuery(Constants.FIND_STORY_ID, new String[] { result });
 
         cursor.moveToFirst(); // Move to the first position
         int the_id = cursor.getInt(0);
@@ -84,27 +97,27 @@ public class SQLDatabase extends SQLiteOpenHelper {
     // change depending on user story selection
     // Location: AddCharacters, AddLocations, AddEvents
     public Cursor getRows(String query) {
-        sbDatabase = this.getReadableDatabase();
-        return sbDatabase.rawQuery(query + ShowStory.SB_ID + ";", null);
+        SQLiteDatabase helper = getReadableDatabase();
+        return helper.rawQuery(query + ShowStory.SB_ID + ";", null);
     }
 
     // Get the story element user clicked on
     // Location: AddCharacters, AddLocations, AddEvents
     public Cursor getElementRow(String query, String name) {
-        sbDatabase = this.getReadableDatabase();
-        return sbDatabase.rawQuery(query, new String[] { name });
+        SQLiteDatabase helper = getReadableDatabase();
+        return helper.rawQuery(query, new String[] { name });
     }
 
     // Get the story genre to set the drawable
     // Location: ShowStory
     public Cursor getStoryGenre() {
-        sbDatabase = this.getReadableDatabase();
-        return sbDatabase.rawQuery(Constants.GET_STORY_GENRE + ShowStory.SB_ID + ";", null);
+        SQLiteDatabase helper = getReadableDatabase();
+        return helper.rawQuery(Constants.GET_STORY_GENRE + ShowStory.SB_ID + ";", null);
     }
 
     // For user search queries
     public Cursor getSearchResults(String find, String[] columns) {
-        sbDatabase = this.getReadableDatabase();
+        SQLiteDatabase helper = getReadableDatabase();
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
 
         columns = new String[] {
@@ -126,7 +139,7 @@ public class SQLDatabase extends SQLiteOpenHelper {
         builder.setTables(Constants.STORY_LOCATION_TABLE);
         builder.setTables(Constants.STORY_EVENT_TABLE);
 
-        Cursor cursor = builder.query(sbDatabase,
+        Cursor cursor = builder.query(helper,
                 columns,
                 "find="+find,
                 new String[] { find },

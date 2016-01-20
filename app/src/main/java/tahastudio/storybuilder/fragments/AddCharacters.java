@@ -34,7 +34,7 @@ public class AddCharacters extends Fragment {
 
     // Interface to send ListView click back to ShowStory
     public interface characterListener {
-        void onCharacterSelected(String name);
+        void onCharacterSelected(int id, String name);
     }
 
     @Override
@@ -59,10 +59,11 @@ public class AddCharacters extends Fragment {
                 // Return a cursor with the row data
                 Cursor cursor = (Cursor) add_characters_listview.getItemAtPosition(position);
 
-                // Grab the first field from the row and cast it to a string
-                // Send to the interface. Implemented in ShowStory
+                // Grab the id and name from the row and send to the interface.
+                // Implemented in ShowStory
                 characterCallback.onCharacterSelected
-                        (cursor.getString(cursor.getColumnIndex(Constants.STORY_CHARACTER_NAME)));
+                        (cursor.getInt(cursor.getColumnIndex(Constants.STORY_CHARACTER_ID)),
+                        cursor.getString(cursor.getColumnIndex(Constants.STORY_CHARACTER_NAME)));
             }
         });
 
@@ -99,7 +100,7 @@ public class AddCharacters extends Fragment {
     // Otherwise, return null
     private class setCharacterList extends AsyncTask<Void, Void, Cursor> {
         private Context context = getActivity().getApplicationContext();
-        private SQLDatabase db;
+        private SQLDatabase db = SQLDatabase.getInstance(context);
 
         @Override
         protected void onPreExecute() {
@@ -113,9 +114,6 @@ public class AddCharacters extends Fragment {
 
         @Override
         protected Cursor doInBackground(Void... params) {
-            // Get a new db instance and set the context
-            db = new SQLDatabase(context);
-
             try {
                 // Return a Cursor object that holds the rows
                 return db.getRows(Constants.GRAB_CHARACTER_DETAILS);

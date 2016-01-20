@@ -162,7 +162,7 @@ public class StoryBuilderMain extends AppCompatActivity {
     // Returns: A list of stories in db. On null, sets up an empty TextView
     private class storyListTask extends AsyncTask<Void, Void, Cursor> {
         private Context context = getBaseContext();
-        private SQLDatabase db;
+        private SQLDatabase db = SQLDatabase.getInstance(context);
         private ListView listView;
         private TextView textView;
 
@@ -180,8 +180,6 @@ public class StoryBuilderMain extends AppCompatActivity {
 
         @Override
         protected Cursor doInBackground(Void... params) {
-            db = new SQLDatabase(context);
-
             // Try to get the list of stories in the db
             try {
                 return db.getRows(Constants.GRAB_STORY_DETAILS);

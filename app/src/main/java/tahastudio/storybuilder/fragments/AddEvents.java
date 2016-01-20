@@ -35,7 +35,7 @@ public class AddEvents extends Fragment {
 
     // Interface to send ListView click back to ShowStory
     public interface eventListener {
-        void onEventSelected(String name);
+        void onEventSelected(int id, String name);
     }
 
     @Override
@@ -59,7 +59,8 @@ public class AddEvents extends Fragment {
                 // Grab the first field from the row and cast it to a string
                 // Send to the interface. Implemented in ShowStory
                 eventCallback.onEventSelected
-                        (cursor.getString(cursor.getColumnIndex(Constants.STORY_EVENT_LINER)));
+                        (cursor.getInt(cursor.getColumnIndex(Constants.STORY_EVENT_ID)),
+                        cursor.getString(cursor.getColumnIndex(Constants.STORY_EVENT_LINER)));
             }
         });
 
@@ -93,7 +94,7 @@ public class AddEvents extends Fragment {
     // Populate the ListView with the events for this story. Otherwise, return null
     private class setEventList extends AsyncTask<Void, Void, Cursor> {
         private Context context = getActivity().getApplicationContext();
-        private SQLDatabase db;
+        private SQLDatabase db = SQLDatabase.getInstance(context);
 
         @Override
         protected void onPreExecute() {
@@ -102,9 +103,6 @@ public class AddEvents extends Fragment {
 
         @Override
         protected Cursor doInBackground(Void... params) {
-            // Get a new db instance and set the context
-            db = new SQLDatabase(context);
-
             try {
                 // Return a cursor object that holds the rows
                 return db.getRows(Constants.GRAB_EVENT_DETALIS);

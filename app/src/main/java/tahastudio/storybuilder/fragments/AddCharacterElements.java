@@ -81,6 +81,12 @@ public class AddCharacterElements extends Fragment {
                                     character_notes.getText().toString());
                     charactersTask.execute();
                 }
+                // Revert both public characters strings back to null value,
+                // otherwise, the next update to a different character
+                // without these values set will mess up the database
+                // TODO -> Find a better method for saving these values
+                ShowStory.CHARACTER_GENDER = null;
+                ShowStory.CHARACTER_TYPE = null;
                 // Return to AddCharacters class on button click, immediately
                 getFragmentManager().popBackStackImmediate();
             }
@@ -103,7 +109,7 @@ public class AddCharacterElements extends Fragment {
     private class addCharactersTask extends AsyncTask<Void, Void, Boolean> {
         private Context context;
         private ContentValues values;
-        private SQLDatabase db;
+        private SQLDatabase db = SQLDatabase.getInstance(context);
         private String name;
         private String age;
         private String type;
@@ -154,7 +160,6 @@ public class AddCharacterElements extends Fragment {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            db = new SQLDatabase(context);
             values = new ContentValues();
 
             try {

@@ -36,6 +36,7 @@ public class ShowCharacter extends Fragment {
         // Grab the bundle info from ShowStory
         Bundle bundle = this.getArguments();
         String name = bundle.getString("name");
+        final int id = bundle.getInt("id");
 
         // Find the elements: text
         final EditText character_name =
@@ -170,7 +171,11 @@ public class ShowCharacter extends Fragment {
 
                 // Send to the AsyncTask
                 UpdateElementsTask updateElementsTask = new UpdateElementsTask
-                        (getContext(), values, Constants.STORY_CHARACTER_TABLE);
+                        (getContext(),
+                                values,
+                                Constants.STORY_CHARACTER_TABLE,
+                                Constants.STORY_CHARACTER_ID, // The ID is needed for the update
+                                id); // in the database class
                 updateElementsTask.execute();
 
                 // Go back to the previous fragment

@@ -34,6 +34,7 @@ public class ShowLocation extends Fragment {
         // Grab the bundle info from ShowStory
         Bundle bundle = this.getArguments();
         String name = bundle.getString("name");
+        final int id = bundle.getInt("id");
 
         // Find the elements
         final EditText location_name =
@@ -93,7 +94,11 @@ public class ShowLocation extends Fragment {
                         location_notes.getText().toString());
 
                 UpdateElementsTask updateElementsTask = new UpdateElementsTask
-                        (getContext(), values, Constants.STORY_LOCATION_TABLE);
+                        (getContext(),
+                                values,
+                                Constants.STORY_LOCATION_TABLE,
+                                Constants.STORY_LOCATION_ID,
+                                id);
                 updateElementsTask.execute();
 
                 // Return to previous fragment, immediately

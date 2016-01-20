@@ -34,6 +34,7 @@ public class ShowEvent extends Fragment {
         // Grab the bundle info from ShowStory
         Bundle bundle = this.getArguments();
         String name = bundle.getString("name");
+        final int id = bundle.getInt("id");
 
         // Find the elements
         final EditText event_title =
@@ -88,7 +89,11 @@ public class ShowEvent extends Fragment {
                         event_notes.getText().toString());
 
                 UpdateElementsTask updateElementsTask = new UpdateElementsTask
-                        (getContext(), values, Constants.STORY_EVENT_TABLE);
+                        (getContext(),
+                                values,
+                                Constants.STORY_EVENT_TABLE,
+                                Constants.STORY_EVENT_ID,
+                                id);
                 updateElementsTask.execute();
 
                 // Leave the fragment immediately

@@ -41,8 +41,7 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
 
     @Override
     protected Integer doInBackground(String... params) {
-        SQLDatabase db = new SQLDatabase(context);
-        db.getWritableDatabase();
+        SQLDatabase db = SQLDatabase.getInstance(context);
 
         // Instantiate a ContentValues instance to add in data
         ContentValues values = new ContentValues();
@@ -53,8 +52,7 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
         // Insert into the database
         db.insertRow(values, Constants.STORY_TABLE);
 
-        // Get id of the story to send as an Intent to the ShowStory class
-        db.getReadableDatabase();
+        // Return the id of the story to send as an Intent to the ShowStory class
         return db.getStoryID();
     }
 

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import tahastudio.storybuilder.ShowStory;
 import tahastudio.storybuilder.db.SQLDatabase;
 
 /**
@@ -17,11 +16,19 @@ public class UpdateElementsTask extends AsyncTask<Void, Void, Boolean> {
     Context context;
     ContentValues values;
     String table;
+    String column;
+    int id;
 
-    public UpdateElementsTask(Context context, ContentValues values, String table) {
+    public UpdateElementsTask(Context context,
+                              ContentValues values,
+                              String table,
+                              String column,
+                              int id) {
         this.context = context;
         this.values = values;
         this.table = table;
+        this.id = id;
+        this.column = column;
     }
 
     @Override
@@ -34,8 +41,8 @@ public class UpdateElementsTask extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected Boolean doInBackground(Void... params) {
         try {
-            SQLDatabase db = new SQLDatabase(context);
-            db.updateRow(values, table, ShowStory.SB_ID);
+            SQLDatabase db = SQLDatabase.getInstance(context);
+            db.updateRow(values, table, column, id);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

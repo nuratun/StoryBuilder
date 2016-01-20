@@ -30,8 +30,7 @@ public class ShowStoryTask extends AsyncTask<String, Void, Integer> {
 
     @Override
     protected Integer doInBackground(String... params) {
-        SQLDatabase db = new SQLDatabase(context);
-        db.getReadableDatabase(); // Get a read on the db to grab the id
+        SQLDatabase db = SQLDatabase.getInstance(context);
 
         return db.findStoryID(title); // Return the Integer from the db, querying by title
     }

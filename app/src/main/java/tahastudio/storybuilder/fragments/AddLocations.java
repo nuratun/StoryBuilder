@@ -34,7 +34,7 @@ public class AddLocations extends Fragment {
 
     // Interface to send ListView click back to ShowStory
     public interface locationListener {
-        void onLocationSelected(String name);
+        void onLocationSelected(int id, String name);
     }
 
     @Override
@@ -60,7 +60,8 @@ public class AddLocations extends Fragment {
                 // Grab the first field from the row and cast it to a string
                 // Send to the interface. Implemented in ShowStory
                 locationCallback.onLocationSelected
-                        (cursor.getString(cursor.getColumnIndex(Constants.STORY_LOCATION_NAME)));
+                        (cursor.getInt(cursor.getColumnIndex(Constants.STORY_LOCATION_ID)),
+                        cursor.getString(cursor.getColumnIndex(Constants.STORY_LOCATION_NAME)));
             }
         });
 
@@ -93,7 +94,7 @@ public class AddLocations extends Fragment {
     // Populate the ListView with the locations in this story. Otherwise, return null
     private class setLocationList extends AsyncTask<Void, Void, Cursor> {
         private Context context = getActivity().getApplicationContext();
-        private SQLDatabase db;
+        private SQLDatabase db = SQLDatabase.getInstance(context); // An instance of the database
 
         @Override
         protected void onPreExecute() {
@@ -102,8 +103,6 @@ public class AddLocations extends Fragment {
 
         @Override
         protected Cursor doInBackground(Void... params) {
-            // Get a new db instance and set the context
-            db = new SQLDatabase(context);
 
             try {
                 // Create a Cursor object to hold the rows

@@ -34,7 +34,7 @@ public class ShowElementsTask extends AsyncTask<String, Void, Cursor> {
 
     @Override
     protected Cursor doInBackground(String... params) {
-        SQLDatabase db = new SQLDatabase(context);
+        SQLDatabase db = SQLDatabase.getInstance(context);
 
         switch (table) {
             case Constants.STORY_CHARACTER_TABLE:
@@ -54,7 +54,7 @@ public class ShowElementsTask extends AsyncTask<String, Void, Cursor> {
         super.onPostExecute(result);
 
         // Override this method in the following classes:
-        // ShowCharacters, ShowPlaces, ShowPlots
+        // ShowCharacters, ShowLocations, ShowEvents
 
         // Do nothing here
     }

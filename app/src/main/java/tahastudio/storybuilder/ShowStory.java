@@ -41,11 +41,10 @@ public class ShowStory extends AppCompatActivity implements
     // To programmatically add in the fragments
     FragmentManager fragmentManager = getSupportFragmentManager();
 
-    // Create public static reference, so other classes can access it
-    public static int SB_ID;
-
-    public static String CHARACTER_TYPE;
-    public static String CHARACTER_GENDER;
+    // Create public static references for the story, so other classes can access them
+    public static int SB_ID; // This value will not change unless a user selects a different story
+    public static String CHARACTER_GENDER; // These values
+    public static String CHARACTER_TYPE; // may change
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,10 +161,11 @@ public class ShowStory extends AppCompatActivity implements
     }
 
     // Implement the AddCharacters interface method for a ListView click
-    public void onCharacterSelected(String name) {
+    public void onCharacterSelected(int id, String name) {
         // Bundle info and send user to the new fragment, ShowCharacter
         Bundle bundle = new Bundle();
         bundle.putString("name", name);
+        bundle.putInt("id", id);
 
         // Set up the fragment with the bundle
         ShowCharacter showCharacter = new ShowCharacter();
@@ -176,10 +176,11 @@ public class ShowStory extends AppCompatActivity implements
     }
 
     // Implement the AddLocations interface method for a ListView click
-    public void onLocationSelected(String name) {
+    public void onLocationSelected(int id, String name) {
         // Bundle info and send user to the new fragment, ShowLocation
         Bundle bundle = new Bundle();
         bundle.putString("name", name);
+        bundle.putInt("id", id);
 
         // Set up the fragment with the bundle
         ShowLocation showLocation = new ShowLocation();
@@ -190,10 +191,11 @@ public class ShowStory extends AppCompatActivity implements
     }
 
     // Implement the AddEvents interface method for a ListView click
-    public void onEventSelected(String name) {
+    public void onEventSelected(int id, String name) {
         // Bundle info and send user to the new fragment, ShowEvent
         Bundle bundle = new Bundle();
         bundle.putString("name", name);
+        bundle.putInt("id", id);
 
         // Set up the fragment with the bundle
         ShowEvent showEvent = new ShowEvent();
@@ -257,7 +259,7 @@ public class ShowStory extends AppCompatActivity implements
         }
     }
 
-    // This AsyncTask will set the TextView
+    // This AsyncTask will set the TextView to show the title and the genre pic
     public class setStoryTitle extends AsyncTask<String, Void, String> {
         private TextView story_title = (TextView) findViewById(R.id.story_title);
         private String title;
@@ -274,7 +276,7 @@ public class ShowStory extends AppCompatActivity implements
 
         @Override
         protected String doInBackground(String... params) {
-            SQLDatabase db = new SQLDatabase(getBaseContext());
+            SQLDatabase db = SQLDatabase.getInstance(getBaseContext());
             Cursor cursor = db.getStoryGenre(); // Grab the genre string from the db
 
             if ( cursor.moveToFirst() ) { // If not null...
@@ -288,10 +290,12 @@ public class ShowStory extends AppCompatActivity implements
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
+            // Get the pic from drawables for the genre the user selected
             int pic = getBaseContext().getResources().getIdentifier // Find the drawable
-                    ("genre_" + result.replaceAll(" ", "_").toLowerCase(),
+                    ("genre_" + result.replaceAll(" ", "_").toLowerCase(), // replace any spaces
                             "drawable", getPackageName());
 
+            // Set the drawable next to the story title
             story_title.setCompoundDrawablesWithIntrinsicBounds(pic, 0, 0, 0);
         }
     }

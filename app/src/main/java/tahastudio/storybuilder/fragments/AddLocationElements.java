@@ -94,7 +94,7 @@ public class AddLocationElements extends Fragment {
     private class addLocationsTask extends AsyncTask<Void, Void, Boolean> {
         private Context context;
         private ContentValues values;
-        private SQLDatabase db;
+        private SQLDatabase db = SQLDatabase.getInstance(context);
         String name;
         String location;
         String description;
@@ -130,7 +130,6 @@ public class AddLocationElements extends Fragment {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            db = new SQLDatabase(context);
             values = new ContentValues();
 
             try {
