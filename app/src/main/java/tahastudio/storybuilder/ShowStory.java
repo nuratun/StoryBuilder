@@ -1,6 +1,5 @@
 package tahastudio.storybuilder;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,8 +9,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
@@ -41,22 +42,19 @@ public class ShowStory extends AppCompatActivity implements
     // To programmatically add in the fragments
     FragmentManager fragmentManager = getSupportFragmentManager();
 
-    // Create public static references for the story, so other classes can access them
-    public static int SB_ID; // This value will not change unless a user selects a different story
-    public static String CHARACTER_GENDER; // These values
-    public static String CHARACTER_TYPE; // may change
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_story);
 
-        // Set the public static variable as the story _id from the db
-        SB_ID = getIntent().getExtras().getInt("id");
-
-        Intent get_title = getIntent(); // Get the Intent from CreateStoryTask
+        // Set the public static int as the story _id from the db
+        Constants.SB_ID = getIntent().getExtras().getInt("id");
+        Log.d("the_id", String.valueOf(Constants.SB_ID));
+        // Grab the title from the Intent, also
+        String title = getIntent().getExtras().getString("title");
+        Log.d("the_title", title);
         // Grab the string and pass to the AsyncTask, setStoryTitle
-        setStoryTitle setStoryTitle = new setStoryTitle(get_title.getStringExtra("title"));
+        setStoryTitle setStoryTitle = new setStoryTitle(title);
         setStoryTitle.execute();
 
         // Find the FAB menu and add the actions
@@ -224,16 +222,16 @@ public class ShowStory extends AppCompatActivity implements
         switch (view.getId()) {
             case R.id.sb_character_main:
                 if ( checked ) {
-                    CHARACTER_TYPE = Constants.CHARACTER_TYPE_PROTAGONIST;
+                    Constants.CHARACTER_TYPE = Constants.CHARACTER_TYPE_PROTAGONIST;
                     break;
                 }
             case R.id.sb_character_antagonist:
                 if ( checked ) {
-                    CHARACTER_TYPE = Constants.CHARACTER_TYPE_ANTAGONIST;
+                    Constants.CHARACTER_TYPE = Constants.CHARACTER_TYPE_ANTAGONIST;
                     break;
                 }
             default:
-                CHARACTER_TYPE = null;
+                Constants.CHARACTER_TYPE = null;
         }
     }
 
@@ -244,19 +242,29 @@ public class ShowStory extends AppCompatActivity implements
         switch (view.getId()) {
             case R.id.male_gender:
                 if (checked)
-                    CHARACTER_GENDER = Constants.CHARACTER_GENDER_MALE;
+                    Constants.CHARACTER_GENDER = Constants.CHARACTER_GENDER_MALE;
                 break;
             case R.id.female_gender:
                 if (checked)
-                    CHARACTER_GENDER = Constants.CHARACTER_GENDER_FEMALE;
+                    Constants.CHARACTER_GENDER = Constants.CHARACTER_GENDER_FEMALE;
                 break;
             case R.id.other_gender:
                 if (checked)
-                    CHARACTER_GENDER = Constants.CHARACTER_GENDER_OTHER;
+                    Constants.CHARACTER_GENDER = Constants.CHARACTER_GENDER_OTHER;
                 break;
             default:
-                CHARACTER_GENDER = null;
+                Constants.CHARACTER_GENDER = null;
         }
+    }
+
+    public void closeKeyboard() {
+        // Close the keyboard on update click
+        InputMethodManager inputMethodManager = (InputMethodManager)
+                this.getSystemService(this.INPUT_METHOD_SERVICE);
+
+        inputMethodManager.hideSoftInputFromInputMethod
+                (this.getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     // This AsyncTask will set the TextView to show the title and the genre pic
@@ -289,6 +297,7 @@ public class ShowStory extends AppCompatActivity implements
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+            Log.d("the_result", result);
 
             // Get the pic from drawables for the genre the user selected
             int pic = getBaseContext().getResources().getIdentifier // Find the drawable

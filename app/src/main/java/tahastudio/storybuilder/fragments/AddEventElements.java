@@ -46,12 +46,13 @@ public class AddEventElements extends Fragment {
                 .findViewById(R.id.sb_event_notes);
         Button add_the_event = (Button) event_elements_layout
                 .findViewById(R.id.add_the_event);
-        Button event_cancel = (Button) event_elements_layout
-                .findViewById(R.id.event_cancel);
 
         add_the_event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Call activity method to close keyboard
+                ((ShowStory) getActivity()).closeKeyboard();
+
                 // Ensure event field != null
                 if (event_title.length() < 1) {
                     Toast.makeText(getContext(), "You must enter at least"
@@ -68,14 +69,6 @@ public class AddEventElements extends Fragment {
                     eventTask.execute();
                 }
                 // Return to AddEvents on button click, immediately
-                getFragmentManager().popBackStackImmediate();
-            }
-        });
-
-        event_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Return to AddEvents without saving anything
                 getFragmentManager().popBackStackImmediate();
             }
         });
@@ -123,7 +116,7 @@ public class AddEventElements extends Fragment {
             values = new ContentValues();
 
             try {
-                values.put(Constants.DB_ID, ShowStory.SB_ID);
+                values.put(Constants.DB_ID, Constants.SB_ID);
                 values.put(Constants.STORY_EVENT_LINER, event_title);
                 values.put(Constants.STORY_EVENT_DESC, event);
                 values.put(Constants.STORY_EVENT_CHARACTERS, characters);

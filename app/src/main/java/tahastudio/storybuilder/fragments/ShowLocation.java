@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import tahastudio.storybuilder.R;
+import tahastudio.storybuilder.ShowStory;
 import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.tasks.ShowElementsTask;
 import tahastudio.storybuilder.tasks.UpdateElementsTask;
@@ -53,7 +54,7 @@ public class ShowLocation extends Fragment {
         // The following AsyncTask is contained in its own class.
         // Therefore, to receive the return value, override onPostExecute
         // Name is string from bundle
-        new ShowElementsTask(getContext(), Constants.STORY_LOCATION_TABLE, name) {
+        new ShowElementsTask(getContext(), Constants.STORY_LOCATION_TABLE, name, id) {
             @Override
             public void onPostExecute(Cursor result) {
                 if ( result.moveToFirst() ) {
@@ -79,6 +80,9 @@ public class ShowLocation extends Fragment {
         location_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Call activity method to close keyboard
+                ((ShowStory) getActivity()).closeKeyboard();
+
                 ContentValues values = new ContentValues();
                 values.put(Constants.STORY_LOCATION_NAME,
                         location_name.getText().toString());
@@ -102,15 +106,6 @@ public class ShowLocation extends Fragment {
                 updateElementsTask.execute();
 
                 // Return to previous fragment, immediately
-                getFragmentManager().popBackStackImmediate();
-            }
-        });
-
-        Button cancel = (Button) add_location_layout.findViewById(R.id.location_cancel);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Return to previous fragment
                 getFragmentManager().popBackStackImmediate();
             }
         });

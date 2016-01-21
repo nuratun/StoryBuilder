@@ -14,11 +14,13 @@ import tahastudio.storybuilder.db.SQLDatabase;
 public class ShowStoryTask extends AsyncTask<String, Void, Integer> {
     private Context context;
     String title;
+    int id;
 
     // Pass the context and string from StoryBuilderMain
-    public ShowStoryTask(Context context, String title) {
+    public ShowStoryTask(Context context, String title, int id) {
         this.context = context;
         this.title = title;
+        this.id = id;
     }
 
     @Override

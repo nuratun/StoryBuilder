@@ -72,7 +72,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
-                    android:inputType="textCapSentences"
+                    android:inputType="textCapWords"
                     android:hint="@string/character_name" />
 
                 <EditText
@@ -119,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/character_birth"
                 android:imeOptions="actionNext"
-                android:inputType="textCapSentences"
+                android:inputType="textCapWords"
                 android:layout_below="@id/gender"/>
 
             <EditText
@@ -185,13 +185,6 @@
         android:gravity="bottom|end"
         android:background="@color/white"
         android:layout_alignParentBottom="true">
-
-        <Button
-            android:id="@+id/character_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="?android:attr/borderlessButtonStyle"
-            android:text="@string/cancel" />
 
         <Button
             android:id="@+id/add_the_character"

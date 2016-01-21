@@ -18,7 +18,7 @@ import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.db.SQLDatabase;
 
 /**
- * Fragment to relocation ListView in AddLocations. Is called by AddLocations.
+ * Fragment to replace ListView in AddLocations. Is called by AddLocations.
  */
 public class AddLocationElements extends Fragment {
 
@@ -51,12 +51,13 @@ public class AddLocationElements extends Fragment {
                 .findViewById(R.id.sb_location_notes);
         Button add_location = (Button) location_elements_layout
                 .findViewById(R.id.add_the_location);
-        Button location_cancel = (Button) location_elements_layout
-                .findViewById(R.id.location_cancel);
 
         add_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Call activity method to close keyboard
+                ((ShowStory) getActivity()).closeKeyboard();
+
                 // Make sure name field != null
                 if ( location_name.length() < 1 ) {
                     Toast.makeText(getContext(), "Name is a required "
@@ -75,14 +76,6 @@ public class AddLocationElements extends Fragment {
                     locationsTask.execute();
                 }
                 // Return to AddLocations on button click, immediately
-                getFragmentManager().popBackStackImmediate();
-            }
-        });
-
-        location_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Return to AddLocations, without saving anything
                 getFragmentManager().popBackStackImmediate();
             }
         });
@@ -133,7 +126,7 @@ public class AddLocationElements extends Fragment {
             values = new ContentValues();
 
             try {
-                values.put(Constants.DB_ID, ShowStory.SB_ID);
+                values.put(Constants.DB_ID, Constants.SB_ID);
                 values.put(Constants.STORY_LOCATION_NAME, name);
                 values.put(Constants.STORY_LOCATION_LOCATION, location);
                 values.put(Constants.STORY_LOCATION_DESC, description);

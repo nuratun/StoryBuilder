@@ -31,6 +31,7 @@
     <string name="title_activity_add_event">Add Events</string>
     <string name="title_activity_add_locations">Add Locations</string>
     <string name="title_activity_add_character">Add A Character</string>
+    <string name="add_an_element">Save</string>
 
     <!-- For the ShowStory tabs -->
     <string name="tab_characters">Characters</string>

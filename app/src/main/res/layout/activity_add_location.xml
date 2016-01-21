@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/location_name"
                 android:imeOptions="actionNext"
-                android:inputType="textCapSentences"
+                android:inputType="textCapWords"
                 android:layout_below="@+id/activity_add_location_top"/>
 
             <EditText
@@ -100,13 +100,6 @@
         android:background="@color/white"
         android:gravity="end|bottom"
         android:layout_alignParentBottom="true">
-
-            <Button
-                android:id="@+id/location_cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="?android:attr/borderlessButtonStyle"
-                android:text="@string/cancel"/>
 
             <Button
                 android:id="@+id/add_the_location"

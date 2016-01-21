@@ -106,7 +106,9 @@ public class AddLocations extends Fragment {
 
             try {
                 // Create a Cursor object to hold the rows
-                return db.getRows(Constants.GRAB_LOCATION_DETAILS);
+                // Need to add in the _id of the story, as the
+                // GRAB_LOCATION_DETAILS string is a final static string
+                return db.getRows(Constants.GRAB_LOCATION_DETAILS + Constants.SB_ID);
             } catch (Exception e) {
                 e.printStackTrace(); }
             return null;
@@ -117,13 +119,15 @@ public class AddLocations extends Fragment {
             super.onPostExecute(result);
 
             // Get the column names
-            String[] columns = new String[]{
+            String[] columns = new String[] {
+                    Constants.STORY_LOCATION_ID,
                     Constants.STORY_LOCATION_NAME,
                     Constants.STORY_LOCATION_LOCATION
             };
 
             // Get the TextView widgets
-            int[] widgets = new int[]{
+            int[] widgets = new int[] {
+                    R.id.element_id,
                     R.id.name_info,
                     R.id.extra_info
             };

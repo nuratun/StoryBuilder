@@ -116,7 +116,9 @@ public class AddCharacters extends Fragment {
         protected Cursor doInBackground(Void... params) {
             try {
                 // Return a Cursor object that holds the rows
-                return db.getRows(Constants.GRAB_CHARACTER_DETAILS);
+                // Need to add in the _id of the story, as the
+                // GRAB_CHARACTER_DETAILS string is a final static string
+                return db.getRows(Constants.GRAB_CHARACTER_DETAILS + Constants.SB_ID);
             }
             catch (Exception e) {
                 e.printStackTrace(); }
@@ -129,12 +131,14 @@ public class AddCharacters extends Fragment {
 
             // Get the column names
             String[] columns = new String[] {
+                    Constants.STORY_CHARACTER_ID,
                     Constants.STORY_CHARACTER_NAME,
                     Constants.STORY_CHARACTER_AGE
             };
 
             // Get the TextView widgets
             int[] widgets = new int[] {
+                    R.id.element_id,
                     R.id.name_info,
                     R.id.extra_info
             };

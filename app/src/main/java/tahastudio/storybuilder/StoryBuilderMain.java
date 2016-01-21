@@ -14,12 +14,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Random;
 
 import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.db.SQLDatabase;
-import tahastudio.storybuilder.tasks.ShowStoryTask;
 import tahastudio.storybuilder.ui.SBDialog;
 
 /**
@@ -43,7 +43,7 @@ public class StoryBuilderMain extends AppCompatActivity {
         randomQuoteTask.execute();
 
         story_list = (ListView) findViewById(R.id.story_list); // Stories go here
-        empty = (TextView) findViewById(R.id.empty); // TextView used if stories == null
+        empty = (TextView) findViewById(R.id.empty); // TextView used if saved stories == null
 
         // AsyncTask to find list of stories in db. If not null, return the list
         // Otherwise, set up the empty TextView. Call the public method.
@@ -59,13 +59,24 @@ public class StoryBuilderMain extends AppCompatActivity {
                 Cursor cursor = (Cursor) story_list.getItemAtPosition(position);
 
                 // From the cursor, we can grab the title, going by column name
-                String title = cursor.getString(
-                        cursor.getColumnIndex(Constants.STORY_NAME));
+                int story_id = cursor.getInt(cursor.getColumnIndex(Constants.DB_ID));
+                String title = cursor.getString(cursor.getColumnIndex(Constants.STORY_NAME));
 
-                // ShowStoryTask class will grab the the story _id from the db
-                // and create an intent to call the ShowStory class
-                ShowStoryTask showStoryTask = new ShowStoryTask(getBaseContext(), title);
-                showStoryTask.execute();
+                // Show a message while loading the story
+                Toast.makeText(getBaseContext(),
+                        "Loading story. Please wait...",
+                        Toast.LENGTH_LONG).show();
+
+                // Create a new Intent to pass info to ShowStory
+                Intent intent = new Intent(getBaseContext(), ShowStory.class);
+                intent.putExtra("id", story_id);  // Pass the story id
+                intent.putExtra("title", title); // Pass the story title
+
+                // Add a flag or get an exception raised
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                // Call the intent from this context
+                getBaseContext().startActivity(intent);
             }
         });
 
@@ -103,6 +114,14 @@ public class StoryBuilderMain extends AppCompatActivity {
         }
     }
 
+    // Calls SBDialog class to create the story creation dialog
+    // User inputs data and creates a new story. Data is sent to the CreateStoryTask class
+    // Initialized from the FAB
+    private void showSBDialog() {
+        SBDialog sbDialog = new SBDialog();
+        sbDialog.show(getSupportFragmentManager(), "story_creation");
+    }
+
     // To update the ListView whenever a new story is created
     // The integers are not used, as the dialog box will exit
     // if the story has not been created
@@ -110,14 +129,6 @@ public class StoryBuilderMain extends AppCompatActivity {
     protected void onActivityResult(int request, int result, Intent data) {
         callStoryListTask(story_list, empty);
 
-    }
-
-    // Calls SBDialog class to create the story creation dialog
-    // User inputs data and creates a new story. Data is sent to the CreateStoryTask class
-    // Initialized from the FAB
-    private void showSBDialog() {
-        SBDialog sbDialog = new SBDialog();
-        sbDialog.show(getSupportFragmentManager(), "story_creation");
     }
 
     // Makes the storyListTask public, so fragments can access it
@@ -196,6 +207,7 @@ public class StoryBuilderMain extends AppCompatActivity {
             if (result != null) {
                 // Get the column names
                 String[] columns = {
+                        Constants.DB_ID,
                         Constants.STORY_NAME,
                         Constants.STORY_GENRE,
                         Constants.STORY_DESC
@@ -203,6 +215,7 @@ public class StoryBuilderMain extends AppCompatActivity {
 
                 // Get the TextView widgets
                 int[] widgets = {
+                        R.id.element_id,
                         R.id.name_info,
                         R.id.extra_info,
                         R.id.desc

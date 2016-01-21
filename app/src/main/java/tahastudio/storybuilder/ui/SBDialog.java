@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import tahastudio.storybuilder.R;
+import tahastudio.storybuilder.ShowStory;
 import tahastudio.storybuilder.tasks.CreateStoryTask;
 
 /**
@@ -67,6 +68,9 @@ public class SBDialog extends DialogFragment {
         builder.setPositiveButton(R.string.create_story, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
+                // Call activity method to close keyboard
+                ((ShowStory) getActivity()).closeKeyboard();
+
                 // Make sure both title and genre != null
                 if (the_story_title.length() < 1 || sb_story_genre.length() < 1) {
                     Toast.makeText(getActivity().getApplicationContext(), "Both title"

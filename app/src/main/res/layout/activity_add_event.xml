@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/event_title"
                 android:imeOptions="actionNext"
-                android:inputType="textCapSentences"
+                android:inputType="textCapWords"
                 android:layout_below="@id/activity_add_event_top" />
 
             <EditText
@@ -92,13 +92,6 @@
         android:background="@color/white"
         android:gravity="bottom|end"
         android:layout_alignParentBottom="true">
-
-        <Button
-            android:id="@+id/event_cancel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            style="?android:attr/borderlessButtonStyle"
-            android:text="@string/cancel"/>
 
         <Button
             android:id="@+id/add_the_event"

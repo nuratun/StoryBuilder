@@ -105,7 +105,9 @@ public class AddEvents extends Fragment {
         protected Cursor doInBackground(Void... params) {
             try {
                 // Return a cursor object that holds the rows
-                return db.getRows(Constants.GRAB_EVENT_DETALIS);
+                // Need to add in the _id of the story, as the
+                // GRAB_EVENT_DETAILS string is a final static string
+                return db.getRows(Constants.GRAB_EVENT_DETALIS + Constants.SB_ID);
             } catch (Exception e) {
                 e.printStackTrace(); }
             return null;
@@ -117,12 +119,14 @@ public class AddEvents extends Fragment {
 
             // Get the columns
             String[] columns = new String[] {
-                Constants.STORY_EVENT_LINER
+                    Constants.STORY_EVENT_ID,
+                    Constants.STORY_EVENT_LINER
             };
 
             // Get the widget list
             int[] widgets = new int[] {
-                R.id.name_info
+                    R.id.element_id,
+                    R.id.name_info
             };
 
             // Set up the adapter

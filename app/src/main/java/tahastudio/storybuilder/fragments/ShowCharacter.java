@@ -33,6 +33,10 @@ public class ShowCharacter extends Fragment {
         final View show_character_layout =
                 inflater.inflate(R.layout.activity_add_character, container, false);
 
+        // TODO -> Find a better method for saving these values
+        Constants.CHARACTER_GENDER = null;
+        Constants.CHARACTER_TYPE = null;
+
         // Grab the bundle info from ShowStory
         Bundle bundle = this.getArguments();
         String name = bundle.getString("name");
@@ -73,7 +77,7 @@ public class ShowCharacter extends Fragment {
         // The following AsyncTask is contained in its own class.
         // Therefore, to receive the return value, override onPostExecute
         // Name is string from bundle
-        new ShowElementsTask(getContext(), Constants.STORY_CHARACTER_TABLE, name) {
+        new ShowElementsTask(getContext(), Constants.STORY_CHARACTER_TABLE, name, id) {
             @Override
             protected void onPostExecute(Cursor result) {
                 if ( result.moveToFirst() ) {
@@ -144,6 +148,9 @@ public class ShowCharacter extends Fragment {
         update_character.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Call activity method to close keyboard
+                ((ShowStory) getActivity()).closeKeyboard();
+
                 ContentValues values = new ContentValues();
 
                 values.put(Constants.STORY_CHARACTER_NAME,
@@ -151,9 +158,9 @@ public class ShowCharacter extends Fragment {
                 values.put(Constants.STORY_CHARACTER_AGE,
                         character_age.getText().toString());
                 values.put(Constants.STORY_CHARACTER_TYPE,
-                        ShowStory.CHARACTER_TYPE);
+                        Constants.CHARACTER_TYPE);
                 values.put(Constants.STORY_CHARACTER_GENDER,
-                        ShowStory.CHARACTER_GENDER);
+                        Constants.CHARACTER_GENDER);
                 values.put(Constants.STORY_CHARACTER_BIRTHPLACE,
                         character_birthplace.getText().toString());
                 values.put(Constants.STORY_CHARACTER_HISTORY,
@@ -179,15 +186,6 @@ public class ShowCharacter extends Fragment {
                 updateElementsTask.execute();
 
                 // Go back to the previous fragment
-                getFragmentManager().popBackStackImmediate();
-            }
-        });
-
-        Button cancel_update = (Button) show_character_layout.findViewById(R.id.character_cancel);
-        cancel_update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Leave the fragment immediately
                 getFragmentManager().popBackStackImmediate();
             }
         });

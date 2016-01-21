@@ -58,6 +58,9 @@ public class AddCharacterElements extends Fragment {
         add_the_character.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Call activity method to close keyboard
+                ((ShowStory) getActivity()).closeKeyboard();
+
                 // Make sure the name field != null
                 if ( name.length() < 1 ) {
                     Toast.makeText(getContext(), "The character's name "
@@ -70,8 +73,8 @@ public class AddCharacterElements extends Fragment {
                                     getContext(),
                                     name.getText().toString(),
                                     age.getText().toString(),
-                                    ShowStory.CHARACTER_TYPE, // Methods for these public strings
-                                    ShowStory.CHARACTER_GENDER, // are in the ShowStory class
+                                    Constants.CHARACTER_TYPE, // Methods for these constants
+                                    Constants.CHARACTER_GENDER, // are in the ShowStory class
                                     birthplace.getText().toString(),
                                     history.getText().toString(),
                                     goals.getText().toString(),
@@ -81,23 +84,7 @@ public class AddCharacterElements extends Fragment {
                                     character_notes.getText().toString());
                     charactersTask.execute();
                 }
-                // Revert both public characters strings back to null value,
-                // otherwise, the next update to a different character
-                // without these values set will mess up the database
-                // TODO -> Find a better method for saving these values
-                ShowStory.CHARACTER_GENDER = null;
-                ShowStory.CHARACTER_TYPE = null;
                 // Return to AddCharacters class on button click, immediately
-                getFragmentManager().popBackStackImmediate();
-            }
-        });
-
-        Button cancel = (Button) character_elements_layout
-                .findViewById(R.id.character_cancel);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Return to AddCharacters, immediately.
                 getFragmentManager().popBackStackImmediate();
             }
         });
@@ -163,7 +150,7 @@ public class AddCharacterElements extends Fragment {
             values = new ContentValues();
 
             try {
-                values.put(Constants.DB_ID, ShowStory.SB_ID);
+                values.put(Constants.DB_ID, Constants.SB_ID);
                 values.put(Constants.STORY_CHARACTER_NAME, name);
                 values.put(Constants.STORY_CHARACTER_AGE, age);
                 values.put(Constants.STORY_CHARACTER_TYPE, type);

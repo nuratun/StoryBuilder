@@ -18,11 +18,15 @@ public class ShowElementsTask extends AsyncTask<String, Void, Cursor> {
     private Context context;
     private String table;
     private String data;
+    private int id;
 
-    public ShowElementsTask(Context context, String table, String data) {
+    // Takes the table name, the title of the element, and the element id and finds them in the db
+    // Called from: ShowCharacter, ShowLocation, ShowEvent
+    public ShowElementsTask(Context context, String table, String data, int id) {
         this.context = context;
         this.table = table;
         this.data = data;
+        this.id = id;
     }
 
     @Override
@@ -38,11 +42,11 @@ public class ShowElementsTask extends AsyncTask<String, Void, Cursor> {
 
         switch (table) {
             case Constants.STORY_CHARACTER_TABLE:
-                return db.getElementRow(Constants.GRAB_CHARACTER_ROW_DETAILS, data);
+                return db.getElementRow(Constants.GRAB_CHARACTER_ROW_DETAILS, data, id);
             case Constants.STORY_LOCATION_TABLE:
-                return db.getElementRow(Constants.GRAB_LOCATION_ROW_DETAILS, data);
+                return db.getElementRow(Constants.GRAB_LOCATION_ROW_DETAILS, data, id);
             case Constants.STORY_EVENT_TABLE:
-                return db.getElementRow(Constants.GRAB_EVENT_ROW_DETAILS, data);
+                return db.getElementRow(Constants.GRAB_EVENT_ROW_DETAILS, data, id);
             default:
                 break;
         }

@@ -7,8 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 
-import tahastudio.storybuilder.ShowStory;
-
 /**
  * This class holds all the SQL queries used elsewhere in the app
  */
@@ -98,21 +96,21 @@ public class SQLDatabase extends SQLiteOpenHelper {
     // Location: AddCharacters, AddLocations, AddEvents
     public Cursor getRows(String query) {
         SQLiteDatabase helper = getReadableDatabase();
-        return helper.rawQuery(query + ShowStory.SB_ID + ";", null);
+        return helper.rawQuery(query, null);
     }
 
     // Get the story element user clicked on
     // Location: AddCharacters, AddLocations, AddEvents
-    public Cursor getElementRow(String query, String name) {
+    public Cursor getElementRow(String query, String name, int id) {
         SQLiteDatabase helper = getReadableDatabase();
-        return helper.rawQuery(query, new String[] { name });
+        return helper.rawQuery(query + id, null);
     }
 
     // Get the story genre to set the drawable
     // Location: ShowStory
     public Cursor getStoryGenre() {
         SQLiteDatabase helper = getReadableDatabase();
-        return helper.rawQuery(Constants.GET_STORY_GENRE + ShowStory.SB_ID + ";", null);
+        return helper.rawQuery(Constants.GET_STORY_GENRE + Constants.SB_ID, null);
     }
 
     // For user search queries

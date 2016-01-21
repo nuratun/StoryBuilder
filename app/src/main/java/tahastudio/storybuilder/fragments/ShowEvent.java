@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import tahastudio.storybuilder.R;
+import tahastudio.storybuilder.ShowStory;
 import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.tasks.ShowElementsTask;
 import tahastudio.storybuilder.tasks.UpdateElementsTask;
@@ -51,7 +52,7 @@ public class ShowEvent extends Fragment {
         // The following AsyncTask is contained in its own class.
         // Therefore, to receive the return value, override onPostExecute
         // Name is string from bundle
-        new ShowElementsTask(getContext(), Constants.STORY_EVENT_TABLE, name) {
+        new ShowElementsTask(getContext(), Constants.STORY_EVENT_TABLE, name, id) {
             @Override
             protected void onPostExecute(Cursor result) {
                 if ( result.moveToFirst() ) {
@@ -75,6 +76,9 @@ public class ShowEvent extends Fragment {
         add_event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Call activity method to close keyboard
+                ((ShowStory) getActivity()).closeKeyboard();
+
                 ContentValues values = new ContentValues();
 
                 values.put(Constants.STORY_EVENT_LINER,
@@ -97,16 +101,6 @@ public class ShowEvent extends Fragment {
                 updateElementsTask.execute();
 
                 // Leave the fragment immediately
-                getFragmentManager().popBackStackImmediate();
-            }
-        });
-
-        // Cancel button
-        Button cancel = (Button) show_event_layout.findViewById(R.id.event_cancel);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Leave this fragment immediately
                 getFragmentManager().popBackStackImmediate();
             }
         });

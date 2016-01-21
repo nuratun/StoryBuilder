@@ -1,15 +1,18 @@
 package tahastudio.storybuilder.db;
 
-import tahastudio.storybuilder.ShowStory;
-
 /**
  * To store constants for SQL queries.
- * These constants will not change throughout the lifecycle
+ * Most of these constants will not change throughout the lifecycle
  */
 public class Constants {
 
+    // Create public static references for the story, so other classes can access them
+    public static int SB_ID; // This value will not change unless a user selects a different story
+    public static String CHARACTER_GENDER; // These values
+    public static String CHARACTER_TYPE; // may change
+
     // Version number must change if database changes
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 2;
     public static final String DATABASE_NAME = "sb.db";
 
     // Set up table schema for the story
@@ -127,56 +130,49 @@ public class Constants {
             + STORY_NAME + ", "
             + STORY_GENRE + ", "
             + STORY_DESC + " FROM "
-            + STORY_TABLE + ";";
+            + STORY_TABLE;
 
     // Used in AddCharacters class to populate the ListView
     public static final String GRAB_CHARACTER_DETAILS = "SELECT "
             + DB_ID + ", "
+            + STORY_CHARACTER_ID + ", "
             + STORY_CHARACTER_NAME + ", "
             + STORY_CHARACTER_AGE + " FROM "
             + STORY_CHARACTER_TABLE + " WHERE "
-            + DB_ID + " = "
-            + ShowStory.SB_ID + " AND WHERE "
-            + STORY_CHARACTER_ID + " = ?";
+            + DB_ID + " = ";
 
     // Used in the AddLocations class to populate the ListView
     public static final String GRAB_LOCATION_DETAILS = "SELECT "
             + DB_ID + ", "
+            + STORY_LOCATION_ID + ", "
             + STORY_LOCATION_NAME + ", "
             + STORY_LOCATION_LOCATION + " FROM "
             + STORY_LOCATION_TABLE + " WHERE "
-            + DB_ID + " = "
-            + ShowStory.SB_ID + " AND WHERE "
-            + STORY_LOCATION_ID + " = ?";
+            + DB_ID + " = ";
 
     // Used in the AddEvents class to populate the ListView
     public static final String GRAB_EVENT_DETALIS = "SELECT "
             + DB_ID + ", "
+            + STORY_EVENT_ID + ", "
             + STORY_EVENT_LINER + ", "
             + STORY_EVENT_CHARACTERS + " FROM "
             + STORY_EVENT_TABLE + " WHERE "
-            + DB_ID + " = "
-            + ShowStory.SB_ID + " AND WHERE "
-            + STORY_EVENT_ID + " = ?";
+            + DB_ID + " = ";
 
     // Used in UpdateElementTask to grab the row selected in AddCharacters
     public static final String GRAB_CHARACTER_ROW_DETAILS = "SELECT * FROM "
             + STORY_CHARACTER_TABLE + " WHERE "
-            + DB_ID + " = "
-            + ShowStory.SB_ID + " AND WHERE "
-            + STORY_CHARACTER_ID + " = ?";
+            + STORY_CHARACTER_ID + " = ";
 
     // Used in UpdateElementTask to grab the row selected in AddLocations
     public static final String GRAB_LOCATION_ROW_DETAILS = "SELECT * FROM "
             + STORY_LOCATION_TABLE + " WHERE "
-            + ShowStory.SB_ID + " AND WHERE "
-            + STORY_LOCATION_ID + " = ?";
+            + STORY_LOCATION_ID + " = ";
 
     // Used in UpdateElementTask to grab the row selected in AddEvents
     public static final String GRAB_EVENT_ROW_DETAILS = "SELECT * FROM "
             + STORY_EVENT_TABLE + " WHERE "
-            + ShowStory.SB_ID + " AND WHERE "
-            + STORY_EVENT_ID + " = ?";
+            + STORY_EVENT_ID + " = ";
 
     // Used in ShowStory
     public static final String CHARACTER_TYPE_PROTAGONIST = "protagonist";
@@ -186,8 +182,7 @@ public class Constants {
     public static final String CHARACTER_GENDER_FEMALE = "female";
     public static final String CHARACTER_GENDER_OTHER = "other";
 
-    public static final String GET_STORY_GENRE = "SELECT GENRE FROM "
+    public static final String GET_STORY_GENRE = "SELECT " + STORY_GENRE + " FROM "
             + STORY_TABLE + " WHERE "
             + DB_ID + " = ";
-
 }
