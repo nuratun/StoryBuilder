@@ -1,5 +1,6 @@
 package tahastudio.storybuilder;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,11 +10,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import tahastudio.storybuilder.db.Constants;
@@ -47,21 +46,18 @@ public class ShowStory extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_story);
 
-        // Set the public static int as the story _id from the db
-        Constants.SB_ID = getIntent().getExtras().getInt("id");
-        Log.d("the_id", String.valueOf(Constants.SB_ID));
-        // Grab the title from the Intent, also
+        // Grab the story id and title from the intent and set the variables
+        Constants.SB_ID = getIntent().getExtras().getInt("id"); // Update the static variable
         String title = getIntent().getExtras().getString("title");
-        Log.d("the_title", title);
-        // Grab the string and pass to the AsyncTask, setStoryTitle
-        setStoryTitle setStoryTitle = new setStoryTitle(title);
-        setStoryTitle.execute();
 
-        // Find the FAB menu and add the actions
+        // Grab the string and pass to the AsyncTask, setStoryTitle
+        new setStoryTitle(title).execute();
+
+        // Find the FAB menu and add in the actions
         final com.getbase.floatingactionbutton.FloatingActionsMenu fab =
                 (com.getbase.floatingactionbutton.FloatingActionsMenu) findViewById(R.id.fab);
 
-        // Find the inner menu for adding a character
+        // The inner menu for adding a character
         com.getbase.floatingactionbutton.FloatingActionButton characters_fab =
                 (com.getbase.floatingactionbutton.FloatingActionButton)
                         findViewById(R.id.characters);
@@ -73,12 +69,12 @@ public class ShowStory extends AppCompatActivity implements
                 // Collapse the menu fab on click
                 fab.collapse();
 
-                // Call re-factored method for fragment transaction
+                // Call method for fragment transaction
                 onFragmentSelected(new AddCharacterElements(), "add_the_character");
             }
         });
 
-        // Find the inner menu for adding a location
+        // The inner menu for adding a location
         com.getbase.floatingactionbutton.FloatingActionButton location_fab =
                 (com.getbase.floatingactionbutton.FloatingActionButton)
                         findViewById(R.id.locations);
@@ -90,12 +86,12 @@ public class ShowStory extends AppCompatActivity implements
                 // Collapse the menu fab on click
                 fab.collapse();
 
-                // Call re-factored method for fragment transaction
+                // Call method for fragment transaction
                 onFragmentSelected(new AddLocationElements(), "add_the_location");
             }
         });
 
-        // Find the inner menu for adding an event
+        // The inner menu for adding an event
         com.getbase.floatingactionbutton.FloatingActionButton events_fab =
                 (com.getbase.floatingactionbutton.FloatingActionButton)
                         findViewById(R.id.events);
@@ -107,35 +103,35 @@ public class ShowStory extends AppCompatActivity implements
                 // Collapse the menu fab on click
                 fab.collapse();
 
-                // Call re-factored method for fragment transaction
+                // Call method for fragment transaction
                 onFragmentSelected(new AddEventElements(), "add_the_event");
             }
         });
 
-         // Find the TabLayout in the XML
+         // Find the TabLayout
         TabLayout tab_layout = (TabLayout) findViewById(R.id.tab_layout);
 
-        // Add the number tabs, set the title for each one. Content
-        // will be provided by the TabViewer method
+        // Add the tabs, set the title for each one. Content will be provided by the TabViewer
         tab_layout.addTab(tab_layout.newTab().setText("Characters"));
         tab_layout.addTab(tab_layout.newTab().setText("Locations"));
         tab_layout.addTab(tab_layout.newTab().setText("Events"));
         tab_layout.setTabGravity(tab_layout.GRAVITY_FILL);
 
         // ViewPager allows flipping left and right through pages (tabs) of data
-        final ViewPager view_pager = (ViewPager) findViewById(R.id.pager);
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
 
-        // TabViewer class to get the list of fragments for the ViewPager
-        TabViewer tab_viewer = new TabViewer(getSupportFragmentManager(), tab_layout.getTabCount());
+        // TabViewer to get the list of fragments for the ViewPager
+        final TabViewer tabViewer = new TabViewer(getSupportFragmentManager(), tab_layout.getTabCount());
 
         // Set TabViewer as adapter of the ViewPager. Since TabViewer created the tabs (fragments),
         // ViewPager can now flip through them
-        view_pager.setAdapter(tab_viewer);
-        view_pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab_layout));
+        viewPager.setAdapter(tabViewer);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab_layout));
         tab_layout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                view_pager.setCurrentItem(tab.getPosition());
+                viewPager.setCurrentItem(tab.getPosition());
+                viewPager.getAdapter().notifyDataSetChanged();
             }
 
             @Override
@@ -146,12 +142,24 @@ public class ShowStory extends AppCompatActivity implements
         });
     }
 
+    private void closeKeyboard() {
+        View view = this.getCurrentFocus();
+
+        if ( view != null ) {
+            InputMethodManager inputMethodManager = (InputMethodManager)
+                    this.getApplicationContext().getSystemService
+                            (Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here.
         switch (item.getItemId()) {
             case android.R.id.home:
-                onBackPressed();
+                closeKeyboard(); // Close the keyboard, if open
+                onBackPressed(); // Return here whenever the back button is pressed on a fragment
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -207,69 +215,16 @@ public class ShowStory extends AppCompatActivity implements
     public void onFragmentSelected(Fragment fragment, String tag) {
         // APIs from FragmentTransaction to add, replace or remove fragments
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        // Replace the fragment, add it to backstack, commit it
+        // Replace the fragment, add it to the backstack, commit it
         fragmentTransaction
                 .add(R.id.story_creation_layout, fragment)
                 .addToBackStack(tag)
                 .commit();
     }
 
-    // May be a variation -> main character & the antagonist, just the main character
-    // or just the antagonist.
-    public void mCharacterCheckbox(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
-
-        switch (view.getId()) {
-            case R.id.sb_character_main:
-                if ( checked ) {
-                    Constants.CHARACTER_TYPE = Constants.CHARACTER_TYPE_PROTAGONIST;
-                    break;
-                }
-            case R.id.sb_character_antagonist:
-                if ( checked ) {
-                    Constants.CHARACTER_TYPE = Constants.CHARACTER_TYPE_ANTAGONIST;
-                    break;
-                }
-            default:
-                Constants.CHARACTER_TYPE = null;
-        }
-    }
-
-    public void characterGender(View view) {
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Return which radio button was selected
-        switch (view.getId()) {
-            case R.id.male_gender:
-                if (checked)
-                    Constants.CHARACTER_GENDER = Constants.CHARACTER_GENDER_MALE;
-                break;
-            case R.id.female_gender:
-                if (checked)
-                    Constants.CHARACTER_GENDER = Constants.CHARACTER_GENDER_FEMALE;
-                break;
-            case R.id.other_gender:
-                if (checked)
-                    Constants.CHARACTER_GENDER = Constants.CHARACTER_GENDER_OTHER;
-                break;
-            default:
-                Constants.CHARACTER_GENDER = null;
-        }
-    }
-
-    public void closeKeyboard() {
-        // Close the keyboard on update click
-        InputMethodManager inputMethodManager = (InputMethodManager)
-                this.getSystemService(this.INPUT_METHOD_SERVICE);
-
-        inputMethodManager.hideSoftInputFromInputMethod
-                (this.getCurrentFocus().getWindowToken(),
-                        InputMethodManager.HIDE_NOT_ALWAYS);
-    }
-
     // This AsyncTask will set the TextView to show the title and the genre pic
     public class setStoryTitle extends AsyncTask<String, Void, String> {
-        private TextView story_title = (TextView) findViewById(R.id.story_title);
+        private TextView storyTitle = (TextView) findViewById(R.id.story_title);
         private String title;
 
         public setStoryTitle(String title) {
@@ -279,7 +234,7 @@ public class ShowStory extends AppCompatActivity implements
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            story_title.setText(title); // Set the story title on the top TextView
+            storyTitle.setText(title); // Set the story title on the top TextView
         }
 
         @Override
@@ -297,7 +252,6 @@ public class ShowStory extends AppCompatActivity implements
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Log.d("the_result", result);
 
             // Get the pic from drawables for the genre the user selected
             int pic = getBaseContext().getResources().getIdentifier // Find the drawable
@@ -305,7 +259,7 @@ public class ShowStory extends AppCompatActivity implements
                             "drawable", getPackageName());
 
             // Set the drawable next to the story title
-            story_title.setCompoundDrawablesWithIntrinsicBounds(pic, 0, 0, 0);
+            storyTitle.setCompoundDrawablesWithIntrinsicBounds(pic, 0, 0, 0);
         }
     }
 }

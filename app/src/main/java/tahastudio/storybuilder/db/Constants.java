@@ -8,11 +8,15 @@ public class Constants {
 
     // Create public static references for the story, so other classes can access them
     public static int SB_ID; // This value will not change unless a user selects a different story
-    public static String CHARACTER_GENDER; // These values
-    public static String CHARACTER_TYPE; // may change
+    public static int CHARACTER_TYPE_PROTAGONIST;
+    public static int CHARACTER_TYPE_ANTAGONIST;
+
+    public static int CHARACTER_GENDER_MALE;
+    public static int CHARACTER_GENDER_FEMALE;
+    public static int CHARACTER_GENDER_OTHER;
 
     // Version number must change if database changes
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "sb.db";
 
     // Set up table schema for the story
@@ -79,8 +83,8 @@ public class Constants {
             + STORY_CHARACTER_TABLE + "("
             + STORY_CHARACTER_ID + " integer primary key autoincrement, "
             + STORY_CHARACTER_NAME + " text, "
-            + STORY_CHARACTER_TYPE + " text, "
-            + STORY_CHARACTER_GENDER + " text, "
+            + STORY_CHARACTER_TYPE + " integer, "
+            + STORY_CHARACTER_GENDER + " integer, "
             + STORY_CHARACTER_AGE + " integer, "
             + STORY_CHARACTER_BIRTHPLACE + " text, "
             + STORY_CHARACTER_HISTORY + " text, "
@@ -137,7 +141,8 @@ public class Constants {
             + DB_ID + ", "
             + STORY_CHARACTER_ID + ", "
             + STORY_CHARACTER_NAME + ", "
-            + STORY_CHARACTER_AGE + " FROM "
+            + STORY_CHARACTER_AGE + ", "
+            + STORY_CHARACTER_BIRTHPLACE + " FROM "
             + STORY_CHARACTER_TABLE + " WHERE "
             + DB_ID + " = ";
 
@@ -173,14 +178,6 @@ public class Constants {
     public static final String GRAB_EVENT_ROW_DETAILS = "SELECT * FROM "
             + STORY_EVENT_TABLE + " WHERE "
             + STORY_EVENT_ID + " = ";
-
-    // Used in ShowStory
-    public static final String CHARACTER_TYPE_PROTAGONIST = "protagonist";
-    public static final String CHARACTER_TYPE_ANTAGONIST = "antagonist";
-
-    public static final String CHARACTER_GENDER_MALE = "male";
-    public static final String CHARACTER_GENDER_FEMALE = "female";
-    public static final String CHARACTER_GENDER_OTHER = "other";
 
     public static final String GET_STORY_GENRE = "SELECT " + STORY_GENRE + " FROM "
             + STORY_TABLE + " WHERE "

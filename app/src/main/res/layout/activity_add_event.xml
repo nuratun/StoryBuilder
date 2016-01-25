@@ -34,8 +34,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_event"
+                    android:drawablePadding="10dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/event_instructions"/>
-
             </LinearLayout>
 
             <EditText
@@ -44,7 +45,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/event_title"
                 android:imeOptions="actionNext"
-                android:inputType="textCapWords"
+                android:inputType="textCapWords|textAutoComplete|textAutoCorrect"
+                android:maxLines="1"
                 android:layout_below="@id/activity_add_event_top" />
 
             <EditText
@@ -53,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/event_desc"
                 android:imeOptions="actionNext"
-                android:inputType="textCapSentences|textMultiLine"
+                android:inputType="textCapSentences|textMultiLine|textAutoComplete|textAutoCorrect"
                 android:layout_below="@+id/sb_event_name" />
 
             <EditText
@@ -62,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/event_characters"
                 android:imeOptions="actionNext"
-                android:inputType="textCapSentences|textMultiLine"
+                android:inputType="textCapSentences|textMultiLine|textAutoComplete|textAutoCorrect"
                 android:layout_below="@+id/sb_event" />
 
             <EditText
@@ -71,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/event_summary"
                 android:imeOptions="actionNext"
-                android:inputType="textCapSentences|textMultiLine"
+                android:inputType="textCapSentences|textMultiLine|textAutoComplete|textAutoCorrect"
                 android:layout_below="@+id/sb_event_characters" />
 
             <EditText
@@ -80,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/event_notes"
                 android:imeOptions="actionNext"
-                android:inputType="textCapSentences|textMultiLine"
+                android:inputType="textCapSentences|textMultiLine|textAutoComplete|textAutoCorrect"
                 android:layout_below="@id/sb_event_summary" />
         </RelativeLayout>
     </ScrollView>

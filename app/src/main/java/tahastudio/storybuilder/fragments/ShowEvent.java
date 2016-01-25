@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import tahastudio.storybuilder.R;
-import tahastudio.storybuilder.ShowStory;
 import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.tasks.ShowElementsTask;
 import tahastudio.storybuilder.tasks.UpdateElementsTask;
@@ -76,9 +75,6 @@ public class ShowEvent extends Fragment {
         add_event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Call activity method to close keyboard
-                ((ShowStory) getActivity()).closeKeyboard();
-
                 ContentValues values = new ContentValues();
 
                 values.put(Constants.STORY_EVENT_LINER,

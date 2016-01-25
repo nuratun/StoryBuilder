@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +22,10 @@ import tahastudio.storybuilder.db.SQLDatabase;
  * Second tab for SB
  */
 public class AddLocations extends Fragment {
-    // Make the AsyncTask global to stop it on onPause
-    private setLocationList locationList;
+    // To update the ListView
+    SimpleCursorAdapter cursorAdapter;
 
+    // Make view components accessible across the class
     private View add_location_layout;
     private ListView add_locations_listview;
 
@@ -43,8 +45,7 @@ public class AddLocations extends Fragment {
         add_location_layout = inflater.inflate(R.layout.fragment_add_locations, container, false);
 
         // Run an AsyncTask to fill in the ListView from the db
-        locationList = new setLocationList();
-        locationList.execute();
+        new setLocationList().execute();
 
         // TODO -> The below code is initialized twice. Need to refactor
         add_locations_listview =
@@ -81,13 +82,13 @@ public class AddLocations extends Fragment {
 
     // Start, or restart, AsyncTask when user views the fragment
     @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
+    public void onResume() {
+        super.onResume();
 
-        if ( isVisibleToUser ) { // isVisibleToUser is set to true as default
-            if ( locationList == null || locationList.getStatus() == AsyncTask.Status.FINISHED ) {
-                new setLocationList().execute();
-            }
+        Log.d("the_resume", "locations");
+
+        if ( cursorAdapter != null ) {
+            cursorAdapter.notifyDataSetChanged();
         }
     }
 
@@ -133,7 +134,7 @@ public class AddLocations extends Fragment {
             };
 
             // Set up the adapter
-            SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
+            cursorAdapter = new SimpleCursorAdapter(
                     context,
                     R.layout.tab_view,
                     result,

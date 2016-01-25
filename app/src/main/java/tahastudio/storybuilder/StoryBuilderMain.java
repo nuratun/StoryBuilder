@@ -38,9 +38,8 @@ public class StoryBuilderMain extends AppCompatActivity {
         // TODO -> Set up a drawer
 
         TextView textView = (TextView) findViewById(R.id.quote); // TextView used for quotes
-        // randomQuoteTask will generate a random quote and place it in the above TextView
-        randomQuoteTask randomQuoteTask = new randomQuoteTask(textView);
-        randomQuoteTask.execute();
+        // randomQuoteTask will generate a random quote and place it in the TextView
+        new randomQuoteTask(textView).execute();
 
         story_list = (ListView) findViewById(R.id.story_list); // Stories go here
         empty = (TextView) findViewById(R.id.empty); // TextView used if saved stories == null
@@ -55,20 +54,19 @@ public class StoryBuilderMain extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Clicking on a ListView row will return a cursor
-                // Get the position of the user click
+                // Get the position of the user click to generate the cursor
                 Cursor cursor = (Cursor) story_list.getItemAtPosition(position);
 
-                // From the cursor, we can grab the title, going by column name
+                // From the cursor, we can grab the story id and title, going by column names
                 int story_id = cursor.getInt(cursor.getColumnIndex(Constants.DB_ID));
                 String title = cursor.getString(cursor.getColumnIndex(Constants.STORY_NAME));
 
                 // Show a message while loading the story
-                Toast.makeText(getBaseContext(),
-                        "Loading story. Please wait...",
+                Toast.makeText(getApplicationContext(), "Loading story. Please wait...",
                         Toast.LENGTH_LONG).show();
 
                 // Create a new Intent to pass info to ShowStory
-                Intent intent = new Intent(getBaseContext(), ShowStory.class);
+                Intent intent = new Intent(getApplicationContext(), ShowStory.class);
                 intent.putExtra("id", story_id);  // Pass the story id
                 intent.putExtra("title", title); // Pass the story title
 
@@ -76,7 +74,7 @@ public class StoryBuilderMain extends AppCompatActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 // Call the intent from this context
-                getBaseContext().startActivity(intent);
+                getApplicationContext().startActivity(intent);
             }
         });
 
@@ -128,7 +126,6 @@ public class StoryBuilderMain extends AppCompatActivity {
     @Override
     protected void onActivityResult(int request, int result, Intent data) {
         callStoryListTask(story_list, empty);
-
     }
 
     // Makes the storyListTask public, so fragments can access it

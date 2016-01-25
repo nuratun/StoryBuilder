@@ -34,13 +34,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_character"
+                    android:drawablePadding="10dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/character_instructions" />
             </LinearLayout>
 
-            <RelativeLayout
+            <RadioGroup
                 android:id="@+id/add_character_position"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:gravity="center_horizontal"
                 android:layout_below="@id/activity_add_character_top">
 
@@ -48,18 +51,14 @@
                     android:id="@+id/sb_character_main"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/character_protagonist"
-                    android:onClick="mCharacterCheckbox" />
+                    android:text="@string/character_protagonist" />
 
                 <RadioButton
                     android:id="@+id/sb_character_antagonist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="end"
-                    android:text="@string/character_antagonist"
-                    android:onClick="mCharacterCheckbox"
-                    android:layout_toEndOf="@id/sb_character_main" />
-            </RelativeLayout>
+                    android:text="@string/character_antagonist" />
+            </RadioGroup>
 
             <RelativeLayout
                 android:id="@+id/add_character_details"
@@ -73,17 +72,20 @@
                     android:layout_height="wrap_content"
                     android:imeOptions="actionNext"
                     android:inputType="textCapWords"
+                    android:maxLines="1"
                     android:hint="@string/character_name" />
 
                 <EditText
                     android:id="@+id/sb_character_age"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:inputType="textShortMessage|number"
+                    android:maxLines="1"
                     android:hint="@string/character_age"
                     android:layout_alignParentEnd="true" />
             </RelativeLayout>
 
-            <LinearLayout
+            <RadioGroup
                 android:id="@+id/gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -95,23 +97,20 @@
                     android:id="@+id/male_gender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/character_male"
-                    android:onClick="characterGender"/>
+                    android:text="@string/character_male" />
 
                 <RadioButton
                     android:id="@+id/female_gender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/character_female"
-                    android:onClick="characterGender"/>
+                    android:text="@string/character_female" />
 
                 <RadioButton
                     android:id="@+id/other_gender"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/character_other"
-                    android:onClick="characterGender"/>
-            </LinearLayout>
+                    android:text="@string/character_other" />
+            </RadioGroup>
 
             <EditText
                 android:id="@+id/sb_character_birthplace"
@@ -128,7 +127,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/character_history"
                 android:imeOptions="actionNext"
-                android:inputType="textCapSentences|textMultiLine"
+                android:inputType="textCapSentences|textMultiLine|textAutoComplete|textAutoCorrect"
                 android:layout_below="@id/sb_character_birthplace" />
 
             <EditText
@@ -137,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/character_goals"
                 android:imeOptions="actionNext"
-                android:inputType="textCapSentences|textMultiLine"
+                android:inputType="textCapSentences|textMultiLine|textAutoComplete|textAutoCorrect"
                 android:layout_below="@id/sb_character_history" />
 
             <EditText
@@ -146,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/character_conflicts"
                 android:imeOptions="actionNext"
-                android:inputType="textCapSentences|textMultiLine"
+                android:inputType="textCapSentences|textMultiLine|textAutoComplete|textAutoCorrect"
                 android:layout_below="@id/sb_character_goals" />
 
             <EditText
@@ -155,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/character_epiphany"
                 android:imeOptions="actionNext"
-                android:inputType="textCapSentences|textMultiLine"
+                android:inputType="textCapSentences|textMultiLine|textAutoComplete|textAutoCorrect"
                 android:layout_below="@id/sb_character_conflicts" />
 
             <EditText
@@ -164,7 +163,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/character_personality"
                 android:imeOptions="actionNext"
-                android:inputType="textCapSentences|textMultiLine"
+                android:inputType="textCapSentences|textMultiLine|textAutoComplete|textAutoCorrect"
                 android:layout_below="@id/sb_character_epiphany"/>
 
             <EditText
@@ -173,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/character_notes"
                 android:imeOptions="actionNext"
-                android:inputType="textCapSentences|textMultiLine"
+                android:inputType="textCapSentences|textMultiLine|textAutoComplete|textAutoCorrect"
                 android:layout_below="@id/sb_character_personality"/>
         </RelativeLayout>
     </ScrollView>

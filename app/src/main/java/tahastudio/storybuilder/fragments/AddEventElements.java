@@ -8,12 +8,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import tahastudio.storybuilder.R;
-import tahastudio.storybuilder.ShowStory;
 import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.db.SQLDatabase;
 
@@ -50,8 +50,14 @@ public class AddEventElements extends Fragment {
         add_the_event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Call activity method to close keyboard
-                ((ShowStory) getActivity()).closeKeyboard();
+                // TODO -> refactor into one method
+                if ( getActivity().getCurrentFocus() != null ) {
+                    InputMethodManager inputMethodManager = (InputMethodManager)
+                            getActivity().getApplicationContext().getSystemService
+                                    (Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow
+                            (getActivity().getCurrentFocus().getWindowToken(), 0);
+                }
 
                 // Ensure event field != null
                 if (event_title.length() < 1) {

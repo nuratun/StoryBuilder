@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import tahastudio.storybuilder.R;
-import tahastudio.storybuilder.ShowStory;
 import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.tasks.ShowElementsTask;
 import tahastudio.storybuilder.tasks.UpdateElementsTask;
@@ -80,9 +79,6 @@ public class ShowLocation extends Fragment {
         location_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Call activity method to close keyboard
-                ((ShowStory) getActivity()).closeKeyboard();
-
                 ContentValues values = new ContentValues();
                 values.put(Constants.STORY_LOCATION_NAME,
                         location_name.getText().toString());

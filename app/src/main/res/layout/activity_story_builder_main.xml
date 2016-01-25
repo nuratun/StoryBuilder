@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/divider"
     tools:context=".StoryBuilderMain">
 
     <TextView
@@ -15,9 +14,9 @@
 
     <ListView
         android:id="@+id/story_list"
-        android:theme="@style/List"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:listSelector="@drawable/big_card_list"
         android:layout_below="@id/quote" />
 
     <TextView

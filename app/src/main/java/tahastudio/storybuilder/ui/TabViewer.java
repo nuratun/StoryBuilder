@@ -20,20 +20,16 @@ public class TabViewer extends FragmentStatePagerAdapter {
         this.sbTabs = nmTabs;
     }
 
-    // TODO -> Check into releasing tabs to save memory
     @Override
     public Fragment getItem(int position) {
 
         switch (position) {
             case 0:
-                AddCharacters sbTab1 = new AddCharacters();
-                return sbTab1;
+                return new AddCharacters();
             case 1:
-                AddLocations sbTab2 = new AddLocations();
-                return sbTab2;
+                return new AddLocations();
             case 2:
-                AddEvents sbTab3 = new AddEvents();
-                return sbTab3;
+                return new AddEvents();
             default:
                 return null;
         }
@@ -48,5 +44,4 @@ public class TabViewer extends FragmentStatePagerAdapter {
     public int getCount() {
         return sbTabs;
     }
-
 }

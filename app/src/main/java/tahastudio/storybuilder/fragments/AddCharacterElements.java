@@ -5,15 +5,17 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import tahastudio.storybuilder.R;
-import tahastudio.storybuilder.ShowStory;
 import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.db.SQLDatabase;
 
@@ -21,8 +23,12 @@ import tahastudio.storybuilder.db.SQLDatabase;
  * Fragment to replace ListView in AddCharacters. Called by AddCharacters.
  */
 public class AddCharacterElements extends Fragment {
+    private int type;
+    private int gender;
 
     public AddCharacterElements() { }
+
+    // TODO -> Fix up radiogroup methods
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,13 +59,52 @@ public class AddCharacterElements extends Fragment {
         final EditText character_notes = (EditText) character_elements_layout
                 .findViewById(R.id.sb_character_notes);
 
+        final RadioGroup character_type = (RadioGroup) character_elements_layout
+                .findViewById(R.id.add_character_position);
+        character_type.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int id = character_type.getCheckedRadioButtonId();
+
+                if ( id == R.id.sb_character_main ) {
+                    type = 1; }
+                else if ( id == R.id.sb_character_antagonist ) {
+                    type = 2; }
+                else {
+                    type = 0; }
+            }
+        });
+
+        final RadioGroup character_gender = (RadioGroup) character_elements_layout
+                .findViewById(R.id.gender);
+        character_gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int id = character_gender.getCheckedRadioButtonId();
+
+                if ( id == R.id.male_gender ) {
+                    gender = 1; }
+                else if ( id == R.id.female_gender ) {
+                    gender = 2; }
+                else if ( id == R.id.other_gender ) {
+                    gender = 3; }
+                else { gender = 0; }
+            }
+        });
+
         Button add_the_character = (Button) character_elements_layout
                 .findViewById(R.id.add_the_character);
         add_the_character.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Call activity method to close keyboard
-                ((ShowStory) getActivity()).closeKeyboard();
+                // TODO -> refactor into one method
+                if ( getActivity().getCurrentFocus() != null ) {
+                    InputMethodManager inputMethodManager = (InputMethodManager)
+                            getActivity().getApplicationContext().getSystemService
+                                    (Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow
+                            (getActivity().getCurrentFocus().getWindowToken(), 0);
+                }
 
                 // Make sure the name field != null
                 if ( name.length() < 1 ) {
@@ -67,14 +112,17 @@ public class AddCharacterElements extends Fragment {
                             + "is a required field", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    // Send converted strings to a background thread to process in the db
+
+                    Log.d("type", String.valueOf(type));
+                    Log.d("gender", String.valueOf(gender));
+                    // Send converted strings and ints to a background thread to process in the db
                     addCharactersTask charactersTask =
                             new addCharactersTask(
                                     getContext(),
                                     name.getText().toString(),
                                     age.getText().toString(),
-                                    Constants.CHARACTER_TYPE, // Methods for these constants
-                                    Constants.CHARACTER_GENDER, // are in the ShowStory class
+                                    type,
+                                    gender,
                                     birthplace.getText().toString(),
                                     history.getText().toString(),
                                     goals.getText().toString(),
@@ -99,8 +147,8 @@ public class AddCharacterElements extends Fragment {
         private SQLDatabase db = SQLDatabase.getInstance(context);
         private String name;
         private String age;
-        private String type;
-        private String gender;
+        private int type;
+        private int gender;
         private String birthplace;
         private String history;
         private String goals;
@@ -113,8 +161,8 @@ public class AddCharacterElements extends Fragment {
         public addCharactersTask(Context context,
                                  String name,
                                  String age,
-                                 String type,
-                                 String gender,
+                                 int type,
+                                 int gender,
                                  String birthplace,
                                  String history,
                                  String goals,
@@ -147,6 +195,7 @@ public class AddCharacterElements extends Fragment {
 
         @Override
         protected Boolean doInBackground(Void... params) {
+
             values = new ContentValues();
 
             try {

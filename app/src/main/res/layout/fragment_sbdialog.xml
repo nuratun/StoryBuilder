@@ -12,16 +12,17 @@
         android:text="@string/dialog_instructions"
         android:textAllCaps="true"
         android:textColor="@color/primary_text_light"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:drawableStart="@drawable/ic_create_story"
         android:drawablePadding="15dp"
-        android:gravity="center" />
+        android:gravity="center_horizontal" />
 
     <EditText
         android:id="@+id/sb_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:imeOptions="actionNext"
-        android:inputType="textCapSentences"
+        android:inputType="textCapWords"
         android:hint="@string/dialog_title" />
 
     <Spinner

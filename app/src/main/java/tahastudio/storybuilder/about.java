@@ -10,9 +10,6 @@ import android.widget.TextView;
  * About page for the menu
  */
 public class About extends AppCompatActivity {
-    private String fab_author_link = "<a href='https://github.com/futuresimple/" +
-            "android-floating-action-button'>Jerzy Chalupski</a>";
-    private String icon_author_link = "<a href='http://www.freepik.com'>Freepik</a>";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +18,17 @@ public class About extends AppCompatActivity {
 
         TextView fab_author = (TextView) findViewById(R.id.fab_author);
         fab_author.setMovementMethod(LinkMovementMethod.getInstance());
-        fab_author.setText(Html.fromHtml(fab_author_link)); // Set the TextView to a link
+        // Set the TextView to a link
+        fab_author.setText(Html.fromHtml("<a href='https://github.com/futuresimple/android-floating-action-button'>Jerzy Chalupski</a>"));
 
         TextView icon_author = (TextView) findViewById(R.id.icons);
         icon_author.setMovementMethod(LinkMovementMethod.getInstance());
-        icon_author.setText(Html.fromHtml(icon_author_link));
+        // Set the TextView to a link
+        icon_author.setText(Html.fromHtml("<a href='http://www.freepik.com'>Freepik</a>"));
+
+        TextView asset_author = (TextView) findViewById(R.id.assets_author);
+        asset_author.setMovementMethod(LinkMovementMethod.getInstance());
+        // Set the TextView to a link
+        asset_author.setText(Html.fromHtml("<a href='https://romannurik.github.io/AndroidAssetStudio/index.html'>Android Asset Studio</a>"));
     }
 }

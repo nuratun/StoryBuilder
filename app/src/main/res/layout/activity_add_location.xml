@@ -34,6 +34,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_location"
+                    android:drawablePadding="10dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="@string/location_instructions"/>
             </LinearLayout>
 
@@ -44,6 +46,7 @@
                 android:hint="@string/location_name"
                 android:imeOptions="actionNext"
                 android:inputType="textCapWords"
+                android:maxLines="1"
                 android:layout_below="@+id/activity_add_location_top"/>
 
             <EditText
@@ -52,7 +55,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/location_location"
                 android:imeOptions="actionNext"
-                android:inputType="textCapSentences|textMultiLine"
+                android:inputType="textCapSentences|textMultiLine|textAutoComplete|textAutoCorrect"
+                android:maxLines="1"
                 android:layout_below="@+id/sb_location_name"/>
 
             <EditText
@@ -61,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/location_desc"
                 android:imeOptions="actionNext"
-                android:inputType="textCapSentences|textMultiLine"
+                android:inputType="textCapSentences|textMultiLine|textAutoComplete|textAutoCorrect"
                 android:layout_below="@+id/sb_location_location"/>
 
             <EditText
@@ -70,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/location_importance"
                 android:imeOptions="actionNext"
-                android:inputType="textCapSentences|textMultiLine"
+                android:inputType="textCapSentences|textMultiLine|textAutoComplete|textAutoCorrect"
                 android:layout_below="@+id/sb_location_desc"/>
 
             <EditText
@@ -79,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/location_events"
                 android:imeOptions="actionNext"
-                android:inputType="textCapSentences|textMultiLine"
+                android:inputType="textCapSentences|textMultiLine|textAutoComplete|textAutoCorrect"
                 android:layout_below="@+id/sb_location_importance"/>
 
             <EditText
@@ -88,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/location_notes"
                 android:imeOptions="actionNext"
-                android:inputType="textCapSentences|textMultiLine"
+                android:inputType="textCapSentences|textMultiLine|textAutoComplete|textAutoCorrect"
                 android:layout_below="@+id/sb_location_events"/>
         </RelativeLayout>
     </ScrollView>
@@ -106,7 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="?android:attr/borderlessButtonStyle"
-                android:text="@string/OK"/>
+                android:text="@string/OK" />
         </LinearLayout>
 
 </RelativeLayout>

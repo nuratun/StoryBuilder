@@ -2,11 +2,13 @@ package tahastudio.storybuilder.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -14,7 +16,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import tahastudio.storybuilder.R;
-import tahastudio.storybuilder.ShowStory;
 import tahastudio.storybuilder.tasks.CreateStoryTask;
 
 /**
@@ -68,11 +69,17 @@ public class SBDialog extends DialogFragment {
         builder.setPositiveButton(R.string.create_story, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
-                // Call activity method to close keyboard
-                ((ShowStory) getActivity()).closeKeyboard();
+                View view = getActivity().getCurrentFocus();
+
+                if ( view != null ) {
+                    InputMethodManager inputMethodManager = (InputMethodManager)
+                            getActivity().getApplicationContext().getSystemService
+                                    (Context.INPUT_METHOD_SERVICE);
+                    inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
 
                 // Make sure both title and genre != null
-                if (the_story_title.length() < 1 || sb_story_genre.length() < 1) {
+                if ( the_story_title.length() < 1 || sb_story_genre.length() < 1 ) {
                     Toast.makeText(getActivity().getApplicationContext(), "Both title"
                             + " and genre are required fields", Toast.LENGTH_LONG).show();
                 } else {

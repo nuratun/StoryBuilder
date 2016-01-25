@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SimpleCursorAdapter;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +21,8 @@ import tahastudio.storybuilder.db.SQLDatabase;
  * First tab for SB
  */
 public class AddCharacters extends Fragment {
-    // Make the AsyncTask global to stop it onPause
-    private setCharacterList characterList;
+    // To update the ListView
+    SimpleCursorAdapter cursorAdapter;
 
     // Make view components accessible across the class
     private View add_character_layout;
@@ -44,8 +45,7 @@ public class AddCharacters extends Fragment {
                 inflater.inflate(R.layout.fragment_add_characters, container, false);
 
         // Run an AsyncTask to fill in the ListView from the db
-        characterList = new setCharacterList();
-        characterList.execute();
+        new setCharacterList().execute();
 
         // TODO -> The below code is initialized twice. Need to refactor
         add_characters_listview =
@@ -67,6 +67,8 @@ public class AddCharacters extends Fragment {
             }
         });
 
+        Log.d("the_resume", "characters on layout");
+
         return add_character_layout;
     }
 
@@ -74,6 +76,7 @@ public class AddCharacters extends Fragment {
     @Override
     public void onAttach(Context context) {
        super.onAttach(context);
+        Log.d("the_resume", "characters on attach");
 
         try {
             characterCallback = (characterListener) context;
@@ -82,17 +85,15 @@ public class AddCharacters extends Fragment {
         }
     }
 
-    // Start, or restart, the AsyncTask when fragment is visible to user
-    // This will only update the listview on user swipe
+    // Start, the AsyncTask when fragment is resumed
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
-        if ( isVisibleToUser ) { // isVisibleToUser is set to true as default
-            if ( characterList == null ||
-                    characterList.getStatus() == AsyncTask.Status.FINISHED ) {
-                new setCharacterList().execute();
-            }
+        Log.d("the_resume", "characters on isvisible");
+
+        if ( cursorAdapter != null) {
+            cursorAdapter.notifyDataSetChanged();
         }
     }
 
@@ -105,7 +106,7 @@ public class AddCharacters extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
+            Log.d("the_resume", "characters on preexecute");
         }
 
         protected void onProgressUpdate() {
@@ -133,18 +134,20 @@ public class AddCharacters extends Fragment {
             String[] columns = new String[] {
                     Constants.STORY_CHARACTER_ID,
                     Constants.STORY_CHARACTER_NAME,
-                    Constants.STORY_CHARACTER_AGE
+                    Constants.STORY_CHARACTER_AGE,
+                    Constants.STORY_CHARACTER_BIRTHPLACE
             };
 
             // Get the TextView widgets
             int[] widgets = new int[] {
                     R.id.element_id,
                     R.id.name_info,
-                    R.id.extra_info
+                    R.id.extra_info,
+                    R.id.desc
             };
 
             // Set up the adapter
-            SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
+            cursorAdapter = new SimpleCursorAdapter(
                     context,
                     R.layout.tab_view,
                     result,

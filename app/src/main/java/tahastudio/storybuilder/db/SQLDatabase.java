@@ -79,7 +79,6 @@ public class SQLDatabase extends SQLiteOpenHelper {
 
     // Get a story ID from database depending on what row user clicked
     // on in StoryBuilderMain
-    // Location: showStoryTask
     public Integer findStoryID(String result) {
         SQLiteDatabase helper = getReadableDatabase();
         Cursor cursor =  helper.rawQuery(Constants.FIND_STORY_ID, new String[] { result });
