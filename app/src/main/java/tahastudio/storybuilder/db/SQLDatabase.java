@@ -3,6 +3,7 @@ package tahastudio.storybuilder.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
@@ -113,22 +114,13 @@ public class SQLDatabase extends SQLiteOpenHelper {
     }
 
     // For user search queries
-    public Cursor getSearchResults(String find, String[] columns) {
-        SQLiteDatabase helper = getReadableDatabase();
-        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
+    public Cursor getSearchResults(String id,
+                                   String[] projection,
+                                   String selection,
+                                   String[] selectionArgs,
+                                   String sortOrder) {
 
-        columns = new String[] {
-                Constants.STORY_CHARACTER_NAME,
-                Constants.STORY_CHARACTER_BIRTHPLACE,
-                Constants.STORY_CHARACTER_HISTORY,
-                Constants.STORY_CHARACTER_CONFLICTS,
-                Constants.STORY_CHARACTER_PERSONALITY,
-                Constants.STORY_CHARACTER_STORYLINE,
-                Constants.STORY_EVENT_LINER,
-                Constants.STORY_EVENT_DESC,
-                Constants.STORY_LOCATION_NAME,
-                Constants.STORY_LOCATION_EVENTS,
-                Constants.STORY_LOCATION_DESC };
+        SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
 
         // Tables to search
         builder.setTables(Constants.STORY_TABLE);
@@ -136,22 +128,50 @@ public class SQLDatabase extends SQLiteOpenHelper {
         builder.setTables(Constants.STORY_LOCATION_TABLE);
         builder.setTables(Constants.STORY_EVENT_TABLE);
 
-        Cursor cursor = builder.query(helper,
-                columns,
-                "find="+find,
-                new String[] { find },
-                Constants.DB_ID,
-                null,
-                Constants.DB_ID);
+        if ( id != null ) {
+            builder.appendWhere(Constants.DB_ID + " = " + id);
+        }
 
-        if ( cursor == null ) {
-            return null;
-        }
-        else if ( !cursor.moveToFirst() ) {
-            cursor.close();
-            return null;
-        }
+        Cursor cursor = builder.query(getReadableDatabase(),
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                sortOrder);
 
         return cursor;
+    }
+
+    public long addEntry(ContentValues values) throws SQLException {
+        long id = getWritableDatabase().insert(Constants.TABLE_ENTRY, "", values);
+
+        if ( id <= 0 ) {
+            throw new SQLException("Failed to add entry");
+        }
+        return id;
+    }
+
+    public int deleteEntry(String id) {
+        if ( id == null ) {
+            return getWritableDatabase().delete(Constants.TABLE_ENTRY, null, null);
+        } else {
+            return getWritableDatabase().delete(
+                    Constants.TABLE_ENTRY,
+                    Constants.DB_ID + "=?",
+                    new String[] { id });
+        }
+    }
+
+    public int updateEntry(String id, ContentValues values) {
+        if ( id == null ) {
+            return getWritableDatabase().update(Constants.TABLE_ENTRY, values, null, null);
+        } else {
+            return getWritableDatabase().update(
+                    Constants.TABLE_ENTRY,
+                    values,
+                    Constants.DB_ID + "=?",
+                    new String[] { id });
+        }
     }
 }

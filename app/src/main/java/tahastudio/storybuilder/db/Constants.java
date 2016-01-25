@@ -1,19 +1,31 @@
 package tahastudio.storybuilder.db;
 
+import android.content.UriMatcher;
+import android.net.Uri;
+
 /**
  * To store constants for SQL queries.
  * Most of these constants will not change throughout the lifecycle
  */
 public class Constants {
 
+    // The below if for the content provider class, StoryProvider
+    // Since this content provider will not be accessible by outside apps,
+    // the provider is this app itself
+    public static final String PROVIDER_NAME = "tahastudio.storybuilder";
+    public static final int ROW_ID = 1;
+    public static final int ROW_DETAILS = 2;
+    public static final Uri CONTENT_URI = Uri.parse("content://" + PROVIDER_NAME + ".db");
+    public static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+    // This must be updated by the activity/fragment calling the content provider
+    // insert, delete, or update methods. The content provider insert method calls the database
+    // methods addEntry, deleteEntry, and updateEntry.
+    // These methods require that a table name be passed. It's currently not possible to modify
+    // these methods on the content provider, as that will prevent the required overrides.
+    public static String TABLE_ENTRY = "";
+
     // Create public static references for the story, so other classes can access them
     public static int SB_ID; // This value will not change unless a user selects a different story
-    public static int CHARACTER_TYPE_PROTAGONIST;
-    public static int CHARACTER_TYPE_ANTAGONIST;
-
-    public static int CHARACTER_GENDER_MALE;
-    public static int CHARACTER_GENDER_FEMALE;
-    public static int CHARACTER_GENDER_OTHER;
 
     // Version number must change if database changes
     public static final int DATABASE_VERSION = 3;

@@ -10,7 +10,9 @@
         android:label="@string/app_name"
         android:theme="@style/StoryBuilderTheme"
         android:largeHeap="true">
-
+        <provider
+            android:authorities="tahastudio.storybuilder.db.SQLDatabase"
+            android:name="tahastudio.storybuilder.db.StoryProvider" />
         <activity
             android:name=".ui.SplashScreen"
             android:label="@string/app_name">
