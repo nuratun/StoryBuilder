@@ -1,11 +1,13 @@
 package tahastudio.storybuilder.db;
 
 import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 /**
  * ContentProvider for story elements. All other activities/fragments will now call
@@ -14,22 +16,37 @@ import android.net.Uri;
 public class StoryProvider extends ContentProvider {
     // Get an instance of the database
     private SQLDatabase db = null;
+    private ContentResolver contentResolver;
+
 
     @Override
     public String getType(Uri uri) {
         switch (Constants.uriMatcher.match(uri)) {
-            case Constants.ROW_ID:
-                return "tahastudio.storybuilder.db.SQLDatabase";
-            case Constants.ROW_DETAILS:
-                return "tahastudio.storybuilder.db.SQLDatabase";
+            case (Constants.CHARACTER_LIST):
+                return Constants.CONTENT_URI + "/" + Constants.STORY_CHARACTER_TABLE;
+            case (Constants.CHARACTER_ID):
+                return Constants.CONTENT_URI + "/" + Constants.STORY_CHARACTER_TABLE
+                        + "/" + Constants.DB_ID;
+            case (Constants.LOCATION_LIST):
+                return Constants.CONTENT_URI + "/" + Constants.STORY_LOCATION_TABLE;
+            case (Constants.LOCATION_ID):
+                return Constants.CONTENT_URI + "/" + Constants.STORY_LOCATION_TABLE
+                        + "/" + Constants.DB_ID;
+            case (Constants.EVENT_LIST):
+                return Constants.CONTENT_URI + "/" + Constants.STORY_EVENT_TABLE;
+            case (Constants.EVENT_ID):
+                return Constants.CONTENT_URI + "/" + Constants.STORY_EVENT_ID
+                        + "/" + Constants.DB_ID;
         }
-        return "";
+        return "tahastudio.storybuilder.db.SQLDatabase";
     }
 
     @Override
     public boolean onCreate() {
         Context context = getContext();
         db = new SQLDatabase(context);
+        contentResolver = context.getContentResolver(); // This to notify of db changes
+
         return true;
     }
 
@@ -39,18 +56,50 @@ public class StoryProvider extends ContentProvider {
                         String selection,
                         String[] selectionArgs,
                         String sortOrder) {
-        String id = null;
 
-        if ( Constants.uriMatcher.match(uri) == Constants.ROW_ID ) {
-            id = uri.getPathSegments().get(1);
+        String id = null; // This will set the table in the db
+
+        Log.d("the_uri", String.valueOf(uri));
+
+        int uriType = Constants.uriMatcher.match(uri);
+
+        switch (uriType) {
+            case Constants.CHARACTER_LIST:
+                id = Constants.STORY_CHARACTER_TABLE;
+                break;
+            case Constants.CHARACTER_ID:
+                id = Constants.STORY_CHARACTER_TABLE;
+                break;
+            case Constants.LOCATION_LIST:
+                id = Constants.STORY_LOCATION_TABLE;
+                break;
+            case Constants.LOCATION_ID:
+                id = Constants.STORY_LOCATION_TABLE;
+                break;
+            case Constants.EVENT_LIST:
+                id = Constants.STORY_EVENT_TABLE;
+                break;
+            case Constants.EVENT_ID:
+                id = Constants.STORY_EVENT_TABLE;
+                break;
         }
-        return db.getSearchResults(id, projection, selection, selectionArgs, sortOrder);
+
+        Cursor cursor = db.getSearchResults(id, projection, selection, selectionArgs, sortOrder);
+
+        // Call the ContentResolver on the cursor
+        cursor.setNotificationUri(contentResolver, uri);
+
+        return cursor;
     }
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         try {
             long id = db.addEntry(values);
+
+            // Notify ContentResolver of db change
+            contentResolver.notifyChange(uri, null);
+
             return ContentUris.withAppendedId(Constants.CONTENT_URI, id);
         } catch (Exception e) {
             e.printStackTrace();
@@ -60,21 +109,18 @@ public class StoryProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        String id = null;
-        if ( Constants.uriMatcher.match(uri) == Constants.ROW_ID ) {
-            // Deletion is for a row. Get that row.
-            id = uri.getPathSegments().get(1);
-        }
-        return db.deleteEntry(id);
+        // Notify ContentResolver of db change
+        contentResolver.notifyChange(uri, null);
+
+        return db.deleteEntry(selection);
     }
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        String id = null;
-        if ( Constants.uriMatcher.match(uri) == Constants.ROW_ID ) {
-            // Update is for a row. Get that row.
-            id = uri.getPathSegments().get(1);
-        }
-        return db.updateEntry(id, values);
+
+        // Notify ContentResolver of db change
+        contentResolver.notifyChange(uri, null);
+
+        return db.updateEntry(selection, values);
     }
 }

@@ -2,9 +2,11 @@ package tahastudio.storybuilder.fragments;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,19 +17,22 @@ import android.widget.ListView;
 
 import tahastudio.storybuilder.R;
 import tahastudio.storybuilder.db.Constants;
-import tahastudio.storybuilder.db.SQLDatabase;
-
 
 /**
  * Second tab for SB
  */
-public class AddLocations extends Fragment {
-    // To update the ListView
-    SimpleCursorAdapter cursorAdapter;
+public class AddLocations extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+    // To update the ListView through the LoadManager
+    private SimpleCursorAdapter cursorAdapter;
+    private android.support.v4.content.CursorLoader cursorLoader;
+    private ListView locations_listview; // ListView to update
 
-    // Make view components accessible across the class
-    private View add_location_layout;
-    private ListView add_locations_listview;
+    // From String[] for the cursor
+    String[] from = new String[] {
+            Constants.DB_ID,
+            Constants.STORY_LOCATION_ID,
+            Constants.STORY_LOCATION_NAME,
+            Constants.STORY_LOCATION_LOCATION };
 
     // For interface method
     locationListener locationCallback;
@@ -42,21 +47,36 @@ public class AddLocations extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        add_location_layout = inflater.inflate(R.layout.fragment_add_locations, container, false);
+        View location_layout = inflater.inflate(R.layout.fragment_add_locations, container, false);
 
-        // Run an AsyncTask to fill in the ListView from the db
-        new setLocationList().execute();
+        locations_listview = (ListView) location_layout.findViewById(R.id.locations_listview);
 
-        // TODO -> The below code is initialized twice. Need to refactor
-        add_locations_listview =
-                (ListView) add_location_layout.findViewById(R.id.locations_listview);
+        // To int[] for the SimpleCursorAdapter
+        int[] to = new int[] {
+                R.id.story_id,
+                R.id.element_id,
+                R.id.name_info,
+                R.id.desc };
+
+        cursorAdapter = new SimpleCursorAdapter(
+                getActivity().getApplicationContext(),
+                R.layout.tab_view,
+                null,
+                from,
+                to,
+                0);
+        locations_listview.setAdapter(cursorAdapter);
+
+        // To initialize the LoaderManager
+        getLoaderManager().initLoader(Constants.LOADER, null, this);
+
         // Clicking on a location row will bring up a new fragment with info
         // TODO --> Long click brings up the delete option
-        add_locations_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        locations_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Return a cursor with the row data
-                Cursor cursor = (Cursor) add_locations_listview.getItemAtPosition(position);
+                Cursor cursor = (Cursor) locations_listview.getItemAtPosition(position);
 
                 // Grab the first field from the row and cast it to a string
                 // Send to the interface. Implemented in ShowStory
@@ -66,89 +86,47 @@ public class AddLocations extends Fragment {
             }
         });
 
-        return add_location_layout;
+        return location_layout;
     }
 
     // Ensure ShowStory implements the interface
     public void onAttach(Context context) {
         super.onAttach(context);
+        Log.d("the_resume", "locations on attach");
 
         try {
             locationCallback = (locationListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + "must implement locationListener");
+            throw new ClassCastException(context.toString() + " must implement locationListener");
         }
     }
 
-    // Start, or restart, AsyncTask when user views the fragment
+    // Must implement the below methods for the LoaderManager
     @Override
-    public void onResume() {
-        super.onResume();
+    public Loader<Cursor> onCreateLoader(int num, Bundle state) {
+        // This URI will be sent to a switch statement in the StoryProvider. It will
+        // set the tables on setTables() method in the db to pull the data for the ListView
+        Uri uri = Uri.parse(Constants.CONTENT_URI + "/" + Constants.STORY_LOCATION_TABLE);
+        Log.d("uri_parse", String.valueOf(uri));
 
-        Log.d("the_resume", "locations");
+        // Send the URI and the string[] to StoryProvider to interface with the db
+        // This will be returned to onLoadFinished
+        cursorLoader = new android.support.v4.content.CursorLoader(
+                getActivity().getApplicationContext(), uri, from, null, null, null);
 
-        if ( cursorAdapter != null ) {
-            cursorAdapter.notifyDataSetChanged();
-        }
+        return cursorLoader;
     }
 
-    // Populate the ListView with the locations in this story. Otherwise, return null
-    private class setLocationList extends AsyncTask<Void, Void, Cursor> {
-        private Context context = getActivity().getApplicationContext();
-        private SQLDatabase db = SQLDatabase.getInstance(context); // An instance of the database
+    // Once data is returned from onCreateLoader, swap the empty cursor
+    // from onCreateView with a fresh one
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        cursorAdapter.swapCursor(cursor);
+    }
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Cursor doInBackground(Void... params) {
-
-            try {
-                // Create a Cursor object to hold the rows
-                // Need to add in the _id of the story, as the
-                // GRAB_LOCATION_DETAILS string is a final static string
-                return db.getRows(Constants.GRAB_LOCATION_DETAILS + Constants.SB_ID);
-            } catch (Exception e) {
-                e.printStackTrace(); }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Cursor result) {
-            super.onPostExecute(result);
-
-            // Get the column names
-            String[] columns = new String[] {
-                    Constants.STORY_LOCATION_ID,
-                    Constants.STORY_LOCATION_NAME,
-                    Constants.STORY_LOCATION_LOCATION
-            };
-
-            // Get the TextView widgets
-            int[] widgets = new int[] {
-                    R.id.element_id,
-                    R.id.name_info,
-                    R.id.extra_info
-            };
-
-            // Set up the adapter
-            cursorAdapter = new SimpleCursorAdapter(
-                    context,
-                    R.layout.tab_view,
-                    result,
-                    columns,
-                    widgets,
-                    0);
-
-            // Notify thread the data has changed
-            cursorAdapter.notifyDataSetChanged();
-
-            // Initialize
-            add_locations_listview = (ListView) add_location_layout
-                    .findViewById(R.id.locations_listview);
-            add_locations_listview.setAdapter(cursorAdapter);
-        }
+    // Reset the entire cursor when the fragment starts from the beginning
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        cursorAdapter.swapCursor(null);
     }
 }

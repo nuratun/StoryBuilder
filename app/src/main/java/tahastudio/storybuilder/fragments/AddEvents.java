@@ -2,9 +2,11 @@ package tahastudio.storybuilder.fragments;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,19 +17,21 @@ import android.widget.ListView;
 
 import tahastudio.storybuilder.R;
 import tahastudio.storybuilder.db.Constants;
-import tahastudio.storybuilder.db.SQLDatabase;
-
 
 /**
  * 3rd tab for SB
  */
-public class AddEvents extends Fragment {
-    // To update the ListView
-    SimpleCursorAdapter cursorAdapter;
+public class AddEvents extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+    // To update the ListView through the LoadManager
+    private SimpleCursorAdapter cursorAdapter;
+    private android.support.v4.content.CursorLoader cursorLoader;
+    private ListView event_listview; // ListView to update
 
-    // Make view components accessible across the class
-    private View add_event_layout;
-    private ListView add_event_listview;
+    // From String[] for the cursor
+    private String[] from = new String[] {
+            Constants.DB_ID,
+            Constants.STORY_EVENT_ID,
+            Constants.STORY_EVENT_LINER };
 
     // For interface method
     eventListener eventCallback;
@@ -42,19 +46,34 @@ public class AddEvents extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        add_event_layout = inflater.inflate(R.layout.fragment_add_events, container, false);
+        View event_layout = inflater.inflate(R.layout.fragment_add_events, container, false);
 
-        // Run an AsyncTask to fill in the ListView from the db
-        new setEventList().execute();
+        event_listview = (ListView) event_layout.findViewById(R.id.event_listview);
 
-        // TODO -> The below code is initialized twice. Need to refactor
-        add_event_listview =
-                (ListView) add_event_layout.findViewById(R.id.event_listview);
-        add_event_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        // To int[] for the SimpleCursorAdapter
+        int[] to = new int[] {
+                R.id.story_id,
+                R.id.element_id,
+                R.id.name_info };
+
+        cursorAdapter = new SimpleCursorAdapter(
+                getActivity().getApplicationContext(),
+                R.layout.tab_view,
+                null,
+                from,
+                to,
+                0);
+        event_listview.setAdapter(cursorAdapter);
+
+        // To initialize the LoaderManager
+        getLoaderManager().initLoader(Constants.LOADER, null, this);
+
+        // Clicking on an event row will bring up a new fragment with info
+        event_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Return a cursor with the row data
-                Cursor cursor = (Cursor) add_event_listview.getItemAtPosition(position);
+                Cursor cursor = (Cursor) event_listview.getItemAtPosition(position);
 
                 // Grab the first field from the row and cast it to a string
                 // Send to the interface. Implemented in ShowStory
@@ -64,13 +83,14 @@ public class AddEvents extends Fragment {
             }
         });
 
-        return add_event_layout;
+        return event_layout;
     }
 
     // Ensure ShowStory implements the interface
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        Log.d("the_resume", "events on attach");
 
         try {
             eventCallback = (eventListener) context;
@@ -79,71 +99,32 @@ public class AddEvents extends Fragment {
         }
     }
 
-    // Start, or restart, the AsyncTask when fragment becomes visible to the user
+    // Must implement the below methods for the LoaderManager
     @Override
-    public void onResume() {
-        super.onResume();
+    public Loader<Cursor> onCreateLoader(int num, Bundle state) {
+        // This URI will be sent to a switch statement in the StoryProvider. It will
+        // set the tables on setTables() method in the db to pull the data for the ListView
+        Uri uri = Uri.parse(Constants.CONTENT_URI + "/" + Constants.STORY_EVENT_TABLE);
+        Log.d("uri_parse", String.valueOf(uri));
 
-        Log.d("the_resume", "events");
+        // Send the URI and the string[] to StoryProvider to interface with the db
+        // This will be returned to onLoadFinished
+        cursorLoader = new android.support.v4.content.CursorLoader(
+                getActivity().getApplication(), uri, from, null, null, null);
 
-        if ( cursorAdapter != null ) {
-            cursorAdapter.notifyDataSetChanged();
-        }
+        return cursorLoader;
     }
 
-    // Populate the ListView with the events for this story. Otherwise, return null
-    private class setEventList extends AsyncTask<Void, Void, Cursor> {
-        private Context context = getActivity().getApplicationContext();
-        private SQLDatabase db = SQLDatabase.getInstance(context);
+    // Once data is returned from onCreateLoader, swap the empty cursor
+    // from onCreateView with a fresh one
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        cursorAdapter.swapCursor(cursor);
+    }
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Cursor doInBackground(Void... params) {
-            try {
-                // Return a cursor object that holds the rows
-                // Need to add in the _id of the story, as the
-                // GRAB_EVENT_DETAILS string is a final static string
-                return db.getRows(Constants.GRAB_EVENT_DETALIS + Constants.SB_ID);
-            } catch (Exception e) {
-                e.printStackTrace(); }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Cursor result) {
-            super.onPostExecute(result);
-
-            // Get the columns
-            String[] columns = new String[] {
-                    Constants.STORY_EVENT_ID,
-                    Constants.STORY_EVENT_LINER
-            };
-
-            // Get the widget list
-            int[] widgets = new int[] {
-                    R.id.element_id,
-                    R.id.name_info
-            };
-
-            // Set up the adapter
-            cursorAdapter = new SimpleCursorAdapter(
-                    context,
-                    R.layout.tab_view,
-                    result,
-                    columns,
-                    widgets,
-                    0);
-
-            // Notify thread the data has changed
-            cursorAdapter.notifyDataSetChanged();
-
-            // Initialize
-            add_event_listview = (ListView) add_event_layout.findViewById(R.id.event_listview);
-            add_event_listview.setAdapter(cursorAdapter);
-        }
+    // Reset the entire cursor when the fragment starts from the beginning
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        cursorAdapter.swapCursor(null);
     }
 }

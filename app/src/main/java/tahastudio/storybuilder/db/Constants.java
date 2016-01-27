@@ -8,21 +8,8 @@ import android.net.Uri;
  * Most of these constants will not change throughout the lifecycle
  */
 public class Constants {
-
-    // The below if for the content provider class, StoryProvider
-    // Since this content provider will not be accessible by outside apps,
-    // the provider is this app itself
-    public static final String PROVIDER_NAME = "tahastudio.storybuilder";
-    public static final int ROW_ID = 1;
-    public static final int ROW_DETAILS = 2;
-    public static final Uri CONTENT_URI = Uri.parse("content://" + PROVIDER_NAME + ".db");
-    public static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-    // This must be updated by the activity/fragment calling the content provider
-    // insert, delete, or update methods. The content provider insert method calls the database
-    // methods addEntry, deleteEntry, and updateEntry.
-    // These methods require that a table name be passed. It's currently not possible to modify
-    // these methods on the content provider, as that will prevent the required overrides.
-    public static String TABLE_ENTRY = "";
+    // The Loader instance for AddCharacters, AddLocations, and AddEvents
+    public static final int LOADER = 0;
 
     // Create public static references for the story, so other classes can access them
     public static int SB_ID; // This value will not change unless a user selects a different story
@@ -72,6 +59,29 @@ public class Constants {
     public static final String STORY_LOCATION_IMPORTANCE = "location_importance";
     public static final String STORY_LOCATION_EVENTS = "location_events";
     public static final String STORY_LOCATION_NOTES = "location_notes";
+
+    // The below if for the content provider class, StoryProvider
+    // Since this content provider will not be accessible by outside apps,
+    // the provider is this app itself
+    public static final String AUTHORITY = "tahastudio.storybuilder.db.SQLDatabase";
+    public static final String PROVIDER_NAME = "tahastudio.storybuilder.db.StoryProvider";
+    public static final int CHARACTER_LIST = 1;
+    public static final int CHARACTER_ID = 2;
+    public static final int LOCATION_LIST = 3;
+    public static final int LOCATION_ID = 4;
+    public static final int EVENT_LIST = 5;
+    public static final int EVENT_ID = 6;
+    public static final Uri CONTENT_URI = Uri.parse("content://" + PROVIDER_NAME);
+    public static final UriMatcher uriMatcher;
+    static  {
+        uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+        uriMatcher.addURI(PROVIDER_NAME, STORY_CHARACTER_TABLE, CHARACTER_LIST);
+        uriMatcher.addURI(PROVIDER_NAME, STORY_CHARACTER_TABLE + "/#", CHARACTER_ID);
+        uriMatcher.addURI(PROVIDER_NAME, STORY_LOCATION_TABLE, LOCATION_LIST);
+        uriMatcher.addURI(PROVIDER_NAME, STORY_LOCATION_TABLE + "/#", LOCATION_ID);
+        uriMatcher.addURI(PROVIDER_NAME, STORY_EVENT_TABLE, EVENT_LIST);
+        uriMatcher.addURI(PROVIDER_NAME, STORY_EVENT_TABLE + "/#", EVENT_ID);
+    }
 
     // Get latest story entry id from database
     public static final String GET_STORY_ID = "SELECT MAX(_id) FROM " + STORY_TABLE;

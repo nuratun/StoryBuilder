@@ -2,9 +2,11 @@ package tahastudio.storybuilder.fragments;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,18 +17,23 @@ import android.widget.ListView;
 
 import tahastudio.storybuilder.R;
 import tahastudio.storybuilder.db.Constants;
-import tahastudio.storybuilder.db.SQLDatabase;
 
 /**
  * First tab for SB
  */
-public class AddCharacters extends Fragment {
-    // To update the ListView
-    SimpleCursorAdapter cursorAdapter;
+public class AddCharacters extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+    // To update the ListView through the LoaderManager
+    private SimpleCursorAdapter cursorAdapter;
+    private android.support.v4.content.CursorLoader cursorLoader;
+    private ListView characters_listview;
 
-    // Make view components accessible across the class
-    private View add_character_layout;
-    private ListView add_characters_listview;
+    // From String[] for the cursor
+    private String[] from = new String[] {
+            Constants.DB_ID,
+            Constants.STORY_CHARACTER_ID,
+            Constants.STORY_CHARACTER_NAME,
+            Constants.STORY_CHARACTER_AGE,
+            Constants.STORY_CHARACTER_BIRTHPLACE };
 
     // For interface method
     characterListener characterCallback;
@@ -41,23 +48,39 @@ public class AddCharacters extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        add_character_layout =
-                inflater.inflate(R.layout.fragment_add_characters, container, false);
+        View character_layout = inflater.inflate(
+                R.layout.fragment_add_characters, container, false);
 
-        // Run an AsyncTask to fill in the ListView from the db
-        new setCharacterList().execute();
+         characters_listview = (ListView) character_layout.findViewById(R.id.characters_listview);
 
-        // TODO -> The below code is initialized twice. Need to refactor
-        add_characters_listview =
-                (ListView) add_character_layout.findViewById(R.id.characters_listview);
+        // To int[] for the SimpleCursorAdapter
+        int[] to = new int[] {
+                R.id.story_id,
+                R.id.element_id,
+                R.id.name_info,
+                R.id.extra_info,
+                R.id.desc };
+
+        // Set up the adapter to add to the ListView
+        cursorAdapter = new SimpleCursorAdapter(
+                getActivity().getApplicationContext(),
+                R.layout.tab_view,
+                null,
+                from,
+                to,
+                0);
+        characters_listview.setAdapter(cursorAdapter);
+
+        // To initialize the LoaderManager
+        getLoaderManager().initLoader(Constants.LOADER, null, this);
 
         // Clicking on a character row will bring up a new fragment with info
         // TODO --> Long click brings up the delete option
-        add_characters_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        characters_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Return a cursor with the row data
-                Cursor cursor = (Cursor) add_characters_listview.getItemAtPosition(position);
+                Cursor cursor = (Cursor) characters_listview.getItemAtPosition(position);
 
                 // Grab the id and name from the row and send to the interface.
                 // Implemented in ShowStory
@@ -67,9 +90,7 @@ public class AddCharacters extends Fragment {
             }
         });
 
-        Log.d("the_resume", "characters on layout");
-
-        return add_character_layout;
+        return character_layout;
     }
 
     // Ensure ShowStory implements the interface
@@ -85,82 +106,31 @@ public class AddCharacters extends Fragment {
         }
     }
 
-    // Start, the AsyncTask when fragment is resumed
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
+    // Must implement the below methods for the LoaderManager
+    public Loader<Cursor> onCreateLoader(int num, Bundle state) {
+        // This URI will be sent to a switch statement in the StoryProvider. It will
+        // set the tables on setTables() method in the db to pull the data for the ListView
+        Uri uri = Uri.parse(Constants.CONTENT_URI + "/" + Constants.STORY_CHARACTER_TABLE);
+        Log.d("uri_parse", String.valueOf(uri));
 
-        Log.d("the_resume", "characters on isvisible");
+        // Send the URI and the string[] to StoryProvider to interface with the db
+        // This will be returned to onLoadFinished
+        cursorLoader = new android.support.v4.content.CursorLoader(
+                getActivity().getApplicationContext(), uri, from, null, null, null);
 
-        if ( cursorAdapter != null) {
-            cursorAdapter.notifyDataSetChanged();
-        }
+        return cursorLoader;
     }
 
-    // Populate the ListView with characters saved for this story
-    // Otherwise, return null
-    private class setCharacterList extends AsyncTask<Void, Void, Cursor> {
-        private Context context = getActivity().getApplicationContext();
-        private SQLDatabase db = SQLDatabase.getInstance(context);
+    // Once data is returned from onCreateLoader, swap the empty cursor
+    // from onCreateView with a fresh one
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        cursorAdapter.swapCursor(cursor);
+        Log.d("onLoadFinished", "onLoadFinished: adapter is null");
+    }
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            Log.d("the_resume", "characters on preexecute");
-        }
-
-        protected void onProgressUpdate() {
-            super.onProgressUpdate();
-        }
-
-        @Override
-        protected Cursor doInBackground(Void... params) {
-            try {
-                // Return a Cursor object that holds the rows
-                // Need to add in the _id of the story, as the
-                // GRAB_CHARACTER_DETAILS string is a final static string
-                return db.getRows(Constants.GRAB_CHARACTER_DETAILS + Constants.SB_ID);
-            }
-            catch (Exception e) {
-                e.printStackTrace(); }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Cursor result) {
-            super.onPostExecute(result);
-
-            // Get the column names
-            String[] columns = new String[] {
-                    Constants.STORY_CHARACTER_ID,
-                    Constants.STORY_CHARACTER_NAME,
-                    Constants.STORY_CHARACTER_AGE,
-                    Constants.STORY_CHARACTER_BIRTHPLACE
-            };
-
-            // Get the TextView widgets
-            int[] widgets = new int[] {
-                    R.id.element_id,
-                    R.id.name_info,
-                    R.id.extra_info,
-                    R.id.desc
-            };
-
-            // Set up the adapter
-            cursorAdapter = new SimpleCursorAdapter(
-                    context,
-                    R.layout.tab_view,
-                    result,
-                    columns,
-                    widgets,
-                    0);
-
-            // Notify thread the data has changed
-            cursorAdapter.notifyDataSetChanged();
-
-            add_characters_listview =
-                    (ListView) add_character_layout.findViewById(R.id.characters_listview);
-            add_characters_listview.setAdapter(cursorAdapter);
-        }
+    // Reset the entire cursor when the fragment starts from the beginning
+    public void onLoaderReset(Loader<Cursor> loader) {
+        cursorAdapter.swapCursor(null);
+        Log.d("onLoadReset", "onLoadReset: adapter is null");
     }
 }

@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.util.Log;
 
 /**
  * This class holds all the SQL queries used elsewhere in the app
@@ -123,28 +124,20 @@ public class SQLDatabase extends SQLiteOpenHelper {
         SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
 
         // Tables to search
-        builder.setTables(Constants.STORY_TABLE);
-        builder.setTables(Constants.STORY_CHARACTER_TABLE);
-        builder.setTables(Constants.STORY_LOCATION_TABLE);
-        builder.setTables(Constants.STORY_EVENT_TABLE);
+        builder.setTables(id);
+        Log.d("the_id", id);
 
-        if ( id != null ) {
-            builder.appendWhere(Constants.DB_ID + " = " + id);
-        }
-
-        Cursor cursor = builder.query(getReadableDatabase(),
+        return builder.query(getReadableDatabase(),
                 projection,
                 selection,
                 selectionArgs,
                 null,
                 null,
                 sortOrder);
-
-        return cursor;
     }
 
     public long addEntry(ContentValues values) throws SQLException {
-        long id = getWritableDatabase().insert(Constants.TABLE_ENTRY, "", values);
+        long id = getWritableDatabase().insert(null, "", values);
 
         if ( id <= 0 ) {
             throw new SQLException("Failed to add entry");
@@ -154,10 +147,10 @@ public class SQLDatabase extends SQLiteOpenHelper {
 
     public int deleteEntry(String id) {
         if ( id == null ) {
-            return getWritableDatabase().delete(Constants.TABLE_ENTRY, null, null);
+            return getWritableDatabase().delete(null, null, null);
         } else {
             return getWritableDatabase().delete(
-                    Constants.TABLE_ENTRY,
+                    id,
                     Constants.DB_ID + "=?",
                     new String[] { id });
         }
@@ -165,10 +158,10 @@ public class SQLDatabase extends SQLiteOpenHelper {
 
     public int updateEntry(String id, ContentValues values) {
         if ( id == null ) {
-            return getWritableDatabase().update(Constants.TABLE_ENTRY, values, null, null);
+            return getWritableDatabase().update(null, values, null, null);
         } else {
             return getWritableDatabase().update(
-                    Constants.TABLE_ENTRY,
+                    id,
                     values,
                     Constants.DB_ID + "=?",
                     new String[] { id });
