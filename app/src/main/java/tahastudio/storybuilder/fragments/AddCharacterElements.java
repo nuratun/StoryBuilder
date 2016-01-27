@@ -2,7 +2,7 @@ package tahastudio.storybuilder.fragments;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import tahastudio.storybuilder.R;
 import tahastudio.storybuilder.db.Constants;
-import tahastudio.storybuilder.db.SQLDatabase;
 
 /**
  * Fragment to replace ListView in AddCharacters. Called by AddCharacters.
@@ -112,25 +111,30 @@ public class AddCharacterElements extends Fragment {
                             + "is a required field", Toast.LENGTH_LONG).show();
                 }
                 else {
-
                     Log.d("type", String.valueOf(type));
                     Log.d("gender", String.valueOf(gender));
-                    // Send converted strings and ints to a background thread to process in the db
-                    addCharactersTask charactersTask =
-                            new addCharactersTask(
-                                    getContext(),
-                                    name.getText().toString(),
-                                    age.getText().toString(),
-                                    type,
-                                    gender,
-                                    birthplace.getText().toString(),
-                                    history.getText().toString(),
-                                    goals.getText().toString(),
-                                    conflicts.getText().toString(),
-                                    epiphany.getText().toString(),
-                                    personality.getText().toString(),
-                                    character_notes.getText().toString());
-                    charactersTask.execute();
+
+                    Uri uri = Uri.parse(Constants.CONTENT_URI + "/"
+                            + Constants.STORY_CHARACTER_TABLE);
+
+                    ContentValues values = new ContentValues(); // Send data to the ContentProvider
+
+                    values.put(Constants.DB_ID, Constants.SB_ID);
+                    values.put(Constants.STORY_CHARACTER_NAME, name.getText().toString());
+                    values.put(Constants.STORY_CHARACTER_AGE, age.getText().toString());
+                    values.put(Constants.STORY_CHARACTER_TYPE, type);
+                    values.put(Constants.STORY_CHARACTER_GENDER, gender);
+                    values.put(Constants.STORY_CHARACTER_BIRTHPLACE, birthplace.getText().toString());
+                    values.put(Constants.STORY_CHARACTER_HISTORY, history.getText().toString());
+                    values.put(Constants.STORY_CHARACTER_GOALS, goals.getText().toString());
+                    values.put(Constants.STORY_CHARACTER_CONFLICTS, conflicts.getText().toString());
+                    values.put(Constants.STORY_CHARACTER_EPIPHANY, epiphany.getText().toString());
+                    values.put(Constants.STORY_CHARACTER_PERSONALITY, personality.getText().toString());
+                    values.put(Constants.STORY_CHARACTER_NOTES, character_notes.getText().toString());
+
+                    // Call the insert method on StoryProvider, through the ContentResolver
+                    // This will allow for automatic updates on the ListView
+                    getActivity().getApplicationContext().getContentResolver().insert(uri, values);
                 }
                 // Return to AddCharacters class on button click, immediately
                 getFragmentManager().popBackStackImmediate();
@@ -138,93 +142,5 @@ public class AddCharacterElements extends Fragment {
         });
 
         return character_elements_layout;
-    }
-
-    // Pass multiple variables to the constructor
-    private class addCharactersTask extends AsyncTask<Void, Void, Boolean> {
-        private Context context;
-        private ContentValues values;
-        private SQLDatabase db = SQLDatabase.getInstance(context);
-        private String name;
-        private String age;
-        private int type;
-        private int gender;
-        private String birthplace;
-        private String history;
-        private String goals;
-        private String conflicts;
-        private String epiphany;
-        private String personality;
-        private String notes;
-
-        // Constructor
-        public addCharactersTask(Context context,
-                                 String name,
-                                 String age,
-                                 int type,
-                                 int gender,
-                                 String birthplace,
-                                 String history,
-                                 String goals,
-                                 String conflicts,
-                                 String epiphany,
-                                 String personality,
-                                 String notes) {
-            this.context = context;
-            this.name = name;
-            this.age = age;
-            this.type = type;
-            this.gender = gender;
-            this.birthplace = birthplace;
-            this.history = history;
-            this.goals = goals;
-            this.conflicts = conflicts;
-            this.epiphany = epiphany;
-            this.personality = personality;
-            this.notes = notes;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        protected void onProgressUpdate() {
-            super.onProgressUpdate();
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-
-            values = new ContentValues();
-
-            try {
-                values.put(Constants.DB_ID, Constants.SB_ID);
-                values.put(Constants.STORY_CHARACTER_NAME, name);
-                values.put(Constants.STORY_CHARACTER_AGE, age);
-                values.put(Constants.STORY_CHARACTER_TYPE, type);
-                values.put(Constants.STORY_CHARACTER_GENDER, gender);
-                values.put(Constants.STORY_CHARACTER_BIRTHPLACE, birthplace);
-                values.put(Constants.STORY_CHARACTER_HISTORY, history);
-                values.put(Constants.STORY_CHARACTER_GOALS, goals);
-                values.put(Constants.STORY_CHARACTER_CONFLICTS, conflicts);
-                values.put(Constants.STORY_CHARACTER_EPIPHANY, epiphany);
-                values.put(Constants.STORY_CHARACTER_PERSONALITY, personality);
-                values.put(Constants.STORY_CHARACTER_NOTES, notes);
-
-                // Insert the rows
-                db.insertRow(values, Constants.STORY_CHARACTER_TABLE);
-
-                return true;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-        }
     }
 }

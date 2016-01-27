@@ -95,7 +95,7 @@ public class StoryProvider extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         try {
-            long id = db.addEntry(values);
+            long id = db.addEntry(uri, values);
 
             // Notify ContentResolver of db change
             contentResolver.notifyChange(uri, null);

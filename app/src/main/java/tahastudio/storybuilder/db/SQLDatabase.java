@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.net.Uri;
 import android.util.Log;
 
 /**
@@ -136,8 +137,32 @@ public class SQLDatabase extends SQLiteOpenHelper {
                 sortOrder);
     }
 
-    public long addEntry(ContentValues values) throws SQLException {
-        long id = getWritableDatabase().insert(null, "", values);
+    public long addEntry(Uri uri, ContentValues values) throws SQLException {
+        String table = null; // The table to insert the ContentValues into
+
+        int uriType = Constants.uriMatcher.match(uri); // Find the table by the uri
+        switch (uriType) {
+            case Constants.CHARACTER_ID:
+                table = Constants.STORY_CHARACTER_TABLE;
+                break;
+            case Constants.CHARACTER_LIST:
+                table = Constants.STORY_CHARACTER_TABLE;
+                break;
+            case Constants.LOCATION_ID:
+                table = Constants.STORY_LOCATION_TABLE;
+                break;
+            case Constants.LOCATION_LIST:
+                table = Constants.STORY_LOCATION_TABLE;
+                break;
+            case Constants.EVENT_ID:
+                table = Constants.STORY_EVENT_TABLE;
+                break;
+            case Constants.EVENT_LIST:
+                table = Constants.STORY_EVENT_TABLE;
+                break;
+        }
+
+        long id = getWritableDatabase().insert(table, "", values);
 
         if ( id <= 0 ) {
             throw new SQLException("Failed to add entry");

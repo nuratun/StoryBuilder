@@ -2,7 +2,7 @@ package tahastudio.storybuilder.fragments;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import tahastudio.storybuilder.R;
 import tahastudio.storybuilder.db.Constants;
-import tahastudio.storybuilder.db.SQLDatabase;
 
 /**
  * Fragment to replace ListView in AddEvents. Is called by AddEvents.
@@ -61,18 +60,24 @@ public class AddEventElements extends Fragment {
 
                 // Ensure event field != null
                 if (event_title.length() < 1) {
-                    Toast.makeText(getContext(), "You must enter at least"
-                            + " a one line description of this event", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "You must enter a short description of this event",
+                            Toast.LENGTH_LONG).show();
                 } else {
-                    // Send converted strings to background thread
-                    addEventTask eventTask = new addEventTask(
-                            getContext(),
-                            event_title.getText().toString(),
-                            event.getText().toString(),
-                            characters.getText().toString(),
-                            summary.getText().toString(),
-                            notes.getText().toString());
-                    eventTask.execute();
+                    // Create the URI for the insert method in StoryProvider
+                    Uri uri = Uri.parse(Constants.CONTENT_URI + "/" + Constants.STORY_EVENT_TABLE);
+
+                    ContentValues values = new ContentValues();
+
+                    values.put(Constants.DB_ID, Constants.SB_ID);
+                    values.put(Constants.STORY_EVENT_LINER, event_title.getText().toString());
+                    values.put(Constants.STORY_EVENT_DESC, event.getText().toString());
+                    values.put(Constants.STORY_EVENT_CHARACTERS, characters.getText().toString());
+                    values.put(Constants.STORY_EVENT_SUMMARY, summary.getText().toString());
+                    values.put(Constants.STORY_EVENT_NOTES, notes.getText().toString());
+
+                    // Call the insert method on StoryProvider, through the ContentResolver
+                    // This will allow for automatic updates on the ListView
+                    getActivity().getApplicationContext().getContentResolver().insert(uri, values);
                 }
                 // Return to AddEvents on button click, immediately
                 getFragmentManager().popBackStackImmediate();
@@ -80,69 +85,5 @@ public class AddEventElements extends Fragment {
         });
 
         return event_elements_layout;
-    }
-
-    // Pass in multiple values to constructor
-    private class addEventTask extends AsyncTask<Void, Void, Boolean> {
-        private Context context;
-        private ContentValues values;
-        private SQLDatabase db = SQLDatabase.getInstance(context);
-        String event_title;
-        String event;
-        String characters;
-        String summary;
-        String notes;
-
-        // Constructor
-        public addEventTask(Context context,
-                            String event_title,
-                            String event,
-                            String characters,
-                            String summary,
-                            String notes) {
-            this.context = context;
-            this.event_title = event_title;
-            this.event = event;
-            this.characters = characters;
-            this.summary = summary;
-            this.notes = notes;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        protected void onProgressUpdate() {
-            super.onProgressUpdate();
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            values = new ContentValues();
-
-            try {
-                values.put(Constants.DB_ID, Constants.SB_ID);
-                values.put(Constants.STORY_EVENT_LINER, event_title);
-                values.put(Constants.STORY_EVENT_DESC, event);
-                values.put(Constants.STORY_EVENT_CHARACTERS, characters);
-                values.put(Constants.STORY_EVENT_SUMMARY, summary);
-                values.put(Constants.STORY_EVENT_NOTES, notes);
-
-                // Insert the rows
-                db.insertRow(values, Constants.STORY_EVENT_TABLE);
-
-                return true; // If successful
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return false;
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-        }
-
     }
 }
