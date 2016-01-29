@@ -71,6 +71,8 @@ public class Constants {
     public static final int LOCATION_ID = 4;
     public static final int EVENT_LIST = 5;
     public static final int EVENT_ID = 6;
+    public static final int STORY_LIST = 7;
+    public static final int STORY_ID = 8;
     public static final Uri CONTENT_URI = Uri.parse("content://" + PROVIDER_NAME);
     public static final UriMatcher uriMatcher;
     static  {
@@ -81,6 +83,8 @@ public class Constants {
         uriMatcher.addURI(PROVIDER_NAME, STORY_LOCATION_TABLE + "/#", LOCATION_ID);
         uriMatcher.addURI(PROVIDER_NAME, STORY_EVENT_TABLE, EVENT_LIST);
         uriMatcher.addURI(PROVIDER_NAME, STORY_EVENT_TABLE + "/#", EVENT_ID);
+        uriMatcher.addURI(PROVIDER_NAME, STORY_TABLE, STORY_LIST);
+        uriMatcher.addURI(PROVIDER_NAME, STORY_TABLE + "/#", STORY_ID);
     }
 
     // Get latest story entry id from database

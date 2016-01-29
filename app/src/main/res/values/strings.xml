@@ -18,6 +18,13 @@
     <string name="create_story">Create</string>
     <string name="cancel_story">Cancel</string>
 
+    <!--SBDeleteDialog -->
+    <string name="delete_warning">Warning</string>
+    <string name="delete_entry">Are you sure you want to delete this entry?</string>
+    <string name="delete_no_go_back">This action cannot be undone.</string>
+    <string name="delete_yes">Delete</string>
+    <string name="delete_no">Cancel</string>
+
     <!-- For FAB menu -->
     <string name="add_character">Add A Character</string>
     <string name="add_location">Add A Location</string>

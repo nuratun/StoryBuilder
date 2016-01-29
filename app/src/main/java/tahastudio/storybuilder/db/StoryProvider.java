@@ -111,10 +111,42 @@ public class StoryProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
+        String table = null; // The table to delete from
+
+        int uriType = Constants.uriMatcher.match(uri); // Find the table by the uri
+        Log.d("story", String.valueOf(uri));
+
+        switch (uriType) {
+            case Constants.CHARACTER_ID:
+                table = Constants.STORY_CHARACTER_TABLE;
+                break;
+            case Constants.CHARACTER_LIST:
+                table = Constants.STORY_CHARACTER_TABLE;
+                break;
+            case Constants.LOCATION_ID:
+                table = Constants.STORY_LOCATION_TABLE;
+                break;
+            case Constants.LOCATION_LIST:
+                table = Constants.STORY_LOCATION_TABLE;
+                break;
+            case Constants.EVENT_ID:
+                table = Constants.STORY_EVENT_TABLE;
+                break;
+            case Constants.EVENT_LIST:
+                table = Constants.STORY_EVENT_TABLE;
+                break;
+            case Constants.STORY_ID:
+                table = Constants.STORY_TABLE;
+                break;
+            case Constants.STORY_LIST:
+                table = Constants.STORY_TABLE;
+                break;
+        }
+
         // Notify ContentResolver of db change
         contentResolver.notifyChange(uri, null);
 
-        return db.deleteEntry(selection);
+        return db.deleteEntry(table, selection, selectionArgs);
     }
 
     // Called from: ShowCharacter, ShowEvent, ShowLocation

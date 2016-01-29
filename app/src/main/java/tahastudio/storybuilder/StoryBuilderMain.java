@@ -20,6 +20,7 @@ import java.util.Random;
 
 import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.db.SQLDatabase;
+import tahastudio.storybuilder.ui.SBDeleteDialog;
 import tahastudio.storybuilder.ui.SBDialog;
 
 /**
@@ -78,6 +79,18 @@ public class StoryBuilderMain extends AppCompatActivity {
             }
         });
 
+        // On long click, bring up the delete dialog box
+        story_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Cursor cursor = (Cursor) story_list.getItemAtPosition(position);
+
+                deleteSBDialog(cursor.getInt(cursor.getColumnIndex(Constants.DB_ID)), // Get the _id
+                        Constants.STORY_TABLE); // Send over the table to delete the story from
+                return true;
+            }
+        });
+
         // When FAB is clicked, a dialog box appears
         // Returns: SBDialog class
         the_fab = (android.support.design.widget.FloatingActionButton) findViewById(R.id.fab);
@@ -91,7 +104,7 @@ public class StoryBuilderMain extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // Inflate the menu for the action bar
         getMenuInflater().inflate(R.menu.menu_story_builder_main, menu);
 
         return true;
@@ -118,6 +131,19 @@ public class StoryBuilderMain extends AppCompatActivity {
     private void showSBDialog() {
         SBDialog sbDialog = new SBDialog();
         sbDialog.show(getSupportFragmentManager(), "story_creation");
+    }
+
+    // Calls the SBDeleteDialog class to delete a story, or story element
+    private void deleteSBDialog(int position, String table) {
+        // Bundle the story id for the delete dialog
+        Bundle bundle = new Bundle();
+        bundle.putString("table", table);
+        bundle.putInt("id", position); // The id is the _id for the story entry in the db
+
+        SBDeleteDialog deleteDialog = new SBDeleteDialog();
+        deleteDialog.setArguments(bundle); // Send the bundle over to the dialog
+
+        deleteDialog.show(getSupportFragmentManager(), "delete_story");
     }
 
     // To update the ListView whenever a new story is created

@@ -39,6 +39,4 @@
         android:imeOptions="actionDone"
         android:inputType="textMultiLine|textCapSentences"
         android:hint="@string/dialog_desc" />
-
-
 </LinearLayout>

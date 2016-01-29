@@ -17,6 +17,7 @@ import android.widget.ListView;
 
 import tahastudio.storybuilder.R;
 import tahastudio.storybuilder.db.Constants;
+import tahastudio.storybuilder.ui.SBDeleteDialog;
 
 /**
  * 3rd tab for SB
@@ -83,7 +84,32 @@ public class AddEvents extends Fragment implements LoaderManager.LoaderCallbacks
             }
         });
 
+        event_listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Cursor cursor = (Cursor) event_listview.getItemAtPosition(position);
+
+                deleteSBDialog(cursor.getInt(cursor.getColumnIndex(Constants.STORY_EVENT_ID)),
+                        Constants.STORY_EVENT_TABLE); // Send over the table to delete
+                return true;
+            }
+        });
+
         return event_layout;
+    }
+
+    // TODO -> Factor this out into one method
+    // Calls the SBDeleteDialog class to delete a story, or story element
+    private void deleteSBDialog(int position, String table) {
+        // Bundle the story id for the delete dialog
+        Bundle bundle = new Bundle();
+        bundle.putString("table", table);
+        bundle.putInt("id", position); // The id is the _id for the character entry in the db
+
+        SBDeleteDialog deleteDialog = new SBDeleteDialog();
+        deleteDialog.setArguments(bundle); // Send the bundle over to the dialog
+
+        deleteDialog.show(getFragmentManager(), "delete_story");
     }
 
     // Ensure ShowStory implements the interface

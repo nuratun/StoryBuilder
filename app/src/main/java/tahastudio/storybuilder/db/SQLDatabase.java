@@ -170,15 +170,9 @@ public class SQLDatabase extends SQLiteOpenHelper {
         return id;
     }
 
-    public int deleteEntry(String id) {
-        if ( id == null ) {
-            return getWritableDatabase().delete(null, null, null);
-        } else {
-            return getWritableDatabase().delete(
-                    id,
-                    Constants.DB_ID + "=?",
-                    new String[] { id });
-        }
+    public int deleteEntry(String table, String selection, String[] selectionArgs) {
+
+        return getWritableDatabase().delete(table, selection, selectionArgs);
     }
 
     public int updateEntry(String id, ContentValues values, String selection,
