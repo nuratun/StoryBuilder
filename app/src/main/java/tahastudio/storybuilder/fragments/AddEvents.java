@@ -110,7 +110,8 @@ public class AddEvents extends Fragment implements LoaderManager.LoaderCallbacks
         // Send the URI and the string[] to StoryProvider to interface with the db
         // This will be returned to onLoadFinished
         cursorLoader = new android.support.v4.content.CursorLoader(
-                getActivity().getApplication(), uri, from, null, null, null);
+                getActivity().getApplication(), uri, from,
+                Constants.DB_ID + "=?", new String[] { String.valueOf(Constants.SB_ID) }, null);
 
         return cursorLoader;
     }

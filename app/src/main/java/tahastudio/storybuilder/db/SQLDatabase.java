@@ -40,7 +40,7 @@ public class SQLDatabase extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sbDatabase, int old_ver, int new_ver) {
         // TODO -> Remove when going into production
-        sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_TABLE);
+        sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_TABLE + " ON DELETE CASCADE");
         sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_CHARACTER_TABLE);
         sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_EVENT_TABLE);
         sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_LOCATION_TABLE);
@@ -181,15 +181,12 @@ public class SQLDatabase extends SQLiteOpenHelper {
         }
     }
 
-    public int updateEntry(String id, ContentValues values) {
+    public int updateEntry(String id, ContentValues values, String selection,
+                           String[] selectionArgs) {
         if ( id == null ) {
             return getWritableDatabase().update(null, values, null, null);
         } else {
-            return getWritableDatabase().update(
-                    id,
-                    values,
-                    Constants.DB_ID + "=?",
-                    new String[] { id });
+            return getWritableDatabase().update(id, values, selection, selectionArgs);
         }
     }
 }

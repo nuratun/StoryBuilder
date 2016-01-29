@@ -3,7 +3,6 @@ package tahastudio.storybuilder.tasks;
 import android.content.Context;
 import android.database.Cursor;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.db.SQLDatabase;
@@ -30,11 +29,7 @@ public class ShowElementsTask extends AsyncTask<String, Void, Cursor> {
     }
 
     @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-
-        Toast.makeText(context, data, Toast.LENGTH_LONG).show();
-    }
+    protected void onPreExecute() { super.onPreExecute(); }
 
     @Override
     protected Cursor doInBackground(String... params) {

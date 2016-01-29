@@ -15,7 +15,7 @@ public class Constants {
     public static int SB_ID; // This value will not change unless a user selects a different story
 
     // Version number must change if database changes
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "sb.db";
 
     // Set up table schema for the story
@@ -118,7 +118,7 @@ public class Constants {
             + STORY_CHARACTER_NOTES + " text, "
             + DB_ID + " integer, "
             + "FOREIGN KEY(" + DB_ID + ") "
-            + "REFERENCES " + STORY_TABLE + "(" + DB_ID + ")"
+            + "REFERENCES " + STORY_TABLE + "(" + DB_ID + ") ON DELETE CASCADE"
             + " );";
 
     // Create the event table, with foreign keys from the story table
@@ -132,7 +132,7 @@ public class Constants {
             + STORY_EVENT_NOTES + " text, "
             + DB_ID + " integer,"
             + "FOREIGN KEY(" + DB_ID + ") "
-            + "REFERENCES " + STORY_TABLE + "(" + DB_ID + ")"
+            + "REFERENCES " + STORY_TABLE + "(" + DB_ID + ") ON DELETE CASCADE"
             + " );";
 
     // Create the locations table, with foreign keys from the story table
@@ -147,7 +147,7 @@ public class Constants {
             + STORY_LOCATION_NOTES + " text, "
             + DB_ID + " integer, "
             + "FOREIGN KEY(" + DB_ID + ") "
-            + "REFERENCES " + STORY_TABLE + "(" + DB_ID + ")"
+            + "REFERENCES " + STORY_TABLE + "(" + DB_ID + ") ON DELETE CASCADE"
             + " );";
 
     // Used in StoryBuilderMain to populate the ListView

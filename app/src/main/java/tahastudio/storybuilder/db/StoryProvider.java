@@ -50,6 +50,7 @@ public class StoryProvider extends ContentProvider {
         return true;
     }
 
+    // Called from: AddCharacters, AddEvents, AddLocations
     @Override
     public Cursor query(Uri uri,
                         String[] projection,
@@ -92,6 +93,7 @@ public class StoryProvider extends ContentProvider {
         return cursor;
     }
 
+    // Uri will be the hardcoded table from AddCharacters, AddEvents, and AddLocations
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         try {
@@ -115,12 +117,39 @@ public class StoryProvider extends ContentProvider {
         return db.deleteEntry(selection);
     }
 
+    // Called from: ShowCharacter, ShowEvent, ShowLocation
+    // String selection is database row id
+    // selectionArgs is the id grabbed from the onClick method
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
+        String id = null;
+
+        int uriType = Constants.uriMatcher.match(uri);
+
+        switch (uriType) {
+            case Constants.CHARACTER_LIST:
+                id = Constants.STORY_CHARACTER_TABLE;
+                break;
+            case Constants.CHARACTER_ID:
+                id = Constants.STORY_CHARACTER_TABLE;
+                break;
+            case Constants.LOCATION_LIST:
+                id = Constants.STORY_LOCATION_TABLE;
+                break;
+            case Constants.LOCATION_ID:
+                id = Constants.STORY_LOCATION_TABLE;
+                break;
+            case Constants.EVENT_LIST:
+                id = Constants.STORY_EVENT_TABLE;
+                break;
+            case Constants.EVENT_ID:
+                id = Constants.STORY_EVENT_TABLE;
+                break;
+        }
 
         // Notify ContentResolver of db change
         contentResolver.notifyChange(uri, null);
 
-        return db.updateEntry(selection, values);
+        return db.updateEntry(id, values, selection, selectionArgs);
     }
 }

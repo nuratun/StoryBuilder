@@ -116,7 +116,8 @@ public class AddCharacters extends Fragment implements LoaderManager.LoaderCallb
         // Send the URI and the string[] to StoryProvider to interface with the db
         // This will be returned to onLoadFinished
         cursorLoader = new android.support.v4.content.CursorLoader(
-                getActivity().getApplicationContext(), uri, from, null, null, null);
+                getActivity().getApplicationContext(), uri, from,
+                Constants.DB_ID + "=?", new String[] { String.valueOf(Constants.SB_ID) }, null);
 
         return cursorLoader;
     }
