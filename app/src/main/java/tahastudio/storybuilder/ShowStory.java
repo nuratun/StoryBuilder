@@ -48,9 +48,9 @@ public class ShowStory extends AppCompatActivity implements
 
         // Grab the story id and title from the intent and set the variables
         Constants.SB_ID = getIntent().getExtras().getInt("id"); // Update the static variable
-        String title = getIntent().getExtras().getString("title");
+        String title = getIntent().getExtras().getString("title"); // Get the story title to show
 
-        // Grab the string and pass to the AsyncTask, setStoryTitle
+        // Grab the title and pass to the AsyncTask, setStoryTitle
         new setStoryTitle(title).execute();
 
         // Find the FAB menu and add in the actions
@@ -242,9 +242,8 @@ public class ShowStory extends AppCompatActivity implements
             SQLDatabase db = SQLDatabase.getInstance(getBaseContext());
             Cursor cursor = db.getStoryGenre(); // Grab the genre string from the db
 
-            if ( cursor.moveToFirst() ) { // If not null...
-                return cursor.getString(cursor.getColumnIndex
-                        (Constants.STORY_GENRE)); // ... return the string
+            if ( cursor.moveToFirst() ) { // If not null, return the genre string
+                return cursor.getString(cursor.getColumnIndex(Constants.STORY_GENRE));
             }
             return null;
         }
@@ -258,7 +257,7 @@ public class ShowStory extends AppCompatActivity implements
                     ("genre_" + result.replaceAll(" ", "_").toLowerCase(), // replace any spaces
                             "drawable", getPackageName());
 
-            // Set the drawable next to the story title
+            // Set the genre icon next to the story title
             storyTitle.setCompoundDrawablesWithIntrinsicBounds(pic, 0, 0, 0);
         }
     }

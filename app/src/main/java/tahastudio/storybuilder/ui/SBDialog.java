@@ -2,6 +2,7 @@ package tahastudio.storybuilder.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import tahastudio.storybuilder.R;
+import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.tasks.CreateStoryTask;
 
 /**
@@ -24,7 +26,7 @@ import tahastudio.storybuilder.tasks.CreateStoryTask;
  */
 public class SBDialog extends DialogFragment {
     // The string for the genre array
-    String sb_story_genre;
+    private String genre;
 
     public SBDialog() { }
 
@@ -38,9 +40,9 @@ public class SBDialog extends DialogFragment {
         builder.setView(popup); // Set the view
 
         // Grab user input from the inflated view
-        final EditText the_story_title = (EditText) popup.findViewById(R.id.sb_title);
-        final Spinner the_story_genre = (Spinner) popup.findViewById(R.id.sb_genre);
-        final EditText the_story_notes = (EditText) popup.findViewById(R.id.sb_notes);
+        final EditText story_title = (EditText) popup.findViewById(R.id.sb_title);
+        final Spinner story_genre = (Spinner) popup.findViewById(R.id.sb_genre);
+        final EditText story_notes = (EditText) popup.findViewById(R.id.sb_notes);
 
         // Create an ArrayAdapter for the spinner, using the genres array
         // Use the default layout from the resource library
@@ -49,18 +51,18 @@ public class SBDialog extends DialogFragment {
 
         // Use the default layout from the resource library and set the adapter
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        the_story_genre.setAdapter(adapter);
+        story_genre.setAdapter(adapter);
 
         // On click, grab the selection and convert to string
-        the_story_genre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        story_genre.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                sb_story_genre = parent.getItemAtPosition(position).toString();
+                genre = parent.getItemAtPosition(position).toString();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                sb_story_genre = "General"; // If user selects nothing, general is the default
+                genre = "General"; // If user selects nothing, general is the default
             }
         });
 
@@ -79,18 +81,21 @@ public class SBDialog extends DialogFragment {
                 }
 
                 // Make sure both title and genre != null
-                if ( the_story_title.length() < 1 || sb_story_genre.length() < 1 ) {
+                if ( story_title.length() < 1 || genre.length() < 1 ) {
                     Toast.makeText(getActivity().getApplicationContext(), "Both title"
                             + " and genre are required fields", Toast.LENGTH_LONG).show();
                 } else {
                     // Execute CreateStoryTask to add entry into database
                     // CreateStoryTask will pass values needed back to ShowStory
-                            CreateStoryTask task = new CreateStoryTask(
-                            getContext(),
-                            the_story_title.getText().toString(),
-                            sb_story_genre, // Already a string
-                            the_story_notes.getText().toString());
-                    task.execute();
+                    ContentValues values = new ContentValues();
+                    values.put(Constants.STORY_NAME, story_title.getText().toString());
+                    values.put(Constants.STORY_GENRE, genre);
+                    values.put(Constants.STORY_DESC, story_notes.getText().toString());
+
+                    // Send everything to the AsyncTask, which will take care of sending the
+                    // data to the ContentProvider, and returning the story _id
+                    new CreateStoryTask(getContext().getApplicationContext(),
+                            values, story_title.getText().toString()).execute();
                 }
             }
         }).setNegativeButton(R.string.cancel_story, new DialogInterface.OnClickListener() {

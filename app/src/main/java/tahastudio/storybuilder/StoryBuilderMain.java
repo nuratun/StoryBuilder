@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +33,6 @@ public class StoryBuilderMain extends AppCompatActivity implements
     FloatingActionButton the_fab;
     private ListView list;
     private SimpleCursorAdapter cursorAdapter; // For the LoaderManager
-    private CursorLoader cursorLoader; // For the LoaderManager
 
     // From String[] for the cursor
     String[] from = {

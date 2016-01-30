@@ -8,7 +8,7 @@ import tahastudio.storybuilder.R;
 import tahastudio.storybuilder.StoryBuilderMain;
 
 /**
- * Splash screen
+ * Splash screen showing the TahaStudio logo
  */
 public class SplashScreen extends Activity {
 
@@ -20,10 +20,11 @@ public class SplashScreen extends Activity {
         Thread timerThread = new Thread() {
             public void run() {
                 try {
-                    sleep(3000);
+                    sleep(3000); // Show for 3000 milliseconds
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
+                    // Start the main activity
                     Intent intent = new Intent(SplashScreen.this, StoryBuilderMain.class);
                     startActivity(intent);
                 }

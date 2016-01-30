@@ -21,6 +21,11 @@ public class StoryProvider extends ContentProvider {
     @Override
     public String getType(Uri uri) {
         switch (Constants.uriMatcher.match(uri)) {
+            case (Constants.STORY_LIST):
+                return Constants.CONTENT_URI + "/" + Constants.STORY_TABLE;
+            case (Constants.STORY_ID):
+                return Constants.CONTENT_URI + "/" + Constants.STORY_TABLE
+                        + "/" + Constants.DB_ID;
             case (Constants.CHARACTER_LIST):
                 return Constants.CONTENT_URI + "/" + Constants.STORY_CHARACTER_TABLE;
             case (Constants.CHARACTER_ID):
@@ -36,12 +41,8 @@ public class StoryProvider extends ContentProvider {
             case (Constants.EVENT_ID):
                 return Constants.CONTENT_URI + "/" + Constants.STORY_EVENT_ID
                         + "/" + Constants.DB_ID;
-            case (Constants.STORY_LIST):
-                return Constants.CONTENT_URI + "/" + Constants.STORY_TABLE;
-            case (Constants.STORY_ID):
-                return Constants.CONTENT_URI + "/" + Constants.DB_ID;
         }
-        return Constants.AUTHORITY;
+        return Constants.AUTHORITY; // Return the database
     }
 
     @Override
@@ -53,7 +54,7 @@ public class StoryProvider extends ContentProvider {
         return true;
     }
 
-    // Called from: AddCharacters, AddEvents, AddLocations
+    // Called from: StoryBuilderMain, AddCharacters, AddEvents, AddLocations
     @Override
     public Cursor query(Uri uri,
                         String[] projection,
@@ -66,6 +67,12 @@ public class StoryProvider extends ContentProvider {
         int uriType = Constants.uriMatcher.match(uri);
 
         switch (uriType) {
+            case Constants.STORY_LIST:
+                id = Constants.STORY_TABLE;
+                break;
+            case Constants.STORY_ID:
+                id = Constants.STORY_TABLE;
+                break;
             case Constants.CHARACTER_LIST:
                 id = Constants.STORY_CHARACTER_TABLE;
                 break;
@@ -84,12 +91,6 @@ public class StoryProvider extends ContentProvider {
             case Constants.EVENT_ID:
                 id = Constants.STORY_EVENT_TABLE;
                 break;
-            case Constants.STORY_LIST:
-                id = Constants.STORY_TABLE;
-                break;
-            case Constants.STORY_ID:
-                id = Constants.STORY_TABLE;
-                break;
         }
 
         Cursor cursor = db.getSearchResults(id, projection, selection, selectionArgs, sortOrder);
@@ -100,7 +101,8 @@ public class StoryProvider extends ContentProvider {
         return cursor;
     }
 
-    // Uri will be the hardcoded table from AddCharacters, AddEvents, and AddLocations
+    // Uri will be the hardcoded table from CreateStoryTask, AddCharacters, AddEvents,
+    // and AddLocations
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         try {
@@ -123,6 +125,12 @@ public class StoryProvider extends ContentProvider {
         int uriType = Constants.uriMatcher.match(uri); // Find the table by the uri
 
         switch (uriType) {
+            case Constants.STORY_ID:
+                table = Constants.STORY_TABLE;
+                break;
+            case Constants.STORY_LIST:
+                table = Constants.STORY_TABLE;
+                break;
             case Constants.CHARACTER_ID:
                 table = Constants.STORY_CHARACTER_TABLE;
                 break;
@@ -140,12 +148,6 @@ public class StoryProvider extends ContentProvider {
                 break;
             case Constants.EVENT_LIST:
                 table = Constants.STORY_EVENT_TABLE;
-                break;
-            case Constants.STORY_ID:
-                table = Constants.STORY_TABLE;
-                break;
-            case Constants.STORY_LIST:
-                table = Constants.STORY_TABLE;
                 break;
         }
 
@@ -165,6 +167,12 @@ public class StoryProvider extends ContentProvider {
         int uriType = Constants.uriMatcher.match(uri);
 
         switch (uriType) {
+            case Constants.STORY_LIST:
+                id = Constants.STORY_TABLE;
+                break;
+            case Constants.STORY_ID:
+                id = Constants.STORY_TABLE;
+                break;
             case Constants.CHARACTER_LIST:
                 id = Constants.STORY_CHARACTER_TABLE;
                 break;
@@ -182,12 +190,6 @@ public class StoryProvider extends ContentProvider {
                 break;
             case Constants.EVENT_ID:
                 id = Constants.STORY_EVENT_TABLE;
-                break;
-            case Constants.STORY_LIST:
-                id = Constants.STORY_TABLE;
-                break;
-            case Constants.STORY_ID:
-                id = Constants.STORY_TABLE;
                 break;
         }
 

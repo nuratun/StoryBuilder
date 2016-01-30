@@ -26,8 +26,7 @@ public class ShowLocation extends Fragment {
     public ShowLocation() { }
 
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.activity_add_location, container, false);
 

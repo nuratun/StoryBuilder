@@ -29,30 +29,24 @@ public class AddLocationElements extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View location_elements_layout = inflater.inflate(R.layout.activity_add_location, container,
+        View layout = inflater.inflate(R.layout.activity_add_location, container,
                 false);
 
         // Find layout elements
-        final EditText location_name = (EditText) location_elements_layout
-                .findViewById(R.id.sb_location_name);
-        final EditText location_location = (EditText) location_elements_layout
-                .findViewById(R.id.sb_location_location);
-        final EditText location_description = (EditText) location_elements_layout
-                .findViewById(R.id.sb_location_desc);
-        final EditText location_importance = (EditText) location_elements_layout
-                .findViewById(R.id.sb_location_importance);
-        final EditText location_events = (EditText) location_elements_layout
-                .findViewById(R.id.sb_location_events);
+        final EditText location_name = (EditText) layout.findViewById(R.id.sb_location_name);
+        final EditText location_location = (EditText) layout.findViewById(R.id.sb_location_location);
+        final EditText location_description = (EditText) layout.findViewById(R.id.sb_location_desc);
+        final EditText location_importance = (EditText) layout.findViewById(R.id.sb_location_importance);
+        final EditText location_events = (EditText) layout.findViewById(R.id.sb_location_events);
 
-        final EditText location_notes = (EditText) location_elements_layout
-                .findViewById(R.id.sb_location_notes);
-        Button add_location = (Button) location_elements_layout
-                .findViewById(R.id.add_the_location);
+        final EditText location_notes = (EditText) layout.findViewById(R.id.sb_location_notes);
+        Button add_location = (Button) layout.findViewById(R.id.add_the_location);
 
         add_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO -> refactor into one method
+                // Close the keyboard
                 if ( getActivity().getCurrentFocus() != null ) {
                     InputMethodManager inputMethodManager = (InputMethodManager)
                             getActivity().getApplicationContext().getSystemService
@@ -63,8 +57,8 @@ public class AddLocationElements extends Fragment {
 
                 // Make sure name field != null
                 if ( location_name.length() < 1 ) {
-                    Toast.makeText(getContext(), "Name is a required field",
-                            Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Name is a required field", Toast.LENGTH_LONG)
+                            .show();
                 }
                 else {
                     // Create a URI to send to the StoryProvider insert method
@@ -94,6 +88,6 @@ public class AddLocationElements extends Fragment {
             }
         });
 
-        return location_elements_layout;
+        return layout;
     }
 }

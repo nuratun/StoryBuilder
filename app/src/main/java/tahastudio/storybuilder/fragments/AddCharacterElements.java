@@ -32,70 +32,56 @@ public class AddCharacterElements extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this view
-        View character_elements_layout = inflater.inflate(
+        View layout = inflater.inflate(
                 R.layout.activity_add_character,
                 container,
                 false);
 
         // Find the layout elements
-        final EditText name = (EditText) character_elements_layout
-                .findViewById(R.id.sb_character_name);
-        final EditText age = (EditText) character_elements_layout
-                .findViewById(R.id.sb_character_age);
-        final EditText birthplace = (EditText) character_elements_layout
-                .findViewById(R.id.sb_character_birthplace);
-        final EditText history = (EditText) character_elements_layout
-                .findViewById(R.id.sb_character_history);
-        final EditText goals = (EditText) character_elements_layout
-                .findViewById(R.id.sb_character_goals);
-        final EditText conflicts = (EditText) character_elements_layout
-                .findViewById(R.id.sb_character_conflicts);
-        final EditText epiphany = (EditText) character_elements_layout
-                .findViewById(R.id.sb_character_epiphany);
-        final EditText personality = (EditText) character_elements_layout
-                .findViewById(R.id.sb_character_personality);
-        final EditText character_notes = (EditText) character_elements_layout
-                .findViewById(R.id.sb_character_notes);
+        final EditText name = (EditText) layout.findViewById(R.id.sb_character_name);
+        final EditText age = (EditText) layout.findViewById(R.id.sb_character_age);
+        final EditText birthplace = (EditText) layout.findViewById(R.id.sb_character_birthplace);
+        final EditText history = (EditText) layout.findViewById(R.id.sb_character_history);
+        final EditText goals = (EditText) layout.findViewById(R.id.sb_character_goals);
+        final EditText conflicts = (EditText) layout.findViewById(R.id.sb_character_conflicts);
+        final EditText epiphany = (EditText) layout.findViewById(R.id.sb_character_epiphany);
+        final EditText personality = (EditText) layout.findViewById(R.id.sb_character_personality);
+        final EditText character_notes = (EditText) layout.findViewById(R.id.sb_character_notes);
 
-        final RadioGroup character_type = (RadioGroup) character_elements_layout
-                .findViewById(R.id.add_character_position);
+        // Find the RadioGroup selections
+        final RadioGroup character_type = (RadioGroup) layout.findViewById(R.id.add_character_position);
         character_type.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 int id = character_type.getCheckedRadioButtonId();
 
-                if ( id == R.id.sb_character_main ) {
-                    type = 1; }
-                else if ( id == R.id.sb_character_antagonist ) {
-                    type = 2; }
-                else {
-                    type = 0; }
+                if ( id == R.id.sb_character_main ) { type = 1; }
+                else if ( id == R.id.sb_character_antagonist ) { type = 2; }
+                else { type = 0; }
             }
         });
 
-        final RadioGroup character_gender = (RadioGroup) character_elements_layout
-                .findViewById(R.id.gender);
+        // Find the RadioGroup selections
+        final RadioGroup character_gender = (RadioGroup) layout.findViewById(R.id.gender);
         character_gender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 int id = character_gender.getCheckedRadioButtonId();
 
-                if ( id == R.id.male_gender ) {
-                    gender = 1; }
-                else if ( id == R.id.female_gender ) {
-                    gender = 2; }
-                else if ( id == R.id.other_gender ) {
-                    gender = 3; }
+                if ( id == R.id.male_gender ) { gender = 1; }
+                else if ( id == R.id.female_gender ) { gender = 2; }
+                else if ( id == R.id.other_gender ) { gender = 3; }
                 else { gender = 0; }
             }
         });
 
-        Button add_the_character = (Button) character_elements_layout
-                .findViewById(R.id.add_the_character);
-        add_the_character.setOnClickListener(new View.OnClickListener() {
+        // On the add button
+        Button add = (Button) layout.findViewById(R.id.add_the_character);
+        add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO -> refactor into one method
+                // Close the keyboard
                 if ( getActivity().getCurrentFocus() != null ) {
                     InputMethodManager inputMethodManager = (InputMethodManager)
                             getActivity().getApplicationContext().getSystemService
@@ -106,10 +92,11 @@ public class AddCharacterElements extends Fragment {
 
                 // Make sure the name field != null
                 if ( name.length() < 1 ) {
-                    Toast.makeText(getContext(), "The character's name "
-                            + "is a required field", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "The character's name is a required field",
+                            Toast.LENGTH_LONG).show();
                 }
                 else {
+                    // The table to insert the ContentValues into
                     Uri uri = Uri.parse(Constants.CONTENT_URI + "/"
                             + Constants.STORY_CHARACTER_TABLE);
 
@@ -137,6 +124,6 @@ public class AddCharacterElements extends Fragment {
             }
         });
 
-        return character_elements_layout;
+        return layout;
     }
 }

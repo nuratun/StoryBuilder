@@ -45,7 +45,7 @@ public class SBDeleteDialog extends DialogFragment {
                 Uri uri = Uri.parse(Constants.CONTENT_URI + "/" + table);
 
                 // Confirm the deletion to the user
-                Toast.makeText(getActivity().getApplicationContext(), "Deleting Entry...",
+                Toast.makeText(getActivity().getApplicationContext(), "Deleting entry...",
                         Toast.LENGTH_LONG).show();
 
                 // Call the delete method of StoryProvider, through the ContentResolver

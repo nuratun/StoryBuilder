@@ -13,6 +13,7 @@ import android.net.Uri;
  * This class holds all the SQL queries used elsewhere in the app
  */
 public class SQLDatabase extends SQLiteOpenHelper {
+    // Use only one instance of the database throughout the app. Prevents leakages...
     private static SQLDatabase sbDatabase;
 
     public SQLDatabase(Context context) {
@@ -28,6 +29,7 @@ public class SQLDatabase extends SQLiteOpenHelper {
 
     }
 
+    // Create the below tables
     @Override
     public void onCreate(SQLiteDatabase sbDatabase) {
         sbDatabase.execSQL(Constants.SQL_CREATE_STORY_TABLE);
@@ -38,32 +40,15 @@ public class SQLDatabase extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sbDatabase, int old_ver, int new_ver) {
-        // TODO -> Remove when going into production
-        sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_TABLE + " ON DELETE CASCADE");
-        sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_CHARACTER_TABLE);
-        sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_EVENT_TABLE);
-        sbDatabase.execSQL("DROP TABLE IF EXISTS " + Constants.STORY_LOCATION_TABLE);
         onCreate(sbDatabase);
     }
 
+    // Get one synchronized instance of the database across the app
     public static synchronized SQLDatabase getInstance(Context context) {
         if ( sbDatabase == null ) {
             sbDatabase = new SQLDatabase(context.getApplicationContext());
         }
         return sbDatabase;
-    }
-
-    public void insertRow(ContentValues values, String db) {
-        SQLiteDatabase helper = getWritableDatabase();
-
-        helper.insert(db, null, values);
-    }
-
-    public void updateRow(ContentValues values, String table, String column, int id) {
-        SQLiteDatabase helper = getWritableDatabase();
-
-        // Update the primary row listed in the string column where the value is id
-        helper.update(table, values, column + " = " + id, null);
     }
 
     // Get the story ID back from database to create the other tables
@@ -77,27 +62,6 @@ public class SQLDatabase extends SQLiteOpenHelper {
         cursor.close(); // Close the cursor when done
 
         return the_id;
-    }
-
-    // Get a story ID from database depending on what row user clicked
-    // on in StoryBuilderMain
-    public Integer findStoryID(String result) {
-        SQLiteDatabase helper = getReadableDatabase();
-        Cursor cursor =  helper.rawQuery(Constants.FIND_STORY_ID, new String[] { result });
-
-        cursor.moveToFirst(); // Move to the first position
-        int the_id = cursor.getInt(0);
-        cursor.close(); // Close the cursor when done
-
-        return the_id;
-    }
-
-    // Need to dynamically add in the SB_ID to this query, as it will
-    // change depending on user story selection
-    // Location: AddCharacters, AddLocations, AddEvents
-    public Cursor getRows(String query) {
-        SQLiteDatabase helper = getReadableDatabase();
-        return helper.rawQuery(query, null);
     }
 
     // Get the story element user clicked on
@@ -114,7 +78,7 @@ public class SQLDatabase extends SQLiteOpenHelper {
         return helper.rawQuery(Constants.GET_STORY_GENRE + Constants.SB_ID, null);
     }
 
-    // For user search queries
+    // For the ListViews in StoryBuilderMain, AddCharacters, AddEvents, AddLocations
     public Cursor getSearchResults(String id,
                                    String[] projection,
                                    String selection,
@@ -135,11 +99,18 @@ public class SQLDatabase extends SQLiteOpenHelper {
                 sortOrder);
     }
 
+    // Insert an entry into the database. StoryProvider is the middleman
     public long addEntry(Uri uri, ContentValues values) throws SQLException {
         String table = null; // The table to insert the ContentValues into
 
         int uriType = Constants.uriMatcher.match(uri); // Find the table by the uri
         switch (uriType) {
+            case Constants.STORY_ID:
+                table = Constants.STORY_TABLE;
+                break;
+            case Constants.STORY_LIST:
+                table = Constants.STORY_TABLE;
+                break;
             case Constants.CHARACTER_ID:
                 table = Constants.STORY_CHARACTER_TABLE;
                 break;
@@ -168,11 +139,13 @@ public class SQLDatabase extends SQLiteOpenHelper {
         return id;
     }
 
+    // StoryProvider is the middleman
     public int deleteEntry(String table, String selection, String[] selectionArgs) {
 
         return getWritableDatabase().delete(table, selection, selectionArgs);
     }
 
+    // StoryProvider is the middleman
     public int updateEntry(String id, ContentValues values, String selection,
                            String[] selectionArgs) {
         if ( id == null ) {

@@ -1,6 +1,5 @@
 package tahastudio.storybuilder.tasks;
 
-import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -19,17 +18,13 @@ import tahastudio.storybuilder.db.SQLDatabase;
  */
 public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
     private Context context;
-    String title;
-    String genre;
-    String desc;
+    private ContentValues values;
+    private String title;
 
-
-    // We need to be able to pass more than one string to background
-    public CreateStoryTask(Context context, String title, String genre, String desc) {
+    public CreateStoryTask(Context context, ContentValues values, String title) {
         this.context = context;
+        this.values = values;
         this.title = title;
-        this.genre = genre;
-        this.desc = desc;
     }
 
     @Override
@@ -45,15 +40,7 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
         SQLDatabase db = new SQLDatabase(context);
 
         Uri uri = Uri.parse(Constants.CONTENT_URI + "/" + Constants.STORY_TABLE);
-
-        // Instantiate a ContentValues instance to add in data
-        ContentValues values = new ContentValues();
-        values.put(Constants.STORY_NAME, title);
-        values.put(Constants.STORY_GENRE, genre);
-        values.put(Constants.STORY_DESC, desc);
-
-        // Call the insert method on StoryProvider, through the ContentResolver
-        context.getContentResolver().insert(uri, values);
+        context.getContentResolver().insert(uri, values); // Insert method from StoryProvider
 
         // Return the id of the story to send as an Intent to the ShowStory class
         return db.getStoryID();
@@ -72,9 +59,6 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         // Create the story, calling the ShowStory class from this context
-        // The activity is for the onActivityResult method in StoryBuilderMain
-        // Need to pass in an integer, though if this is successful, the
-        // automatic assumption is that a story has been created.
-        ((Activity) context).startActivityForResult(intent, 1);
+        context.startActivity(intent);
     }
 }

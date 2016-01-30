@@ -140,29 +140,29 @@
             </LinearLayout>
 
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingRight="15dp"
-                android:paddingLeft="15dp">
+                android:layout_gravity="center_horizontal"
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/banner_author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/banner_credit"
-                    android:linksClickable="true" />
+                    android:layout_gravity="center"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/banner_credit" />
 
                 <TextView
                     android:id="@+id/banner"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="15dp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="@string/icons"
-                    android:gravity="end"
-                    android:linksClickable="true" />
+                    android:linksClickable="true"
+                    android:layout_gravity="center" />
             </LinearLayout>
 
         </LinearLayout>

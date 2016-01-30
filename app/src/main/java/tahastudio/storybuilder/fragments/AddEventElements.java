@@ -27,29 +27,21 @@ public class AddEventElements extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Set the layout for this view
-        View event_elements_layout = inflater.inflate(
-                R.layout.activity_add_event,
-                container,
-                false);
+        View layout = inflater.inflate(R.layout.activity_add_event, container, false);
 
         // Find the elements in the layout
-        final EditText event_title = (EditText) event_elements_layout
-                .findViewById(R.id.sb_event_name);
-        final EditText event = (EditText) event_elements_layout
-                .findViewById(R.id.sb_event);
-        final EditText characters = (EditText) event_elements_layout
-                .findViewById(R.id.sb_event_characters);
-        final EditText summary = (EditText) event_elements_layout
-                .findViewById(R.id.sb_event_summary);
-        final EditText notes = (EditText) event_elements_layout
-                .findViewById(R.id.sb_event_notes);
-        Button add_the_event = (Button) event_elements_layout
-                .findViewById(R.id.add_the_event);
+        final EditText event_title = (EditText) layout.findViewById(R.id.sb_event_name);
+        final EditText event = (EditText) layout.findViewById(R.id.sb_event);
+        final EditText characters = (EditText) layout.findViewById(R.id.sb_event_characters);
+        final EditText summary = (EditText) layout.findViewById(R.id.sb_event_summary);
+        final EditText notes = (EditText) layout.findViewById(R.id.sb_event_notes);
+        Button add_the_event = (Button) layout.findViewById(R.id.add_the_event);
 
         add_the_event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO -> refactor into one method
+                // Close the keyboard
                 if ( getActivity().getCurrentFocus() != null ) {
                     InputMethodManager inputMethodManager = (InputMethodManager)
                             getActivity().getApplicationContext().getSystemService
@@ -84,6 +76,6 @@ public class AddEventElements extends Fragment {
             }
         });
 
-        return event_elements_layout;
+        return layout;
     }
 }

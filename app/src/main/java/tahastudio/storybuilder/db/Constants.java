@@ -8,14 +8,14 @@ import android.net.Uri;
  * Most of these constants will not change throughout the lifecycle
  */
 public class Constants {
-    // The Loader instance for AddCharacters, AddLocations, and AddEvents
+    // The Loader instance for StoryBuilderMain, AddCharacters, AddLocations, and AddEvents
     public static final int LOADER = 0;
 
     // Create public static references for the story, so other classes can access them
     public static int SB_ID; // This value will not change unless a user selects a different story
 
     // Version number must change if database changes
-    public static final int DATABASE_VERSION = 4;
+    public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "sb.db";
 
     // Set up table schema for the story
@@ -62,39 +62,33 @@ public class Constants {
 
     // The below if for the content provider class, StoryProvider
     // Since this content provider will not be accessible by outside apps,
-    // the provider is this app itself
+    // the provider will be the app itself
     public static final String AUTHORITY = "tahastudio.storybuilder.db.SQLDatabase";
     public static final String PROVIDER_NAME = "tahastudio.storybuilder.db.StoryProvider";
-    public static final int CHARACTER_LIST = 1;
-    public static final int CHARACTER_ID = 2;
-    public static final int LOCATION_LIST = 3;
-    public static final int LOCATION_ID = 4;
-    public static final int EVENT_LIST = 5;
-    public static final int EVENT_ID = 6;
-    public static final int STORY_LIST = 7;
-    public static final int STORY_ID = 8;
+    public static final int STORY_ID = 1;
+    public static final int STORY_LIST = 2;
+    public static final int CHARACTER_ID = 3;
+    public static final int CHARACTER_LIST = 4;
+    public static final int LOCATION_ID = 5;
+    public static final int LOCATION_LIST = 6;
+    public static final int EVENT_ID = 7;
+    public static final int EVENT_LIST = 8;
     public static final Uri CONTENT_URI = Uri.parse("content://" + PROVIDER_NAME);
     public static final UriMatcher uriMatcher;
     static  {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(PROVIDER_NAME, STORY_CHARACTER_TABLE, CHARACTER_LIST);
-        uriMatcher.addURI(PROVIDER_NAME, STORY_CHARACTER_TABLE + "/#", CHARACTER_ID);
-        uriMatcher.addURI(PROVIDER_NAME, STORY_LOCATION_TABLE, LOCATION_LIST);
-        uriMatcher.addURI(PROVIDER_NAME, STORY_LOCATION_TABLE + "/#", LOCATION_ID);
-        uriMatcher.addURI(PROVIDER_NAME, STORY_EVENT_TABLE, EVENT_LIST);
-        uriMatcher.addURI(PROVIDER_NAME, STORY_EVENT_TABLE + "/#", EVENT_ID);
-        uriMatcher.addURI(PROVIDER_NAME, STORY_TABLE, STORY_LIST);
         uriMatcher.addURI(PROVIDER_NAME, STORY_TABLE + "/#", STORY_ID);
+        uriMatcher.addURI(PROVIDER_NAME, STORY_TABLE, STORY_LIST);
+        uriMatcher.addURI(PROVIDER_NAME, STORY_CHARACTER_TABLE + "/#", CHARACTER_ID);
+        uriMatcher.addURI(PROVIDER_NAME, STORY_CHARACTER_TABLE, CHARACTER_LIST);
+        uriMatcher.addURI(PROVIDER_NAME, STORY_LOCATION_TABLE + "/#", LOCATION_ID);
+        uriMatcher.addURI(PROVIDER_NAME, STORY_LOCATION_TABLE, LOCATION_LIST);
+        uriMatcher.addURI(PROVIDER_NAME, STORY_EVENT_TABLE + "/#", EVENT_ID);
+        uriMatcher.addURI(PROVIDER_NAME, STORY_EVENT_TABLE, EVENT_LIST);
     }
 
     // Get latest story entry id from database
     public static final String GET_STORY_ID = "SELECT MAX(_id) FROM " + STORY_TABLE;
-
-    // Get a story entry id from database, going by the title
-    public static final String FIND_STORY_ID = "SELECT "
-            + DB_ID + " FROM "
-            + STORY_TABLE + " WHERE "
-            + STORY_NAME + " = ?";
 
     // Create the story table. All other tables will reference the id and story name
     public static final String SQL_CREATE_STORY_TABLE = "CREATE TABLE IF NOT EXISTS "
@@ -154,53 +148,17 @@ public class Constants {
             + "REFERENCES " + STORY_TABLE + "(" + DB_ID + ") ON DELETE CASCADE"
             + " );";
 
-    // Used in StoryBuilderMain to populate the ListView
-    public static final String GRAB_STORY_DETAILS = "SELECT "
-            + DB_ID + ", "
-            + STORY_NAME + ", "
-            + STORY_GENRE + ", "
-            + STORY_DESC + " FROM "
-            + STORY_TABLE;
-
-    // Used in AddCharacters class to populate the ListView
-    public static final String GRAB_CHARACTER_DETAILS = "SELECT "
-            + DB_ID + ", "
-            + STORY_CHARACTER_ID + ", "
-            + STORY_CHARACTER_NAME + ", "
-            + STORY_CHARACTER_AGE + ", "
-            + STORY_CHARACTER_BIRTHPLACE + " FROM "
-            + STORY_CHARACTER_TABLE + " WHERE "
-            + DB_ID + " = ";
-
-    // Used in the AddLocations class to populate the ListView
-    public static final String GRAB_LOCATION_DETAILS = "SELECT "
-            + DB_ID + ", "
-            + STORY_LOCATION_ID + ", "
-            + STORY_LOCATION_NAME + ", "
-            + STORY_LOCATION_LOCATION + " FROM "
-            + STORY_LOCATION_TABLE + " WHERE "
-            + DB_ID + " = ";
-
-    // Used in the AddEvents class to populate the ListView
-    public static final String GRAB_EVENT_DETALIS = "SELECT "
-            + DB_ID + ", "
-            + STORY_EVENT_ID + ", "
-            + STORY_EVENT_LINER + ", "
-            + STORY_EVENT_CHARACTERS + " FROM "
-            + STORY_EVENT_TABLE + " WHERE "
-            + DB_ID + " = ";
-
-    // Used in UpdateElementTask to grab the row selected in AddCharacters
+    // The below is used in the SQLDatabase getElementRows method
     public static final String GRAB_CHARACTER_ROW_DETAILS = "SELECT * FROM "
             + STORY_CHARACTER_TABLE + " WHERE "
             + STORY_CHARACTER_ID + " = ";
 
-    // Used in UpdateElementTask to grab the row selected in AddLocations
+    // The below is used in the SQLDatabase getElementRows method
     public static final String GRAB_LOCATION_ROW_DETAILS = "SELECT * FROM "
             + STORY_LOCATION_TABLE + " WHERE "
             + STORY_LOCATION_ID + " = ";
 
-    // Used in UpdateElementTask to grab the row selected in AddEvents
+    // The below is used in the SQLDatabase getElementRows method
     public static final String GRAB_EVENT_ROW_DETAILS = "SELECT * FROM "
             + STORY_EVENT_TABLE + " WHERE "
             + STORY_EVENT_ID + " = ";

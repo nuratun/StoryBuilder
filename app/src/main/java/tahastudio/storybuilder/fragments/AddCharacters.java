@@ -48,10 +48,9 @@ public class AddCharacters extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View character_layout = inflater.inflate(
-                R.layout.fragment_add_characters, container, false);
+        View layout = inflater.inflate(R.layout.fragment_add_characters, container, false);
 
-         characters_listview = (ListView) character_layout.findViewById(R.id.characters_listview);
+         characters_listview = (ListView) layout.findViewById(R.id.characters_listview);
 
         // To int[] for the SimpleCursorAdapter
         int[] to = new int[] {
@@ -103,7 +102,7 @@ public class AddCharacters extends Fragment implements LoaderManager.LoaderCallb
             }
         });
 
-        return character_layout;
+        return layout;
     }
 
     // TODO -> Factor this out into one method
