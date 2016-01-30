@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
@@ -41,7 +42,9 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
 
     @Override
     protected Integer doInBackground(String... params) {
-        SQLDatabase db = SQLDatabase.getInstance(context);
+        SQLDatabase db = new SQLDatabase(context);
+
+        Uri uri = Uri.parse(Constants.CONTENT_URI + "/" + Constants.STORY_TABLE);
 
         // Instantiate a ContentValues instance to add in data
         ContentValues values = new ContentValues();
@@ -49,8 +52,8 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
         values.put(Constants.STORY_GENRE, genre);
         values.put(Constants.STORY_DESC, desc);
 
-        // Insert into the database
-        db.insertRow(values, Constants.STORY_TABLE);
+        // Call the insert method on StoryProvider, through the ContentResolver
+        context.getContentResolver().insert(uri, values);
 
         // Return the id of the story to send as an Intent to the ShowStory class
         return db.getStoryID();

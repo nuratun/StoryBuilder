@@ -76,7 +76,6 @@ public class AddCharacters extends Fragment implements LoaderManager.LoaderCallb
         getLoaderManager().initLoader(Constants.LOADER, null, this);
 
         // Clicking on a character row will bring up a new fragment with info
-        // TODO --> Long click brings up the delete option
         characters_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -91,13 +90,16 @@ public class AddCharacters extends Fragment implements LoaderManager.LoaderCallb
             }
         });
 
+        // Bring up the delete dialog box on long click
         characters_listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Cursor cursor = (Cursor) characters_listview.getItemAtPosition(position);
 
-                deleteSBDialog(cursor.getInt(cursor.getColumnIndex(Constants.STORY_CHARACTER_ID)),
-                        Constants.STORY_CHARACTER_TABLE); // Send over the table to delete
+                deleteSBDialog(cursor.getInt(cursor.getColumnIndex(
+                        Constants.STORY_CHARACTER_ID)),
+                        Constants.STORY_CHARACTER_TABLE,
+                        Constants.STORY_CHARACTER_ID);
                 return true;
             }
         });
@@ -107,11 +109,13 @@ public class AddCharacters extends Fragment implements LoaderManager.LoaderCallb
 
     // TODO -> Factor this out into one method
     // Calls the SBDeleteDialog class to delete a story, or story element
-    private void deleteSBDialog(int position, String table) {
+    private void deleteSBDialog(int position, String table, String column) {
         // Bundle the story id for the delete dialog
+        Log.d("character position", String.valueOf(position));
         Bundle bundle = new Bundle();
-        bundle.putString("table", table);
         bundle.putInt("id", position); // The id is the _id for the character entry in the db
+        bundle.putString("table", table); // The db table name
+        bundle.putString("column", column); // The column for the where clause
 
         SBDeleteDialog deleteDialog = new SBDeleteDialog();
         deleteDialog.setArguments(bundle); // Send the bundle over to the dialog

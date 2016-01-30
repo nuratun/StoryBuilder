@@ -37,8 +37,12 @@ public class StoryProvider extends ContentProvider {
             case (Constants.EVENT_ID):
                 return Constants.CONTENT_URI + "/" + Constants.STORY_EVENT_ID
                         + "/" + Constants.DB_ID;
+            case (Constants.STORY_LIST):
+                return Constants.CONTENT_URI + "/" + Constants.STORY_TABLE;
+            case (Constants.STORY_ID):
+                return Constants.CONTENT_URI + "/" + Constants.DB_ID;
         }
-        return "tahastudio.storybuilder.db.SQLDatabase";
+        return Constants.AUTHORITY;
     }
 
     @Override
@@ -82,6 +86,12 @@ public class StoryProvider extends ContentProvider {
                 break;
             case Constants.EVENT_ID:
                 id = Constants.STORY_EVENT_TABLE;
+                break;
+            case Constants.STORY_LIST:
+                id = Constants.STORY_TABLE;
+                break;
+            case Constants.STORY_ID:
+                id = Constants.STORY_TABLE;
                 break;
         }
 
@@ -176,6 +186,12 @@ public class StoryProvider extends ContentProvider {
                 break;
             case Constants.EVENT_ID:
                 id = Constants.STORY_EVENT_TABLE;
+                break;
+            case Constants.STORY_LIST:
+                id = Constants.STORY_TABLE;
+                break;
+            case Constants.STORY_ID:
+                id = Constants.STORY_TABLE;
                 break;
         }
 

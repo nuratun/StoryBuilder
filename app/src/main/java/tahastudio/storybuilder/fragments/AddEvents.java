@@ -84,13 +84,16 @@ public class AddEvents extends Fragment implements LoaderManager.LoaderCallbacks
             }
         });
 
+        // Bring up the delete dialog box on long click
         event_listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Cursor cursor = (Cursor) event_listview.getItemAtPosition(position);
 
-                deleteSBDialog(cursor.getInt(cursor.getColumnIndex(Constants.STORY_EVENT_ID)),
-                        Constants.STORY_EVENT_TABLE); // Send over the table to delete
+                deleteSBDialog(cursor.getInt(cursor.getColumnIndex(
+                        Constants.STORY_EVENT_ID)),
+                        Constants.STORY_EVENT_TABLE,
+                        Constants.STORY_EVENT_ID);
                 return true;
             }
         });
@@ -100,11 +103,12 @@ public class AddEvents extends Fragment implements LoaderManager.LoaderCallbacks
 
     // TODO -> Factor this out into one method
     // Calls the SBDeleteDialog class to delete a story, or story element
-    private void deleteSBDialog(int position, String table) {
+    private void deleteSBDialog(int position, String table, String column) {
         // Bundle the story id for the delete dialog
         Bundle bundle = new Bundle();
-        bundle.putString("table", table);
         bundle.putInt("id", position); // The id is the _id for the character entry in the db
+        bundle.putString("table", table); // The db table name
+        bundle.putString("column", column); // The column for the where clause
 
         SBDeleteDialog deleteDialog = new SBDeleteDialog();
         deleteDialog.setArguments(bundle); // Send the bundle over to the dialog

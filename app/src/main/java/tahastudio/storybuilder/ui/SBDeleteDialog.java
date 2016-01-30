@@ -32,8 +32,9 @@ public class SBDeleteDialog extends DialogFragment {
         builder.setView(popup); // Set the view
 
         // Set the story _id and table in the onClick method
-        final String table = getArguments().getString("table");
         final int story_id = getArguments().getInt("id");
+        final String table = getArguments().getString("table");
+        final String column = getArguments().getString("column");
 
         // Inflate layout for the dialog box. Add buttons to the dialog box dynamically,
         // to either delete the entry or not.
@@ -51,8 +52,8 @@ public class SBDeleteDialog extends DialogFragment {
 
                 // Call the delete method of StoryProvider, through the ContentResolver
                 getActivity().getApplicationContext().getContentResolver()
-                        .delete(uri, Constants.DB_ID + "=?",
-                                new String[] { String.valueOf(story_id) });
+                        .delete(uri, column + "=?", new String[] { String.valueOf(story_id) });
+
             }
 
         }).setNegativeButton(R.string.delete_no, new DialogInterface.OnClickListener() {

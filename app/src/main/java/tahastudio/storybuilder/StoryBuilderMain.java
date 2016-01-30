@@ -1,11 +1,14 @@
 package tahastudio.storybuilder;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -19,17 +22,26 @@ import android.widget.Toast;
 import java.util.Random;
 
 import tahastudio.storybuilder.db.Constants;
-import tahastudio.storybuilder.db.SQLDatabase;
 import tahastudio.storybuilder.ui.SBDeleteDialog;
 import tahastudio.storybuilder.ui.SBDialog;
 
 /**
  * Main activity of StoryBuilder
  **/
-public class StoryBuilderMain extends AppCompatActivity {
+public class StoryBuilderMain extends AppCompatActivity implements
+        LoaderManager.LoaderCallbacks<Cursor> {
+
     FloatingActionButton the_fab;
-    ListView story_list;
-    TextView empty;
+    private ListView list;
+    private SimpleCursorAdapter cursorAdapter; // For the LoaderManager
+    private CursorLoader cursorLoader; // For the LoaderManager
+
+    // From String[] for the cursor
+    String[] from = {
+            Constants.DB_ID,
+            Constants.STORY_NAME,
+            Constants.STORY_GENRE,
+            Constants.STORY_DESC };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,23 +54,34 @@ public class StoryBuilderMain extends AppCompatActivity {
         // randomQuoteTask will generate a random quote and place it in the TextView
         new randomQuoteTask(textView).execute();
 
-        story_list = (ListView) findViewById(R.id.story_list); // Stories go here
-        empty = (TextView) findViewById(R.id.empty); // TextView used if saved stories == null
+        list = (ListView) findViewById(R.id.story_list); // Stories go here
+        TextView empty = (TextView) findViewById(R.id.empty); // If saved stories == null
+        list.setEmptyView(empty); // Set the view to the empty TextView
 
-        // AsyncTask to find list of stories in db. If not null, return the list
-        // Otherwise, set up the empty TextView. Call the public method.
-        callStoryListTask(story_list, empty);
+        // To int[] for the SimpleCursorAdapter
+        int[] to = {
+                R.id.element_id,
+                R.id.name_info,
+                R.id.extra_info,
+                R.id.desc
+        };
+
+        cursorAdapter = new SimpleCursorAdapter(this, R.layout.tab_view, null, from, to, 0);
+        list.setAdapter(cursorAdapter);
+
+        // To initialize the LoaderManager
+        getSupportLoaderManager().initLoader(Constants.LOADER, null, this);
 
         // When a user clicks on a story, grab the title, and pass it to
         // ShowStory to return the story details from the db
-        story_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // Clicking on a ListView row will return a cursor
                 // Get the position of the user click to generate the cursor
-                Cursor cursor = (Cursor) story_list.getItemAtPosition(position);
+                Cursor cursor = (Cursor) list.getItemAtPosition(position);
 
-                // From the cursor, we can grab the story id and title, going by column names
+                // From the cursor, we can grab the story id and title, going by db column names
                 int story_id = cursor.getInt(cursor.getColumnIndex(Constants.DB_ID));
                 String title = cursor.getString(cursor.getColumnIndex(Constants.STORY_NAME));
 
@@ -71,7 +94,7 @@ public class StoryBuilderMain extends AppCompatActivity {
                 intent.putExtra("id", story_id);  // Pass the story id
                 intent.putExtra("title", title); // Pass the story title
 
-                // Add a flag or get an exception raised
+                // Add a flag
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
                 // Call the intent from this context
@@ -80,13 +103,16 @@ public class StoryBuilderMain extends AppCompatActivity {
         });
 
         // On long click, bring up the delete dialog box
-        story_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        // Returns: SBDeleteDialog class
+        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Cursor cursor = (Cursor) story_list.getItemAtPosition(position);
+                Cursor cursor = (Cursor) list.getItemAtPosition(position);
 
-                deleteSBDialog(cursor.getInt(cursor.getColumnIndex(Constants.DB_ID)), // Get the _id
-                        Constants.STORY_TABLE); // Send over the table to delete the story from
+                deleteSBDialog(cursor.getInt(cursor.getColumnIndex(
+                        Constants.DB_ID)), // Get the _id
+                        Constants.STORY_TABLE, // Send over table...
+                        Constants.DB_ID); //  ...and the column name
                 return true;
             }
         });
@@ -134,11 +160,12 @@ public class StoryBuilderMain extends AppCompatActivity {
     }
 
     // Calls the SBDeleteDialog class to delete a story, or story element
-    private void deleteSBDialog(int position, String table) {
+    private void deleteSBDialog(int position, String table, String column) {
         // Bundle the story id for the delete dialog
         Bundle bundle = new Bundle();
-        bundle.putString("table", table);
         bundle.putInt("id", position); // The id is the _id for the story entry in the db
+        bundle.putString("table", table); // The db table name
+        bundle.putString("column", column); // The column for the where clause
 
         SBDeleteDialog deleteDialog = new SBDeleteDialog();
         deleteDialog.setArguments(bundle); // Send the bundle over to the dialog
@@ -146,18 +173,27 @@ public class StoryBuilderMain extends AppCompatActivity {
         deleteDialog.show(getSupportFragmentManager(), "delete_story");
     }
 
-    // To update the ListView whenever a new story is created
-    // The integers are not used, as the dialog box will exit
-    // if the story has not been created
+    // Must implement the below methods for the LoaderManager
     @Override
-    protected void onActivityResult(int request, int result, Intent data) {
-        callStoryListTask(story_list, empty);
+    public Loader<Cursor> onCreateLoader(int num, Bundle state) {
+        // This URI will be sent to a switch statement in the StoryProvider. It will
+        // set the tables on setTables() method in the db to pull the data for the ListView
+        Uri uri = Uri.parse(Constants.CONTENT_URI + "/" + Constants.STORY_TABLE);
+
+        // Send the URI and the string[] to StoryProvider to interface with the db
+        // This will be returned to onLoadFinished
+        return new android.support.v4.content.CursorLoader(this, uri, from, null, null, null);
     }
 
-    // Makes the storyListTask public, so fragments can access it
-    public void callStoryListTask(ListView list, TextView empty) {
-        storyListTask storyListTask = new storyListTask(list, empty);
-        storyListTask.execute();
+    @Override
+    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+        cursorAdapter.swapCursor(cursor);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> loader) {
+        cursorAdapter.swapCursor(null);
+
     }
 
     // AsyncTask to generate random quote on start of activity
@@ -187,78 +223,6 @@ public class StoryBuilderMain extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             textView.setText(result); // Set the quote on the TextView
-        }
-    }
-
-    // AsyncTask will return a list of stories saved in the db
-    // Clicking on one will return the saved data for that story
-    // by calling the ShowStory task
-    // Returns: A list of stories in db. On null, sets up an empty TextView
-    private class storyListTask extends AsyncTask<Void, Void, Cursor> {
-        private Context context = getBaseContext();
-        private SQLDatabase db = SQLDatabase.getInstance(context);
-        private ListView listView;
-        private TextView textView;
-
-        public storyListTask(ListView listView, TextView textView) {
-            this.listView = listView;
-            this.textView = textView;
-
-            listView.setEmptyView(textView);
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected Cursor doInBackground(Void... params) {
-            // Try to get the list of stories in the db
-            try {
-                return db.getRows(Constants.GRAB_STORY_DETAILS);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Cursor result) {
-            super.onPostExecute(result);
-
-            if (result != null) {
-                // Get the column names
-                String[] columns = {
-                        Constants.DB_ID,
-                        Constants.STORY_NAME,
-                        Constants.STORY_GENRE,
-                        Constants.STORY_DESC
-                };
-
-                // Get the TextView widgets
-                int[] widgets = {
-                        R.id.element_id,
-                        R.id.name_info,
-                        R.id.extra_info,
-                        R.id.desc
-                };
-
-                SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(
-                        context,
-                        R.layout.tab_view,
-                        result,
-                        columns,
-                        widgets,
-                        0);
-
-                // Set the adapter on the ListView
-                listView.setAdapter(cursorAdapter);
-
-                // Notify thread the data has changed
-                cursorAdapter.notifyDataSetChanged();
-                cursorAdapter.notifyDataSetInvalidated();
-            }
         }
     }
 }
