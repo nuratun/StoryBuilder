@@ -5,7 +5,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,9 +110,6 @@ public class AddCharacterElements extends Fragment {
                             + "is a required field", Toast.LENGTH_LONG).show();
                 }
                 else {
-                    Log.d("type", String.valueOf(type));
-                    Log.d("gender", String.valueOf(gender));
-
                     Uri uri = Uri.parse(Constants.CONTENT_URI + "/"
                             + Constants.STORY_CHARACTER_TABLE);
 

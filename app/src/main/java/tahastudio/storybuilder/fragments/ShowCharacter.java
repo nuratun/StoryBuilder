@@ -68,7 +68,6 @@ public class ShowCharacter extends Fragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 int id = character_type.getCheckedRadioButtonId();
 
-                Log.d("just type", String.valueOf(id));
                 if ( id == R.id.sb_character_main ) {
                     type = 1; }
                 else if ( id == R.id.sb_character_antagonist ) {
@@ -84,7 +83,6 @@ public class ShowCharacter extends Fragment {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 int id = character_gender.getCheckedRadioButtonId();
 
-                Log.d("just gender", String.valueOf(id));
                 if ( id == R.id.male_gender ) {
                     gender = 1; }
                 else if ( id == R.id.female_gender ) {
@@ -161,7 +159,6 @@ public class ShowCharacter extends Fragment {
 
                 ContentValues values = new ContentValues();
 
-                Log.d("type and gender", String.valueOf(type) + " " + String.valueOf(gender));
                 values.put(Constants.STORY_CHARACTER_NAME, name.getText().toString());
                 values.put(Constants.STORY_CHARACTER_AGE, age.getText().toString());
                 values.put(Constants.STORY_CHARACTER_TYPE, type);

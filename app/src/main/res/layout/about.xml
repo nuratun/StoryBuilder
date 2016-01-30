@@ -134,8 +134,35 @@
                     android:id="@+id/assets_author"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingBottom="15dp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="@string/assets_author"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingRight="15dp"
+                android:paddingLeft="15dp">
+
+                <TextView
+                    android:id="@+id/banner_author"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/banner_credit"
+                    android:linksClickable="true" />
+
+                <TextView
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="15dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/icons"
+                    android:gravity="end"
+                    android:linksClickable="true" />
             </LinearLayout>
 
         </LinearLayout>

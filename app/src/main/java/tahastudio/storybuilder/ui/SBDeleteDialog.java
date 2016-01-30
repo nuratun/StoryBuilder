@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
@@ -44,7 +43,6 @@ public class SBDeleteDialog extends DialogFragment {
 
                 // Set the table for the uri to send to the StoryProvider
                 Uri uri = Uri.parse(Constants.CONTENT_URI + "/" + table);
-                Log.d("bundle id", String.valueOf(story_id));
 
                 // Confirm the deletion to the user
                 Toast.makeText(getActivity().getApplicationContext(), "Deleting Entry...",

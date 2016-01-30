@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.util.Log;
 
 /**
  * This class holds all the SQL queries used elsewhere in the app
@@ -126,7 +125,6 @@ public class SQLDatabase extends SQLiteOpenHelper {
 
         // Tables to search
         builder.setTables(id);
-        Log.d("the_id", id);
 
         return builder.query(getReadableDatabase(),
                 projection,

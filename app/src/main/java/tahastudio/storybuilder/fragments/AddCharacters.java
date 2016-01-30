@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,7 +110,6 @@ public class AddCharacters extends Fragment implements LoaderManager.LoaderCallb
     // Calls the SBDeleteDialog class to delete a story, or story element
     private void deleteSBDialog(int position, String table, String column) {
         // Bundle the story id for the delete dialog
-        Log.d("character position", String.valueOf(position));
         Bundle bundle = new Bundle();
         bundle.putInt("id", position); // The id is the _id for the character entry in the db
         bundle.putString("table", table); // The db table name
@@ -127,8 +125,6 @@ public class AddCharacters extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public void onAttach(Context context) {
        super.onAttach(context);
-        Log.d("the_resume", "characters on attach");
-
         try {
             characterCallback = (characterListener) context;
         } catch (ClassCastException e) {
@@ -141,7 +137,6 @@ public class AddCharacters extends Fragment implements LoaderManager.LoaderCallb
         // This URI will be sent to a switch statement in the StoryProvider. It will
         // set the tables on setTables() method in the db to pull the data for the ListView
         Uri uri = Uri.parse(Constants.CONTENT_URI + "/" + Constants.STORY_CHARACTER_TABLE);
-        Log.d("uri_parse", String.valueOf(uri));
 
         // Send the URI and the string[] to StoryProvider to interface with the db
         // This will be returned to onLoadFinished
@@ -156,12 +151,10 @@ public class AddCharacters extends Fragment implements LoaderManager.LoaderCallb
     // from onCreateView with a fresh one
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         cursorAdapter.swapCursor(cursor);
-        Log.d("onLoadFinished", "onLoadFinished: adapter is null");
     }
 
     // Reset the entire cursor when the fragment starts from the beginning
     public void onLoaderReset(Loader<Cursor> loader) {
         cursorAdapter.swapCursor(null);
-        Log.d("onLoadReset", "onLoadReset: adapter is null");
     }
 }

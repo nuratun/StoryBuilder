@@ -30,5 +30,9 @@ public class About extends AppCompatActivity {
         asset_author.setMovementMethod(LinkMovementMethod.getInstance());
         // Set the TextView to a link
         asset_author.setText(Html.fromHtml("<a href='https://romannurik.github.io/AndroidAssetStudio/index.html'>Android Asset Studio</a>"));
+
+        TextView banner_credit = (TextView) findViewById(R.id.banner);
+        banner_credit.setMovementMethod(LinkMovementMethod.getInstance());
+        banner_credit.setText(Html.fromHtml("<a href='www.freepik.com/free-vector/typewriting-illustration-vector-free_756502.htm'>Freepik</a>"));
     }
 }

@@ -7,7 +7,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.util.Log;
 
 /**
  * ContentProvider for story elements. All other activities/fragments will now call
@@ -63,8 +62,6 @@ public class StoryProvider extends ContentProvider {
                         String sortOrder) {
 
         String id = null; // This will set the table in the db
-
-        Log.d("the_uri", String.valueOf(uri));
 
         int uriType = Constants.uriMatcher.match(uri);
 
@@ -124,7 +121,6 @@ public class StoryProvider extends ContentProvider {
         String table = null; // The table to delete from
 
         int uriType = Constants.uriMatcher.match(uri); // Find the table by the uri
-        Log.d("story", String.valueOf(uri));
 
         switch (uriType) {
             case Constants.CHARACTER_ID:

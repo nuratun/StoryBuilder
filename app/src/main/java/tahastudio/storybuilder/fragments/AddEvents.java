@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,7 +119,6 @@ public class AddEvents extends Fragment implements LoaderManager.LoaderCallbacks
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Log.d("the_resume", "events on attach");
 
         try {
             eventCallback = (eventListener) context;
@@ -135,7 +133,6 @@ public class AddEvents extends Fragment implements LoaderManager.LoaderCallbacks
         // This URI will be sent to a switch statement in the StoryProvider. It will
         // set the tables on setTables() method in the db to pull the data for the ListView
         Uri uri = Uri.parse(Constants.CONTENT_URI + "/" + Constants.STORY_EVENT_TABLE);
-        Log.d("uri_parse", String.valueOf(uri));
 
         // Send the URI and the string[] to StoryProvider to interface with the db
         // This will be returned to onLoadFinished
