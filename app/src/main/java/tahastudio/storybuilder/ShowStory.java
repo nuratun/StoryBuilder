@@ -2,6 +2,7 @@ package tahastudio.storybuilder;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Rect;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -11,6 +12,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
@@ -40,6 +42,8 @@ public class ShowStory extends AppCompatActivity implements
 
     // To programmatically add in the fragments
     FragmentManager fragmentManager = getSupportFragmentManager();
+    // The fab, to implement the fab menu
+    private com.getbase.floatingactionbutton.FloatingActionsMenu fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +58,7 @@ public class ShowStory extends AppCompatActivity implements
         new setStoryTitle(title).execute();
 
         // Find the FAB menu and add in the actions
-        final com.getbase.floatingactionbutton.FloatingActionsMenu fab =
-                (com.getbase.floatingactionbutton.FloatingActionsMenu) findViewById(R.id.fab);
+        fab = (com.getbase.floatingactionbutton.FloatingActionsMenu) findViewById(R.id.fab);
 
         // The inner menu for adding a character
         com.getbase.floatingactionbutton.FloatingActionButton characters_fab =
@@ -164,6 +167,23 @@ public class ShowStory extends AppCompatActivity implements
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    // To close the fab menu on an outside touch
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        if ( event.getAction() == MotionEvent.ACTION_DOWN ) {
+            if ( fab.isExpanded() ) {
+                Rect rect = new Rect();
+                fab.getGlobalVisibleRect(rect);
+
+                // If the touch is outside of the fab menu
+                if ( !rect.contains((int)event.getRawX(), (int)event.getRawY()) ) {
+                    fab.collapse(); // Close the fab
+                }
+            }
+        }
+        return super.dispatchTouchEvent(event);
     }
 
     // Implement the AddCharacters interface method for a ListView click

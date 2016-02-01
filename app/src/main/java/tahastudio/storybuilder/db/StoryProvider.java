@@ -17,7 +17,6 @@ public class StoryProvider extends ContentProvider {
     private SQLDatabase db = null;
     private ContentResolver contentResolver;
 
-
     @Override
     public String getType(Uri uri) {
         switch (Constants.uriMatcher.match(uri)) {
