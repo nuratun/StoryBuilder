@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="tahastudio.storybuilder"
-    android:versionCode="1"
-    android:versionName="0.1">
+    package="tahastudio.storybuilder">
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
