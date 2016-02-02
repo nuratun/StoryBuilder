@@ -10,6 +10,8 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 import java.util.Random;
 
 import tahastudio.storybuilder.db.Constants;
+import tahastudio.storybuilder.db.StoryAdapter;
 import tahastudio.storybuilder.ui.SBDeleteDialog;
 import tahastudio.storybuilder.ui.SBDialog;
 
@@ -33,6 +36,11 @@ public class StoryBuilderMain extends AppCompatActivity implements
     FloatingActionButton the_fab;
     private ListView list;
     private SimpleCursorAdapter cursorAdapter; // For the LoaderManager
+    private Cursor cursor;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter recyclerAdapter;
+    private RecyclerView.LayoutManager recyclerLayout;
+    private Uri uri;
 
     // From String[] for the cursor
     String[] from = {
@@ -45,27 +53,27 @@ public class StoryBuilderMain extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story_builder_main);
+        recyclerView = (RecyclerView) findViewById(R.id.story_list);
+
+        // Get the database table to grab data from
+        uri = Uri.parse(Constants.CONTENT_URI + "/" + Constants.STORY_TABLE);
+
+        // Call the query method on the ContentProvider
+        cursor = getContentResolver().query(uri, from, null, null, null);
+
+        // Set the layout manager for the RecyclerView
+        recyclerLayout = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(recyclerLayout);
+
+        // Set the adapter (Cursor) for the RecyclerView
+        recyclerAdapter = new StoryAdapter(this, cursor);
+        recyclerView.setAdapter(recyclerAdapter);
 
         // TODO -> Set up a drawer
 
         TextView textView = (TextView) findViewById(R.id.quote); // TextView used for quotes
         // randomQuoteTask will generate a random quote and place it in the TextView
         new randomQuoteTask(textView).execute();
-
-        list = (ListView) findViewById(R.id.story_list); // Stories go here
-        TextView empty = (TextView) findViewById(R.id.empty); // If saved stories == null
-        list.setEmptyView(empty); // Set the view to the empty TextView
-
-        // To int[] for the SimpleCursorAdapter
-        int[] to = {
-                R.id.element_id,
-                R.id.name_info,
-                R.id.extra_info,
-                R.id.desc
-        };
-
-        cursorAdapter = new SimpleCursorAdapter(this, R.layout.tab_view, null, from, to, 0);
-        list.setAdapter(cursorAdapter);
 
         // To initialize the LoaderManager
         getSupportLoaderManager().initLoader(Constants.LOADER, null, this);
@@ -176,7 +184,7 @@ public class StoryBuilderMain extends AppCompatActivity implements
     public Loader<Cursor> onCreateLoader(int num, Bundle state) {
         // This URI will be sent to a switch statement in the StoryProvider. It will
         // set the tables on setTables() method in the db to pull the data for the ListView
-        Uri uri = Uri.parse(Constants.CONTENT_URI + "/" + Constants.STORY_TABLE);
+        uri = Uri.parse(Constants.CONTENT_URI + "/" + Constants.STORY_TABLE);
 
         // Send the URI and the string[] to StoryProvider to interface with the db
         // This will be returned to onLoadFinished
