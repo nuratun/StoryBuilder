@@ -6,8 +6,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,15 +27,12 @@ import tahastudio.storybuilder.ui.SBDialog;
 /**
  * Main activity of StoryBuilder
  **/
-public class StoryBuilderMain extends AppCompatActivity implements
-        LoaderManager.LoaderCallbacks<Cursor> {
+public class StoryBuilderMain extends AppCompatActivity {
 
     FloatingActionButton the_fab;
-    private ListView list;
-    private SimpleCursorAdapter cursorAdapter; // For the LoaderManager
     private Cursor cursor;
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter recyclerAdapter;
+    private StoryAdapter recyclerAdapter;
     private RecyclerView.LayoutManager recyclerLayout;
     private Uri uri;
 
@@ -75,17 +69,12 @@ public class StoryBuilderMain extends AppCompatActivity implements
         // randomQuoteTask will generate a random quote and place it in the TextView
         new randomQuoteTask(textView).execute();
 
-        // To initialize the LoaderManager
-        getSupportLoaderManager().initLoader(Constants.LOADER, null, this);
-
-        // When a user clicks on a story, grab the title, and pass it to
-        // ShowStory to return the story details from the db
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        recyclerAdapter.setClickListener(new StoryAdapter.OnClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(int position, View v) {
                 // Clicking on a ListView row will return a cursor
                 // Get the position of the user click to generate the cursor
-                Cursor cursor = (Cursor) list.getItemAtPosition(position);
+                Cursor cursor = (Cursor) recyclerAdapter.get
 
                 // From the cursor, we can grab the story id and title, going by db column names
                 int story_id = cursor.getInt(cursor.getColumnIndex(Constants.DB_ID));
@@ -106,20 +95,15 @@ public class StoryBuilderMain extends AppCompatActivity implements
                 // Call the intent from this context
                 getApplicationContext().startActivity(intent);
             }
-        });
 
-        // On long click, bring up the delete dialog box
-        // Returns: SBDeleteDialog class
-        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Cursor cursor = (Cursor) list.getItemAtPosition(position);
+            public void onItemLongClick(int position, View v) {
+                Cursor cursor = (Cursor) recyclerLayout.getItemAtPosition(position);
 
                 deleteSBDialog(cursor.getInt(cursor.getColumnIndex(
                         Constants.DB_ID)), // Get the _id
                         Constants.STORY_TABLE, // Send over table...
                         Constants.DB_ID); //  ...and the column name
-                return true;
             }
         });
 
@@ -177,29 +161,6 @@ public class StoryBuilderMain extends AppCompatActivity implements
         deleteDialog.setArguments(bundle); // Send the bundle over to the dialog
 
         deleteDialog.show(getSupportFragmentManager(), "delete_story");
-    }
-
-    // Must implement the below methods for the LoaderManager
-    @Override
-    public Loader<Cursor> onCreateLoader(int num, Bundle state) {
-        // This URI will be sent to a switch statement in the StoryProvider. It will
-        // set the tables on setTables() method in the db to pull the data for the ListView
-        uri = Uri.parse(Constants.CONTENT_URI + "/" + Constants.STORY_TABLE);
-
-        // Send the URI and the string[] to StoryProvider to interface with the db
-        // This will be returned to onLoadFinished
-        return new android.support.v4.content.CursorLoader(this, uri, from, null, null, null);
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        cursorAdapter.swapCursor(cursor);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        cursorAdapter.swapCursor(null);
-
     }
 
     // AsyncTask to generate random quote on start of activity

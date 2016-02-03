@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import tahastudio.storybuilder.R;
 
@@ -15,8 +16,18 @@ import tahastudio.storybuilder.R;
  * in the constructor will be a cursor working in tandem with the ContentProvider.
  */
 public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
+    private static OnClickListener clickListener;
     private CursorAdapter cursorAdapter;
     private Context context;
+
+    public interface OnClickListener {
+        void onItemClick(int position, View view);
+        void onItemLongClick(int position, View view);
+    }
+
+    public void setClickListener(OnClickListener clickListener) {
+        StoryAdapter.clickListener = clickListener;
+    }
 
     public StoryAdapter(Context context, Cursor cursor) {
         this.context = context;
@@ -35,12 +46,37 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryAdapter.ViewHolder>{
         };
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        View base;
+    public static class ViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener, View.OnLongClickListener {
+        // The elements to find in the tab_view layout file
+        TextView story_id;
+        TextView element_id;
+        TextView name;
+        TextView extra;
+        TextView desc;
 
         public ViewHolder(View view) {
-            super(view);
-            base = view.findViewById(R.id.tab_view);
+            super(view); // The tab_view layout file passed in by the implementing activity
+
+            story_id = (TextView) view.findViewById(R.id.story_id);
+            element_id = (TextView) view.findViewById(R.id.element_id);
+            name = (TextView) view.findViewById(R.id.name_info);
+            extra = (TextView) view.findViewById(R.id.extra_info);
+            desc = (TextView) view.findViewById(R.id.desc);
+
+            view.setOnClickListener(this); // Make the layout file clickable
+            view.setOnLongClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            clickListener.onItemClick(getAdapterPosition(), view);
+        }
+
+        @Override
+        public boolean onLongClick(View view) {
+            clickListener.onItemLongClick(getAdapterPosition(), view);
+            return true;
         }
     }
 

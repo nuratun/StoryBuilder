@@ -2,6 +2,7 @@
 <RelativeLayout
     android:id="@+id/tab_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -21,6 +22,13 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/card_view"
+                android:layout_gravity="center"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                card_view:cardCornerRadius="4dp">
 
             <TextView
                 android:id="@+id/story_id"
@@ -55,6 +63,8 @@
                 android:paddingTop="15dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"/>
+
+            </android.support.v7.widget.CardView>
         </TableRow>
 
         <TableRow
