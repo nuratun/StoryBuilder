@@ -1,10 +1,12 @@
-package tahastudio.storybuilder;
+package tahastudio.storybuilder.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.widget.TextView;
+
+import tahastudio.storybuilder.R;
 
 /**
  * About page for the menu

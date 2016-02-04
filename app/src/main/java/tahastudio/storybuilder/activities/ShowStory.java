@@ -1,4 +1,4 @@
-package tahastudio.storybuilder;
+package tahastudio.storybuilder.activities;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import tahastudio.storybuilder.R;
 import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.db.SQLDatabase;
 import tahastudio.storybuilder.fragments.AddCharacterElements;

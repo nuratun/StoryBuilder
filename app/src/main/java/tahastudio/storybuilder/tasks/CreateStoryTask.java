@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import tahastudio.storybuilder.ShowStory;
+import tahastudio.storybuilder.activities.ShowStory;
 import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.db.SQLDatabase;
 

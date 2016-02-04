@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".StoryBuilderMain">
+    tools:context=".activities.StoryBuilderMain">
 
     <TextView
         android:id="@+id/quote"
@@ -18,14 +18,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:listSelector="@drawable/big_card_list"
-        android:layout_below="@id/quote" />
-
-    <TextView
-        android:id="@+id/empty"
-        android:theme="@style/Empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/empty"
         android:layout_below="@id/quote" />
 
     <android.support.design.widget.FloatingActionButton

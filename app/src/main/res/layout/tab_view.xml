@@ -1,34 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     android:id="@+id/tab_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/divider">
+    android:layout_height="match_parent">
 
-
-
-    <TableLayout
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="6dp"
-        android:layout_marginRight="6dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="4dp"
-        android:background="@drawable/card_list">
+        card_view:contentPadding="10dp"
+        android:layout_margin="4dp"
+        card_view:cardCornerRadius="2dp">
 
-        <TableRow
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <android.support.v7.widget.CardView
-                android:id="@+id/card_view"
-                android:layout_gravity="center"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
-                card_view:cardCornerRadius="4dp">
 
             <TextView
                 android:id="@+id/story_id"
@@ -44,43 +34,29 @@
 
             <TextView
                 android:id="@+id/name_info"
-                android:layout_width="fill_parent"
+                android:layout_alignParentStart="true"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="center_vertical"
+                android:textStyle="bold"
                 android:textAllCaps="true"
-                android:textColor="@color/primary_text"
-                android:paddingTop="15dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"/>
+                android:textColor="@color/primary_text" />
 
             <TextView
                 android:id="@+id/extra_info"
+                android:layout_alignParentEnd="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textColor="@color/secondary_text"
-                android:paddingTop="15dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"/>
-
-            </android.support.v7.widget.CardView>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+                android:textColor="@color/secondary_text" />
 
             <TextView
                 android:id="@+id/desc"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_gravity="start|center_vertical"
+                android:layout_marginTop="10dp"
                 android:textColor="@color/secondary_text"
-                android:paddingTop="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"/>
-        </TableRow>
-    </TableLayout>
-</RelativeLayout>
+                android:layout_below="@+id/name_info" />
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</LinearLayout>

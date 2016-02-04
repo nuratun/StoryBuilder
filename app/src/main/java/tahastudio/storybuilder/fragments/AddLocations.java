@@ -47,9 +47,9 @@ public class AddLocations extends Fragment implements LoaderManager.LoaderCallba
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_add_locations, container, false);
+        View layout = inflater.inflate(R.layout.story_elements, container, false);
 
-        locations_listview = (ListView) layout.findViewById(R.id.locations_listview);
+        locations_listview = (ListView) layout.findViewById(R.id.element_listview);
 
         // To int[] for the SimpleCursorAdapter
         int[] to = new int[] {

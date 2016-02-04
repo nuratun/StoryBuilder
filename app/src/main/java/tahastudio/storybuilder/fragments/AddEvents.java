@@ -46,9 +46,9 @@ public class AddEvents extends Fragment implements LoaderManager.LoaderCallbacks
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_add_events, container, false);
+        View layout = inflater.inflate(R.layout.story_elements, container, false);
 
-        event_listview = (ListView) layout.findViewById(R.id.event_listview);
+        event_listview = (ListView) layout.findViewById(R.id.element_listview);
 
         // To int[] for the SimpleCursorAdapter
         int[] to = new int[] {

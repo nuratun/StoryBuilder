@@ -48,9 +48,9 @@ public class AddCharacters extends Fragment implements LoaderManager.LoaderCallb
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.fragment_add_characters, container, false);
+        View layout = inflater.inflate(R.layout.story_elements, container, false);
 
-         characters_listview = (ListView) layout.findViewById(R.id.characters_listview);
+         characters_listview = (ListView) layout.findViewById(R.id.element_listview);
 
         // To int[] for the SimpleCursorAdapter
         int[] to = new int[] {

@@ -8,7 +8,7 @@ import android.net.Uri;
  * Most of these constants will not change throughout the lifecycle
  */
 public class Constants {
-    // The Loader instance for StoryBuilderMain, AddCharacters, AddLocations, and AddEvents
+    // The Loader instance for StoryBuilderMain
     public static final int LOADER = 0;
 
     // Create public static references for the story, so other classes can access them

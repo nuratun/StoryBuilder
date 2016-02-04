@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import tahastudio.storybuilder.R;
-import tahastudio.storybuilder.StoryBuilderMain;
+import tahastudio.storybuilder.activities.StoryBuilderMain;
 
 /**
  * Splash screen showing the TahaStudio logo
