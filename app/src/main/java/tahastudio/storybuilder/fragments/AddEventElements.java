@@ -1,20 +1,19 @@
 package tahastudio.storybuilder.fragments;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import tahastudio.storybuilder.R;
 import tahastudio.storybuilder.db.Constants;
+import tahastudio.storybuilder.shared.SharedKeyboard;
 
 /**
  * Fragment to replace ListView in AddEvents. Is called by AddEvents.
@@ -40,15 +39,8 @@ public class AddEventElements extends Fragment {
         add_the_event.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO -> refactor into one method
-                // Close the keyboard
-                if ( getActivity().getCurrentFocus() != null ) {
-                    InputMethodManager inputMethodManager = (InputMethodManager)
-                            getActivity().getApplicationContext().getSystemService
-                                    (Context.INPUT_METHOD_SERVICE);
-                    inputMethodManager.hideSoftInputFromWindow
-                            (getActivity().getCurrentFocus().getWindowToken(), 0);
-                }
+                // Call the shared keyboard class to close the virtual keyboard
+                SharedKeyboard.closeKeyboard(getActivity(), v);
 
                 // Ensure event field != null
                 if (event_title.length() < 1) {

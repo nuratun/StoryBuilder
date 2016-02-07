@@ -13,8 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:contentPadding="10dp"
-        android:layout_margin="4dp"
-        card_view:cardCornerRadius="2dp">
+        android:layout_margin="2dp"
+        card_view:cardCornerRadius="1dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
