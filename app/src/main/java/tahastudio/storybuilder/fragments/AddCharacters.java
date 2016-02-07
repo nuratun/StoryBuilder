@@ -16,7 +16,7 @@ import android.widget.ListView;
 
 import tahastudio.storybuilder.R;
 import tahastudio.storybuilder.db.Constants;
-import tahastudio.storybuilder.ui.SBDeleteDialog;
+import tahastudio.storybuilder.shared.DeleteDialogBox;
 
 /**
  * First tab for SB
@@ -94,7 +94,8 @@ public class AddCharacters extends Fragment implements LoaderManager.LoaderCallb
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Cursor cursor = (Cursor) characters_listview.getItemAtPosition(position);
 
-                deleteSBDialog(cursor.getInt(cursor.getColumnIndex(
+                DeleteDialogBox deleteDialogBox = new DeleteDialogBox();
+                deleteDialogBox.deleteSBDialog(cursor.getInt(cursor.getColumnIndex(
                         Constants.STORY_CHARACTER_ID)),
                         Constants.STORY_CHARACTER_TABLE,
                         Constants.STORY_CHARACTER_ID);
@@ -107,18 +108,18 @@ public class AddCharacters extends Fragment implements LoaderManager.LoaderCallb
 
     // TODO -> Factor this out into one method
     // Calls the SBDeleteDialog class to delete a story, or story element
-    private void deleteSBDialog(int position, String table, String column) {
+    //private void deleteSBDialog(int position, String table, String column) {
         // Bundle the story id for the delete dialog
-        Bundle bundle = new Bundle();
-        bundle.putInt("id", position); // The id is the _id for the character entry in the db
-        bundle.putString("table", table); // The db table name
-        bundle.putString("column", column); // The column for the where clause
+    //    Bundle bundle = new Bundle();
+    //    bundle.putInt("id", position); // The id is the _id for the character entry in the db
+    //    bundle.putString("table", table); // The db table name
+    //    bundle.putString("column", column); // The column for the where clause
 
-        SBDeleteDialog deleteDialog = new SBDeleteDialog();
-        deleteDialog.setArguments(bundle); // Send the bundle over to the dialog
+    //    SBDeleteDialog deleteDialog = new SBDeleteDialog();
+    //    deleteDialog.setArguments(bundle); // Send the bundle over to the dialog
 
-        deleteDialog.show(getFragmentManager(), "delete_story");
-    }
+    //    deleteDialog.show(getFragmentManager(), "delete_story");
+    //}
 
     // Ensure ShowStory implements the interface
     @Override
