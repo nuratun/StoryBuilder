@@ -96,10 +96,12 @@ public class StoryBuilderMain extends AppCompatActivity implements
         recyclerAdapter.setOnItemLongClickListener(new StoryAdapter.OnItemLongClickListener() {
             @Override
             public void onItemLongClicked(Cursor cursor) {
-                deleteSBDialog(cursor.getInt(cursor.getColumnIndex(
-                        Constants.DB_ID)), // Get the _id
-                        Constants.STORY_TABLE, // Send over table...
-                        Constants.DB_ID); //  ...and the column name
+                SBDeleteDialog deleteDialog = new SBDeleteDialog();
+                deleteDialog.delete(cursor.getInt(cursor.getColumnIndex(
+                        Constants.DB_ID)),
+                        Constants.STORY_TABLE,
+                        Constants.DB_ID);
+                deleteDialog.show(getSupportFragmentManager(), "delete");
             }
         });
 
@@ -168,20 +170,6 @@ public class StoryBuilderMain extends AppCompatActivity implements
     private void showSBDialog() {
         SBDialog sbDialog = new SBDialog();
         sbDialog.show(getSupportFragmentManager(), "story_creation");
-    }
-
-    // Calls the SBDeleteDialog class to delete a story, or story element
-    private void deleteSBDialog(int position, String table, String column) {
-        // Bundle the story id for the delete dialog
-        Bundle bundle = new Bundle();
-        bundle.putInt("id", position); // The id is the _id for the story entry in the db
-        bundle.putString("table", table); // The db table name
-        bundle.putString("column", column); // The column for the where clause
-
-        SBDeleteDialog deleteDialog = new SBDeleteDialog();
-        deleteDialog.setArguments(bundle); // Send the bundle over to the dialog
-
-        deleteDialog.show(getSupportFragmentManager(), "delete_story");
     }
 
     // AsyncTask to generate random quote on start of activity

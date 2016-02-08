@@ -91,30 +91,18 @@ public class AddLocations extends Fragment implements LoaderManager.LoaderCallba
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Cursor cursor = (Cursor) locations_listview.getItemAtPosition(position);
 
-                deleteSBDialog(cursor.getInt(cursor.getColumnIndex(
+                SBDeleteDialog deleteDialog = new SBDeleteDialog();
+                deleteDialog.delete(cursor.getInt(cursor.getColumnIndex(
                         Constants.STORY_LOCATION_ID)),
                         Constants.STORY_LOCATION_TABLE,
                         Constants.STORY_LOCATION_ID);
+                deleteDialog.show(getFragmentManager(), "delete");
+
                 return true;
             }
         });
 
         return layout;
-    }
-
-    // TODO -> Factor this out into one method
-    // Calls the SBDeleteDialog class to delete a story, or story element
-    private void deleteSBDialog(int position, String table, String column) {
-        // Bundle the story id for the delete dialog
-        Bundle bundle = new Bundle();
-        bundle.putInt("id", position); // The id is the _id for the character entry in the db
-        bundle.putString("table", table); // The db table name
-        bundle.putString("column", column); // The column for the where clause
-
-        SBDeleteDialog deleteDialog = new SBDeleteDialog();
-        deleteDialog.setArguments(bundle); // Send the bundle over to the dialog
-
-        deleteDialog.show(getFragmentManager(), "delete_story");
     }
 
     // Ensure ShowStory implements the interface
