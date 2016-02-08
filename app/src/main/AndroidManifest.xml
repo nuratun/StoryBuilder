@@ -4,10 +4,14 @@
     package="tahastudio.storybuilder">
     <application
         android:allowBackup="true"
+        android:backupAgent=".shared.SharedBackup"
+        android:restoreAnyVersion="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/StoryBuilderTheme"
-        android:largeHeap="true">
+        android:theme="@style/StoryBuilderTheme">
+        <meta-data
+            android:name="com.google.android.backup.api_key"
+            android:value="AEdPqrEAAAAIlb-nfIlX5ocuUrZS7wbQRNGWhX3N6sJEQ6LeXA" />
         <provider
             android:authorities="tahastudio.storybuilder.db.StoryProvider"
             android:name="tahastudio.storybuilder.db.StoryProvider" />
