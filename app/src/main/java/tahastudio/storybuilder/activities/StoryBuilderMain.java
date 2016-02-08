@@ -1,5 +1,6 @@
 package tahastudio.storybuilder.activities;
 
+import android.app.backup.BackupManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -53,6 +54,9 @@ public class StoryBuilderMain extends AppCompatActivity implements
         TextView textView = (TextView) findViewById(R.id.quote); // TextView used for quotes
         // randomQuoteTask will generate a random quote and place it in the TextView
         new randomQuoteTask(textView).execute();
+
+        // Call the backup manager, if this app has been re-installed or data has changed
+        restoreFromBackup();
 
         // Set the layout manager for the RecyclerView
         recyclerLayout = new LinearLayoutManager(this);
@@ -164,12 +168,18 @@ public class StoryBuilderMain extends AppCompatActivity implements
         recyclerAdapter.swapCursor(null);
     }
 
+    // Call the backup manager to restore app state when re-installed
+    private void restoreFromBackup() {
+        BackupManager backupManager = new BackupManager(this);
+        backupManager.dataChanged();
+    }
+
     // Calls SBDialog class to create the story creation dialog
     // User inputs data and creates a new story. Data is sent to the CreateStoryTask class
     // Initialized from the FAB
     private void showSBDialog() {
         SBDialog sbDialog = new SBDialog();
-        sbDialog.show(getSupportFragmentManager(), "story_creation");
+        sbDialog.show(getSupportFragmentManager(), "creation");
     }
 
     // AsyncTask to generate random quote on start of activity

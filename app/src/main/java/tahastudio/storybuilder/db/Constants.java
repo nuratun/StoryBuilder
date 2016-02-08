@@ -8,8 +8,6 @@ import android.net.Uri;
  * Most of these constants will not change throughout the lifecycle
  */
 public class Constants {
-    // For the backup agent, SharedBackup
-    public static final String DB_BACKUP = "db";
 
     // The Loader instance for StoryBuilderMain
     public static final int LOADER = 0;
