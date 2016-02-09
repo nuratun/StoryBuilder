@@ -16,7 +16,7 @@ public class Constants {
     public static int SB_ID; // This value will not change unless a user selects a different story
 
     // Version number must change if database changes
-    public static final int DATABASE_VERSION = 2;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "sb.db";
 
     // Set up table schema for the story
