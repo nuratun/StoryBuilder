@@ -61,14 +61,13 @@
         <item name="android:gravity">center_horizontal</item>
     </style>
 
-    <style name="Tabs" parent="StoryBuilderTheme">
-        <item name="android:textSize">16sp</item>
+    <style name="Tabs" parent="android:Widget">
+        <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/primary_text_light</item>
         <item name="android:background">@color/accent</item>
         <item name="android:textAlignment">center</item>
         <item name="android:tabStripEnabled">true</item>
-        <item name="android:tabStripLeft">@color/primary_dark</item>
-        <item name="android:tabStripRight">@color/primary_dark</item>
+        <item name="android:textAllCaps">true</item>
     </style>
 
     <style name="Fab" parent="StoryBuilderTheme">

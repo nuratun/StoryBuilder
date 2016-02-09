@@ -119,7 +119,7 @@ public class ShowStory extends AppCompatActivity implements
         tab_layout.addTab(tab_layout.newTab().setText("Characters"));
         tab_layout.addTab(tab_layout.newTab().setText("Locations"));
         tab_layout.addTab(tab_layout.newTab().setText("Events"));
-        tab_layout.setTabGravity(tab_layout.GRAVITY_FILL);
+        tab_layout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
         // ViewPager allows flipping left and right through pages (tabs) of data
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
