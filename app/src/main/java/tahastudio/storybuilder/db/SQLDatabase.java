@@ -72,7 +72,7 @@ public class SQLDatabase extends SQLiteOpenHelper {
     }
 
     // Get the story genre to set the drawable
-    // Location: ShowStory
+    // Location: Story
     public Cursor getStoryGenre() {
         SQLiteDatabase helper = getReadableDatabase();
         return helper.rawQuery(Constants.GET_STORY_GENRE + Constants.SB_ID, null);

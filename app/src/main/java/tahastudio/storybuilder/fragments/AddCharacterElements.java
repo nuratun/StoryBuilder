@@ -32,7 +32,7 @@ public class AddCharacterElements extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this view
         View layout = inflater.inflate(
-                R.layout.activity_add_character,
+                R.layout.fragment_add_character,
                 container,
                 false);
 

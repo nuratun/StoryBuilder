@@ -28,9 +28,9 @@ public class ShowEvent extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.activity_add_event, container, false);
+        View layout = inflater.inflate(R.layout.fragment_add_event, container, false);
 
-        // Grab the bundle info from ShowStory
+        // Grab the bundle info from the class, Story
         Bundle bundle = this.getArguments();
         String name = bundle.getString("name");
         final int id = bundle.getInt("id");

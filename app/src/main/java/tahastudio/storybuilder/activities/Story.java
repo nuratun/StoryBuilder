@@ -36,7 +36,7 @@ import tahastudio.storybuilder.ui.TabViewer;
  * as well as the FAB menu to add elements to the story.
  * Implements: characterListener, locationListener, eventListener
  */
-public class ShowStory extends AppCompatActivity implements
+public class Story extends AppCompatActivity implements
         AddCharacters.characterListener,
         AddLocations.locationListener,
         AddEvents.eventListener {
@@ -49,7 +49,7 @@ public class ShowStory extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_story);
+        setContentView(R.layout.activity_story);
 
         // Grab the story id and title from the intent and set the variables
         Constants.SB_ID = getIntent().getExtras().getInt("id"); // Update the static variable

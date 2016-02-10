@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.ShowStory">
+    tools:context=".activities.Story">
 
     <HorizontalScrollView
         android:id="@+id/tab_layout_scroll"
@@ -47,9 +47,9 @@
 
     <com.getbase.floatingactionbutton.FloatingActionsMenu
         android:id="@+id/fab"
+        fab:fab_labelStyle="@style/Fab"
         fab:fab_addButtonColorNormal="@color/accent"
         fab:fab_addButtonColorPressed="@color/primary"
-        fab:fab_expandDirection="left"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="16dp"
@@ -65,6 +65,7 @@
             fab:fabSize="mini"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            fab:fab_title="@string/add_character"
             android:clickable="true" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
@@ -75,6 +76,7 @@
             fab:fabSize="mini"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            fab:fab_title="@string/add_location"
             android:clickable="true" />
 
         <com.getbase.floatingactionbutton.FloatingActionButton
@@ -85,6 +87,7 @@
             fab:fabSize="mini"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            fab:fab_title="@string/add_event"
             android:clickable="true" />
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
 </RelativeLayout>

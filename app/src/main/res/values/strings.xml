@@ -30,19 +30,19 @@
     <string name="add_location">Add A Location</string>
     <string name="add_event">Add An Event</string>
 
-    <!-- For ShowStory -->
+    <!-- For Story -->
     <string name="title_activity_add_characters">Add New Characters</string>
     <string name="title_activity_add_event">Add Events</string>
     <string name="title_activity_add_locations">Add Locations</string>
     <string name="title_activity_add_character">Add A Character</string>
     <string name="add_an_element">Save</string>
 
-    <!-- For the ShowStory tabs -->
+    <!-- For the Story tabs -->
     <string name="tab_characters">Characters</string>
     <string name="tab_event">Events</string>
     <string name="tab_locations">Locations</string>
 
-    <!-- For the ShowStory lists -->
+    <!-- For the Story lists -->
     <string name="list_story_title">Title</string>
     <string name="list_story_genre">Genre</string>
     <string name="list_character_name">Name</string>

@@ -26,7 +26,7 @@ public class AddEventElements extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Set the layout for this view
-        View layout = inflater.inflate(R.layout.activity_add_event, container, false);
+        View layout = inflater.inflate(R.layout.fragment_add_event, container, false);
 
         // Find the elements in the layout
         final EditText event_title = (EditText) layout.findViewById(R.id.sb_event_name);

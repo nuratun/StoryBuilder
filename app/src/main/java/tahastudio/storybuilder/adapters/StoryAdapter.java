@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import tahastudio.storybuilder.R;
-import tahastudio.storybuilder.db.Constants;
 
 /**
  * For the RecyclerView implementation to replace ListView across the app. Since RecyclerView
@@ -23,9 +22,17 @@ public class StoryAdapter extends RVCursorAdapter<StoryAdapter.StoryAdapterViewH
     private OnItemLongClickListener onItemLongClickListener;
     private final LayoutInflater layoutInflater;
 
-    public StoryAdapter(final Context context) {
+    // For the bindData method
+    String header;
+    String description;
+    String info;
+
+    public StoryAdapter(final Context context, String header, String description, String info) {
         super();
         this.layoutInflater = LayoutInflater.from(context);
+        this.header = header;
+        this.description = description;
+        this.info = info;
     }
 
     public interface OnItemClickListener {
@@ -87,7 +94,7 @@ public class StoryAdapter extends RVCursorAdapter<StoryAdapter.StoryAdapterViewH
         return true;
     }
 
-    public static class StoryAdapterViewHolder extends RecyclerView.ViewHolder {
+    public class StoryAdapterViewHolder extends RecyclerView.ViewHolder {
         // The elements to find in the tab_view layout file
         TextView name;
         TextView extra;
@@ -102,9 +109,9 @@ public class StoryAdapter extends RVCursorAdapter<StoryAdapter.StoryAdapterViewH
         }
 
         public void bindData(final Cursor cursor) {
-            String title = cursor.getString(cursor.getColumnIndex(Constants.STORY_NAME));
-            String genre = cursor.getString(cursor.getColumnIndex(Constants.STORY_GENRE));
-            String more = cursor.getString(cursor.getColumnIndex(Constants.STORY_DESC));
+            String title = cursor.getString(cursor.getColumnIndex(header));
+            String genre = cursor.getString(cursor.getColumnIndex(description));
+            String more = cursor.getString(cursor.getColumnIndex(info));
             name.setText(title);
             extra.setText(genre);
             desc.setText(more);

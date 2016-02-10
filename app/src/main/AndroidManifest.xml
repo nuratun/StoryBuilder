@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.ShowStory"
+            android:name=".activities.Story"
             android:label="@string/title_activity_create_story"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:launchMode="singleTop">

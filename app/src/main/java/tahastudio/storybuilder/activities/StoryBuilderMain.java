@@ -33,7 +33,6 @@ public class StoryBuilderMain extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
     private FloatingActionButton fab;
-    private Cursor cursor;
     private RecyclerView recyclerView;
     private StoryAdapter recyclerAdapter;
     private RecyclerView.LayoutManager recyclerLayout;
@@ -63,7 +62,12 @@ public class StoryBuilderMain extends AppCompatActivity implements
         recyclerView.setLayoutManager(recyclerLayout);
 
         // Set the adapter (Cursor) for the RecyclerView
-        recyclerAdapter = new StoryAdapter(this);
+        recyclerAdapter = new StoryAdapter(
+                this,
+                Constants.STORY_NAME, // Since this adapter is used across multiple
+                Constants.STORY_GENRE, // activities/fragments, we need to manually
+                Constants.STORY_DESC); // input the strings to grab for each activity/fragment
+
         recyclerView.setAdapter(recyclerAdapter);
 
         // To initialize the LoaderManager
@@ -83,8 +87,8 @@ public class StoryBuilderMain extends AppCompatActivity implements
                 Toast.makeText(getApplicationContext(), "Loading story. Please wait...",
                         Toast.LENGTH_LONG).show();
 
-                // Create a new Intent to pass info to ShowStory
-                Intent intent = new Intent(getApplicationContext(), ShowStory.class);
+                // Create a new Intent to pass info to class, Story
+                Intent intent = new Intent(getApplicationContext(), Story.class);
                 intent.putExtra("id", story_id);  // Pass the story id
                 intent.putExtra("title", title); // Pass the story title
 
@@ -151,7 +155,7 @@ public class StoryBuilderMain extends AppCompatActivity implements
         Uri uri = Uri.parse(Constants.CONTENT_URI + "/" + Constants.STORY_TABLE);
 
         // Call the query method on the ContentProvider
-        cursor = getContentResolver().query(uri, from, null, null, null);
+        getContentResolver().query(uri, from, null, null, null);
 
         // Send the URI and the string[] to StoryProvider to interface with the db
         // This will be returned to onLoadFinished

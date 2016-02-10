@@ -28,7 +28,7 @@ public class AddLocationElements extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View layout = inflater.inflate(R.layout.activity_add_location, container,
+        View layout = inflater.inflate(R.layout.fragment_add_location, container,
                 false);
 
         // Find layout elements

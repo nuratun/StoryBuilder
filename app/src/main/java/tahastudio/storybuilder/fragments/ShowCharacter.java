@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,9 +35,9 @@ public class ShowCharacter extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View layout = inflater.inflate(R.layout.activity_add_character, container, false);
+        final View layout = inflater.inflate(R.layout.fragment_add_character, container, false);
 
-        // Grab the bundle info from ShowStory
+        // Grab the bundle info from the class, Story
         Bundle bundle = this.getArguments();
         String title = bundle.getString("name");
         final int id = bundle.getInt("id");

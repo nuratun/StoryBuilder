@@ -28,9 +28,9 @@ public class ShowLocation extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View layout = inflater.inflate(R.layout.activity_add_location, container, false);
+        View layout = inflater.inflate(R.layout.fragment_add_location, container, false);
 
-        // Grab the bundle info from ShowStory
+        // Grab the bundle info from the class, Story
         Bundle bundle = this.getArguments();
         String title = bundle.getString("name");
         final int id = bundle.getInt("id");

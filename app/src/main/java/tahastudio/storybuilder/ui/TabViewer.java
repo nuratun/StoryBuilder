@@ -10,7 +10,7 @@ import tahastudio.storybuilder.fragments.AddEvents;
 
 /**
  * This class allows flipping through fragments as tabs
- * Initialized from: ShowStory
+ * Initialized from: Story
  */
 public class TabViewer extends FragmentStatePagerAdapter {
     int sbTabs;

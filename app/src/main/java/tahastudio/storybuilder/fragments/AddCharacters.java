@@ -7,14 +7,14 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.support.v4.widget.SimpleCursorAdapter;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import tahastudio.storybuilder.R;
+import tahastudio.storybuilder.adapters.StoryAdapter;
 import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.ui.SBDeleteDialog;
 
@@ -22,10 +22,11 @@ import tahastudio.storybuilder.ui.SBDeleteDialog;
  * First tab for SB
  */
 public class AddCharacters extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
-    // To update the ListView through the LoaderManager
-    private SimpleCursorAdapter cursorAdapter;
-    private android.support.v4.content.CursorLoader cursorLoader;
-    private ListView characters_listview;
+
+    private Context context;
+    private RecyclerView recyclerView;
+    private StoryAdapter recyclerAdapter;
+    private RecyclerView.LayoutManager recyclerLayout;
 
     // From String[] for the cursor
     private String[] from = new String[] {
@@ -40,7 +41,7 @@ public class AddCharacters extends Fragment implements LoaderManager.LoaderCallb
 
     public AddCharacters() { }
 
-    // Interface to send ListView click back to ShowStory
+    // Interface to send ListView click back to the class, Story
     public interface characterListener {
         void onCharacterSelected(int id, String name);
     }
@@ -50,49 +51,41 @@ public class AddCharacters extends Fragment implements LoaderManager.LoaderCallb
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.story_elements, container, false);
 
-         characters_listview = (ListView) layout.findViewById(R.id.element_listview);
+        // Set the context
+        context = getActivity().getApplicationContext();
 
-        // To int[] for the SimpleCursorAdapter
-        int[] to = new int[] {
-                R.id.story_id,
-                R.id.element_id,
-                R.id.name_info,
-                R.id.extra_info,
-                R.id.desc };
+        // Set the layout manager for the RecyclerView
+        recyclerView = (RecyclerView) layout.findViewById(R.id.element_list);
+        recyclerLayout = new LinearLayoutManager(context);
+        recyclerView.setLayoutManager(recyclerLayout);
 
-        // Set up the adapter to add to the ListView
-        cursorAdapter = new SimpleCursorAdapter(
-                getActivity().getApplicationContext(),
-                R.layout.tab_view,
-                null,
-                from,
-                to,
-                0);
-        characters_listview.setAdapter(cursorAdapter);
+        // Set the adapter (Cursor) for the RecyclerView
+        recyclerAdapter = new StoryAdapter(
+                context,
+                Constants.STORY_CHARACTER_NAME, // Since this adapter is used across multiple
+                Constants.STORY_CHARACTER_AGE, // activities/fragments, we need to manually
+                Constants.STORY_CHARACTER_BIRTHPLACE); // input the strings
+        recyclerView.setAdapter(recyclerAdapter);
 
         // To initialize the LoaderManager
         getLoaderManager().initLoader(Constants.LOADER, null, this);
 
-        // Clicking on a character row will bring up a new fragment with info
-        characters_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        // When an item on the RecyclerView is clicked, load the element
+        recyclerAdapter.setOnItemClickListener(new StoryAdapter.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // Return a cursor with the row data
-                Cursor cursor = (Cursor) characters_listview.getItemAtPosition(position);
-
+            public void onItemClicked(Cursor cursor) {
                 // Grab the id and name from the row and send to the interface.
-                // Implemented in ShowStory
-                characterCallback.onCharacterSelected
-                        (cursor.getInt(cursor.getColumnIndex(Constants.STORY_CHARACTER_ID)),
+                // Implemented in the class, Story
+                characterCallback.onCharacterSelected(cursor.getInt(
+                        cursor.getColumnIndex(Constants.STORY_CHARACTER_ID)),
                         cursor.getString(cursor.getColumnIndex(Constants.STORY_CHARACTER_NAME)));
             }
         });
 
-        // Bring up the delete dialog box on long click
-        characters_listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+        // When long clicked, bring up the delete dialog box
+        recyclerAdapter.setOnItemLongClickListener(new StoryAdapter.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Cursor cursor = (Cursor) characters_listview.getItemAtPosition(position);
+            public void onItemLongClicked(Cursor cursor) {
 
                 SBDeleteDialog deleteDialog = new SBDeleteDialog();
                 deleteDialog.delete(cursor.getInt(cursor.getColumnIndex(
@@ -100,15 +93,13 @@ public class AddCharacters extends Fragment implements LoaderManager.LoaderCallb
                         Constants.STORY_CHARACTER_TABLE,
                         Constants.STORY_CHARACTER_ID);
                 deleteDialog.show(getFragmentManager(), "delete");
-
-                return true;
             }
         });
 
         return layout;
     }
 
-    // Ensure ShowStory implements the interface
+    // Ensure the class, Story, implements the interface
     @Override
     public void onAttach(Context context) {
        super.onAttach(context);
@@ -125,23 +116,23 @@ public class AddCharacters extends Fragment implements LoaderManager.LoaderCallb
         // set the tables on setTables() method in the db to pull the data for the ListView
         Uri uri = Uri.parse(Constants.CONTENT_URI + "/" + Constants.STORY_CHARACTER_TABLE);
 
+        // Call the query method on the ContentProvider
+        context.getContentResolver().query(uri, from, null, null, null);
+
         // Send the URI and the string[] to StoryProvider to interface with the db
         // This will be returned to onLoadFinished
-        cursorLoader = new android.support.v4.content.CursorLoader(
-                getActivity().getApplicationContext(), uri, from,
+        return new android.support.v4.content.CursorLoader(context, uri, from,
                 Constants.DB_ID + "=?", new String[] { String.valueOf(Constants.SB_ID) }, null);
-
-        return cursorLoader;
     }
 
     // Once data is returned from onCreateLoader, swap the empty cursor
     // from onCreateView with a fresh one
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        cursorAdapter.swapCursor(cursor);
+        recyclerAdapter.swapCursor(cursor);
     }
 
     // Reset the entire cursor when the fragment starts from the beginning
     public void onLoaderReset(Loader<Cursor> loader) {
-        cursorAdapter.swapCursor(null);
+        recyclerAdapter.swapCursor(null);
     }
 }

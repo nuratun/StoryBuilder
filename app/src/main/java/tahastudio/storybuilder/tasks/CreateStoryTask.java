@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import tahastudio.storybuilder.activities.ShowStory;
+import tahastudio.storybuilder.activities.Story;
 import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.db.SQLDatabase;
 
@@ -42,7 +42,7 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
         Uri uri = Uri.parse(Constants.CONTENT_URI + "/" + Constants.STORY_TABLE);
         context.getContentResolver().insert(uri, values); // Insert method from StoryProvider
 
-        // Return the id of the story to send as an Intent to the ShowStory class
+        // Return the id of the story to send as an Intent to the class, Story
         return db.getStoryID();
     }
 
@@ -51,14 +51,14 @@ public class CreateStoryTask extends AsyncTask<String, Void, Integer> {
         super.onPostExecute(result);
 
         // Call the Intent creator, passing in the story id and title
-        Intent intent = new Intent(context, ShowStory.class);
+        Intent intent = new Intent(context, Story.class);
         intent.putExtra("title", title);
         intent.putExtra("id", result);
 
         // Add a flag or get an exception raised
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        // Create the story, calling the ShowStory class from this context
+        // Create the story, calling the the class, Story, from this context
         context.startActivity(intent);
     }
 }

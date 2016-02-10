@@ -86,7 +86,7 @@ public class SBDialog extends DialogFragment {
                             + " and genre are required fields", Toast.LENGTH_LONG).show();
                 } else {
                     // Execute CreateStoryTask to add entry into database
-                    // CreateStoryTask will pass values needed back to ShowStory
+                    // CreateStoryTask will pass values needed back to the class, Story
                     ContentValues values = new ContentValues();
                     values.put(Constants.STORY_NAME, story_title.getText().toString());
                     values.put(Constants.STORY_GENRE, genre);

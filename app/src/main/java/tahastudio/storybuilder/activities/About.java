@@ -18,7 +18,7 @@ public class About extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.about);
 
-        // For the FAB implementation in ShowStory
+        // For the FAB implementation in class, Story
         TextView fab_author = (TextView) findViewById(R.id.fab_author);
         fab_author.setMovementMethod(LinkMovementMethod.getInstance());
         // Set the TextView to a link
