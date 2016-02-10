@@ -39,11 +39,6 @@ public class SBDeleteDialog extends DialogFragment {
         View popup = inflater.inflate(R.layout.fragment_sbdeletedialog, null);
         builder.setView(popup); // Set the view
 
-        // Set the story _id and table in the onClick method
-        //final int story_id = getArguments().getInt("id");
-        //final String table = getArguments().getString("table");
-        //final String column = getArguments().getString("column");
-
         // Inflate layout for the dialog box. Add buttons to the dialog box dynamically,
         // to either delete the entry or not.
         builder.setPositiveButton(R.string.delete_yes, new DialogInterface.OnClickListener() {

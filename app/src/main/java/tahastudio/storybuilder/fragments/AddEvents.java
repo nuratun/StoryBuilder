@@ -32,7 +32,9 @@ public class AddEvents extends Fragment implements LoaderManager.LoaderCallbacks
     private String[] from = new String[] {
             Constants.DB_ID,
             Constants.STORY_EVENT_ID,
-            Constants.STORY_EVENT_LINER };
+            Constants.STORY_EVENT_LINER,
+            Constants.STORY_EVENT_CHARACTERS,
+            Constants.STORY_EVENT_NOTES };
 
     // For interface method
     eventListener eventCallback;
@@ -60,8 +62,8 @@ public class AddEvents extends Fragment implements LoaderManager.LoaderCallbacks
         // Set the adapter (Cursor) for the RecyclerView
         recyclerAdapter = new StoryAdapter(
                 context,
-                Constants.STORY_EVENT_LINER, // Since this adapter is used across multiple
-                Constants.STORY_EVENT_CHARACTERS, // activities/fragments, we need to manually
+                Constants.STORY_EVENT_LINER,
+                Constants.STORY_EVENT_CHARACTERS,
                 Constants.STORY_EVENT_NOTES); // input the strings);
 
         recyclerView.setAdapter(recyclerAdapter);

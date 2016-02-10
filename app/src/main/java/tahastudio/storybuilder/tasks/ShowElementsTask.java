@@ -42,6 +42,8 @@ public class ShowElementsTask extends AsyncTask<String, Void, Cursor> {
                 return db.getElementRow(Constants.GRAB_LOCATION_ROW_DETAILS, data, id);
             case Constants.STORY_EVENT_TABLE:
                 return db.getElementRow(Constants.GRAB_EVENT_ROW_DETAILS, data, id);
+            case Constants.STORY_PLOT_TABLE:
+                return db.getElementRow(Constants.GRAB_PLOT_ROW_DETAILS, data, id);
             default:
                 break;
         }
@@ -53,7 +55,7 @@ public class ShowElementsTask extends AsyncTask<String, Void, Cursor> {
         super.onPostExecute(result);
 
         // Override this method in the following classes:
-        // ShowCharacters, ShowLocations, ShowEvents
+        // ShowCharacters, ShowLocations, ShowEvents, ShowPlots
 
         // Do nothing here
     }

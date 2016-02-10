@@ -62,9 +62,9 @@ public class AddCharacters extends Fragment implements LoaderManager.LoaderCallb
         // Set the adapter (Cursor) for the RecyclerView
         recyclerAdapter = new StoryAdapter(
                 context,
-                Constants.STORY_CHARACTER_NAME, // Since this adapter is used across multiple
-                Constants.STORY_CHARACTER_AGE, // activities/fragments, we need to manually
-                Constants.STORY_CHARACTER_BIRTHPLACE); // input the strings
+                Constants.STORY_CHARACTER_NAME,
+                Constants.STORY_CHARACTER_AGE,
+                Constants.STORY_CHARACTER_BIRTHPLACE);
         recyclerView.setAdapter(recyclerAdapter);
 
         // To initialize the LoaderManager

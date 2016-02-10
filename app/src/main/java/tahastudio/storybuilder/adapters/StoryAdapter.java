@@ -21,18 +21,17 @@ public class StoryAdapter extends RVCursorAdapter<StoryAdapter.StoryAdapterViewH
     private OnItemClickListener onItemClickListener;
     private OnItemLongClickListener onItemLongClickListener;
     private final LayoutInflater layoutInflater;
+    private String title;
+    private String extra;
+    private String desc;
 
-    // For the bindData method
-    String header;
-    String description;
-    String info;
 
-    public StoryAdapter(final Context context, String header, String description, String info) {
+    public StoryAdapter(final Context context, String title, String extra, String desc) {
         super();
         this.layoutInflater = LayoutInflater.from(context);
-        this.header = header;
-        this.description = description;
-        this.info = info;
+        this.title = title;
+        this.extra = extra;
+        this.desc = desc;
     }
 
     public interface OnItemClickListener {
@@ -62,7 +61,7 @@ public class StoryAdapter extends RVCursorAdapter<StoryAdapter.StoryAdapterViewH
 
     @Override
     public void onBindViewHolder(StoryAdapterViewHolder holder, final Cursor cursor) {
-        holder.bindData(cursor); // Pass the data from StoryAdapterViewHolder static class
+        holder.bindData(cursor); // Pass the data from StoryAdapterViewHolder class
     }
 
     // On regular click
@@ -70,7 +69,7 @@ public class StoryAdapter extends RVCursorAdapter<StoryAdapter.StoryAdapterViewH
     public void onClick(final View view) {
         if ( this.onItemClickListener != null ) {
             final RecyclerView recyclerView = (RecyclerView) view.getParent();
-            final int position = recyclerView.getChildLayoutPosition(view); // The story clicked
+            final int position = recyclerView.getChildLayoutPosition(view); // The element clicked
 
             if ( position != recyclerView.NO_POSITION ) { // If something was actually clicked
                 final Cursor cursor = this.getItem(position); // Get the cursor for that db entry
@@ -96,25 +95,25 @@ public class StoryAdapter extends RVCursorAdapter<StoryAdapter.StoryAdapterViewH
 
     public class StoryAdapterViewHolder extends RecyclerView.ViewHolder {
         // The elements to find in the tab_view layout file
-        TextView name;
-        TextView extra;
-        TextView desc;
+        TextView left;
+        TextView right;
+        TextView bottom;
 
         public StoryAdapterViewHolder(final View view) {
             super(view); // The tab_view layout file passed in by the implementing activity
 
-            name = (TextView) view.findViewById(R.id.name_info);
-            extra = (TextView) view.findViewById(R.id.extra_info);
-            desc = (TextView) view.findViewById(R.id.desc);
+            left = (TextView) view.findViewById(R.id.name_info);
+            right = (TextView) view.findViewById(R.id.extra_info);
+            bottom = (TextView) view.findViewById(R.id.desc);
         }
 
         public void bindData(final Cursor cursor) {
-            String title = cursor.getString(cursor.getColumnIndex(header));
-            String genre = cursor.getString(cursor.getColumnIndex(description));
-            String more = cursor.getString(cursor.getColumnIndex(info));
-            name.setText(title);
-            extra.setText(genre);
-            desc.setText(more);
+            String lString = cursor.getString(cursor.getColumnIndex(title));
+            String rString = cursor.getString(cursor.getColumnIndex(extra));
+            String bString = cursor.getString(cursor.getColumnIndex(desc));
+            left.setText(lString);
+            right.setText(rString);
+            bottom.setText(bString);
         }
     }
 }

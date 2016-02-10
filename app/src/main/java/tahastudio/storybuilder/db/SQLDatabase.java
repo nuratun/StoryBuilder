@@ -36,6 +36,7 @@ public class SQLDatabase extends SQLiteOpenHelper {
         sbDatabase.execSQL(Constants.SQL_CREATE_CHARACTERS);
         sbDatabase.execSQL(Constants.SQL_CREATE_LOCATIONS);
         sbDatabase.execSQL(Constants.SQL_CREATE_EVENTS);
+        sbDatabase.execSQL(Constants.SQL_CREATE_PLOTS);
     }
 
     @Override
@@ -101,35 +102,12 @@ public class SQLDatabase extends SQLiteOpenHelper {
 
     // Insert an entry into the database. StoryProvider is the middleman
     public long addEntry(Uri uri, ContentValues values) throws SQLException {
-        String table = null; // The table to insert the ContentValues into
 
         int uriType = Constants.uriMatcher.match(uri); // Find the table by the uri
-        switch (uriType) {
-            case Constants.STORY_ID:
-                table = Constants.STORY_TABLE;
-                break;
-            case Constants.STORY_LIST:
-                table = Constants.STORY_TABLE;
-                break;
-            case Constants.CHARACTER_ID:
-                table = Constants.STORY_CHARACTER_TABLE;
-                break;
-            case Constants.CHARACTER_LIST:
-                table = Constants.STORY_CHARACTER_TABLE;
-                break;
-            case Constants.LOCATION_ID:
-                table = Constants.STORY_LOCATION_TABLE;
-                break;
-            case Constants.LOCATION_LIST:
-                table = Constants.STORY_LOCATION_TABLE;
-                break;
-            case Constants.EVENT_ID:
-                table = Constants.STORY_EVENT_TABLE;
-                break;
-            case Constants.EVENT_LIST:
-                table = Constants.STORY_EVENT_TABLE;
-                break;
-        }
+
+        // Call the FindTable class to use its switch statement
+        FindTable getTable = new FindTable();
+        String table = getTable.findTheTable(uriType); // Get the table by the uri code
 
         long id = getWritableDatabase().insert(table, "", values);
 

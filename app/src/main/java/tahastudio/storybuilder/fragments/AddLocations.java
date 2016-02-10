@@ -32,7 +32,8 @@ public class AddLocations extends Fragment implements LoaderManager.LoaderCallba
             Constants.DB_ID,
             Constants.STORY_LOCATION_ID,
             Constants.STORY_LOCATION_NAME,
-            Constants.STORY_LOCATION_LOCATION };
+            Constants.STORY_LOCATION_LOCATION,
+            Constants.STORY_LOCATION_NOTES };
 
     // For interface method
     locationListener locationCallback;
@@ -60,8 +61,8 @@ public class AddLocations extends Fragment implements LoaderManager.LoaderCallba
         // Set the adapter (Cursor) for the RecyclerView
         recyclerAdapter = new StoryAdapter(
                 context,
-                Constants.STORY_LOCATION_NAME, // Since this adapter is used across multiple
-                Constants.STORY_LOCATION_LOCATION, // activities/fragments, we need to manually
+                Constants.STORY_LOCATION_NAME,
+                Constants.STORY_LOCATION_LOCATION,
                 Constants.STORY_LOCATION_NOTES); // input the strings);
 
         recyclerView.setAdapter(recyclerAdapter);

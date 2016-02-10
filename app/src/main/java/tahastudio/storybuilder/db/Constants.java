@@ -16,7 +16,7 @@ public class Constants {
     public static int SB_ID; // This value will not change unless a user selects a different story
 
     // Version number must change if database changes
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 4;
     public static final String DATABASE_NAME = "sb.db";
 
     // Set up table schema for the story
@@ -61,6 +61,14 @@ public class Constants {
     public static final String STORY_LOCATION_EVENTS = "location_events";
     public static final String STORY_LOCATION_NOTES = "location_notes";
 
+    // Set up table schema for plots
+    public static final String STORY_PLOT_ID = "sb_plots_id";
+    public static final String STORY_PLOT_TABLE = "sb_plots";
+    public static final String STORY_PLOT_TITLE = "plot_name";
+    public static final String STORY_PLOT_MAIN = "plot_main_sub";
+    public static final String STORY_PLOT_DESC = "plot_description";
+    public static final String STORY_PLOT_NOTES = "plot_notes";
+
     // The below if for the content provider class, StoryProvider
     // Since this content provider will not be accessible by outside apps,
     // the provider will be the app itself
@@ -74,6 +82,8 @@ public class Constants {
     public static final int LOCATION_LIST = 6;
     public static final int EVENT_ID = 7;
     public static final int EVENT_LIST = 8;
+    public static final int PLOT_ID = 9;
+    public static final int PLOT_LIST = 10;
     public static final Uri CONTENT_URI = Uri.parse("content://" + PROVIDER_NAME);
     public static final UriMatcher uriMatcher;
     static  {
@@ -86,6 +96,8 @@ public class Constants {
         uriMatcher.addURI(PROVIDER_NAME, STORY_LOCATION_TABLE, LOCATION_LIST);
         uriMatcher.addURI(PROVIDER_NAME, STORY_EVENT_TABLE + "/#", EVENT_ID);
         uriMatcher.addURI(PROVIDER_NAME, STORY_EVENT_TABLE, EVENT_LIST);
+        uriMatcher.addURI(PROVIDER_NAME, STORY_PLOT_TABLE + "/#", PLOT_ID);
+        uriMatcher.addURI(PROVIDER_NAME, STORY_PLOT_TABLE, PLOT_LIST);
     }
 
     // Get latest story entry id from database
@@ -149,6 +161,19 @@ public class Constants {
             + "REFERENCES " + STORY_TABLE + "(" + DB_ID + ") ON DELETE CASCADE"
             + " );";
 
+    // Create the plots table, with foreign keys from the story table
+    public static final String SQL_CREATE_PLOTS = "CREATE TABLE IF NOT EXISTS "
+            + STORY_PLOT_TABLE + "("
+            + STORY_PLOT_ID + " integer primary key autoincrement, "
+            + STORY_PLOT_TITLE + " text, "
+            + STORY_PLOT_MAIN + " integer, "
+            + STORY_PLOT_DESC + " text, "
+            + STORY_PLOT_NOTES + " text, "
+            + DB_ID + " integer, "
+            + "FOREIGN KEY(" + DB_ID + ") "
+            + "REFERENCES " + STORY_TABLE + "(" + DB_ID + ") ON DELETE CASCADE"
+            + " );";
+
     // The below is used in the SQLDatabase getElementRows method
     public static final String GRAB_CHARACTER_ROW_DETAILS = "SELECT * FROM "
             + STORY_CHARACTER_TABLE + " WHERE "
@@ -163,6 +188,11 @@ public class Constants {
     public static final String GRAB_EVENT_ROW_DETAILS = "SELECT * FROM "
             + STORY_EVENT_TABLE + " WHERE "
             + STORY_EVENT_ID + " = ";
+
+    // The below is used in the SQLDatabase getElementRows method
+    public static final String GRAB_PLOT_ROW_DETAILS = "SELECT * FROM "
+            + STORY_PLOT_TABLE + " WHERE "
+            + STORY_PLOT_ID + " = ";
 
     public static final String GET_STORY_GENRE = "SELECT " + STORY_GENRE + " FROM "
             + STORY_TABLE + " WHERE "

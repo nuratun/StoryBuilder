@@ -3,6 +3,7 @@ package tahastudio.storybuilder.activities;
 import android.app.backup.BackupManager;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -64,9 +66,9 @@ public class StoryBuilderMain extends AppCompatActivity implements
         // Set the adapter (Cursor) for the RecyclerView
         recyclerAdapter = new StoryAdapter(
                 this,
-                Constants.STORY_NAME, // Since this adapter is used across multiple
-                Constants.STORY_GENRE, // activities/fragments, we need to manually
-                Constants.STORY_DESC); // input the strings to grab for each activity/fragment
+                Constants.STORY_NAME,
+                Constants.STORY_GENRE,
+                Constants.STORY_DESC); // input the strings to grab for each activity
 
         recyclerView.setAdapter(recyclerAdapter);
 
@@ -79,6 +81,8 @@ public class StoryBuilderMain extends AppCompatActivity implements
         recyclerAdapter.setOnItemClickListener(new StoryAdapter.OnItemClickListener() {
             @Override
             public void onItemClicked(Cursor cursor) {
+
+                Log.d("the_cursor", DatabaseUtils.dumpCursorToString(cursor));
                 // From the cursor, we can grab the story id and title, going by db column names
                 int story_id = cursor.getInt(cursor.getColumnIndex(Constants.DB_ID));
                 String title = cursor.getString(cursor.getColumnIndex(Constants.STORY_NAME));

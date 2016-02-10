@@ -40,6 +40,11 @@ public class StoryProvider extends ContentProvider {
             case (Constants.EVENT_ID):
                 return Constants.CONTENT_URI + "/" + Constants.STORY_EVENT_ID
                         + "/" + Constants.DB_ID;
+            case (Constants.PLOT_LIST):
+                return Constants.CONTENT_URI + "/" + Constants.STORY_PLOT_TABLE;
+            case (Constants.PLOT_ID):
+                return Constants.CONTENT_URI + "/" + Constants.STORY_PLOT_ID
+                        + "/" + Constants.DB_ID;
         }
         return Constants.AUTHORITY; // Return the database
     }
@@ -61,36 +66,11 @@ public class StoryProvider extends ContentProvider {
                         String[] selectionArgs,
                         String sortOrder) {
 
-        String id = null; // This will set the table in the db
-
         int uriType = Constants.uriMatcher.match(uri);
 
-        switch (uriType) {
-            case Constants.STORY_LIST:
-                id = Constants.STORY_TABLE;
-                break;
-            case Constants.STORY_ID:
-                id = Constants.STORY_TABLE;
-                break;
-            case Constants.CHARACTER_LIST:
-                id = Constants.STORY_CHARACTER_TABLE;
-                break;
-            case Constants.CHARACTER_ID:
-                id = Constants.STORY_CHARACTER_TABLE;
-                break;
-            case Constants.LOCATION_LIST:
-                id = Constants.STORY_LOCATION_TABLE;
-                break;
-            case Constants.LOCATION_ID:
-                id = Constants.STORY_LOCATION_TABLE;
-                break;
-            case Constants.EVENT_LIST:
-                id = Constants.STORY_EVENT_TABLE;
-                break;
-            case Constants.EVENT_ID:
-                id = Constants.STORY_EVENT_TABLE;
-                break;
-        }
+        // Call the FindTable class to use its switch statement
+        FindTable getTable = new FindTable();
+        String id = getTable.findTheTable(uriType); // Get the table by the uri code
 
         Cursor cursor = db.getSearchResults(id, projection, selection, selectionArgs, sortOrder);
 
@@ -119,36 +99,12 @@ public class StoryProvider extends ContentProvider {
 
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) {
-        String table = null; // The table to delete from
 
         int uriType = Constants.uriMatcher.match(uri); // Find the table by the uri
 
-        switch (uriType) {
-            case Constants.STORY_ID:
-                table = Constants.STORY_TABLE;
-                break;
-            case Constants.STORY_LIST:
-                table = Constants.STORY_TABLE;
-                break;
-            case Constants.CHARACTER_ID:
-                table = Constants.STORY_CHARACTER_TABLE;
-                break;
-            case Constants.CHARACTER_LIST:
-                table = Constants.STORY_CHARACTER_TABLE;
-                break;
-            case Constants.LOCATION_ID:
-                table = Constants.STORY_LOCATION_TABLE;
-                break;
-            case Constants.LOCATION_LIST:
-                table = Constants.STORY_LOCATION_TABLE;
-                break;
-            case Constants.EVENT_ID:
-                table = Constants.STORY_EVENT_TABLE;
-                break;
-            case Constants.EVENT_LIST:
-                table = Constants.STORY_EVENT_TABLE;
-                break;
-        }
+        // Call the FindTable class to use its switch statement
+        FindTable getTable = new FindTable();
+        String table = getTable.findTheTable(uriType); // Get the table by the uri code
 
         // Notify ContentResolver of db change
         contentResolver.notifyChange(uri, null);
@@ -161,36 +117,11 @@ public class StoryProvider extends ContentProvider {
     // selectionArgs is the id grabbed from the onClick method
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        String id = null;
-
         int uriType = Constants.uriMatcher.match(uri);
 
-        switch (uriType) {
-            case Constants.STORY_LIST:
-                id = Constants.STORY_TABLE;
-                break;
-            case Constants.STORY_ID:
-                id = Constants.STORY_TABLE;
-                break;
-            case Constants.CHARACTER_LIST:
-                id = Constants.STORY_CHARACTER_TABLE;
-                break;
-            case Constants.CHARACTER_ID:
-                id = Constants.STORY_CHARACTER_TABLE;
-                break;
-            case Constants.LOCATION_LIST:
-                id = Constants.STORY_LOCATION_TABLE;
-                break;
-            case Constants.LOCATION_ID:
-                id = Constants.STORY_LOCATION_TABLE;
-                break;
-            case Constants.EVENT_LIST:
-                id = Constants.STORY_EVENT_TABLE;
-                break;
-            case Constants.EVENT_ID:
-                id = Constants.STORY_EVENT_TABLE;
-                break;
-        }
+        // Call the FindTable class to use its switch statement
+        FindTable getTable = new FindTable();
+        String id = getTable.findTheTable(uriType); // Get the table by the uri code
 
         // Notify ContentResolver of db change
         contentResolver.notifyChange(uri, null);
