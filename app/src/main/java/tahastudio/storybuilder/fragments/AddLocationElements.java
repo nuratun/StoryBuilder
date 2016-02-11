@@ -28,8 +28,7 @@ public class AddLocationElements extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View layout = inflater.inflate(R.layout.fragment_add_location, container,
-                false);
+        View layout = inflater.inflate(R.layout.fragment_add_location, container, false);
 
         // Find layout elements
         final EditText location_name = (EditText) layout.findViewById(R.id.sb_location_name);
@@ -48,9 +47,8 @@ public class AddLocationElements extends Fragment {
                 SharedKeyboard.closeKeyboard(getActivity(), v);
 
                 // Make sure name field != null
-                if ( location_name.length() < 1 ) {
-                    Toast.makeText(getContext(), "Name is a required field", Toast.LENGTH_LONG)
-                            .show();
+                if ( location_name.length() < 1 ) { Toast.makeText(getContext(),
+                        "Name is a required field", Toast.LENGTH_LONG).show();
                 }
                 else {
                     // Create a URI to send to the StoryProvider insert method

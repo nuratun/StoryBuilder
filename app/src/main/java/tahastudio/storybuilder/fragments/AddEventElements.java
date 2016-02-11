@@ -43,9 +43,9 @@ public class AddEventElements extends Fragment {
                 SharedKeyboard.closeKeyboard(getActivity(), v);
 
                 // Ensure event field != null
-                if (event_title.length() < 1) {
-                    Toast.makeText(getContext(), "You must enter a short description of this event",
-                            Toast.LENGTH_LONG).show();
+                if (event_title.length() < 1) { Toast.makeText(getContext(),
+                        "You must enter a short description of this event",
+                        Toast.LENGTH_LONG).show();
                 } else {
                     // Create the URI for the insert method in StoryProvider
                     Uri uri = Uri.parse(Constants.CONTENT_URI + "/" + Constants.STORY_EVENT_TABLE);

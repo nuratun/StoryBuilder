@@ -32,9 +32,7 @@ public class AddCharacterElements extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this view
         View layout = inflater.inflate(
-                R.layout.fragment_add_character,
-                container,
-                false);
+                R.layout.fragment_add_character, container, false);
 
         // Find the layout elements
         final EditText name = (EditText) layout.findViewById(R.id.sb_character_name);
@@ -83,9 +81,8 @@ public class AddCharacterElements extends Fragment {
                 SharedKeyboard.closeKeyboard(getActivity(), v);
 
                 // Make sure the name field != null
-                if ( name.length() < 1 ) {
-                    Toast.makeText(getContext(), "The character's name is a required field",
-                            Toast.LENGTH_LONG).show();
+                if ( name.length() < 1 ) { Toast.makeText(getContext(),
+                        "The character's name is a required field", Toast.LENGTH_LONG).show();
                 }
                 else {
                     // The table to insert the ContentValues into

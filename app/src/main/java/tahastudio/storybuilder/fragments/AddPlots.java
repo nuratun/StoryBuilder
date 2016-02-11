@@ -19,9 +19,9 @@ import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.ui.SBDeleteDialog;
 
 /**
- * Second tab for SB
+ * Fourth tab for SB.
  */
-public class AddLocations extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class AddPlots extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private Context context;
     private RecyclerView recyclerView;
     private StoryAdapter recyclerAdapter;
@@ -30,19 +30,19 @@ public class AddLocations extends Fragment implements LoaderManager.LoaderCallba
     // From String[] for the cursor
     String[] from = new String[] {
             Constants.DB_ID,
-            Constants.STORY_LOCATION_ID,
-            Constants.STORY_LOCATION_NAME,
-            Constants.STORY_LOCATION_LOCATION,
-            Constants.STORY_LOCATION_NOTES };
+            Constants.STORY_PLOT_ID,
+            Constants.STORY_PLOT_TITLE,
+            Constants.STORY_PLOT_MAIN,
+            Constants.STORY_PLOT_NOTES };
 
     // For interface method
-    locationListener locationCallback;
+    plotListener plotCallback;
 
-    public AddLocations() { }
+    public AddPlots() { }
 
     // Interface to send user click back to the class, Story
-    public interface locationListener {
-        void onLocationSelected(int id, String name);
+    public interface plotListener{
+        void onPlotSelected(int id, String name);
     }
 
     @Override
@@ -61,15 +61,14 @@ public class AddLocations extends Fragment implements LoaderManager.LoaderCallba
         // Set the adapter (Cursor) for the RecyclerView
         recyclerAdapter = new StoryAdapter(
                 context,
-                Constants.STORY_LOCATION_NAME,
-                Constants.STORY_LOCATION_LOCATION,
-                Constants.STORY_LOCATION_NOTES); // input the strings);
+                Constants.STORY_PLOT_TITLE,
+                Constants.STORY_PLOT_MAIN,
+                Constants.STORY_PLOT_NOTES); // input the strings);
 
         recyclerView.setAdapter(recyclerAdapter);
 
         // To initialize the LoaderManager
         getLoaderManager().initLoader(Constants.LOADER, null, this);
-
 
         // When an item on the RecyclerView is clicked, load the element
         recyclerAdapter.setOnItemClickListener(new StoryAdapter.OnItemClickListener() {
@@ -78,9 +77,9 @@ public class AddLocations extends Fragment implements LoaderManager.LoaderCallba
 
                 // Grab the first field from the row and cast it to a string
                 // Send to the interface. Implemented in the class, Story
-                locationCallback.onLocationSelected(
-                        cursor.getInt(cursor.getColumnIndex(Constants.STORY_LOCATION_ID)),
-                        cursor.getString(cursor.getColumnIndex(Constants.STORY_LOCATION_NAME)));
+                plotCallback.onPlotSelected(
+                        cursor.getInt(cursor.getColumnIndex(Constants.STORY_PLOT_ID)),
+                        cursor.getString(cursor.getColumnIndex(Constants.STORY_PLOT_TITLE)));
             }
         });
 
@@ -90,9 +89,9 @@ public class AddLocations extends Fragment implements LoaderManager.LoaderCallba
             public void onItemLongClicked(Cursor cursor) {
                 SBDeleteDialog deleteDialog = new SBDeleteDialog();
                 deleteDialog.delete(cursor.getInt(cursor.getColumnIndex(
-                        Constants.STORY_LOCATION_ID)),
-                        Constants.STORY_LOCATION_TABLE,
-                        Constants.STORY_LOCATION_ID);
+                        Constants.STORY_PLOT_ID)),
+                        Constants.STORY_PLOT_TABLE,
+                        Constants.STORY_PLOT_ID);
                 deleteDialog.show(getFragmentManager(), "delete");
             }
         });
@@ -105,9 +104,9 @@ public class AddLocations extends Fragment implements LoaderManager.LoaderCallba
         super.onAttach(context);
 
         try {
-            locationCallback = (locationListener) context;
+            plotCallback = (plotListener) context;
         } catch (ClassCastException e) {
-            throw new ClassCastException(context.toString() + " must implement locationListener");
+            throw new ClassCastException(context.toString() + " must implement plotListener");
         }
     }
 
@@ -116,7 +115,7 @@ public class AddLocations extends Fragment implements LoaderManager.LoaderCallba
     public Loader<Cursor> onCreateLoader(int num, Bundle state) {
         // This URI will be sent to a switch statement in the StoryProvider. It will
         // set the tables on setTables() method in the db to pull the data for the ListView
-        Uri uri = Uri.parse(Constants.CONTENT_URI + "/" + Constants.STORY_LOCATION_TABLE);
+        Uri uri = Uri.parse(Constants.CONTENT_URI + "/" + Constants.STORY_PLOT_TABLE);
 
         // Call the query method on the ContentProvider
         context.getContentResolver().query(uri, from, null, null, null);
@@ -140,4 +139,6 @@ public class AddLocations extends Fragment implements LoaderManager.LoaderCallba
     public void onLoaderReset(Loader<Cursor> loader) {
         recyclerAdapter.swapCursor(null);
     }
+
+
 }

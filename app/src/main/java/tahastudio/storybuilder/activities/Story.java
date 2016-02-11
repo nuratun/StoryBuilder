@@ -26,6 +26,7 @@ import tahastudio.storybuilder.fragments.AddEventElements;
 import tahastudio.storybuilder.fragments.AddEvents;
 import tahastudio.storybuilder.fragments.AddLocationElements;
 import tahastudio.storybuilder.fragments.AddLocations;
+import tahastudio.storybuilder.fragments.AddPlotElements;
 import tahastudio.storybuilder.fragments.ShowCharacter;
 import tahastudio.storybuilder.fragments.ShowEvent;
 import tahastudio.storybuilder.fragments.ShowLocation;
@@ -112,13 +113,32 @@ public class Story extends AppCompatActivity implements
             }
         });
 
-         // Find the TabLayout
+        // The inner menu for adding a plot
+        com.getbase.floatingactionbutton.FloatingActionButton plots_fab =
+                (com.getbase.floatingactionbutton.FloatingActionButton)
+                        findViewById(R.id.plots);
+        plots_fab.setTitle("Add A Plot");
+
+        plots_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Collapse the menu fab on click
+                fab.collapse();
+
+                // Call method for fragment transaction
+                onFragmentSelected(new AddPlotElements(), "add_the_plot");
+            }
+        });
+
+
+        // Find the TabLayout
         TabLayout tab_layout = (TabLayout) findViewById(R.id.tab_layout);
 
         // Add the tabs, set the title for each one. Content will be provided by the TabViewer
         tab_layout.addTab(tab_layout.newTab().setText("Characters"));
         tab_layout.addTab(tab_layout.newTab().setText("Locations"));
         tab_layout.addTab(tab_layout.newTab().setText("Events"));
+        tab_layout.addTab(tab_layout.newTab().setText("Plots"));
         tab_layout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
         // ViewPager allows flipping left and right through pages (tabs) of data
@@ -230,6 +250,16 @@ public class Story extends AppCompatActivity implements
 
         // Call re-factored method for fragment transaction
         onFragmentSelected(showEvent, "show_event");
+    }
+
+    // Implement the AddEvents interface method for a ListView click
+    public void onPlotSelected(int id, String name) {
+        // Bundle info and send user to the new fragment, ShowEvent
+        Bundle bundle = new Bundle();
+        bundle.putString("name", name);
+        bundle.putInt("id", id);
+
+        // Set up the fragment with the bundle
     }
 
     // Re-factored method for all fragment transactions

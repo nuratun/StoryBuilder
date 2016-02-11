@@ -29,6 +29,7 @@
     <string name="add_character">Add A Character</string>
     <string name="add_location">Add A Location</string>
     <string name="add_event">Add An Event</string>
+    <string name="add_plot">Add A Plot</string>
 
     <!-- For Story -->
     <string name="title_activity_add_characters">Add New Characters</string>
@@ -88,6 +89,13 @@
     <string name="event_characters">What characters make an appearance?</string>
     <string name="event_summary">Summary of this event/act</string>
     <string name="event_notes">Notes</string>
+
+    <!-- For the AddPlots -->
+    <string name="plot_instructions">Add A Plot</string>
+    <string name="plot_main">Main Plot</string>
+    <string name="plot_sub">Sub Plot</string>
+    <string name="plot_title">Title of plot</string>
+    <string name="plot_desc">Describe this plot line</string>
 
     <!-- For all activities/fragments -->
     <string name="cancel">Cancel</string>
