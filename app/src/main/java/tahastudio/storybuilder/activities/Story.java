@@ -27,9 +27,11 @@ import tahastudio.storybuilder.fragments.AddEvents;
 import tahastudio.storybuilder.fragments.AddLocationElements;
 import tahastudio.storybuilder.fragments.AddLocations;
 import tahastudio.storybuilder.fragments.AddPlotElements;
+import tahastudio.storybuilder.fragments.AddPlots;
 import tahastudio.storybuilder.fragments.ShowCharacter;
 import tahastudio.storybuilder.fragments.ShowEvent;
 import tahastudio.storybuilder.fragments.ShowLocation;
+import tahastudio.storybuilder.fragments.ShowPlot;
 import tahastudio.storybuilder.ui.TabViewer;
 
 /**
@@ -40,7 +42,8 @@ import tahastudio.storybuilder.ui.TabViewer;
 public class Story extends AppCompatActivity implements
         AddCharacters.characterListener,
         AddLocations.locationListener,
-        AddEvents.eventListener {
+        AddEvents.eventListener,
+        AddPlots.plotListener {
 
     // To programmatically add in the fragments
     FragmentManager fragmentManager = getSupportFragmentManager();
@@ -260,6 +263,11 @@ public class Story extends AppCompatActivity implements
         bundle.putInt("id", id);
 
         // Set up the fragment with the bundle
+        ShowPlot showPlot = new ShowPlot();
+        showPlot.setArguments(bundle);
+
+        // Call re-factored method for fragment transaction
+        onFragmentSelected(showPlot, "show_plot");
     }
 
     // Re-factored method for all fragment transactions

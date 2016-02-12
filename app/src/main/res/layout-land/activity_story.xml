@@ -80,7 +80,7 @@
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/events"
             android:theme="@style/Fab"
-            android:src="@drawable/ic_event"
+            android:src="@drawable/ic_plot"
             fab:fab_colorNormal="@color/primary"
             fab:fabSize="mini"
             android:layout_width="wrap_content"
@@ -90,7 +90,7 @@
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/plots"
             android:theme="@style/Fab"
-            android:src="@drawable/ic_event"
+            android:src="@drawable/ic_plot"
             fab:fab_colorNormal="@color/primary"
             fab:fabSize="mini"
             android:layout_width="wrap_content"

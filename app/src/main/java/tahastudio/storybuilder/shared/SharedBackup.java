@@ -30,9 +30,7 @@ public class SharedBackup extends BackupAgentHelper {
                     this.getExternalFilesDir(Constants.DATABASE_NAME).getAbsolutePath());
             addHelper(Constants.DATABASE_NAME, helper);
 
-            Log.d("backup_created", "Backup file is created");
         } catch (Exception e) {
-            Log.d("backup_created", "error here");
             e.printStackTrace();
         }
     }
@@ -45,11 +43,9 @@ public class SharedBackup extends BackupAgentHelper {
         try {
             synchronized (BackupManager.class) {
                 super.onBackup(oldState, data, newState);
-                Log.d("onBackup", "backup changed");
             }
         } catch (IOException e) {
             e.printStackTrace();
-            Log.d("onBackup", "error onbackup");
         }
     }
 
@@ -59,11 +55,9 @@ public class SharedBackup extends BackupAgentHelper {
         try {
             synchronized (BackupManager.class) {
                 super.onRestore(data, version, newState);
-                Log.d("onRestore", "on restore called successfully");
             }
         } catch (IOException e) {
             e.printStackTrace();
-            Log.d("onRestore", "there was an error");
         }
     }
 }

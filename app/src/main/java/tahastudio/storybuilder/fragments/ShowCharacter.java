@@ -171,9 +171,8 @@ public class ShowCharacter extends Fragment {
                 values.put(Constants.STORY_CHARACTER_NOTES, notes.getText().toString());
 
                 // Call the update method of StoryProvider, through the ContentResolver
-                getActivity().getApplicationContext().getContentResolver()
-                        .update(uri, values, Constants.STORY_CHARACTER_ID + "=?",
-                                new String[] { String.valueOf(id) });
+                getActivity().getApplicationContext().getContentResolver().update(uri, values,
+                        Constants.STORY_CHARACTER_ID + "=?", new String[] { String.valueOf(id) });
 
                 Toast.makeText(getActivity().getApplicationContext(), "Updating...",
                         Toast.LENGTH_LONG).show();

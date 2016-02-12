@@ -12,6 +12,9 @@ public class Constants {
     // The Loader instance for StoryBuilderMain
     public static final int LOADER = 0;
 
+    // For AddPlot. TODO -> Find better method
+    public static final String PLOT_EMPTY = "";
+
     // Create public static references for the story, so other classes can access them
     public static int SB_ID; // This value will not change unless a user selects a different story
 
