@@ -12,9 +12,6 @@ public class Constants {
     // The Loader instance for StoryBuilderMain
     public static final int LOADER = 0;
 
-    // For AddPlot. TODO -> Find better method
-    public static final String PLOT_EMPTY = "";
-
     // Create public static references for the story, so other classes can access them
     public static int SB_ID; // This value will not change unless a user selects a different story
 
@@ -70,6 +67,7 @@ public class Constants {
     public static final String STORY_PLOT_TITLE = "plot_name";
     public static final String STORY_PLOT_MAIN = "plot_main_sub";
     public static final String STORY_PLOT_DESC = "plot_description";
+    public static final String STORY_PLOT_MISC = "plot_misc";
     public static final String STORY_PLOT_NOTES = "plot_notes";
 
     // The below if for the content provider class, StoryProvider
@@ -170,6 +168,7 @@ public class Constants {
             + STORY_PLOT_ID + " integer primary key autoincrement, "
             + STORY_PLOT_TITLE + " text, "
             + STORY_PLOT_MAIN + " integer, "
+            + STORY_PLOT_MISC + " text, "
             + STORY_PLOT_DESC + " text, "
             + STORY_PLOT_NOTES + " text, "
             + DB_ID + " integer, "

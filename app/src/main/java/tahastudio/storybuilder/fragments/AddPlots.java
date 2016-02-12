@@ -32,7 +32,7 @@ public class AddPlots extends Fragment implements LoaderManager.LoaderCallbacks<
             Constants.DB_ID,
             Constants.STORY_PLOT_ID,
             Constants.STORY_PLOT_TITLE,
-            Constants.PLOT_EMPTY,
+            Constants.STORY_PLOT_MISC,
             Constants.STORY_PLOT_NOTES };
 
     // For interface method
@@ -62,7 +62,7 @@ public class AddPlots extends Fragment implements LoaderManager.LoaderCallbacks<
         recyclerAdapter = new StoryAdapter(
                 context,
                 Constants.STORY_PLOT_TITLE,
-                Constants.PLOT_EMPTY,
+                Constants.STORY_PLOT_MISC,
                 Constants.STORY_PLOT_NOTES); // input the strings
 
         recyclerView.setAdapter(recyclerAdapter);
