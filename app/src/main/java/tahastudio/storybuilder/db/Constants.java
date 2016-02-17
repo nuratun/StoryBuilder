@@ -9,6 +9,12 @@ import android.net.Uri;
  */
 public class Constants {
 
+    // For Google Drive backup
+    public static final String EXISTING_FOLDER_ID = null;
+    public static final String EXISTING_FILE_ID = null;
+    public static final int REQUEST_CODE_RESOLUTION = 1;
+    public static final int NEXT_AVAILABLE_REQUEST_CODE = 2;
+
     // The Loader instance for StoryBuilderMain
     public static final int LOADER = 0;
 

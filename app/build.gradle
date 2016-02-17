@@ -32,4 +32,5 @@ dependencies {
     compile 'com.android.support:design:23.0.0'
     compile 'com.android.support:percent:23.0.0'
     compile 'com.getbase:floatingactionbutton:1.10.1'
+    compile 'com.google.android.gms:play-services-drive:8.4.0'
 }
