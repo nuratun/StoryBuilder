@@ -6,15 +6,13 @@ import android.app.backup.BackupDataOutput;
 import android.app.backup.BackupManager;
 import android.app.backup.FileBackupHelper;
 import android.os.ParcelFileDescriptor;
-import android.util.Log;
 
 import java.io.IOException;
 
 import tahastudio.storybuilder.db.Constants;
 
 /**
- * This will allow backup to a cloud service. Just Google Drive at the start, but
- * eventually more: Dropbox, Box, OneDrive, etc.
+ * This will allow automatic backups in the background, without user intervention.
  */
 public class SharedBackup extends BackupAgentHelper {
 
