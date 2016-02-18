@@ -13,10 +13,6 @@ import com.google.android.gms.drive.MetadataChangeSet;
  */
 public class DriveCreation extends DriveBackup {
 
-    @Override
-    public void onConnected(Bundle connectionHint) {
-        super.onConnected(connectionHint);
-    }
 
 
     // Create a folder for the backup file
