@@ -17,6 +17,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +40,9 @@ public class StoryBuilderMain extends AppCompatActivity implements
     private RecyclerView recyclerView;
     private StoryAdapter recyclerAdapter;
     private RecyclerView.LayoutManager recyclerLayout;
+    // List for the drawer
+    private ListView drawer;
+    private ArrayAdapter<String> dLayout;
 
     // From String[] for the cursor
     String[] from = {
@@ -50,6 +55,9 @@ public class StoryBuilderMain extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story_builder_main);
+
+        // Find the drawer for the drawer layout and the RecyclerView for the list of saved stories
+        drawer = (ListView) findViewById(R.id.drawerList);
         recyclerView = (RecyclerView) findViewById(R.id.story_list);
 
         TextView textView = (TextView) findViewById(R.id.quote); // TextView used for quotes
@@ -58,6 +66,9 @@ public class StoryBuilderMain extends AppCompatActivity implements
 
         // Call the backup manager, if this app has been re-installed or data has changed
         restoreFromBackup();
+
+        // Call the drawer layout
+        drawerList();
 
         // Set the layout manager for the RecyclerView
         recyclerLayout = new LinearLayoutManager(this);
@@ -74,8 +85,6 @@ public class StoryBuilderMain extends AppCompatActivity implements
 
         // To initialize the LoaderManager
         getSupportLoaderManager().restartLoader(Constants.LOADER, null, this);
-
-        // TODO -> Set up a drawer
 
         // When an item on the RecyclerView is clicked, load the story
         recyclerAdapter.setOnItemClickListener(new StoryAdapter.OnItemClickListener() {
@@ -149,6 +158,12 @@ public class StoryBuilderMain extends AppCompatActivity implements
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void drawerList() {
+        String[] list = { "Home", "Backup", "Share", "About" };
+        dLayout = new ArrayAdapter<String>(this, R.layout.activity_story_builder_main, list);
+        drawer.setAdapter(dLayout);
     }
 
     // Must implement the below methods for the LoaderManager
