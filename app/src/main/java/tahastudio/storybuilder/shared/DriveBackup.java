@@ -14,7 +14,7 @@ import tahastudio.storybuilder.activities.StoryBuilderMain;
 import tahastudio.storybuilder.db.Constants;
 
 /**
- * Backup to Google Drive
+ * Connection to user's Google Drive account
  */
 public class DriveBackup extends StoryBuilderMain implements
         GoogleApiClient.ConnectionCallbacks,
@@ -55,13 +55,13 @@ public class DriveBackup extends StoryBuilderMain implements
         super.onResume();
 
         if ( apiClient == null ) {
-            apiClient = new GoogleApiClient().Builder(this)
+            GoogleApiClient.Builder builder = new GoogleApiClient.Builder(this)
                     .addApi(Drive.API)
                     .addScope(Drive.SCOPE_FILE)
                     .addScope(Drive.SCOPE_APPFOLDER)
                     .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .build();
+                    .addOnConnectionFailedListener(this);
+            apiClient = builder.build();
         }
         apiClient.connect();
     }

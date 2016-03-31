@@ -1,33 +1,47 @@
-<RelativeLayout
-    android:id="@+id/mainView"
+<android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:id="@+id/drawer"
     android:layout_height="match_parent"
-    tools:context=".activities.StoryBuilderMain">
+    android:layout_width="match_parent">
 
-    <TextView
-        android:id="@+id/quote"
-        android:theme="@style/Quotes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/story_list"
-        android:scrollbars="vertical"
+    <RelativeLayout
+        android:id="@+id/mainView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:listSelector="@drawable/big_card_list"
-        android:layout_below="@id/quote" />
+        tools:context=".activities.StoryBuilderMain">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:src="@drawable/ic_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:clickable="true" />
-</RelativeLayout>
+        <TextView
+            android:id="@+id/quote"
+            android:theme="@style/Quotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/story_list"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:listSelector="@drawable/big_card_list"
+            android:layout_below="@id/quote" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab"
+            android:src="@drawable/ic_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
+            android:clickable="true" />
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/drawerList"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="@color/accent" />
+
+</android.support.v4.widget.DrawerLayout>
