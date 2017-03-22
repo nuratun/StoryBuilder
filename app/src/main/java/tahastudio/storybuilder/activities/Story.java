@@ -154,7 +154,7 @@ public class Story extends AppCompatActivity implements
         // ViewPager can now flip through them
         viewPager.setAdapter(tabViewer);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tab_layout));
-        tab_layout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        tab_layout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());

@@ -15,6 +15,9 @@ public class Constants {
     public static final int REQUEST_CODE_RESOLUTION = 1;
     public static final int NEXT_AVAILABLE_REQUEST_CODE = 2;
 
+    // For the SimpleItemTouchHelperCallback helper
+    public static final float ALPHA_FULL = 1.0f;
+
     // The Loader instance for StoryBuilderMain
     public static final int LOADER = 0;
 
@@ -22,7 +25,7 @@ public class Constants {
     public static int SB_ID; // This value will not change unless a user selects a different story
 
     // Version number must change if database changes
-    public static final int DATABASE_VERSION = 4;
+    public static final int DATABASE_VERSION = 5;
     public static final String DATABASE_NAME = "sb.db";
 
     // Set up table schema for the story
@@ -31,6 +34,7 @@ public class Constants {
     public static final String STORY_NAME = "title";
     public static final String STORY_GENRE = "genre";
     public static final String STORY_DESC = "desc";
+    public static final int STORY_ARCHIVE = 0;
 
     // Set up table schema for characters
     public static final String STORY_CHARACTER_ID = "sb_characters_id";
@@ -47,6 +51,7 @@ public class Constants {
     public static final String STORY_CHARACTER_PERSONALITY = "character_personality";
     public static final String STORY_CHARACTER_STORYLINE = "character_storyline";
     public static final String STORY_CHARACTER_NOTES = "character_notes";
+    public static final int STORY_CHARACTER_ARCHIVE = 0;
 
     // Set up table schema for events
     public static final String STORY_EVENT_ID = "sb_events_id";
@@ -56,6 +61,7 @@ public class Constants {
     public static final String STORY_EVENT_CHARACTERS = "event_characters";
     public static final String STORY_EVENT_SUMMARY = "event_summary";
     public static final String STORY_EVENT_NOTES = "event_notes";
+    public static final int STORY_EVENT_ARCHIVE = 0;
 
     // Set up table schema for locations
     public static final String STORY_LOCATION_ID = "sb_locations_id";
@@ -66,6 +72,7 @@ public class Constants {
     public static final String STORY_LOCATION_IMPORTANCE = "location_importance";
     public static final String STORY_LOCATION_EVENTS = "location_events";
     public static final String STORY_LOCATION_NOTES = "location_notes";
+    public static final int STORY_LOCATION_ARCHIVE = 0;
 
     // Set up table schema for plots
     public static final String STORY_PLOT_ID = "sb_plots_id";
@@ -75,6 +82,7 @@ public class Constants {
     public static final String STORY_PLOT_DESC = "plot_description";
     public static final String STORY_PLOT_MISC = "plot_misc";
     public static final String STORY_PLOT_NOTES = "plot_notes";
+    public static final int STORY_PLOT_ARCHIVE = 0;
 
     // The below if for the content provider class, StoryProvider
     // Since this content provider will not be accessible by outside apps,
@@ -116,7 +124,8 @@ public class Constants {
             + DB_ID + " integer primary key autoincrement, "
             + STORY_NAME + " text, "
             + STORY_GENRE + " text, "
-            + STORY_DESC + " text)";
+            + STORY_DESC + " text, "
+            + STORY_ARCHIVE + " integer)";
 
     // Create the character table, with foreign keys from the story table
     public static final String SQL_CREATE_CHARACTERS = "CREATE TABLE IF NOT EXISTS "
@@ -134,6 +143,7 @@ public class Constants {
             + STORY_CHARACTER_PERSONALITY + " text, "
             + STORY_CHARACTER_STORYLINE + " text, "
             + STORY_CHARACTER_NOTES + " text, "
+            + STORY_CHARACTER_ARCHIVE + " integer, "
             + DB_ID + " integer, "
             + "FOREIGN KEY(" + DB_ID + ") "
             + "REFERENCES " + STORY_TABLE + "(" + DB_ID + ") ON DELETE CASCADE"
@@ -148,6 +158,7 @@ public class Constants {
             + STORY_EVENT_CHARACTERS + " text, "
             + STORY_EVENT_SUMMARY + " text, "
             + STORY_EVENT_NOTES + " text, "
+            + STORY_EVENT_ARCHIVE + " integer, "
             + DB_ID + " integer,"
             + "FOREIGN KEY(" + DB_ID + ") "
             + "REFERENCES " + STORY_TABLE + "(" + DB_ID + ") ON DELETE CASCADE"
@@ -163,6 +174,7 @@ public class Constants {
             + STORY_LOCATION_IMPORTANCE + " text,"
             + STORY_LOCATION_EVENTS + " text,"
             + STORY_LOCATION_NOTES + " text, "
+            + STORY_LOCATION_ARCHIVE + " integer, "
             + DB_ID + " integer, "
             + "FOREIGN KEY(" + DB_ID + ") "
             + "REFERENCES " + STORY_TABLE + "(" + DB_ID + ") ON DELETE CASCADE"
@@ -177,6 +189,7 @@ public class Constants {
             + STORY_PLOT_MISC + " text, "
             + STORY_PLOT_DESC + " text, "
             + STORY_PLOT_NOTES + " text, "
+            + STORY_PLOT_ARCHIVE + " integer, "
             + DB_ID + " integer, "
             + "FOREIGN KEY(" + DB_ID + ") "
             + "REFERENCES " + STORY_TABLE + "(" + DB_ID + ") ON DELETE CASCADE"

@@ -13,6 +13,7 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +26,7 @@ import java.util.Random;
 import tahastudio.storybuilder.R;
 import tahastudio.storybuilder.adapters.StoryAdapter;
 import tahastudio.storybuilder.db.Constants;
+import tahastudio.storybuilder.helpers.OnStartDragListener;
 import tahastudio.storybuilder.ui.SBDeleteDialog;
 import tahastudio.storybuilder.ui.SBDialog;
 
@@ -32,12 +34,13 @@ import tahastudio.storybuilder.ui.SBDialog;
  * Main activity of StoryBuilder
  **/
 public class StoryBuilderMain extends AppCompatActivity implements
-        LoaderManager.LoaderCallbacks<Cursor> {
+        LoaderManager.LoaderCallbacks<Cursor>, OnStartDragListener {
 
     private FloatingActionButton fab;
     private RecyclerView recyclerView;
     private StoryAdapter recyclerAdapter;
     private RecyclerView.LayoutManager recyclerLayout;
+    private ItemTouchHelper helper;
 
     // From String[] for the cursor
     String[] from = {
@@ -180,6 +183,11 @@ public class StoryBuilderMain extends AppCompatActivity implements
     private void restoreFromBackup() {
         BackupManager backupManager = new BackupManager(this);
         backupManager.dataChanged();
+    }
+
+    @Override
+    public void onStartDrag(RecyclerView.ViewHolder viewHolder) {
+        helper.startDrag(viewHolder);
     }
 
     // Calls SBDialog class to create the story creation dialog

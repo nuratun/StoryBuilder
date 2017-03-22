@@ -3,28 +3,30 @@ package tahastudio.storybuilder.adapters;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import tahastudio.storybuilder.R;
+import tahastudio.storybuilder.helpers.ItemTouchHelperAdapter;
 
 /**
  * For the RecyclerView implementation to replace ListView across the app. Since RecyclerView
- * does not implement a CursorAdapter, it will extenda special class, RVCursorAdapter to bind
+ * does not implement a CursorAdapter, it will extend a special class, RVCursorAdapter to bind
  * the db to the CardView.
  */
 public class StoryAdapter extends RVCursorAdapter<StoryAdapter.StoryAdapterViewHolder>
-        implements View.OnClickListener, View.OnLongClickListener {
+        implements View.OnClickListener, View.OnLongClickListener, ItemTouchHelperAdapter {
+
+    private final LayoutInflater layoutInflater;
 
     private OnItemClickListener onItemClickListener;
     private OnItemLongClickListener onItemLongClickListener;
-    private final LayoutInflater layoutInflater;
     private String title;
     private String extra;
     private String desc;
-
 
     public StoryAdapter(final Context context, String title, String extra, String desc) {
         super();
@@ -71,7 +73,7 @@ public class StoryAdapter extends RVCursorAdapter<StoryAdapter.StoryAdapterViewH
             final RecyclerView recyclerView = (RecyclerView) view.getParent();
             final int position = recyclerView.getChildLayoutPosition(view); // The element clicked
 
-            if ( position != recyclerView.NO_POSITION ) { // If something was actually clicked
+            if ( position != RecyclerView.NO_POSITION) { // If something was actually clicked
                 final Cursor cursor = this.getItem(position); // Get the cursor for that db entry
                 this.onItemClickListener.onItemClicked(cursor);
             }
@@ -85,7 +87,7 @@ public class StoryAdapter extends RVCursorAdapter<StoryAdapter.StoryAdapterViewH
             final RecyclerView recyclerView = (RecyclerView) view.getParent();
             final int position = recyclerView.getChildLayoutPosition(view);
 
-            if ( position != recyclerView.NO_POSITION ) {
+            if ( position != RecyclerView.NO_POSITION) {
                 final Cursor cursor = this.getItem(position);
                 this.onItemLongClickListener.onItemLongClicked(cursor);
             }
