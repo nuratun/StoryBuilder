@@ -21,12 +21,18 @@ public class Constants {
     // The Loader instance for StoryBuilderMain
     public static final int LOADER = 0;
 
-    // Create public static references for the story, so other classes can access them
+    // Create public static references for the story and table, so other classes can access them
     public static int SB_ID; // This value will not change unless a user selects a different story
+    public static String SB_TABLE;
 
     // Version number must change if database changes
     public static final int DATABASE_VERSION = 5;
     public static final String DATABASE_NAME = "sb.db";
+
+    // Columns used by all tables
+    public static final String ID = "id"; // Migrate all id's (except story) to this. Version 4 -> 5
+    public static final String ARCHIVE = "archive";
+    public static final int ARCHIVED = 1;
 
     // Set up table schema for the story
     public static final String DB_ID = "_id";
@@ -34,10 +40,9 @@ public class Constants {
     public static final String STORY_NAME = "title";
     public static final String STORY_GENRE = "genre";
     public static final String STORY_DESC = "desc";
-    public static final int STORY_ARCHIVE = 0;
 
     // Set up table schema for characters
-    public static final String STORY_CHARACTER_ID = "sb_characters_id";
+    public static final String STORY_CHARACTER_ID = "sb_characters_id"; // TODO -> Will delete after migration
     public static final String STORY_CHARACTER_TABLE = "sb_characters";
     public static final String STORY_CHARACTER_NAME = "character_name";
     public static final String STORY_CHARACTER_TYPE = "character_type";
@@ -51,20 +56,18 @@ public class Constants {
     public static final String STORY_CHARACTER_PERSONALITY = "character_personality";
     public static final String STORY_CHARACTER_STORYLINE = "character_storyline";
     public static final String STORY_CHARACTER_NOTES = "character_notes";
-    public static final int STORY_CHARACTER_ARCHIVE = 0;
 
     // Set up table schema for events
-    public static final String STORY_EVENT_ID = "sb_events_id";
+    public static final String STORY_EVENT_ID = "sb_events_id"; // TODO -> Will delete after migration
     public static final String STORY_EVENT_TABLE = "sb_events";
     public static final String STORY_EVENT_LINER = "event_liner";
     public static final String STORY_EVENT_DESC = "event_desc";
     public static final String STORY_EVENT_CHARACTERS = "event_characters";
     public static final String STORY_EVENT_SUMMARY = "event_summary";
     public static final String STORY_EVENT_NOTES = "event_notes";
-    public static final int STORY_EVENT_ARCHIVE = 0;
 
     // Set up table schema for locations
-    public static final String STORY_LOCATION_ID = "sb_locations_id";
+    public static final String STORY_LOCATION_ID = "sb_locations_id"; // TODO -> Will delete after migration
     public static final String STORY_LOCATION_TABLE = "sb_locations";
     public static final String STORY_LOCATION_NAME = "location_name";
     public static final String STORY_LOCATION_LOCATION = "location_location";
@@ -72,17 +75,15 @@ public class Constants {
     public static final String STORY_LOCATION_IMPORTANCE = "location_importance";
     public static final String STORY_LOCATION_EVENTS = "location_events";
     public static final String STORY_LOCATION_NOTES = "location_notes";
-    public static final int STORY_LOCATION_ARCHIVE = 0;
 
     // Set up table schema for plots
-    public static final String STORY_PLOT_ID = "sb_plots_id";
+    public static final String STORY_PLOT_ID = "sb_plots_id"; // TODO -> Will delete after migration
     public static final String STORY_PLOT_TABLE = "sb_plots";
     public static final String STORY_PLOT_TITLE = "plot_name";
     public static final String STORY_PLOT_MAIN = "plot_main_sub";
     public static final String STORY_PLOT_DESC = "plot_description";
     public static final String STORY_PLOT_MISC = "plot_misc";
     public static final String STORY_PLOT_NOTES = "plot_notes";
-    public static final int STORY_PLOT_ARCHIVE = 0;
 
     // The below if for the content provider class, StoryProvider
     // Since this content provider will not be accessible by outside apps,
@@ -101,7 +102,8 @@ public class Constants {
     public static final int PLOT_LIST = 10;
     public static final Uri CONTENT_URI = Uri.parse("content://" + PROVIDER_NAME);
     public static final UriMatcher uriMatcher;
-    static  {
+
+    static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(PROVIDER_NAME, STORY_TABLE + "/#", STORY_ID);
         uriMatcher.addURI(PROVIDER_NAME, STORY_TABLE, STORY_LIST);
@@ -116,7 +118,8 @@ public class Constants {
     }
 
     // Get latest story entry id from database
-    public static final String GET_STORY_ID = "SELECT MAX(_id) FROM " + STORY_TABLE;
+    // Migrating from: _id to id
+    public static final String GET_STORY_ID = "SELECT MAX(id) FROM " + STORY_TABLE;
 
     // Create the story table. All other tables will reference the id and story name
     public static final String SQL_CREATE_STORY_TABLE = "CREATE TABLE IF NOT EXISTS "
@@ -125,12 +128,12 @@ public class Constants {
             + STORY_NAME + " text, "
             + STORY_GENRE + " text, "
             + STORY_DESC + " text, "
-            + STORY_ARCHIVE + " integer)";
+            + ARCHIVE + " integer)";
 
     // Create the character table, with foreign keys from the story table
     public static final String SQL_CREATE_CHARACTERS = "CREATE TABLE IF NOT EXISTS "
             + STORY_CHARACTER_TABLE + "("
-            + STORY_CHARACTER_ID + " integer primary key autoincrement, "
+            + ID + " integer primary key autoincrement, "
             + STORY_CHARACTER_NAME + " text, "
             + STORY_CHARACTER_TYPE + " integer, "
             + STORY_CHARACTER_GENDER + " integer, "
@@ -143,7 +146,7 @@ public class Constants {
             + STORY_CHARACTER_PERSONALITY + " text, "
             + STORY_CHARACTER_STORYLINE + " text, "
             + STORY_CHARACTER_NOTES + " text, "
-            + STORY_CHARACTER_ARCHIVE + " integer, "
+            + ARCHIVE + " integer, "
             + DB_ID + " integer, "
             + "FOREIGN KEY(" + DB_ID + ") "
             + "REFERENCES " + STORY_TABLE + "(" + DB_ID + ") ON DELETE CASCADE"
@@ -152,13 +155,13 @@ public class Constants {
     // Create the event table, with foreign keys from the story table
     public static final String SQL_CREATE_EVENTS = "CREATE TABLE IF NOT EXISTS "
             + STORY_EVENT_TABLE + "("
-            + STORY_EVENT_ID + " integer primary key autoincrement, "
+            + ID + " integer primary key autoincrement, "
             + STORY_EVENT_LINER + " text, "
             + STORY_EVENT_DESC + " text, "
             + STORY_EVENT_CHARACTERS + " text, "
             + STORY_EVENT_SUMMARY + " text, "
             + STORY_EVENT_NOTES + " text, "
-            + STORY_EVENT_ARCHIVE + " integer, "
+            + ARCHIVE + " integer, "
             + DB_ID + " integer,"
             + "FOREIGN KEY(" + DB_ID + ") "
             + "REFERENCES " + STORY_TABLE + "(" + DB_ID + ") ON DELETE CASCADE"
@@ -167,14 +170,14 @@ public class Constants {
     // Create the locations table, with foreign keys from the story table
     public static final String SQL_CREATE_LOCATIONS = "CREATE TABLE IF NOT EXISTS "
             + STORY_LOCATION_TABLE + "("
-            + STORY_LOCATION_ID + " integer primary key autoincrement, "
+            + ID + " integer primary key autoincrement, "
             + STORY_LOCATION_NAME + " text, "
             + STORY_LOCATION_LOCATION + " text, "
             + STORY_LOCATION_DESC + " text, "
             + STORY_LOCATION_IMPORTANCE + " text,"
             + STORY_LOCATION_EVENTS + " text,"
             + STORY_LOCATION_NOTES + " text, "
-            + STORY_LOCATION_ARCHIVE + " integer, "
+            + ARCHIVE + " integer, "
             + DB_ID + " integer, "
             + "FOREIGN KEY(" + DB_ID + ") "
             + "REFERENCES " + STORY_TABLE + "(" + DB_ID + ") ON DELETE CASCADE"
@@ -183,13 +186,13 @@ public class Constants {
     // Create the plots table, with foreign keys from the story table
     public static final String SQL_CREATE_PLOTS = "CREATE TABLE IF NOT EXISTS "
             + STORY_PLOT_TABLE + "("
-            + STORY_PLOT_ID + " integer primary key autoincrement, "
+            + ID + " integer primary key autoincrement, "
             + STORY_PLOT_TITLE + " text, "
             + STORY_PLOT_MAIN + " integer, "
             + STORY_PLOT_MISC + " text, "
             + STORY_PLOT_DESC + " text, "
             + STORY_PLOT_NOTES + " text, "
-            + STORY_PLOT_ARCHIVE + " integer, "
+            + ARCHIVE + " integer, "
             + DB_ID + " integer, "
             + "FOREIGN KEY(" + DB_ID + ") "
             + "REFERENCES " + STORY_TABLE + "(" + DB_ID + ") ON DELETE CASCADE"
@@ -197,25 +200,23 @@ public class Constants {
 
     // The below is used in the SQLDatabase getElementRows method
     public static final String GRAB_CHARACTER_ROW_DETAILS = "SELECT * FROM "
-            + STORY_CHARACTER_TABLE + " WHERE "
-            + STORY_CHARACTER_ID + " = ";
+            + STORY_CHARACTER_TABLE + " WHERE " + ID + " = ";
 
     // The below is used in the SQLDatabase getElementRows method
     public static final String GRAB_LOCATION_ROW_DETAILS = "SELECT * FROM "
-            + STORY_LOCATION_TABLE + " WHERE "
-            + STORY_LOCATION_ID + " = ";
+            + STORY_LOCATION_TABLE + " WHERE " + ID + " = ";
 
     // The below is used in the SQLDatabase getElementRows method
     public static final String GRAB_EVENT_ROW_DETAILS = "SELECT * FROM "
-            + STORY_EVENT_TABLE + " WHERE "
-            + STORY_EVENT_ID + " = ";
+            + STORY_EVENT_TABLE + " WHERE " + ID + " = ";
 
     // The below is used in the SQLDatabase getElementRows method
     public static final String GRAB_PLOT_ROW_DETAILS = "SELECT * FROM "
-            + STORY_PLOT_TABLE + " WHERE "
-            + STORY_PLOT_ID + " = ";
+            + STORY_PLOT_TABLE + " WHERE " + ID + " = ";
 
     public static final String GET_STORY_GENRE = "SELECT " + STORY_GENRE + " FROM "
-            + STORY_TABLE + " WHERE "
-            + DB_ID + " = ";
+            + STORY_TABLE + " WHERE " + DB_ID + " = ";
+
+    public static final String ARCHIVE_ELEMENT = "UPDATE " + SB_TABLE + " SET "
+            + ARCHIVE + " = " + ARCHIVED + " WHERE " + ID + " = ";
 }

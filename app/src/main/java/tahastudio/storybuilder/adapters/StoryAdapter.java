@@ -3,7 +3,6 @@ package tahastudio.storybuilder.adapters;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,6 +92,20 @@ public class StoryAdapter extends RVCursorAdapter<StoryAdapter.StoryAdapterViewH
             }
         }
         return true;
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+
+        if ( this.onItemClickListener != null ) {
+            final Cursor cursor = this.getItem(position);
+            cursor.
+         }
+    }
+
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+
     }
 
     public class StoryAdapterViewHolder extends RecyclerView.ViewHolder {
