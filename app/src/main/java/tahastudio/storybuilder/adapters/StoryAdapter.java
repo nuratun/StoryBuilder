@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import tahastudio.storybuilder.R;
+import tahastudio.storybuilder.db.Constants;
 import tahastudio.storybuilder.helpers.ItemTouchHelperAdapter;
+import tahastudio.storybuilder.tasks.ArchiveElementTask;
 
 /**
  * For the RecyclerView implementation to replace ListView across the app. Since RecyclerView
@@ -97,10 +99,7 @@ public class StoryAdapter extends RVCursorAdapter<StoryAdapter.StoryAdapterViewH
     @Override
     public void onItemDismiss(int position) {
 
-        if ( this.onItemClickListener != null ) {
-            final Cursor cursor = this.getItem(position);
-            cursor.
-         }
+        new ArchiveElementTask(Constants.STORY_TABLE, position).execute();
     }
 
     @Override

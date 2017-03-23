@@ -80,8 +80,7 @@ public class StoryProvider extends ContentProvider {
         return cursor;
     }
 
-    // Uri will be the hardcoded table from CreateStoryTask, AddCharacters, AddEvents,
-    // and AddLocations
+    // Uri will be the hardcoded table from CreateStoryTask, AddCharacters, AddEvents, AddLocations
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         try {
@@ -128,4 +127,5 @@ public class StoryProvider extends ContentProvider {
 
         return db.updateEntry(id, values, selection, selectionArgs);
     }
+
 }

@@ -1,23 +1,25 @@
 package tahastudio.storybuilder.tasks;
 
-import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.widget.Toast;
+
+import tahastudio.storybuilder.db.SQLDatabase;
 
 /**
  * Archive a story, or a story element (character, location, event)
  * Called from StoryBuilderMain, AddCharacters, AddEvents, AddLocations, AddPlots
  */
-public class ArchiveElementTask extends AsyncTask<String, Void, Integer> {
+public class ArchiveElementTask extends AsyncTask<String, Void, Cursor> {
     private Context context;
-    private ContentValues values;
+    private boolean story;
     private String table;
     private int id;
 
-    public ArchiveElementTask(Context context, ContentValues values, String table, int id) {
+    public ArchiveElementTask(Context context, boolean story, String table, int id) {
         this.context = context;
-        this.values = values;
+        this.story = story;
         this.table = table;
         this.id = id;
     }
@@ -30,12 +32,15 @@ public class ArchiveElementTask extends AsyncTask<String, Void, Integer> {
     }
 
     @Override
-    protected Integer doInBackground(String... params) {
+    protected Cursor doInBackground(String... params) {
+        SQLDatabase db = new SQLDatabase(context);
 
+        return db.archiveElement(story, table, id);
     }
 
     @Override
-    protected void onPostExecute(Integer result) {
+    protected void onPostExecute(Cursor result) {
+        super.onPostExecute(result);
 
     }
 

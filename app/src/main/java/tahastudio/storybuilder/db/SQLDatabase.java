@@ -214,6 +214,24 @@ public class SQLDatabase extends SQLiteOpenHelper {
         return helper.rawQuery(Constants.GET_STORY_GENRE + Constants.SB_ID, null);
     }
 
+    // Archive a story or a story element
+    public Cursor archiveElement(boolean story, String table, int id) {
+        SQLiteDatabase helper = getReadableDatabase();
+        String type;
+
+        // If this isn't a story, use the regular ID (id)
+        if (story != true) {
+            type = Constants.ID;
+        } else {
+            // Else, use _id
+            type = Constants.DB_ID;
+        }
+
+        return helper.rawQuery("UPDATE " + table + " SET "
+                + Constants.ARCHIVE + " = " + Constants.ARCHIVED
+                + " WHERE " + type + " = " + id, null);
+    }
+
     // For the ListViews in StoryBuilderMain, AddCharacters, AddEvents, AddLocations
     public Cursor getSearchResults(String id,
                                    String[] projection,
