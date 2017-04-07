@@ -31,7 +31,7 @@ public class AddEvents extends Fragment implements LoaderManager.LoaderCallbacks
     // From String[] for the cursor
     private String[] from = new String[] {
             Constants.DB_ID,
-            Constants.STORY_EVENT_ID,
+            Constants.ID,
             Constants.STORY_EVENT_LINER,
             Constants.STORY_EVENT_CHARACTERS,
             Constants.STORY_EVENT_NOTES };
@@ -78,7 +78,7 @@ public class AddEvents extends Fragment implements LoaderManager.LoaderCallbacks
                 // Grab the first field from the row and cast it to a string
                 // Send to the interface. Implemented in the class, Story
                 eventCallback.onEventSelected(
-                        cursor.getInt(cursor.getColumnIndex(Constants.STORY_EVENT_ID)),
+                        cursor.getInt(cursor.getColumnIndex(Constants.ID)),
                         cursor.getString(cursor.getColumnIndex(Constants.STORY_EVENT_LINER)));
             }
         });
@@ -89,9 +89,9 @@ public class AddEvents extends Fragment implements LoaderManager.LoaderCallbacks
             public void onItemLongClicked(Cursor cursor) {
                 SBDeleteDialog deleteDialog = new SBDeleteDialog();
                 deleteDialog.delete(cursor.getInt(cursor.getColumnIndex(
-                        Constants.STORY_EVENT_ID)),
+                        Constants.ID)),
                         Constants.STORY_EVENT_TABLE,
-                        Constants.STORY_EVENT_ID);
+                        Constants.ID);
                 deleteDialog.show(getFragmentManager(), "delete");
             }
         });

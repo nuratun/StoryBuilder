@@ -31,7 +31,7 @@ public class AddCharacters extends Fragment implements LoaderManager.LoaderCallb
     // From String[] for the cursor
     private String[] from = new String[] {
             Constants.DB_ID,
-            Constants.STORY_CHARACTER_ID,
+            Constants.ID,
             Constants.STORY_CHARACTER_NAME,
             Constants.STORY_CHARACTER_AGE,
             Constants.STORY_CHARACTER_BIRTHPLACE };
@@ -77,7 +77,7 @@ public class AddCharacters extends Fragment implements LoaderManager.LoaderCallb
                 // Grab the id and name from the row and send to the interface.
                 // Implemented in the class, Story
                 characterCallback.onCharacterSelected(cursor.getInt(
-                        cursor.getColumnIndex(Constants.STORY_CHARACTER_ID)),
+                        cursor.getColumnIndex(Constants.ID)),
                         cursor.getString(cursor.getColumnIndex(Constants.STORY_CHARACTER_NAME)));
             }
         });
@@ -89,9 +89,9 @@ public class AddCharacters extends Fragment implements LoaderManager.LoaderCallb
 
                 SBDeleteDialog deleteDialog = new SBDeleteDialog();
                 deleteDialog.delete(cursor.getInt(cursor.getColumnIndex(
-                        Constants.STORY_CHARACTER_ID)),
+                        Constants.ID)),
                         Constants.STORY_CHARACTER_TABLE,
-                        Constants.STORY_CHARACTER_ID);
+                        Constants.ID);
                 deleteDialog.show(getFragmentManager(), "delete");
             }
         });

@@ -99,12 +99,15 @@ public class StoryAdapter extends RVCursorAdapter<StoryAdapter.StoryAdapterViewH
     @Override
     public void onItemDismiss(int position) {
 
-        new ArchiveElementTask(Constants.STORY_TABLE, position).execute();
+        new ArchiveElementTask(layoutInflater.getContext(), false, Constants.STORY_TABLE, position).execute();
     }
 
     @Override
     public boolean onItemMove(int fromPosition, int toPosition) {
-
+        if ( this.cursor != null && !this.cursor.isClosed() ) {
+            this.cursor.moveToPosition(toPosition);
+        }
+        return true;
     }
 
     public class StoryAdapterViewHolder extends RecyclerView.ViewHolder {

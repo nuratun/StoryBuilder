@@ -30,7 +30,7 @@ public class AddPlots extends Fragment implements LoaderManager.LoaderCallbacks<
     // From String[] for the cursor
     String[] from = new String[] {
             Constants.DB_ID,
-            Constants.STORY_PLOT_ID,
+            Constants.ID,
             Constants.STORY_PLOT_TITLE,
             Constants.STORY_PLOT_MISC,
             Constants.STORY_PLOT_NOTES };
@@ -78,7 +78,7 @@ public class AddPlots extends Fragment implements LoaderManager.LoaderCallbacks<
                 // Grab the first field from the row and cast it to a string
                 // Send to the interface. Implemented in the class, Story
                 plotCallback.onPlotSelected(
-                        cursor.getInt(cursor.getColumnIndex(Constants.STORY_PLOT_ID)),
+                        cursor.getInt(cursor.getColumnIndex(Constants.ID)),
                         cursor.getString(cursor.getColumnIndex(Constants.STORY_PLOT_TITLE)));
             }
         });
@@ -89,9 +89,9 @@ public class AddPlots extends Fragment implements LoaderManager.LoaderCallbacks<
             public void onItemLongClicked(Cursor cursor) {
                 SBDeleteDialog deleteDialog = new SBDeleteDialog();
                 deleteDialog.delete(cursor.getInt(cursor.getColumnIndex(
-                        Constants.STORY_PLOT_ID)),
+                        Constants.ID)),
                         Constants.STORY_PLOT_TABLE,
-                        Constants.STORY_PLOT_ID);
+                        Constants.ID);
                 deleteDialog.show(getFragmentManager(), "delete");
             }
         });

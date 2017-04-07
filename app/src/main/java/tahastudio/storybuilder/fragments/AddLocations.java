@@ -30,7 +30,7 @@ public class AddLocations extends Fragment implements LoaderManager.LoaderCallba
     // From String[] for the cursor
     String[] from = new String[] {
             Constants.DB_ID,
-            Constants.STORY_LOCATION_ID,
+            Constants.ID,
             Constants.STORY_LOCATION_NAME,
             Constants.STORY_LOCATION_LOCATION,
             Constants.STORY_LOCATION_NOTES };
@@ -79,7 +79,7 @@ public class AddLocations extends Fragment implements LoaderManager.LoaderCallba
                 // Grab the first field from the row and cast it to a string
                 // Send to the interface. Implemented in the class, Story
                 locationCallback.onLocationSelected(
-                        cursor.getInt(cursor.getColumnIndex(Constants.STORY_LOCATION_ID)),
+                        cursor.getInt(cursor.getColumnIndex(Constants.ID)),
                         cursor.getString(cursor.getColumnIndex(Constants.STORY_LOCATION_NAME)));
             }
         });
@@ -90,9 +90,9 @@ public class AddLocations extends Fragment implements LoaderManager.LoaderCallba
             public void onItemLongClicked(Cursor cursor) {
                 SBDeleteDialog deleteDialog = new SBDeleteDialog();
                 deleteDialog.delete(cursor.getInt(cursor.getColumnIndex(
-                        Constants.STORY_LOCATION_ID)),
+                        Constants.ID)),
                         Constants.STORY_LOCATION_TABLE,
-                        Constants.STORY_LOCATION_ID);
+                        Constants.ID);
                 deleteDialog.show(getFragmentManager(), "delete");
             }
         });

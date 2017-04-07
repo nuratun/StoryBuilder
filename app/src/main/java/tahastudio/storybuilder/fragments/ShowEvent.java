@@ -83,8 +83,7 @@ public class ShowEvent extends Fragment {
 
                 // Call the update method of StoryProvider, through the ContentResolver
                 getActivity().getApplicationContext().getContentResolver()
-                        .update(uri, values, Constants.STORY_EVENT_ID + "=?",
-                                new String[] { String.valueOf(id) });
+                        .update(uri, values, Constants.ID + "=?", new String[] { String.valueOf(id) });
 
                 Toast.makeText(getActivity().getApplicationContext(), "Updating...",
                         Toast.LENGTH_LONG).show();

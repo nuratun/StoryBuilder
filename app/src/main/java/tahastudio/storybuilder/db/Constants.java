@@ -118,8 +118,7 @@ public class Constants {
     }
 
     // Get latest story entry id from database
-    // Migrating from: _id to id
-    public static final String GET_STORY_ID = "SELECT MAX(id) FROM " + STORY_TABLE;
+    public static final String GET_STORY_ID = "SELECT MAX(_id) FROM " + STORY_TABLE;
 
     // Create the story table. All other tables will reference the id and story name
     public static final String SQL_CREATE_STORY_TABLE = "CREATE TABLE IF NOT EXISTS "
